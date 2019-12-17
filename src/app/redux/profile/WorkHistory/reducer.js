@@ -1,6 +1,4 @@
-import {
-    WorkHistory
-} from './actions'
+import { WorkHistory } from './bridge';
 
 const defaultState = {
     workhistoryList:[],

@@ -81,7 +81,7 @@ class _CardForm extends Component {
 
     render() {
         return (
-            <form className="row" onSubmit={this.handleSubmit}>
+            <form className="row" onSubmit={this.handleSubmit} test-cardForm='test-cardForm'>
                 <div className="col-md-6">
                     <div className="form-group">
                         <label className="m-0">Card Number</label>
@@ -131,7 +131,7 @@ class _CardForm extends Component {
 }
 const CardForm = injectStripe(_CardForm)
 
-class CheckoutForm extends React.Component {
+export class CheckoutForm extends React.Component {
 
     chargeData = (data) => {
         if (this.props.eligibilityCheck.active === true && this.props.eligibilityCheck.authorizationRequired === false) {
@@ -143,7 +143,7 @@ class CheckoutForm extends React.Component {
 
     render() {
         return (
-            <div className="col-md-12">
+            <div className="col-md-12" test-stripe='test-stripe'>
                 <Elements>
                     <CardForm
                         token={this.chargeData}
@@ -156,13 +156,13 @@ class CheckoutForm extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         createCharge: (data, claimData) => dispatch(createCharge(data, claimData)),
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         summaryAmount: state.visitSelectionState.VisitServiceProcessingState.SummaryState,
         SummaryDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.SummaryDetails,

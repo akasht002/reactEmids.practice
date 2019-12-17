@@ -1,6 +1,4 @@
-import {
-    ForgetPassword
-} from './actions'
+import {ForgetPassword} from './bridge';
 
 const defaultState = {
     sendResetPasswordLinkSuccess: false,

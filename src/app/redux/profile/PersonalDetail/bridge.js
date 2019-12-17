@@ -1,0 +1,15 @@
+export const PersonalDetails = {
+    get_personal_detail_success : "profile/get_personal_detail_success",
+    update_personal_detail_success:"profile/update_personal_detail_success",
+    get_personal_detail : "profile/get_personal_detail",
+    get_city_success: 'profile/get_city_success',
+    get_city_detail: 'profile/get_city_detail',
+    upload_img_success: 'profile/upload_img_success',
+    upload_img: 'profile/upload_img',
+    get_gender_success:'profile/get_gender_success,',
+    get_sp_busy_in_visit_success: 'profile/get_sp_busy_in_visit_success',
+    get_affiliation_detail_success:'profile/get_affiliation_detail_success',
+    clearSbMode: 'clearSbMode/profile',
+    setServiceProviderId: 'setServiceProviderId/profile',
+    clearServiceProviderId: 'clearServiceProviderId/profile',
+  }

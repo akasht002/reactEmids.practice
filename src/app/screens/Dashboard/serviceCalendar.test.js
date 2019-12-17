@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon'
-import { ServiceCalendar } from './serviceCalendar'
+import { ServiceCalendar,mapDispatchToProps, mapStateToProps } from './serviceCalendar'
 
 jest.mock('./ServiceInfo', () => ({
   ServiceCalendarList: () => ({
@@ -144,6 +144,58 @@ describe('Dashboard - Service Calendar', function () {
     expect(shallowWrapper.find('.ProfileCardBody').length).toEqual(1)
   })
 
+  it('should test initial state', () => {
+    const initialState = defaultState
+    expect(mapStateToProps(initialState)).toBeDefined();
+}); 
+
+it('Check mapDispatchToProps', () => {
+    const dispatch = jest.fn();
+    mapDispatchToProps(dispatch).getServiceProviderVists();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getServiceVisitCount();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getEntityServiceProviderList();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).updateEntityServiceVisit();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getServiceRequestId();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).setPatient();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).goToPatientProfile();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).createNewConversation();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).createVideoConference();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();        
+    mapDispatchToProps(dispatch).goToServiceRequestDetailsPage();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).setEntityServiceProvider();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).setESP();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).goToESPProfile();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getEntityServiceProviderListSearch();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).setServiceVisitDate();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).saveContextData();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).goToServiceVisitProcessing();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+})
+
+  it('Check the togglePersonalDetails function', () => {
+    shallowWrapper.instance().togglePersonalDetails({},{})
+  });
+
+  it('Check the onSubmit function', () => {
+    shallowWrapper.instance().data = {serviceRequestId:23}
+    shallowWrapper.instance().onSubmit()
+  });
+
   it('Check the componentDidMount function', () => {
     shallowWrapper.instance().componentDidMount()
   });
@@ -155,6 +207,24 @@ describe('Dashboard - Service Calendar', function () {
   it('Check the componentWillUnmount function', () => {
     shallowWrapper.instance().componentWillUnmount()
   });
+
+  it('Check the reset function', () => {
+    shallowWrapper.instance().reset()
+  });
+
+  it('Check the handleserviceType function', () => {
+    shallowWrapper.instance().handleserviceType({serviceProviderId :2343},{target:{checked:true}})
+  });
+
+  it('Check the onchangeSearchServiceProvider function', () => {
+    shallowWrapper.instance().onchangeSearchServiceProvider({target:{value:true}})
+  });
+
+
+  it('Check the navigateProfileHeader function', () => {
+    shallowWrapper.instance().navigateProfileHeader("conversationsummary")
+  });
+
 
   it('Check the getYear function', () => {
     let selectMonth = '11'
@@ -192,6 +262,11 @@ describe('Dashboard - Service Calendar', function () {
 
   it('Check the todayDate function', () => {
     shallowWrapper.instance().todayDate()
+  });
+
+  it('Check the initialCall function', () => {
+    
+    shallowWrapper.instance().initialCall()
   });
 
   it('Check the handleDayChange function', () => {

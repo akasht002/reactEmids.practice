@@ -1,6 +1,4 @@
-import {
-    ServiceOffered
-} from './actions'
+import { ServiceOffered } from './bridge';
 
 const defaultState = {
     serviceOfferedList: [],

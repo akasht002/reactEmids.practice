@@ -671,7 +671,7 @@ export class VisitServiceList extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getVisitServiceList: (data) => dispatch(getVisitServiceList(data)),
         getServiceRequestId: (data) => dispatch(getServiceRequestId(data)),
@@ -703,7 +703,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
 
     return {
         visitServiceList: state.visitSelectionState.VisitServiceListState.visitServiceList,

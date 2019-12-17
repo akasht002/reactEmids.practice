@@ -15,7 +15,7 @@ export class ResetPasswordConfirmation extends Component {
 
     render() {
         return (
-            <LoginCover isLoading={this.props.isLoading}>
+            <LoginCover isLoading={this.props.isLoading} test-restConfirm-body='test-restConfirm-body'>
                 <div className="icon-check"></div>
                 <p>A reset password link has been sent to Email Address <span className="email-length">{this.props.emailId}</span></p>
                 <p>Click on the link in the email to set your new password </p>

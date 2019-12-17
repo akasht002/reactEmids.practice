@@ -296,7 +296,7 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
   }
 }
 
-const getConversationSummaryItemSignalRSuceess = data => {
+export const getConversationSummaryItemSignalRSuceess = data => {
   return (dispatch, getState) => {
     let state = getState()
     let conversationSummaryData = [

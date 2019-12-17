@@ -2,7 +2,7 @@ import React from "react";
 import { Collapse } from 'reactstrap';
 import ServiceOfferedIcons from '../ServiceOffered/serviceOfferedIcons'
 
-class ServiceOfferedAccordian extends React.Component {
+export class ServiceOfferedAccordian extends React.Component {
 
     constructor(props) {
         super(props);

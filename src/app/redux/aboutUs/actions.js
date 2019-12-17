@@ -1,10 +1,6 @@
 import { ThirdPartyGet } from '../../services/http';
 import { API } from '../../services/api';
-
-export const AboutUs = {
-    getAboutUsContentSuccess: 'getAboutUsContentSuccess/AboutUs',
-    getBuildVersionSuccess: 'getBuildVersionSuccess/AboutUs'
-};
+import { AboutUs } from './bridge'
 
 export const getAboutUsContentSuccess = (data) => {
     return {
@@ -22,7 +18,7 @@ export const getBuildVersionSuccess = (data) => {
 
 export function getAboutUsContent() { 
     return (dispatch) => {
-        ThirdPartyGet(API.getAboutUsContent )          
+        return ThirdPartyGet(API.getAboutUsContent )          
           .then(resp => {
             dispatch(getAboutUsContentSuccess(resp.data[0]));
           })
@@ -34,7 +30,7 @@ export function getAboutUsContent() {
 
 export function getBuildVersion() { 
     return (dispatch) => {
-        ThirdPartyGet(API.getBuildVersion)          
+        return ThirdPartyGet(API.getBuildVersion)          
           .then(resp => {
             dispatch(getBuildVersionSuccess(resp.data[0]));
           })

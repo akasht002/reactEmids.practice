@@ -7,6 +7,12 @@ import { calenderDetails } from './CalendarDetails'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+jest.mock('../../../utils/userUtility', () => ({
+    getUserInfo: () => ({
+        serviceProviderId: 13
+    })
+}))
+
 let store;
 const dispatch = sinon.spy();
 
@@ -19,13 +25,19 @@ const defaultState = {
 }
 
 describe("calenderDetails", function () {
-    let wrapper;
-
-    wrapper = shallow(
-        <calenderDetails dispatch={dispatch} store={store} {...defaultState} />
-    )
+    
 
     it('Check the calenderDetails Details body', () => {
-        expect(wrapper).toBeDefined()
+        expect(calenderDetails(defaultState,{
+            patientFirstName :'',
+            patientLastName:'',
+            providerId:34,
+            serviceRequestVisitId:45,
+            patientId:'',
+            visitDate:'',
+            providerImage:'',
+            patientImage:34,
+
+        },{},23)).toBeDefined()
     });
 });

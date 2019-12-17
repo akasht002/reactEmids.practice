@@ -1,6 +1,6 @@
 import {
     ProgressIndicator
-} from './actions'
+} from './bridge'
 
 const defaultState = {
     profilePercentage: ''

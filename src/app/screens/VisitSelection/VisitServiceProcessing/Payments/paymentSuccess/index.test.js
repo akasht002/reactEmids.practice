@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
 
-import { PaymentSuccess } from './index';
+import { PaymentSuccess, mapDispatchToProps, mapStateToProps } from './index';
 
 jest.mock('../../../../ScreenCover/AsideScreenCover', () => ({
     AsideScreenCover: 'mockAsideScreenCover'
@@ -16,84 +16,45 @@ let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    VisitServiceElibilityStatus: {
-        authorizationRequired: true,
-        amount: 200,
-        coInAuthorizationRequired: true,
-        benefitPercent: 10,
-        active: false
-    },
-    VisitServiceDetails: {
-        statusId: 38
-    },
     visitSelectionState: {
-        VisitServiceDetailsState: {
-            VisitServiceDetails: [],
-            VisitServiceSchedule: [],
-            ServiceRequestId: '',
-            showMoreVisits: '',
-            tab: '1',
-            isLoaded: false,
-            disableShowMore: false,
-        }
-    },
-    servicerequestState: {
-        schedulepreferencesState: {
-            daysType: []
-        }
-    },
-    authState: {
-        userState: {
-            userData: {
-                userInfo: {}
+        VisitServiceProcessingState: {
+            PerformTasksState: {
+                PerformTasksList: [],
+                startedTime: '123',
+                SummaryDetails: {}
+            },
+            PaymentsState: {
+                CardList: [],
+                serviceRequestId: 1233
             }
         }
     },
-    getVisitServiceDetails: jest.fn(),
-    getVisitServiceSchedule: jest.fn(),
-    visitService: jest.fn(),
-    getPerformTasksList: jest.fn(),
-    createVisits: jest.fn(),
-    getVisitServiceEligibilityStatus: jest.fn(),
-    cancelServiceRequest: jest.fn(),
-    getDays: jest.fn(),
-    createNewConversation: jest.fn(),
-    createVideoConference: jest.fn(),
-    getVisitServiceHistoryByIdDetail: jest.fn(),
+    goVisitServiceList: jest.fn(),
+    updateServiceRequestId: jest.fn(),
+    setPatient: jest.fn(),
+    goToPatientProfile: jest.fn(),
     goBack: jest.fn(),
-    getSummaryDetails: jest.fn(),
-    getServiceVisitId: jest.fn(),
-    formDirtyFeedback: jest.fn(),
-    formDirtySubmittedFeedback: jest.fn(),
-    setServiceProvider: jest.fn(),
-    goToSpProfile: jest.fn(),
-    clearState: jest.fn(),
-    clearVisitServiceSchedule: jest.fn(),
-    push: jest.fn(),
-    createDataStore: jest.fn(),
-    clearServiceDetails: jest.fn(),
-    cancelVisit: jest.fn(),
-    clearScheduleListState: jest.fn(),
-    setLoader: jest.fn(),
     profileImgData: {
         image: 'asda/daasd/dasd'
     },
     patientDetails: {
         visitDate: '30-05-2019',
-        serviceRequestVisitNumber: 'ssa12123d'
-    },
-    VisitFeedback: [],
-    QuestionsList: [],
-    SummaryDetails: {
-        originalTotalDuration: 12312,
-        visitStartTime: 123
+        serviceRequestVisitNumber: 'ssa12123d',
+        patient: {
+            patientId: 213123,
+            imageString: 'asdasd/fsdfs',
+            firstName: 'Akash',
+            lastName : 'Tirole'
+        }
     },
     history: {
         push: jest.fn(),
         goBack: jest.fn()
     },
-    saveAnswers: jest.fn(),
-    goVisitServiceList: jest.fn()
+    SummaryDetails: {
+        originalTotalDuration: 12312,
+        visitStartTime: 123
+    }
 }
 
 store = mockStore(defaultState);
@@ -108,6 +69,72 @@ describe("VisitServiceProcessing - PaymentSuccess", function () {
     });
 
     it('Check the PaymentSuccess contains ProfileContentWidget', () => {
+        shallowWrapper.setProps({
+            patientDetails: {
+                visitDate: '30-05-2019',
+                serviceRequestVisitNumber: 'ssa12123d',
+                patient: {
+                    patientId: 213123,
+                    firstName: 'Akash',
+                    lastName : 'Tirole'
+                }
+            }
+        })
+        expect(shallowWrapper.find('.ProfileContentWidget').length).toEqual(1);
+    });
+
+    it('Check the componentWillUnmount', () => {
+        shallowWrapper.instance().componentWillUnmount();
+    });
+
+    it('Check the toggle', () => {
+        shallowWrapper.instance().toggle();
+    });
+
+    it('Check the toggleCardSelection', () => {
+        let e = {
+            target: {
+                value: 'asdfd'
+            }
+        }
+        shallowWrapper.instance().toggleCardSelection(e);
+    });
+
+
+    it('Check the handelPatientProfile', () => {
+        shallowWrapper.instance().handelPatientProfile();
+    });
+
+    it('Check the mapDispatchToProps fn()', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).goVisitServiceList();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).updateServiceRequestId({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setPatient({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToPatientProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goBack();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+    });
+
+    it('should test mapStateToProps state', () => {
+        expect(mapStateToProps(defaultState)).toBeDefined();
+    });
+
+    it('Check the events', () => {
+        expect(shallowWrapper.find('.backProfileIcon').props().onClick());
+        expect(shallowWrapper.find('.requestImageContent').props().onClick());
+    });
+
+    it('Check for patient not defined', () => {
+        shallowWrapper.setProps({
+            patientDetails: {
+                visitDate: '30-05-2019',
+                serviceRequestVisitNumber: 'ssa12123d'
+            }
+        })
         expect(shallowWrapper.find('.ProfileContentWidget').length).toEqual(1);
     });
 });

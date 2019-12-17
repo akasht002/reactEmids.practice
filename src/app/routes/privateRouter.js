@@ -10,7 +10,7 @@ import { checkUserData } from '../redux/auth/user/actions';
 import { USER_LOCALSTORAGE } from '../constants/constants';
 import { extractRole } from '../utils/roleUtility';
 
-class PrivateRoute extends Component {
+export class PrivateRoute extends Component {
 
   checkUserData = () => {
     if (!this.props.access_token) {
@@ -44,14 +44,14 @@ class PrivateRoute extends Component {
   }
 };
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   let userState = state.authState.userState;
   return {
     access_token: userState && userState.userData && userState.userData.access_token
   }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     checkUserData: () => dispatch(checkUserData())
   }

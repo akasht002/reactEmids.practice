@@ -3,11 +3,7 @@ import { Get, Post } from '../../../services/http'
 import { startLoading, endLoading } from '../../loading/actions'
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions'
 import { getUserInfo } from '../../../services/http'
-
-export const ServiceOffered = {
-  getServicesOfferedSuccess: 'get_certification_success/serviceoffered',
-  getServiceOfferedDetails: 'get_service_offered_details/serviceoffered'
-}
+import { ServiceOffered } from './bridge';
 
 export const getServicesOfferedSuccess = data => {
   return {
@@ -30,7 +26,7 @@ export function getServiceOffered() {
       serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
   };
     dispatch(startLoading())
-    Get(API.getServiceOffered + serviceProviderId + '/Offer/Selected')
+    return Get(API.getServiceOffered + serviceProviderId + '/Offer/Selected')
       .then(resp => {
         if(resp.data.length > 0) {
           resp.data[0].isOpen = true;
@@ -69,7 +65,7 @@ export function addServiceOfferd(data) {
   return dispatch => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
-    Post(API.addServiceOffered + serviceProviderId + '/Offer', modelData)
+    return Post(API.addServiceOffered + serviceProviderId + '/Offer', modelData)
       .then(resp => {
         dispatch(getServiceOffered())
         dispatch(editServiceOffered())
@@ -86,7 +82,7 @@ export function editServiceOffered(data) {
   return dispatch => {
     let serviceProviderId = getUserInfo().serviceProviderId;
     dispatch(startLoading())
-    Get(API.editServiceOffered + serviceProviderId + '/Offer')
+    return Get(API.editServiceOffered + serviceProviderId + '/Offer')
       .then(resp => {
         if(resp.data) {
           resp.data[0].isOpen = true;

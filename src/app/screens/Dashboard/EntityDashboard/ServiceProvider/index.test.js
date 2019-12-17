@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 import configureStore from 'redux-mock-store'
 import sinon from 'sinon';
-import {ServiceProvider} from '../ServiceProvider/index';
+import {ServiceProvider, mapDispatchToProps, mapStateToProps} from '../ServiceProvider/index';
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -44,7 +44,7 @@ const defaultState = {
             statesType: []
         }
     },
-    feedbackServiceVisits: [],
+    feedbackServiceVisits: [{pageCount: 40}],
     visitServiceTableList: [],
     getVisitServiceProviderCountList: jest.fn(),
     getVisitServiceProviderTableList: jest.fn(),
@@ -68,8 +68,17 @@ const defaultState = {
     setActiveStatusForAllTab: jest.fn(),
     getVisitServiceHistoryByIdDetail: jest.fn(),
     setESP: jest.fn(),
-    goToESPProfile: jest.fn()
-};
+    goToESPProfile: jest.fn(),
+    setExperience: jest.fn(),
+    setGenderId: jest.fn(),
+    setImpersinated: jest.fn(),
+    setServiceProviderFeedbackTab: jest.fn(),
+    saveScheduleType: jest.fn(),
+    resetFilter: jest.fn(),
+    setFilterApplied: jest.fn(),
+    clearGenderType: jest.fn(),
+    getAssessmentQuestionsList: jest.fn(),
+}
 
 store = mockStore(defaultState);
 
@@ -142,8 +151,10 @@ describe("ServiceProvider", function () {
 
     it('Check the goToSpVisitSummary function', () => {
         let data = {
-            servicePlanVisitId: 12
+            scheduleTypeId: 12
         }
+        shallowWrapper.instance().goToSpVisitSummary(data)
+        data.scheduleTypeId = 114
         shallowWrapper.instance().goToSpVisitSummary(data)
     });
 
@@ -151,6 +162,10 @@ describe("ServiceProvider", function () {
         let data = {
             serviceProviderId: 12
         }
+        shallowWrapper.instance().impersinateServiceProvider(data)
+        shallowWrapper.setState({
+            status: 'Feedback'
+        })
         shallowWrapper.instance().impersinateServiceProvider(data)
     });
 
@@ -214,5 +229,125 @@ describe("ServiceProvider", function () {
 
     it('Check the closeSearch function', () => {
         shallowWrapper.instance().closeSearch()
+    });
+
+    it('Check the componentWillUnmount function', () => {
+        shallowWrapper.instance().componentWillUnmount()
+        shallowWrapper.setProps({
+            isImpersinated: true
+        })
+        shallowWrapper.instance().componentWillUnmount()
+    });
+
+    it('Check the componentDidUpdate  function', () => {
+        let prevProps = {
+            rowCount: 10,
+            fromDate: '11/12/2019'
+        }
+        shallowWrapper.setState({
+            rowCount: 20,
+            pageSize: 20
+        })
+        shallowWrapper.setProps({
+            paginationCount: 10
+        })
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+        prevProps.rowCount = 20
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+        shallowWrapper.setProps({
+            fromDate: '10/11/2020'
+        })
+        shallowWrapper.instance().componentDidUpdate(prevProps)
+    });
+
+    it('Check mapStateToProps', () => {
+        const initialState = {
+            dashboardState: {
+                VisitServiceProviderState: {
+                    visitServiceProviderTableList: [],
+                    attributedProviders: [],
+                    cohorts: [],
+                    contracts: [],
+                    paginationCount: 0,
+                    states: [],
+                    isLoaded: true,
+                    activeSubTab: 1,
+                    feedbackServiceVisits: [],
+                    visitServiceProviderCountList: [],
+                    isLoadingFeedbackList: true,
+                    savedPaginationNumber: 12,
+                    genderType: [],
+                    genderId: 1,
+                    filterApplied: true,
+                    memberContractId: 12,
+                    minExperience: 20,
+                    maxExperience: 50,
+                    activeTab: 1,
+                    isImpersinated: true,
+                    rating: 5
+                },
+                individualsListState: {
+                    genderType: []
+                }
+            },
+            authState: {
+                userState: {
+                    userData: {
+                        userInfo: {}
+                    }
+                }
+            }
+        };
+        expect(mapStateToProps(initialState)).toBeDefined();
+    });
+
+    it('Check mapDispatchToProps actions', () => {
+        const dispatch = jest.fn();
+        mapDispatchToProps(dispatch).getVisitServiceProviderCountList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getVisitServiceProviderTableList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).createVideoConference({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToSpProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActiveSubTab(2);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getPointofServicedata({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getVisitServiceHistoryByIdDetail(21);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getFeedbackAlertDetails();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).savePaginationNumber(10);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setActiveStatusForAllTab('All');
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToESPProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setESP(23);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getGender();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).clearGenderType([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setServiceProviderFeedbackTab(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).saveScheduleType({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setGenderId(6);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setExperience({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setRating(4);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).resetFilter();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setImpersinated(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setFilterApplied(true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getAssessmentQuestionsList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 })

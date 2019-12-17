@@ -13,7 +13,7 @@ import {
  } from '../../../redux/profile/Availability/actions';
  import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
-class Availability extends Component {
+export class Availability extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -224,7 +224,7 @@ class Availability extends Component {
     }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
         availableDays: state.profileState.AvailabilityState.availableDays,
         blackoutDays: state.profileState.AvailabilityState.blackoutDays,
@@ -232,7 +232,7 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
     return {
         updateAvailabilityDays: data => dispatch(updateAvailabilityDays(data)),
         getAvailableDays: () => dispatch(getAvailableDays()),

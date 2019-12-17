@@ -11,39 +11,9 @@ import {
 import { USERTYPES, Pagination } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
 import {invokeSignalr} from '../../utils/signalrUtility';
+import { AsyncMessageActions } from './bridge';
 
 let interval = null;
-
-export const AsyncMessageActions = {
-    setConversationSummary: 'set_conversation_summary/asyncMessage',
-    loadingStart: 'loading_start/asyncMessage',
-    loadingEnd: 'loading_end/asyncMessage',
-    setconversation: 'set_conversation/asyncMessage',
-    setNewConversationId: 'set_new_conversation/asyncMessage',
-    setCurrentOpenConversation: 'set_current_open_conversation/asyncMessage',
-    setUnreadCountDetails: 'set_unread_count/asyncMessage',
-    setLinkedPatients: 'set_linked_patients/asyncMessage',
-    setLinkedParticipants: 'set_linked_participants/asyncMessage',
-    pushConversation: 'push_conversation/asyncMessage/asyncMessage',
-    clearLinkedParticipants: 'clear_linked_participants/asyncMessage',
-    pushConversationSummary: 'push_conversation_summary/asyncMessage',
-    pushUnreadCount: 'push_unread_count/asyncMessage',
-    setConversationImage: 'set_conversation_image/asyncMessage',
-    clearConversationImageUrl: 'clear_conversation_image_url/asyncMessage',
-    setCanCreateConversation: 'set_canCreate_conversation/asyncMessage',
-    clearCurrentOpenConversation: 'clear_current_open_conversation/asyncMessage',
-    setConversationCount: 'set_conversation_count/asyncMessage',
-    setopenedAsyncPage: 'set_opened_async_page/asynMessage',
-    pushConversationMessage: 'push_conversation_asyncMessage/asyncMessage',
-    setRemoveParticipantConcurrency: 'setRemoveParticipantConcurrency/asyncMessage',
-    clearConversation: 'clearConversation/asyncMessage',
-    setDashboardMessageCount: 'setDashboardMessageCount/asyncMessage',
-    setActivePageNumber: 'setActivePageNumber/asyncMessage',
-    updateTitle: 'updateTitle/asyncMessage',
-    pushUnreadConversation: 'pushUnreadConversation/asyncMessage',
-    msgCallbackInterval: 'msgCallbackInterval/asyncMessage',
-    setConversationId: 'setConversationId/asyncMessage'
-};
 
 export const msgCallbackInterval = (data) => {
     return {
@@ -106,7 +76,7 @@ export function getConversationSummaryItemSignalR(conversationId){
         if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
             let userId = getUserInfo().coreoHomeUserId;
             let userType = USERTYPES.SERVICE_PROVIDER;
-            AsyncGet(API.getConversationSummary 
+            return AsyncGet(API.getConversationSummary 
                 + conversationId + '/'
                 + userId + '/' 
                 + userType
@@ -120,7 +90,7 @@ export function getConversationSummaryItemSignalR(conversationId){
     };
 };
 
-const getConversationSummaryItemSignalRSuceess = (data) => {
+export const getConversationSummaryItemSignalRSuceess = (data) => {
     return(dispatch, getState) => {
         let state = getState();
         let conversationSummaryData = [...state.asyncMessageState.conversationSummary];
@@ -154,7 +124,7 @@ export function getConversationItemSignalR(conversationId, messageId){
             let userId = getUserInfo().coreoHomeUserId;
             let userType = USERTYPES.SERVICE_PROVIDER;
             let data = {conversationId: conversationId};
-            AsyncGet(API.getConversationMessage 
+            return AsyncGet(API.getConversationMessage 
                 + messageId + '/'
                 + conversationId + '/'
                 + userId + '/' 
@@ -178,7 +148,7 @@ export function getUnreadConversationByUserId(conversationId){
             let userId = getUserInfo().coreoHomeUserId;
             let userType = USERTYPES.SERVICE_PROVIDER;
             let data = {conversationId: conversationId};
-            AsyncGet(API.getUnreadConversationsByUserId
+            return AsyncGet(API.getUnreadConversationsByUserId
                 + conversationId + '/'
                 + userId + '/' 
                 + userType
@@ -238,7 +208,7 @@ export function onFetchConversationSummary(pageNumber, hideLoading = false) {
         }
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncGet(API.getConversationSummary 
+        return AsyncGet(API.getConversationSummary 
             + USER_ID + '/'
             + USER_TYPE + '/'
             + pageNumber + '/'
@@ -268,7 +238,7 @@ export function onFetchConversation(id, hideLoading = false) {
         let context = state.asyncMessageState.currentConversation.context
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncGet(API.getConversation 
+        return AsyncGet(API.getConversation 
             + conversationId + '/' 
             + USER_ID + '/' 
             + USER_TYPE + '/all/' + context
@@ -307,7 +277,7 @@ export function onCreateNewConversation(data) {
             ]
         };
         dispatch(startLoading());
-        AsyncPost(API.createNewConversation, asyncData)
+        return AsyncPost(API.createNewConversation, asyncData)
             .then(resp => {
                 dispatch(setNewConversationSuccess(resp.data.conversationId));
                 dispatch(setCurrentOpenConversation(resp.data));
@@ -322,7 +292,7 @@ export function onCreateNewConversation(data) {
 export function onSaveTitle(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        AsyncPut(API.saveTitle, data)
+        return AsyncPut(API.saveTitle, data)
             .then(resp => {
                 dispatch(endLoading());
                 dispatch(updateTitle(data.title));
@@ -380,7 +350,7 @@ export const setNewConversationId = id => {
 
 export function onSendNewMessage(data) {
     return (dispatch) => {
-        AsyncPost(API.sendMessage, data)
+        return AsyncPost(API.sendMessage, data)
             .then(resp => {
                 let list = resp.data.result.participantList.map((participant) => {
                     return {
@@ -419,7 +389,7 @@ const verifyIsConversationMessageExistSendMessage = (data) => {
 export function onAddParticipant(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        AsyncPost(API.addParticipant, data)
+        return AsyncPost(API.addParticipant, data)
             .then(resp => {
                 dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading());
@@ -433,7 +403,7 @@ export function onAddParticipant(data) {
 export function onRemoveParticipant(data) {
     return (dispatch) => {
         dispatch(startLoading());
-        AsyncPut(API.removeParticipant, data)
+        return AsyncPut(API.removeParticipant, data)
             .then(resp => {
                 dispatch(onFetchConversation(resp.data.conversationId));
                 dispatch(endLoading());
@@ -451,7 +421,7 @@ export function getUnreadMessageCounts() {
     return (dispatch) => {
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncGet(API.getUnreadCount + USER_ID + '/' + USER_TYPE)
+        return AsyncGet(API.getUnreadCount + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(onUnreadCountSuccess(resp.data))
             })
@@ -465,7 +435,7 @@ export function updateReadStatus(data) {
     return (dispatch) => {
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
+        return AsyncPutWithUrl(API.updateReadStatus + USER_ID + '/' + data.conversationId
             + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(getDashboardMessageCount());            
@@ -503,7 +473,7 @@ export function checkLatestMessages(conversationId){
             let USER_ID = getUserInfo().coreoHomeUserId;
             let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
             let data = {conversationId: conversationId};
-            AsyncGet(API.getLatestMessages 
+            return AsyncGet(API.getLatestMessages 
                 + conversationId + '/'
                 + lastMessageId + '/'
                 + USER_ID + '/'
@@ -616,7 +586,7 @@ export function leaveConversation(data) {
         dispatch(startLoading())
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncPutWithUrl(API.leaveConversation 
+        return AsyncPutWithUrl(API.leaveConversation 
             + USER_ID + '/' 
             + data.conversationId + '/'
             + USER_TYPE)
@@ -630,7 +600,7 @@ export function leaveConversation(data) {
     }
 };
 
-const getLinkedPatientsSuccess = data => {
+export const getLinkedPatientsSuccess = data => {
     return {
         type: AsyncMessageActions.setLinkedPatients,
         data: data
@@ -652,7 +622,7 @@ export function getLinkedParticipantsByPatients(data) {
         data.participantType = USERTYPES.PATIENT;
         data.thumbNail = patient.thumbNail;
         data.userId = data.patientId;
-        AsyncGet(API.getParticipantsByContext 
+        return AsyncGet(API.getParticipantsByContext 
                 + data.conversationId +
             '/' + USER_ID +
             '/' + data.patientId +
@@ -674,7 +644,7 @@ export function getLinkedParticipantsList(data) {
         let serchText = data.searchText === "" ? null : data.searchText;
         let USER_ID = getUserInfo().coreoHomeUserId;
         let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-        AsyncGet(API.getParticipantsByContext 
+        return AsyncGet(API.getParticipantsByContext 
                 + data.conversationId +
             '/' + USER_ID +
             '/' + data.patientId +
@@ -690,7 +660,7 @@ export function getLinkedParticipantsList(data) {
     }
 };
 
-const getLinkedParticipantsByPatientsSuccess = data => {
+export const getLinkedParticipantsByPatientsSuccess = data => {
     return {
         type: AsyncMessageActions.setLinkedParticipants,
         data: data
@@ -700,7 +670,7 @@ const getLinkedParticipantsByPatientsSuccess = data => {
 export function getDashboardMessageCount() {
     return (dispatch) => {
         let USER_ID = getUserInfo().coreoHomeUserId;
-        AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
+        return AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
             .then(resp => {
                 dispatch(getDashboardCountSuccess(resp.data));
             })
@@ -709,7 +679,7 @@ export function getDashboardMessageCount() {
     }
 };
 
-const getDashboardCountSuccess = data => {
+export const getDashboardCountSuccess = data => {
     return {
         type: AsyncMessageActions.setDashboardMessageCount,
         data: data
@@ -723,7 +693,7 @@ export function clearLinkedParticipants() {
     }
 };
 
-const onClearLinkedParticipants = () => {
+export const onClearLinkedParticipants = () => {
     return {
         type: AsyncMessageActions.clearLinkedParticipants
     }
@@ -734,7 +704,7 @@ const onClearLinkedParticipants = () => {
 export function getConversationImageWithImageId(messageId) {
     return (dispatch) => {
         dispatch(startLoading());
-        AsyncGet(API.getConversationImage + messageId).then(resp => {
+        return AsyncGet(API.getConversationImage + messageId).then(resp => {
             dispatch(endLoading());
             dispatch(onGetConversationImageWithImageIdSuccess(resp.data));
         }).catch(err => {
@@ -743,7 +713,7 @@ export function getConversationImageWithImageId(messageId) {
     }
 };
 
-const onGetConversationImageWithImageIdSuccess = (data) => {
+export const onGetConversationImageWithImageIdSuccess = (data) => {
     return {
         type: AsyncMessageActions.setConversationImage,
         data
@@ -758,7 +728,7 @@ export function clearConversationImageUrl() {
     }
 };
 
-const onClearConversationImageUrl = () => {
+export const onClearConversationImageUrl = () => {
     return {
         type: AsyncMessageActions.clearConversationImageUrl
     }
@@ -769,14 +739,14 @@ const onClearConversationImageUrl = () => {
 export function CanServiceProviderCreateMessage() {
     return (dispatch) => {
         let USER_ID = getUserInfo().coreoHomeUserId;
-        AsyncGet(API.canCreateMessage + USER_ID).then(resp => {
+        return AsyncGet(API.canCreateMessage + USER_ID).then(resp => {
             dispatch(CanServiceProviderCreateMessageSuccess(resp.data))
         }).catch(err => {
         })
     }
 };
 
-const CanServiceProviderCreateMessageSuccess = (data) =>{
+export const CanServiceProviderCreateMessageSuccess = (data) =>{
     return{
         type: AsyncMessageActions.setCanCreateConversation,
         data
@@ -787,7 +757,7 @@ const CanServiceProviderCreateMessageSuccess = (data) =>{
 export function getLinkedPatients() {
         return (dispatch) => {
         let USER_ID = getUserInfo().coreoHomeUserId;
-        AsyncGet(API.getContext + USER_ID)
+        return AsyncGet(API.getContext + USER_ID)
             .then(resp => {
                 dispatch(getLinkedPatientsSuccess(resp.data));
             })
@@ -803,7 +773,7 @@ export function ClearCurrentOpenConversation() {
     }
 };
 
-const onClearCurrentOpenConversation = () => {
+export const onClearCurrentOpenConversation = () => {
     return {
         type: AsyncMessageActions.clearCurrentOpenConversation
     }
@@ -813,7 +783,7 @@ export function getConversationCount() {
     return (dispatch) => {
     let USER_ID = getUserInfo().coreoHomeUserId;
     let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
-    AsyncGet(API.getConverstionCountByUserId 
+    return AsyncGet(API.getConverstionCountByUserId 
         + USER_ID + '/'
         + USER_TYPE)
         .then(resp => {
@@ -824,14 +794,14 @@ export function getConversationCount() {
 }
 };
 
-const getConversationCountSuccess = (data) =>{
+export const getConversationCountSuccess = (data) =>{
     return{
         type: AsyncMessageActions.setConversationCount,
         data
     }
 };
 
-const verifyIsConversationMessageExist = (data) => {
+export const verifyIsConversationMessageExist = (data) => {
     return(dispatch, getState) => {
         let state = getState();
         let conversationMessageData = [...state.asyncMessageState.conversation.messages];
@@ -853,7 +823,7 @@ export function setRemoveParticipantConcurrency (data){
 
  export function getMessageFallBackInterval(){
     return (dispatch) => {
-        AsyncGet(API.getMessageFallBackInterval)
+        return AsyncGet(API.getMessageFallBackInterval)
             .then(resp => {
                 resp.data && resp.data.length > 0 && dispatch(msgCallbackInterval(parseInt(resp.data[0].value, 10)))
             })
