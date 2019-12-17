@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CoreoWizFooter Component testing 1`] = `
+<div
+  className="container-fluid bottom-footer-content p-3 boxShadowTop"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-12"
+    >
+      <button
+        className="btn outline btn-outline-primary mx-2 float-left"
+        disabled={false}
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+`;

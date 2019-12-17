@@ -1,6 +1,6 @@
 import React from "react";
 
-class ServiceOfferedIcons extends React.Component {
+export class ServiceOfferedIcons extends React.Component {
 
     render() {
 

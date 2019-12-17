@@ -9,7 +9,7 @@ import { push } from "../../../redux/navigation/actions";
 import { SERVICE_REQ_STATUS } from '../../../constants/constants'
 import _ from 'lodash'
 
-class AssignServiceProvider extends Component {
+export class AssignServiceProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -178,7 +178,7 @@ class AssignServiceProvider extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     setESP: data => dispatch(setESP(data)),
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
@@ -186,7 +186,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     serviceProviderList: state.dashboardState.dashboardState.serviceProviderList,
   }

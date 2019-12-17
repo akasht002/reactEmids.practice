@@ -3,11 +3,7 @@ import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
-
-export const Languages = {
-    getLanguagesSuccess: 'get_languages_success/languages',
-    getSelectedLanguageDetails: 'get_selected_language_details/languages'
-};
+import { Languages } from './bridge';
 
 export const getLanguagesSuccess = (data) => {
     return {

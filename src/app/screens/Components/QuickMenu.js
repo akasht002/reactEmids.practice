@@ -30,7 +30,7 @@ import {
   import { saveScheduleType } from '../../redux/visitSelection/VisitServiceDetails/actions';
 
 
-class QuickMenu extends Component {
+export class QuickMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -209,7 +209,7 @@ class QuickMenu extends Component {
 }
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getServiceProviderVists: (data,pageNumber,flag) => dispatch(getServiceProviderVists(data,pageNumber,flag)),
         getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
@@ -227,7 +227,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit, 
     }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getPatientVitals } from '../../../redux/patientProfile/actions';
 
-class VitalDetails extends React.Component {
+export class VitalDetails extends React.Component {
 
   constructor(props) {
     super(props)
@@ -58,13 +58,13 @@ class VitalDetails extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPatientVitals: () => dispatch(getPatientVitals())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     vitalDetails: state.patientProfileState.vitalDetails,
   }

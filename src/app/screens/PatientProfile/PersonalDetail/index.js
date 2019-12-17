@@ -10,7 +10,7 @@ import { formatPhoneNumber } from '../../../utils/formatName'
 import './index.css'
 import { communicationData } from './communicationData';
 
-class PersonalDetail extends React.PureComponent {
+export class PersonalDetail extends React.PureComponent {
 
   componentDidMount () {
     this.props.getPersonalDetail()
@@ -115,7 +115,7 @@ class PersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     getImage: () => dispatch(action.getImage()),
@@ -123,7 +123,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+export function mapStateToProps (state) {
   return {
     personalDetail: state.patientProfileState.personalDetail,
     profileImgData: state.patientProfileState.imageData,

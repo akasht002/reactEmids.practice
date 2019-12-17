@@ -10,7 +10,7 @@ import '../styles.css';
 import { USERTYPES } from "../../../constants/constants";
 import {getEulaContent} from '../../../redux/auth/UserAgreement/actions'
 
-class SetPassword extends React.Component {
+export class SetPassword extends React.Component {
 
     constructor(props) {
         super(props);
@@ -70,7 +70,7 @@ class SetPassword extends React.Component {
             });
         } 
         return (
-            <ScreenCover isLoading={this.props.isLoading}>
+            <ScreenCover isLoading={this.props.isLoading} test-setPassword="test-setPassword">
                 <CoreoWizScreen
                     menus={ContactMenu}
                     activeCoreoWiz={2}
@@ -176,7 +176,7 @@ class SetPassword extends React.Component {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onSetPassword: (data) => dispatch(setPassword(data)),
@@ -186,7 +186,7 @@ function mapDispatchToProps(dispatch) {
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         userEmail: state.onboardingState.setPasswordState.userEmail,
         isLoading: state.onboardingState.setPasswordState.loading,

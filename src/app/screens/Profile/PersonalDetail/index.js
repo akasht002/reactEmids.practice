@@ -26,7 +26,7 @@ import { formatContactNumber, formatContactNumberValue } from '../../../utils/va
 import { emptyString } from '../../../utils/arrayUtility'
 import { ImageInstruction } from '../Components/ImageInstruction'
 
-class PersonalDetail extends React.PureComponent {
+export class PersonalDetail extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -436,6 +436,7 @@ class PersonalDetail extends React.PureComponent {
           ModalBody={<span>Do you want to discard the changes?</span>}
           btn1='YES'
           btn2='NO'
+          test-discardPopup='test-discardPopup'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -452,9 +453,11 @@ class PersonalDetail extends React.PureComponent {
           toggle={this.reset}
           ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG, PNG, GIF.</span>}
           btn1='OK'
+          test-image='test-image'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
+          test-sizePopup='test-sizePopup'
           onConfirm={() =>
             this.setState({
               isAlertModalOpen: false
@@ -470,6 +473,7 @@ class PersonalDetail extends React.PureComponent {
           ModalBody={<span>Do you want to discard the changes?</span>}
           btn1='YES'
           btn2='NO'
+          test-savePopup='test-savePopup'
           className='modal-sm'
           headerFooter='d-none'
           footer='d-none'
@@ -495,6 +499,7 @@ class PersonalDetail extends React.PureComponent {
           uploadedImageFile={this.state.uploadedImageFile}
           crop={this.state.crop}
           onCropChange={this.onCropChange}
+          test-crop='test-crop'
           changeCroppedImage={(croppedImage) => {
             this.setState({ croppedImageUrl: croppedImage })
           }}
@@ -670,6 +675,7 @@ class PersonalDetail extends React.PureComponent {
                 required='required'
                 type='text'
                 maxlength='100'
+                test-firstName = "test-firstName"
                 value={this.state.firstName}
                 className={"form-control custome-placeholder " + (this.state.firstNameInvaild && 'inputFailure')}
                 textChange={e => {
@@ -731,6 +737,7 @@ class PersonalDetail extends React.PureComponent {
                   options={genderDetail}
                   simpleValue
                   placeholder='Select Gender'
+                  test-gender='test-gender'
                   onChange={value => {
                     this.setState({
                       selectedGender: value,
@@ -1091,7 +1098,7 @@ class PersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     getAffiliationDetail: () => dispatch(action.getAffiliationDetail()),
@@ -1103,7 +1110,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchInput Component Testing 1`] = `
+<div
+  className="input-group"
+>
+  <span />
+  <input
+    autoComplete={false}
+    className="Test SearchInput"
+    placeholder="Test SearchInput"
+  />
+</div>
+`;

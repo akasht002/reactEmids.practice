@@ -15,7 +15,6 @@ import { AsideMenu } from './AsideMenu';
 import { DashboardWizFlow } from './Dashboard/WizFlow';
 import Scrollbars from "../LevelOne/CustomScrollbar";
 import { StarRating } from "./StarRating";
-import { GeneralModalPopup } from './GeneralModalPopup';
 import {LoginCover} from './LoginCover';
 import {ProfileImage} from './ProfileImage';
 import {StopWatch} from './StopWatch';
@@ -51,7 +50,6 @@ export {
     DashboardWizFlow,
     Scrollbars,
     StarRating,
-    GeneralModalPopup,
     LoginCover,
     ProfileImage,
     StopWatch,

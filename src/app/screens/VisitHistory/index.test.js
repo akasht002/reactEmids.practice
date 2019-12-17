@@ -25,13 +25,14 @@ let store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-    VisitServiceHistory: [],
+    VisitServiceHistory: [{}],
     VisitServiceDetails: [],
     serviceProviders: [],
     serviceCategories: [],
     serviceType: [],
     historyListCount: 100,
     PatientForServiceproviders: [],
+    progressIndicatorState:3456,
     isLoading: false,
     serviceProviderId: 100,
     getVisitServiceLists: jest.fn(),
@@ -48,7 +49,10 @@ const defaultState = {
     clearPatientForServiceProviders: jest.fn(),
     setPatient: jest.fn(),
     goToPatientProfile: jest.fn(),
-    getServiceRequestId: jest.fn()
+    getServiceRequestId: jest.fn(),
+    setServiceProviderFeedbackTab:jest.fn(),
+    getPaymentAvailability:jest.fn(),
+    saveScheduleType:jest.fn()
 };
 
 store = mockStore(defaultState);
@@ -96,6 +100,14 @@ describe("Certification", function () {
 
     it('Check the handleClick', () => {
         shallowWrapper.instance().handleClick(1000);
+    });
+
+    it('Check the handleClick', () => {
+        shallowWrapper.instance().handleClick({serviceRequestVisitId :0,visitTypeId :114});
+    });
+
+    it('Check the handleClick', () => {
+        shallowWrapper.instance().handleClick({serviceRequestVisitId :23,visitTypeId :14});
     });
 
     it('Check the handleChangeServiceCategory ', () => {
@@ -180,7 +192,7 @@ describe("Certification", function () {
             visitHistoryState:
             {
                 vistServiceHistoryState: {
-                    VisitServiceHistory: [],
+                    VisitServiceHistory: [{}],
                     VisitServiceDetails: [],
                     serviceProviders: [],
                     serviceCategories: [],
@@ -210,6 +222,23 @@ describe("Certification", function () {
         mapDispatchToProps(dispatch).clearPatientForServiceProviders();
         mapDispatchToProps(dispatch).setPatient();
         mapDispatchToProps(dispatch).goToPatientProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).clearPatientForServiceProviders();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setPatient();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).goToPatientProfile();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getServiceRequestId();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).saveScheduleType();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getAssessmentQuestionsList();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).setServiceProviderFeedbackTab();
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+        mapDispatchToProps(dispatch).getPaymentAvailability();
         expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 
