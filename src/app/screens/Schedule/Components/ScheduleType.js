@@ -46,6 +46,10 @@ export const ScheduleType = props => {
         props.handleChangeMonthlySelectionFirst(e.target.value)
     }
 
+    const validateField = (field) => {
+        return !field && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker';
+    }
+
     return (
         <Fragment>
             {parseInt(props.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
@@ -82,7 +86,7 @@ export const ScheduleType = props => {
                             mandatory={false}
                             minDate={moment()}
                             value={props.startDate}
-                            className={!props.startDate && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
+                            className={validateField(props.startDate)}
                             label="Start Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
@@ -101,7 +105,7 @@ export const ScheduleType = props => {
                                     minTime={defaultStartTime()}
                                     maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
                                     placeholderText={'Start Time'}
-                                    className={!props.startTime && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
+                                    className={validateField(props.startTime)}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -119,7 +123,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.endTime && props.onClickSave ? 'form-control datePicker inputFailure disable-pointer' : 'form-control datePicker'}
+                                    className={validateField(props.endTime)}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -358,7 +362,7 @@ export const ScheduleType = props => {
                             mandatory={false}
                             minDate={moment()}
                             value={props.startDate}
-                            className={!props.startDate && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
+                            className={validateField(props.startDate)}
                             label="Start Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
@@ -375,7 +379,7 @@ export const ScheduleType = props => {
                             mandatory={false}
                             minDate={props.startDate ? formateStateDateValue(props.startDate) : moment()}
                             value={props.endDate}
-                            className={!props.endDate && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
+                            className={validateField(props.endDate)}
                             label="End Date"
                             dateFormat={DATE_FORMATS.m_d_yy}
                             placeholderText={DATE_FORMATS.m_d_yy}
@@ -395,7 +399,7 @@ export const ScheduleType = props => {
                                     minTime={defaultStartTime()}
                                     maxTime={props.endTime ? timeDropDownFormat(props.endTime) : defaultEndTime()}
                                     placeholderText={'Start Time'}
-                                    className={!props.startTime && props.onClickSave ? 'form-control datePicker inputFailure' : 'form-control datePicker'}
+                                    className={validateField(props.startTime)}
                                 />
                                 {!props.startTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
@@ -412,7 +416,7 @@ export const ScheduleType = props => {
                                     minTime={timeDropDownFormat(props.startTime)}
                                     maxTime={defaultEndTime()}
                                     placeholderText={'End Time'}
-                                    className={!props.startTime && props.onClickSave ? 'form-control datePicker inputFailure disable-pointer' : 'form-control datePicker'}
+                                    className={validateField(props.startTime)}
                                 />
                                 {!props.endTime && props.onClickSave &&
                                     <span className='text-danger d-block mb-2 MsgWithIcon MsgWrongIcon'>
