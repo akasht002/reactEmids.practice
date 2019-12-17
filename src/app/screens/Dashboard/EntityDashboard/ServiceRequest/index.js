@@ -506,9 +506,7 @@ export class ServiceRequest extends Component {
             handleChangeServiceCategory={this.handleChangeServiceCategory}
             selectedOption={this.props.selectedOption}
             serviceType={this.props.serviceType}
-            handleServiceType  ={(item, e) => {
-              this.handleServiceType  (item, e)
-            }}
+            handleServiceType  ={this.handleServiceType}
             applyFilter={this.applyFilter}
             applyReset={this.applyReset}
             scheduleType={this.props.scheduleType}
@@ -525,7 +523,7 @@ export class ServiceRequest extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getServiceRequestCountList: (data, filterApplied) =>
       dispatch(getServiceRequestCountList(data, filterApplied)),
@@ -556,7 +554,7 @@ function mapDispatchToProps(dispatch) {
    }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     visitServiceRequestCountList: state.dashboardState
       .VisitServiceRequestState.visitServiceRequestCountList,

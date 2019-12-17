@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles.css';
 
-class CheckBox extends Component {
+export class CheckBox extends Component {
     render() {
         return (
             <div className="form-check">

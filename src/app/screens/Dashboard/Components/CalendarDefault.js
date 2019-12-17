@@ -5,7 +5,7 @@ export const CalendarDefault = () => {
   return (
     <Fragment>  
         <div className='NoRequestServiceProvider '>  
-        <div className='myPlanBlank theme-primary'></div>
+        <div className='myPlanBlank theme-primary'><img src={require('../../../assets/images/my_plan_blank.png')} alt="my-plan-empty" /></div>
         <span className="clickView theme-primary">Click below to get started.</span>
             <div className="no-blockinfo-top">    
           <Link className='NoServiceReq NewSPReq theme-primary-light' to='/Visitservicelist'>

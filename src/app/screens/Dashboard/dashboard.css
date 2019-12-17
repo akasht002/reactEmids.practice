@@ -720,11 +720,6 @@ a.ProfileCardHeaderLink:hover {
     height: 100%;
 }
 
-.ProfileContainer.topProfile,
-.bottomProfile .innerWidget:first-child {
-    height: 290px;
-}
-
 .BoardContainer {
     display: flex !important;
     flex-wrap: wrap;

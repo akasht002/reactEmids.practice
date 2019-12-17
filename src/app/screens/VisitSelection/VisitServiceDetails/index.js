@@ -157,6 +157,7 @@ export class VisitServiceDetails extends Component {
     this.props.clearVisitList()
     this.props.resetServiceDetails()
     this.props.setEntityDashboard(false)
+    this.applyReset();
   }
 
   componentDidUpdate() {
@@ -248,13 +249,14 @@ export class VisitServiceDetails extends Component {
     this.setState({ isEngageAlertPopupOpen: true, serviceRequestId: serviceRequestId })
   }
 
-  accept = () => {
+  accept = async() => {
     let model = {
       patientId: this.props.patientId,
       serviceRequestId: this.state.serviceRequestId,
     }
     this.setState({ isAcceptAlertPopupOpen: false })
-    this.props.acceptservicerequest(model)
+    await this.props.acceptservicerequest(model);
+    await this.props.getServiceRequestList(this.props.patientId);
   }
 
   engage = () => {
@@ -864,10 +866,11 @@ highlightVisit = data => {
       },
     ]
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
-    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
+    let shouldPatientProfile = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
     let updatedTabdata = this.props.ServiceRequestId === 0 ?
       tabdata.slice(1, tabdata.length) :
-      isDisabledAddSchedule ? tabdata : tabdata.slice(0, 2);
+      shouldPatientProfile ? tabdata : tabdata.slice(0, 2);
+    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 && this.props.scheduleList[0].isAnyAvailableHiredCard;
 
     return (
       <Fragment>

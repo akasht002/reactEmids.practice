@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomTextArea Component Testing 1`] = `
+<div
+  className="form-group"
+>
+  <label />
+   
+  <i />
+  <textarea
+    className="TextArea"
+    placeholder="TextArea"
+    required={false}
+    rows={20}
+    value="TextArea"
+  />
+</div>
+`;

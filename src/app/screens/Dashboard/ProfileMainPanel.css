@@ -857,11 +857,6 @@ div.ProfileConversation {
     -webkit-transition: all linear .2s;
 }
 
-.myConversationContainer .myConversationContent:hover {
-    cursor: pointer;
-    background-color: #f9f8f8;
-}
-
 .myConversationContent .avatarWidget {
     width: 140px;
 }
@@ -1245,22 +1240,8 @@ div.ProfileConversation {
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider {
     background: #f7f7f7;
     border-radius: 4px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 18px 0px 50px 0px;
     display: block;
-}
-
-.topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank::after {
-    content: 'No Result';
-    position: absolute;
-    display: block;
-    font-size: 14px;
-    color: #7a329f;
-    font-weight: 500;
-    left: 0;
-    right: 18px;
-    top: 48%;
-    text-align: center;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider span.clickView {
@@ -1271,7 +1252,7 @@ div.ProfileConversation {
     font-size: 15px;
     font-weight: 500;
     padding-bottom: 30px;
-    margin-top: 70px;
+    margin-top: 10px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top {
@@ -1288,12 +1269,32 @@ div.ProfileConversation {
     width: 100%;
 }
 
+.topProfile .bottomPalette .NoRequestServiceProvider .NoInfoText .NoServiceInfoLink {
+    margin-top: -11px;
+}
+
+.topProfile .bottomPalette .NoRequestServiceProvider .myPlanBlank
+{
+height: auto;
+}
+
+.bottomProfile .NoInformation .myConversationContent {
+    background: #f7f7f7;
+}
+
 .myPlanBlank {
-    background-image: url("../../assets/images/my_plan_blank.png");
-    background-position: center;
-    background-size: 70%;
-    background-repeat: no-repeat;
     height: 230px;
+    display: block;
+    clear: both;
+    position: relative;
+    width: 100%;
+}
+
+.myPlanBlank img
+{
+    max-width: 100%;
+    height:auto;
+    display: block;
 }
 
 .NewSPReq {
@@ -1315,13 +1316,6 @@ div.ProfileConversation {
 
 .topProfile .ProfileCardHeaderTitle.theme-primary {
     padding-left: 20px;
-}
-
-@media only screen and (min-width: 1367px) {
-    .topProfile .bottomPalette .ProfileServicesVisitList .myPlanBlank::after {
-        right: 33px;
-        top: 52%;
-    }
 }
 
 .No-Coverastion-Block {

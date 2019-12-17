@@ -7,7 +7,7 @@ import {
   MessageURLGet
 } from '../../../services/http'
 import { API } from '../../../services/api'
-import { startLoading, endLoading } from '../../loading/actions'
+import { endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
 import {
   PAGE_NO,
@@ -297,7 +297,7 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
   }
 }
 
-const getConversationSummaryItemSignalRSuceess = data => {
+export const getConversationSummaryItemSignalRSuceess = data => {
   return (dispatch, getState) => {
     let state = getState()
     let conversationSummaryData = [

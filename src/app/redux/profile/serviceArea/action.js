@@ -27,7 +27,7 @@ export const getServiceAreaFieldDetails = data => {
 export function getServiceArea() {
   return (dispatch) => {   
     let serviceProviderId = getUserInfo().serviceProviderId;
-    Get(API.getServiceArea +  serviceProviderId )
+    return Get(API.getServiceArea +  serviceProviderId )
       .then(resp => {
         dispatch(getServiceAreaSuccess(resp.data))
       })
@@ -40,7 +40,7 @@ export function addServiceArea(data) {
   let modelData = getModal(data, ACTION_MODEL.ADD_DATA)
   return (dispatch) => {
     dispatch(startLoading())
-    Post(
+    return Post(
         API.addServiceArea,
         modelData
       )
@@ -63,7 +63,7 @@ export function addServiceArea(data) {
 export function editServiceArea (data){
   return (dispatch) => {   
     dispatch(startLoading())
-    Get(API.editServiceArea + getUserInfo().serviceProviderId +'/'+ data)
+    return Get(API.editServiceArea + getUserInfo().serviceProviderId +'/'+ data)
       .then(resp => {
         dispatch(getServiceAreaFieldDetails(resp.data))
         dispatch(endLoading())
@@ -78,7 +78,7 @@ export function updateServiceArea(data) {
   let modelData = getModal(data, ACTION_MODEL.UPDATE_DATA)
   return (dispatch) => {
     dispatch(startLoading())
-    Post(
+    return Post(
         API.addServiceArea,
         modelData
       )
@@ -96,7 +96,7 @@ export function updateServiceArea(data) {
 export function deletePointService(data) {
   return (dispatch) => {
     dispatch(startLoading())
-    Delete(API.deletServiceArea + getUserInfo().serviceProviderId + '/'  + data, data)
+    return Delete(API.deletServiceArea + getUserInfo().serviceProviderId + '/'  + data, data)
       .then(resp => {
         dispatch(getServiceArea())
         dispatch(endLoading())

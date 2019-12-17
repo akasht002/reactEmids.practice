@@ -269,7 +269,7 @@
 
 .Service-typesTitle span h5 {
   display: inline-block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: #7a329f;
   text-decoration: underline;
@@ -423,7 +423,6 @@ fieldset .form-radio {
   clear: both;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
   border: 1px solid #e1e1e1;
   border-radius: 4px;
   -moz-border-radius: 4px;
@@ -471,7 +470,6 @@ fieldset .form-radio {
   width: 100%;
   display: block;
   max-width: 50%;
-  flex: inherit;
 }
 
 .form-group2block {
@@ -583,12 +581,17 @@ fieldset .form-radio {
   max-width: 100%;
 }
 
+.full-block-scheduleDate .recurring-msg {
+  position: absolute;
+  bottom: 0px;
+}
+
 /*left-recurringpattern*/
 .left-recurringpattern {
   width: 100%;
   display: block;
+  height:100%;
   position: absolute;
-  margin-top: -140px;
 }
 
 .left-recurringpattern span.width100 {
@@ -803,7 +806,7 @@ fieldset .form-radio {
 
 .right-block2-shedule {
   width: 48% !important;
-  padding-bottom: 0px !important;
+  padding-bottom: 9px !important;
 }
 
 .right-block2-shedule .slick-list .slick-track {
@@ -1055,6 +1058,9 @@ fieldset.right-colblock2 {
 
 /*assign-SP-card*/
 
+.ServiceTypesWidget .assign-sp-block .assign-SP-card {
+  z-index: 0;
+}
 .assign-sp-block {
   display: flex;
   flex-wrap: wrap;
@@ -1752,6 +1758,26 @@ ul.show-more-assignSP li {
 .form-group2block .form-group .onBoardingSelect {
   background: #fff;
   top: -8px;
+  color: #444444;
+  padding-top: 14px;
+}
+
+.form-group2block .form-group .onBoardingSelect:not(select):before {
+  top: 19px;
+}
+
+.start-rightdate .form-group2block .form-group .onBoardingSelect:not(select):before {
+  top: 18px;
+}
+
+.form-group2block .form-group .onBoardingSelect .Select-placeholder {
+  color: #8c8c8c;
+  font-size: 16px;
+}
+
+.right-block2-shedule .padding-less-10
+{
+   padding-right: 5px;
 }
 
 /*IE-Edge*/
@@ -1781,4 +1807,8 @@ ul.show-more-assignSP li {
 
 .form-group2block .react-datepicker-wrapper .disable-pointer {
   cursor: context-menu !important;
+}
+
+.recurring-msg{
+  margin-bottom: 30px
 }

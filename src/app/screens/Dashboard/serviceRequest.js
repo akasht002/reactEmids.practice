@@ -30,7 +30,7 @@ import {
 import { getLength } from '../../utils/validations'
 import { Preloader } from '../../components'
 
-class ServiceRequest extends React.Component {
+export class ServiceRequest extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -194,7 +194,7 @@ class ServiceRequest extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPatientServiceRequestDetail: data =>
       dispatch(getPatientServiceRequestDetail(data)),
@@ -208,7 +208,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     conversationDetail: state.dashboardState.dashboardState.conversationDetail,
     patientServiceRequest: state.dashboardState.dashboardState

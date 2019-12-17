@@ -23,7 +23,7 @@ import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatPhoneNumber } from '../../../utils/formatName'
 import ImageModal from '../PersonalDetail/ImageModal';
 
-class EntityPersonalDetail extends React.PureComponent {
+export class EntityPersonalDetail extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -877,7 +877,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updateEntityDetail: data => dispatch(action.updateEntityDetail(data)),
@@ -888,7 +888,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

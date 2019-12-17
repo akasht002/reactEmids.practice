@@ -1,6 +1,6 @@
 import React ,{Fragment} from "react";
 
-function EntityUserMyConversionDefault(){
+export function EntityUserMyConversionDefault(){
 
     let initConversations = []
   
@@ -13,9 +13,11 @@ function EntityUserMyConversionDefault(){
               <div className="avatarContainer"/>
             </div>
             <div className="MsgThreadContent m-auto">
-              <div className="NoProfileServices">
-                <i className="NoInformationIcon"/><span>No Conversations</span>
-              </div>
+            <div className="no-blockinfo-top">
+          <div className="NoProfileServices No-Coverastion-Block theme-primary-light">
+          <span className="NoInfoText"><span className="NoServiceInfoLink theme-primary">No Coverastions</span></span>
+          </div>
+           </div>
             </div>
           </div>
          </li>

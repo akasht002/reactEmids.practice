@@ -12,7 +12,7 @@ import { DATE_FORMAT } from '../../../constants/constants';
 
 import './VisitFilter.css'
 
-class VisitFilter extends Component {
+export class VisitFilter extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -212,7 +212,7 @@ class VisitFilter extends Component {
 
           <div className='FilterContainer FilterMiddle'>
             <div className='FilterMiddleContent FilterMiddleLeft'>
-              <span
+              <span               
                 className={this.state.activeTab === '1' ? 'active' : ''}
                 onClick={() => {
                   this.toggle('1')
@@ -263,6 +263,7 @@ class VisitFilter extends Component {
                     <Calendar
                       id='dob'
                       label='Start Date'
+                      test-dob='test-dob'
                       value={this.state.searchData.startDate}
                       startDate={
                         this.state.searchData.startDate &&
@@ -284,6 +285,7 @@ class VisitFilter extends Component {
                     <Calendar
                       id='dob1'
                       label='End Date'
+                      test-dob1='test-dob1'
                       value={this.state.searchData.endDate}
                       startDate={
                         this.state.searchData.endDate &&
@@ -331,6 +333,7 @@ class VisitFilter extends Component {
               type='button'
               classname="btn btn-outline-primary mr-2"
               label='Reset'
+              test-Reset='test-Reset'
               onClick={() => {
                 this.props.applyReset();
                 this.serviceProviderArray = [];
@@ -340,6 +343,7 @@ class VisitFilter extends Component {
               } />
             <Button
               type='button'
+              test-Apply='test-Apply'
               classname='btn btn-primary'
               label='Apply'
               onClick={() => this.props.applyFilter({

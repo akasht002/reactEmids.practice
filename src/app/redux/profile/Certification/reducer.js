@@ -1,6 +1,4 @@
-import {
-    Certification
-} from './actions'
+import { Certification } from './bridge';
 
 const defaultState = {
     certificationList: [],

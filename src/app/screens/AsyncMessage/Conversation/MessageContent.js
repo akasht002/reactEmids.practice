@@ -15,7 +15,7 @@ import AsyncImgModalTemplate from "../Modals/ImageModal";
 import { USERTYPES, ImageFormats } from '../../../constants/constants';
 import { handelEnterSpace } from '../../../utils/stringHelper';
 
-class MessageContent extends Component {
+export class MessageContent extends Component {
 
     constructor(props) {
         super(props);
@@ -81,7 +81,7 @@ class MessageContent extends Component {
     };
 
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({ behavior: "auto" });
+        // this.messagesEnd.scrollIntoView({ behavior: "auto" });
     };
 
     onClickSendMessage = () => {
@@ -202,7 +202,7 @@ class MessageContent extends Component {
                             <td className="chatHeader align-middle" ref={this.setChatHeaderRef}>
                                 <div className="Content d-flex">
                                     <div className="chatHeaderTextWidgetLeft mr-auto d-flex">
-                                        <span className="chatBackButton" onClick={this.backToMessageSummary}></span>
+                                        <div className="chatBackButton" onClick={this.backToMessageSummary}></div>
                                         <div className={"titleWidget" + editTitleClass}>
                                             <span className="MsgIndiTitle chatHeaderText">
                                                 {this.props.title ? this.props.title : "Add Title"}
@@ -313,7 +313,7 @@ class MessageContent extends Component {
 };
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         goToConversationSummary: () => dispatch(goToConversationSummary()),
         getConversationImageWithImageId: (messageId) => dispatch(getConversationImageWithImageId(messageId)),
@@ -322,7 +322,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         messageUrl: state.asyncMessageState.conversationImageUrl,
         canCreateConversation : state.asyncMessageState.canCreateConversation,

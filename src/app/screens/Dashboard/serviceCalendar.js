@@ -526,7 +526,7 @@ export class ServiceCalendar extends Component {
     let start_day_month = parseInt(dates[0].date.format('MM'), 10)
     let end_day_month = parseInt(dates[(count - 1)].date.format('MM'), 10)
     let selectedMonth = parseInt(this.state.selectedMonths, 10)
-    let visitData = this.props.serviceVist.length > 0 ? (
+    let visitData = this.props.isServiceVisitLoading ?<Preloader/>:this.props.serviceVist.length > 0 ? (
       <ServiceCalendarList
         onClickConversation={data => this.onClickConversation(data)}
         onClickVideoConference={data => this.onClickVideoConference(data)}
@@ -556,7 +556,6 @@ export class ServiceCalendar extends Component {
         }
       >
         <div className="ProfileCardBody">
-        <span class="ProfileCardHeaderTitle theme-primary">Service Visits</span>
           <div className="topPalette theme-primary">
             <div className="monthPalette">
             <span>From :</span>
@@ -680,7 +679,7 @@ export class ServiceCalendar extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getServiceProviderVists: (data,pageNumber,flag) => dispatch(getServiceProviderVists(data,pageNumber,flag)),
     getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
@@ -705,7 +704,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     serviceVist: state.dashboardState.dashboardState.serviceVist,
     serviceVistCount: state.dashboardState.dashboardState.serviceVistCount,

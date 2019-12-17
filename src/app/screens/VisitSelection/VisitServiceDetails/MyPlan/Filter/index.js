@@ -113,7 +113,7 @@ export class Filter extends Component {
 
                                 <TabPane tabId="3" id="Service_Category_tab">
                                     <div className="form-group">
-                                        <label>Categories & Types</label>
+                                        <label>Select Service Category</label>
                                     </div>
                                     <div className="form-group">
                                         <ServiceCategory

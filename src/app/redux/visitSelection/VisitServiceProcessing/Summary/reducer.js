@@ -1,6 +1,6 @@
 import {
     SummaryDetails
-} from './actions'
+} from './bridge'
 
 const defaultState = {
     SummaryDetails: {},

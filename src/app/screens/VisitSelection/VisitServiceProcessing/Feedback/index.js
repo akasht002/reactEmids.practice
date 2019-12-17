@@ -218,11 +218,11 @@ export class Feedback extends Component {
                                                                         <div className="form-radio col-md-3" key={answer.id}>
                                                                             <input className="form-radio-input"
                                                                                 id={answer.id}
+                                                                                test-input="test-input"
                                                                                 type="radio"
                                                                                 value={answer.answerName}
                                                                                 name={questionList.feedbackQuestionnaireId}
                                                                                 onChange={(e) => {
-                                                                                    answer.checked = e.target.checked;
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
                                                                                 checked={answer.checked}
@@ -292,6 +292,7 @@ export class Feedback extends Component {
                         ModalBody={<span>Your feedback is still incomplete. Are you sure you want to continue?</span>}
                         btn1="Confirm"
                         btn2="Cancel"
+                        test-feedback="test-feedback"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
@@ -306,6 +307,7 @@ export class Feedback extends Component {
                         ModalBody={<span>Do you want to discard the changes?</span>}
                         btn1='YES'
                         btn2='NO'
+                        test-discard="test-discard"
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'
@@ -322,7 +324,7 @@ export class Feedback extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getQuestionsList: () => dispatch(getQuestionsList()),
         saveAnswers: (data) => dispatch(saveAnswers(data)),
@@ -337,7 +339,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         QuestionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,

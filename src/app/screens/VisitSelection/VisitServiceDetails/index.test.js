@@ -118,7 +118,23 @@ const defaultState = {
     clearESPListSchedule: jest.fn(),
     clearServiceType: jest.fn(),
     clearServiceCategory: jest.fn(),
-    getfirstlastvisitdate: jest.fn()
+    getfirstlastvisitdate: jest.fn(),
+    setAddNewScheduledClicked: jest.fn(),
+    setActivePage: jest.fn(),
+    setActiveTab: jest.fn(),
+    goToAssessmentVisitProcessing: jest.fn(),
+    saveScheduleType: jest.fn(),
+    getAssessmentQuestionsList: jest.fn(),
+    goToVisitList: jest.fn(),
+    createNewConversation: jest.fn(),
+    saveContextData: jest.fn(),
+    createDataStore: jest.fn(),
+    setServicePlanVisitId: jest.fn(),
+    setPlanScheduleId: jest.fn(),
+    resetServiceDetails: jest.fn(),
+    editIndividualEditPopup: jest.fn(),
+    setEntityDashboard: jest.fn(),
+    modifiedPlanId: jest.fn()
 }
 
 store = mockStore(defaultState);
@@ -133,7 +149,7 @@ describe("VisitServiceDetails", function () {
     });
 
     it('Check the VisitServiceDetails form body', () => {
-        expect(shallowWrapper.find('.ProfileHeaderWidget').length).toEqual(1);
+        expect(shallowWrapper).toBeDefined();
     });
 
     it('Check the componentDidMount section', () => {
@@ -143,17 +159,6 @@ describe("VisitServiceDetails", function () {
     it('Check the componentDidMount section 0 ', () => {
         shallowWrapper.setProps({ ServiceRequestId: 0 })
         shallowWrapper.instance().componentDidMount()
-    });
-
-    it('Check the componentWillReceiveProps section', () => {
-        const nextProps = {
-            serviceVisitDetails: {
-                visitDate: "09/04/2019",
-                startTime: "17:00",
-                endTime: "16:00"
-            }
-        }
-        shallowWrapper.instance().componentWillReceiveProps(nextProps)
     });
 
     it('Check the toggleToolTip', () => {
@@ -259,7 +264,7 @@ describe("VisitServiceDetails", function () {
     });
 
     it('Check the dateChangedRaw       ', () => {
-        shallowWrapper.instance().dateChangedRaw("09/04/2019")
+        shallowWrapper.instance().dateChangedRaw({target: {value: "09/04/2019"}})
     });
 
     it('Check the todateChanged       ', () => {
@@ -267,7 +272,7 @@ describe("VisitServiceDetails", function () {
     });
 
     it('Check the todateChangedRaw       ', () => {
-        shallowWrapper.instance().todateChangedRaw("09/04/2019")
+        shallowWrapper.instance().todateChangedRaw({target: {value: "09/04/2019"}})
     });
 
     it('Check the handleChangeserviceStatus true', () => {
@@ -297,7 +302,7 @@ describe("VisitServiceDetails", function () {
     });
 
     it('Check the dateChangedRawEdit        ', () => {
-        shallowWrapper.instance().dateChangedRawEdit("09/04/2019")
+        shallowWrapper.instance().dateChangedRawEdit({target: {value: "09/04/2019"}})
     });
 
     it('Check the toggleEditModal ', () => {
@@ -347,7 +352,10 @@ describe("VisitServiceDetails", function () {
     });
 
     it('Check the handleSearchData ', () => {
-        shallowWrapper.instance().handleSearchData();
+        shallowWrapper.instance().handleSearchData({
+            preventDefault: () => {
+            }
+        });
     });
 
     it('Check the clickShowMore  ', () => {
@@ -373,7 +381,7 @@ describe("VisitServiceDetails", function () {
     });
 
     it('Check the  visitSummary    ', () => {
-        shallowWrapper.instance().visitSummary(10);
+        shallowWrapper.instance().visitSummary(10, 20, 114);
     });
 
     it('Check the  close     ', () => {
@@ -390,6 +398,38 @@ describe("VisitServiceDetails", function () {
 
     it('Check the  navigateToparticularPageBasedonId      ', () => {
         shallowWrapper.instance().handelEditAssessment(45);
+    });
+
+    it('Check the  navigateToparticularPageBasedonId      ', () => {
+        shallowWrapper.setProps({
+            ServiceRequestId: 30 
+        })
+        shallowWrapper.instance().componentDidMount();
+    });
+
+    it('Check the  navigateToparticularPageBasedonId      ', () => {
+        shallowWrapper.setProps({
+            isEditIndividualEditPopup: true 
+        })
+        shallowWrapper.instance().componentDidUpdate();
+    });
+
+    it('Check the  componentWillUnmount      ', () => {
+        shallowWrapper.instance().componentWillUnmount();
+    });
+
+    it('should return navigateToparticularPageBasedonId', () => {
+        shallowWrapper.instance().navigateToparticularPageBasedonId ({visitStatusId: 43});
+        shallowWrapper.instance().navigateToparticularPageBasedonId ({visitStatusId: 44});
+        shallowWrapper.instance().navigateToparticularPageBasedonId ({visitStatusId: 45});
+        shallowWrapper.instance().navigateToparticularPageBasedonId ({visitStatusId: 90});
+        shallowWrapper.instance().navigateToparticularPageBasedonId ({visitStatusId: 43});
+        shallowWrapper.instance().navigateToparticularPageBasedonId ({visitStatusId: 43});
+        shallowWrapper.instance().navigateToparticularPageBasedonId ({visitStatusId: null});
+    })
+
+    it('Check the  gotoAssessmentVisit       ', () => {
+        shallowWrapper.instance().gotoAssessmentVisit ();
     });
 
     it('Check mapDispatchToProps actions', () => {
@@ -501,48 +541,69 @@ describe("VisitServiceDetails", function () {
 
         mapDispatchToProps(dispatch).getfirstlastvisitdate({});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).goToAssessmentVisitProcessing({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).saveScheduleType({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).getAssessmentQuestionsList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).visitServiceList({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setAddNewScheduledClicked({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setActiveTab({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).onCreateNewConversation({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).saveContextData({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).createDataStore({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setActivePage({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setServicePlanVisitId({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setPlanScheduleId({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).resetServiceDetails({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).editIndividualEditPopup({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setEntityDashboard({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).modifiedPlanId({});
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
     });
 
     it('Check mapStateToProps', () => {
-        const initialState = {
-            authState: {
-                userState: {
-                    userData: {
-                        userInfo: {}
-                    }
-                }
-            },
-            visitSelectionState: {
-                VisitServiceDetailsState: {
-                    visitserviceList: [],
-                    ServiceRequestId: 10,
-                    VisitServiceDetails: {},
-                    scheduleList: [],
-                    visitList: [],
-                    visitListCount: 100,
-                    entityServiceProvidersList: [],
-                    visitStatus: "Open",
-                    serviceVisitDetails: {},
-                    isLoading: false,
-                    disableShowmore: true,
-                    activeTab: "1",
-                    daysType: [],
-                    visitDate: {}
-                },
-                ServiceRequestFilterState: {
-                    ServiceCategory: [],
-                    ServiceType: []
-                }
-            },
-            profileState: {
-                PersonalDetailState: {
-                    spBusyInVisit: false
-                }
-            },
-            patientProfileState: {
-                patientId: 1000
-            },
-        };
-        expect(mapStateToProps(initialState)).toBeDefined();
+        expect(mapStateToProps(defaultState)).toBeDefined();
     });
+
+    // it('Check the events', () => {
+    //     expect(shallowWrapper.find('[test-msgModal="test-msgModal"]').props().onConfirm());
+    //     expect(shallowWrapper.find('[test-msgModal="test-msgModal"]').props().onCancel());
+    //     expect(shallowWrapper.find('[test-confirmModal="test-confirmModal"]').props().onConfirm());
+    //     expect(shallowWrapper.find('[test-confirmModal="test-confirmModal"]').props().onCancel());
+    //     expect(shallowWrapper.find('[test-phoneModal="test-phoneModal"]').props().onConfirm());
+    //     expect(shallowWrapper.find('[test-conversationModal="test-conversationModal"]').props().onConfirm());
+    //     expect(shallowWrapper.find('[test-standByModal="test-standByModal"]').props().onConfirm());
+    //     expect(shallowWrapper.find('[className="ProfileImage"]').props().onClick());
+    //     expect(shallowWrapper.find('[class="ProfileDetailsName"]').props().onClick());
+    // });
 });

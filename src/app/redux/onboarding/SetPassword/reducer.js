@@ -1,6 +1,4 @@
-import {
-    SetPassword
-} from './actions'
+import {SetPassword} from './bridge';
 
 const defaultState = {
     serviceProviderDetails: {

@@ -14,7 +14,7 @@ import "./AvailabilityStyles.css";
 import { dateDifference, formattedDateMoment } from '../../../utils/validations';
 import EllipsisText from "react-ellipsis-text";
 
-class BlackoutDays extends Component {
+export class BlackoutDays extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -208,11 +208,8 @@ class BlackoutDays extends Component {
             </div> :  ""
           }
             <div className={"SPCertificateContainer width100"}>
-              {this.state.blackoutData.length > 0 ? 
-              <ul className={"SPCertificateList theme-primary"}>{blackoutData}</ul>
-              :
-              <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleBlackout.bind(this, "add")} />
-            }
+            <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleBlackout.bind(this, "add")} />
+            <ul className={"SPCertificateList theme-primary"}>{blackoutData}</ul>
             </div>
           </div>
         </div>
@@ -247,13 +244,13 @@ class BlackoutDays extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
     blackoutDays: state.profileState.AvailabilityState.blackoutDays
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     getBlackOutDays: () => dispatch(getBlackOutDays()),
     addBlackOutDay: data => dispatch(addBlackOutDay(data)),

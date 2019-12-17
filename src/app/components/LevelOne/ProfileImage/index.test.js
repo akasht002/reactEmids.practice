@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileImage from './ProfileImage';
+import {ProfileImage} from './index';
 import renderer from 'react-test-renderer';
 
 test('ProfileImage Component testing', () => {

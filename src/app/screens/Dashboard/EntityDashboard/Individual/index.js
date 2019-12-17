@@ -327,7 +327,7 @@ export class Individuals extends Component {
     this.props.getIndividualsFeedbackList(model);
   }
 
-  impersinateIndividual = async data => {
+  impersinateIndividual = data => {
     this.props.setImpersinated(true)
     switch (true) {
       case caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit):
@@ -403,12 +403,14 @@ export class Individuals extends Component {
   }
 
   onChangeSlider = data => {
+    if(data.min >= 0 && data.max<=120){
     let ageRange = {
       minimumAge: data.min,
       maximumAge: data.max
     }
     this.props.setAgeRange(ageRange)
   }
+}
 
   handleGenderType = data => {
     this.props.setGenderId(data.id)
