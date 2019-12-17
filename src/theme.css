@@ -68,7 +68,7 @@ table.individuals-tableblock.theme-primary thead th,
 .AffiliatedList.theme-primary:before,
 .memT-S,
 .SPsubTitle.theme-primary span:before,
-.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected, .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected:hover {
     background-color: #1e3d5c;
 }
 
@@ -172,7 +172,7 @@ span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetail
 }
 
 input.form-control:focus,
-.input-range__slider {
+.input-range__slider, .list-group-item table:hover:before {
     border-color: #1e3d5c !important;
 }
 

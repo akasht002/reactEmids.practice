@@ -18,7 +18,7 @@ import { orderBy } from 'lodash'
 import { startLoading, endLoading } from '../loading/actions';
 import { API_ERROR_CODE, DEFAULT_PAGE_SIZE_ESP_LIST } from "../constants/constants";
 import { formatAssessmentData } from './modal/assessment'
-import  {uniqBy} from 'lodash'
+import { uniqBy } from 'lodash'
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -172,7 +172,7 @@ export function getServiceType(id, selectedData = []) {
                 }
             });
 
-           dispatch(getServiceTypeSuccess(data))
+            dispatch(getServiceTypeSuccess(data))
         }).catch((err) => {
         })
     }
@@ -184,7 +184,7 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
             let type = resp.data.filter((type) => {
-                    return type.serviceCategoryId === serviceCategoryId
+                return type.serviceCategoryId === serviceCategoryId
             });
 
             data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: isSelectAll }))
@@ -218,7 +218,7 @@ export function getStates() {
     }
 };
 
-export function getValidPatientAddress(data,addressCallback) {
+export function getValidPatientAddress(data, addressCallback) {
     return (dispatch, getState) => {
         let modelData = getModal(data)
         ServiceRequestPost(
@@ -229,7 +229,7 @@ export function getValidPatientAddress(data,addressCallback) {
                 if (validateCoordinates(resp.data.lat, resp.data.lon)) {
                     dispatch(getValidPatientAddressSuccess(true))
                     addressCallback(false)
-                    dispatch(setSelectedPos(0))                    
+                    dispatch(setSelectedPos(0))
                 }
                 else {
                     dispatch(getValidPatientAddressSuccess(false))
@@ -243,10 +243,14 @@ export function getValidPatientAddress(data,addressCallback) {
     }
 };
 
-export function getEntityServiceProviderList(data, selectedESPId = '') {
+export function getEntityServiceProviderList(data, selectedESPId = null) {
     return (dispatch, getState) => {
         dispatch(startLoading())
-        return Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`)
+        let commonUrl = `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`
+        let url = selectedESPId !== null ?
+            `${commonUrl}/${selectedESPId}` :
+            `${commonUrl}`
+        Get(`${API.searchESP}` + url)
             .then(resp => {
                 let oldEspList = getState().scheduleState.entityServiceProvidersList;
                 let modifiedList = [...oldEspList, ...resp.data];
@@ -287,11 +291,21 @@ export function selectESP(espId) {
 
 
 
-export function getEntityServiceProviderListSearch(data) {
+export function getEntityServiceProviderListSearch(data, selectedESPId = null) {
     return (dispatch, getState) => {
-        return Get(`${API.searchESP}${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}?searchtext=${data.searchKeyword}`)
+        let commonUrl = `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`
+        let url = selectedESPId !== null ?
+            `${commonUrl}/${selectedESPId}?searchtext=${data.searchKeyword}` :
+            `${commonUrl}?searchtext=${data.searchKeyword}`
+        Get(`${API.searchESP}` + url)
             .then(resp => {
-                dispatch(getEntityServiceProviderListSuccess(resp.data))
+                let selectedESP = resp.data.map((type, index) => {
+                    return {
+                        ...type,
+                        selected: type.serviceProviderId === selectedESPId
+                    }
+                });
+                dispatch(getEntityServiceProviderListSuccess(selectedESP))
                 dispatch(disableShowmore(resp.data.length < DEFAULT_PAGE_SIZE_ESP_LIST))
             })
             .catch(err => {

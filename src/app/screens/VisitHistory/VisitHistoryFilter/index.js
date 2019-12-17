@@ -272,6 +272,7 @@ export class VisitFilter extends Component {
                       onDateChange={this.dateFromChanged}
                       onDateChangeRaw={this.dateChangedRaw}
                       mandatory
+                      maxDate={this.state.searchData.endDate && formateStateDateValue(this.state.searchData.endDate)}
                       className={'form-control datePicker '}
                       onBlur={() => {
                         if (!this.state.searchData.startDate) {

@@ -268,6 +268,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
                 ...state,
                 planId: action.data
             }
+        case VisitServiceDetails.clearVisitList:
+        return {
+            ...state,
+            visitList: []
+        }    
         default:
             return state;
     }

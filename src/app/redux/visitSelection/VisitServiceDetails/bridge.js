@@ -41,4 +41,5 @@ export const VisitServiceDetails = {
     isVisitservicedetailLoading: 'isVisitservicedetailLoading/visitservicedetails',
     isServiceRequestListLoading: 'isServiceRequestListLoading/visitservicedetails',
     isEntityServiceProviderListLoading: 'isEntityServiceProviderListLoading/visitservicedetails',
+    clearVisitList: 'clearVisitList/visitServiceDetails'
   }

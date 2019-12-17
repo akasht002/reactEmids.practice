@@ -1671,6 +1671,12 @@ span.ProfileIconSearch .search-block_SP {
 
 }
 
+/* - Internet Explorer 10–11*/
+   :-ms-input-placeholder {
+    color: #8c8c8c !important;
+}
+
+
 .ServiceRequestsWidget .ServiceRequestBoard {
   width: 50%;
 }
