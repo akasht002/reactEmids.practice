@@ -6,7 +6,7 @@ import { ScreenCover, Preloader } from '../../../components';
 import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
 import './styles.css';
 
-class LoginCallBack extends Component {
+export class LoginCallBack extends Component {
   render() {
     return (
       <ScreenCover onPress={this.onBtnPress}>

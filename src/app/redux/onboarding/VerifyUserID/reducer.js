@@ -1,6 +1,4 @@
-import {
-    VerifyUserID
-} from './actions'
+import {VerifyUserID} from './bridge';
 
 const defaultState = {
     isEmailExist: false,

@@ -13,7 +13,7 @@ export class ResetPasswordSuccess extends Component {
 
     render() {
         return (
-            <LoginCover isLoading={this.props.isLoading}>
+            <LoginCover isLoading={this.props.isLoading} test-restSuccess-body='test-restSuccess-body'>
                 <div className="icon-check"></div>
                 <p>Password Reset Sucessful!</p>
                 <p><span onClick={this.onClickButtonLogin}>Go to Login Page</span></p>

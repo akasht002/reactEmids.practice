@@ -12,7 +12,7 @@ import { getEntityProcessingStatus } from '../../../../utils/validations'
 import './style.css';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 
-const renderServiceTypeImages = serviceTypes => {
+export const renderServiceTypeImages = serviceTypes => {
     let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
@@ -22,7 +22,7 @@ const renderServiceTypeImages = serviceTypes => {
         ))
 }
 
-const getServiceTypeImageBasedOnId = serviceTypeId => {
+export const getServiceTypeImageBasedOnId = serviceTypeId => {
     return getServiceTypeImage(serviceTypeId)
 }
 
@@ -38,7 +38,7 @@ const renderServiceTypesInToolTip = serviceTypes => {
     ))
 }
 
-const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
+export const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
     const data = {
         visitStatusId: visitStatusId,
         isPaymentModeEnabled: isPaymentModeEnabled,
@@ -59,7 +59,7 @@ const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => 
     }
 }
 
-const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
+export const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
     const data = {
         visitStatusId: visitStatusId,
         isPaymentModeEnabled: isPaymentModeEnabled,

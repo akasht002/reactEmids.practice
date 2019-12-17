@@ -141,7 +141,7 @@ export function getVisitServiceEligibilityStatus(data) {
     }
     return (dispatch) => {
         dispatch(startLoadingProcessing());
-        ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
+        return ThirdPartyPost(API.getServiceRequestEligibilityStatus, eligibilityData).then((resp) => {
             dispatch(getVisitServiceEligibityStatusSuccess(resp.data));
             dispatch(calculationsFirstTime(data));
             dispatch(push(Path.summary))

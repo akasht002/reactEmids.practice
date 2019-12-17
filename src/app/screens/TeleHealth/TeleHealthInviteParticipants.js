@@ -3,7 +3,7 @@ import ParticipantList from './ParticipantList';
 import './styles.css';
 
 
-export default class TeleHealthInviteParticipants extends Component {
+export class TeleHealthInviteParticipants extends Component {
 
     state = {
         selectedParticipants: [],
@@ -78,3 +78,5 @@ export default class TeleHealthInviteParticipants extends Component {
         );
     }
 }
+
+export default TeleHealthInviteParticipants

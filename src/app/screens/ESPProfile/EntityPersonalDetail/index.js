@@ -12,7 +12,7 @@ import {
 import { Details } from './Details'
 import { Path } from '../../../routes'
 
-class EntityPersonalDetail extends React.PureComponent {
+export class EntityPersonalDetail extends React.PureComponent {
   constructor (props) {
     super(props)
     this.state = {
@@ -142,14 +142,14 @@ class EntityPersonalDetail extends React.PureComponent {
   
 }
 
-function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getESPPersonalDetail()),
     getImage: () => dispatch(action.getESPImage()),
   }
 }
 
-function mapStateToProps (state) {
+export function mapStateToProps (state) {
   return {
     personalDetail: state.patientProfileState.espPatient,
     profileImgData: state.patientProfileState.espimageData,

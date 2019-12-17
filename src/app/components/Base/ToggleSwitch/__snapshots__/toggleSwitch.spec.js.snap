@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToggleSwitch Component Testing 1`] = `
+<label
+  className="switch"
+>
+  <input
+    type="checkbox"
+  />
+  <span
+    className="slider round"
+  />
+</label>
+`;

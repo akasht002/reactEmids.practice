@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Component Testing 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="m-0"
+  />
+  <span>
+    <input
+      autoComplete={false}
+      className="Text Input"
+      disabled="false"
+      placeholder="Text Input"
+      required={false}
+      type="text"
+      value="Text Input"
+    />
+  </span>
+  <small
+    className="form-text text-muted undefined"
+    id="undefinedHelp"
+  />
+</div>
+`;

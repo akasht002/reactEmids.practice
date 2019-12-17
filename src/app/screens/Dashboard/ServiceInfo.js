@@ -147,7 +147,7 @@ export const ServiceProviderRequestDetails = props => {
     })
 }
 
-function getPartcipitantHeader(participants) {
+export function getPartcipitantHeader(participants) {
   let header = "";
   if (participants && participants.length > 0) {
     participants.map(participant => {

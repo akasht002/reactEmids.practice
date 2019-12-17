@@ -8,7 +8,7 @@ import './VisitNotificationSettings.css';
 import { NotificationCheckBox } from './NotificationCheckBox';
 import { setIsFormDirty } from '../../../redux/auth/user/actions';
 import { Preloader } from "../../../components"
-class VisitNotificationSettings extends React.Component {
+export class VisitNotificationSettings extends React.Component {
 
     constructor(props) {
         super(props);
@@ -99,7 +99,7 @@ class VisitNotificationSettings extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getVisitNotificationSettings: () => dispatch(getVisitNotificationSettings()),
         updateVisitNotificationSettings: (data) => dispatch(updateVisitNotificationSettings(data)),
@@ -109,7 +109,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         pushNotification: state.visitNotificationState.VisitNotificationSettingsState.pushNotification,
         emailNotification: state.visitNotificationState.VisitNotificationSettingsState.emailNotification,
