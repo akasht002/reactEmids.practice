@@ -569,7 +569,9 @@ export function getVisitList(data) {
   let getVisitList = isEntityServiceProvider ? API.getEspVisitList : (isEntityUser() ? API.getVisitList : API.getIspVisitList)
   data.serviceProviderId = getUserInfo().serviceProviderId
   return (dispatch, getState) => {
-    let { servicePlanVisitId } = getState().visitSelectionState.VisitServiceDetailsState
+    let {servicePlanVisitId, visitDate, isEntityDashboard} = getState().visitSelectionState.VisitServiceDetailsState
+    data.startDate = isEntityDashboard ? visitDate.startVisitDateForWeb : data.startDate
+    data.endDate = isEntityDashboard ? visitDate.endVisitDateForWeb : data.startDate
     !isEntityUser() &&
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     dispatch(startLoading());
@@ -804,5 +806,11 @@ export const getPlanScheduleId = (data, servicePlanVisitId) => {
   return {
     type: VisitServiceDetails.setPlanScheduleId,
     data: planScheduleId
+  }
+}
+
+export const clearVisitList = () => {
+  return {
+    type: VisitServiceDetails.clearVisitList
   }
 }

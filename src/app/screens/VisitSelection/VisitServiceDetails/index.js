@@ -28,7 +28,8 @@ import {
   resetServiceDetails,
   editIndividualEditPopup,
   setEntityDashboard,
-  modifiedPlanId
+  modifiedPlanId,
+  clearVisitList
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule, getPatientAddress } from '../../../redux/schedule/actions';
 import {
@@ -87,6 +88,7 @@ import { onCreateNewConversation } from '../../../redux/asyncMessages/actions';
 import { saveContextData, createDataStore } from '../../../redux/telehealth/actions';
 import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
+import { setServiceProviderFeedbackTab } from '../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -153,6 +155,7 @@ export class VisitServiceDetails extends Component {
   }
 
   componentWillUnmount() {
+    this.props.clearVisitList()
     this.props.resetServiceDetails()
     this.props.setEntityDashboard(false)
     this.applyReset();
@@ -579,6 +582,7 @@ export class VisitServiceDetails extends Component {
       serviceProviderId: parseInt(espId, 10),
       visitId: data
     }
+    this.props.setServiceProviderFeedbackTab(true)
     this.props.getVisitServiceHistoryByIdDetail(data)
     if (scheduleTypeId === VISIT_TYPE.assessment) {
       this.props.getAssessmentQuestionsList(model)
@@ -855,7 +859,7 @@ highlightVisit = data => {
       },
       {
         id: '4',
-        label: 'Services Types'
+        label: 'Service Types'
       },
       {
         id: '5',
@@ -1101,7 +1105,9 @@ export function mapDispatchToProps(dispatch) {
     editIndividualEditPopup: (data) => dispatch(editIndividualEditPopup(data)),
     setEntityDashboard: data => dispatch(setEntityDashboard(data)),
     modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData)),
-    getPatientAddress: (data) => dispatch(getPatientAddress(data))
+    getPatientAddress: (data) => dispatch(getPatientAddress(data)),
+    setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
+    clearVisitList: () => dispatch(clearVisitList())
   }
 }
 

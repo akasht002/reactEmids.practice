@@ -1552,7 +1552,8 @@ button:focus {
 }
 
 .chatHeader .chatBackButton:after {
-    cursor: none;
+    cursor: context-menu;
+    pointer-events: none;
 }
 
 /*microsoft-edge-detection*/
