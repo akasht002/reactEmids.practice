@@ -14,8 +14,10 @@ const defaultState = {
   espimageData: {},
   espEducation: [],
   userType: '',
-  patientProfilePercentage:0,
-  vitalDetails: {}
+  patientProfilePercentage: 0,
+  vitalDetails: {},
+  emergencyContactDetails: {},
+  attorneyContactDetails: {}
 }
 
 const patientProfileState = (state = defaultState, action) => {
@@ -40,12 +42,12 @@ const patientProfileState = (state = defaultState, action) => {
         ...state,
         espID: action.data
       }
-      case PatientProfile.setPatient:
+    case PatientProfile.setPatient:
       return {
         ...state,
         patientId: action.data
       }
-      case PatientProfile.setParticipantProfile:
+    case PatientProfile.setParticipantProfile:
       return {
         ...state,
         patientId: action.data.userId,
@@ -81,16 +83,26 @@ const patientProfileState = (state = defaultState, action) => {
         ...state,
         clinicalConditionList: action.data
       }
-      case PatientProfile.getProfilePercentageSuccess:
+    case PatientProfile.getProfilePercentageSuccess:
       return {
         ...state,
         patientProfilePercentage: action.data
-      }  
-      case PatientProfile.getPatientVitalsSuccess:
+      }
+    case PatientProfile.getPatientVitalsSuccess:
       return {
         ...state,
         vitalDetails: action.data
-      }  
+      }
+    case PatientProfile.getEmergencyContactDetailsSuccess:
+      return {
+        ...state,
+        emergencyContactDetails: action.data
+      };
+    case PatientProfile.getAttorneyContactDetailsSuccess:
+      return {
+        ...state,
+        attorneyContactDetails: action.data
+      };
     case PatientProfile.clearState:
       return {
         ...state,
@@ -106,8 +118,10 @@ const patientProfileState = (state = defaultState, action) => {
         espimageData: {},
         espEducation: [],
         userType: '',
-        patientProfilePercentage:0,
-        vitalDetails: {}
+        patientProfilePercentage: 0,
+        vitalDetails: {},
+        emergencyContactDetails: {},
+        attorneyContactDetails: {}
       }
     default:
       return state
