@@ -7,7 +7,7 @@ import EmergencyAttorenyDetails from './EmergencyAttorenyDetails';
 Enzyme.configure({ adapter: new Adapter() })
 
 let props = {
-    details: { "patientEmergencyContactId": 1, "patientId": 1083, "firstName": "Abhi", "lastName": "Sathya333", "relationship": "Spouse", "relationshipId": 4, "phoneNumber": "9990202020", "address": { "streetAddress": "", "city": "string", "zipCode": 45630, "stateName": "Georgia", "stateId": 10 } },
+    details: { firstName: 'Test', lastName: 'Test', phoneNumber: '9902040950', relationship: "Test", address: { "streetAddress": "", "city": "string", "zipCode": 45630, "stateName": "Georgia", "stateId": 10 } },
     header: 'Emergency'
 }
 
@@ -19,6 +19,11 @@ describe('EmergencyAttorenyDetails', () => {
         )
     })
     it('should return correct component', () => {
+        expect(wrapper).toBeDefined();
+    })
+
+    it('should return correct component1', () => {
+        wrapper.setProps({ details: "" })
         expect(wrapper).toBeDefined();
     })
 });
