@@ -587,3 +587,8 @@ export const MONTHLY_RECURRING_OPTIONS = {
 export const CALENDAR_DASHBOARD_LENGTH = 6;
 
 export const RECURRING_PATTERN_VALIDATION_MSG = 'Please Select the recurring pattern';
+
+export const PATIENT_STATUS = {
+    deceased: 'Deceased',
+    inActive: 'Inactive'
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { getFields, getServiceTypeImage } from '../../utils/validations'
+import { getFields, getServiceTypeImage, getStatusTextBasedOnStatus } from '../../utils/validations'
 import Moment from 'react-moment'
 import { Progressbar } from '../../components'
 import { VISIT_TYPE } from '../../constants/constants';
@@ -70,7 +70,10 @@ export const VisitList = props => {
                           {' '}
                           {vistList.patientLastName && vistList.patientLastName}
                         </div>
+                       
                       </div>
+                      {vistList.deceasedInd &&
+                          <span className="patient-status-indicator-pg">{`(${getStatusTextBasedOnStatus(vistList)})`}</span>}
                     </div>
                   </div>
                 </div>

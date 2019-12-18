@@ -112,12 +112,15 @@ class QuickMenu extends Component {
       visitStatusId: conversations.visitStatusId,
       isPaymentModeEnabled: conversations.isPaymentModeEnabled,
     }
-    if(isEntityServiceProvider()){
-        options = [
-          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
-            onClick={(e) => this.onClickServiceVisitAction(conversations)}>
-            <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {getEntityProcessingStatus(data)} 
-          </Item>,
+    let visitProcessingOption = 
+      <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
+        onClick={(e) => this.onClickServiceVisitAction(conversations)}>
+        <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {getEntityProcessingStatus(data)} 
+      </Item>
+
+    if(isEntityServiceProvider()) {
+        options = conversations.deceasedInd ? [visitProcessingOption] : [
+          visitProcessingOption,
           <Item className='ListItem CTDashboard' key='item-1'
           onClick={(e) => { this.handlePhoneNumber(conversations) }}>
             <i className='iconPhone' /> Phone Call
@@ -138,12 +141,8 @@ class QuickMenu extends Component {
       </Item>]
 
         !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
-        options = [ 
-          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
-          onClick={(e) => this.onClickServiceVisitAction(conversations)}>
-                <i className={conversations.visitStatusId && list.iconImage} />
-                {getEntityProcessingStatus(data)} 
-          </Item>,   
+        options = conversations.deceasedInd ? [visitProcessingOption] : [ 
+          visitProcessingOption,   
           ...commonOptions,    
         ]
         :

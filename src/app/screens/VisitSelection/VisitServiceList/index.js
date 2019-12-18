@@ -26,7 +26,7 @@ import {
     clearServiceCategory, clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus,
     getFilterDataCount, formDirty, setDefaultFilteredStatus, getSearchDataCount,getSearchDataCountSuccess
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
-import { formattedDateMoment, formattedDateChange, getServiceTypeImage } from "../../../utils/validations";
+import { formattedDateMoment, formattedDateChange, getServiceTypeImage, getStatusTextBasedOnStatus } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
 // import Sorting from "../ServiceRequestSorting";
@@ -531,6 +531,7 @@ export class VisitServiceList extends Component {
                                 <div className='BlockProfileDetails'>
                                     <div className='BlockProfileDetailsName'>
                                         <span>{serviceList.patientFirstName} {patientLastName}</span>
+                                        {serviceList.deceasedInd && <span>{` (${getStatusTextBasedOnStatus(serviceList)})`}</span>}
                                     </div>
                                 </div>
                                 <div className='BlockProfileDetailsStatus'>

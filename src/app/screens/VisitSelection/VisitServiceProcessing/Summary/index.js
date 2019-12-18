@@ -11,7 +11,7 @@ import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { checkNumber, getFields } from '../../../../utils/validations';
+import { checkNumber, getFields, getStatusTextBasedOnStatus } from '../../../../utils/validations';
 import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
@@ -311,6 +311,8 @@ export class Summary extends Component {
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
+                                                {this.props.patientDetails.deceasedInd &&
+                                                    <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails)}</span>}
                                             </span>
                                             :
                                             ''

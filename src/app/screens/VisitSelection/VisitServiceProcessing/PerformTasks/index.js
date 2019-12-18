@@ -12,7 +12,7 @@ import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { getServiceTypeImage } from '../../../../utils/validations';
+import { getServiceTypeImage, getStatusTextBasedOnStatus } from '../../../../utils/validations';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { getUserInfo } from "../../../../services/http";
@@ -212,6 +212,8 @@ export class PerformTasks extends Component {
                                                 className="avatarImage avatarImageBorder" alt="patientImage" />
                                             <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i>
                                         </span>
+                                        {this.state.taskList.deceasedInd &&
+                                          <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.state.taskList)}</span>}
                                     </div>
                                 </div>
                             </div>

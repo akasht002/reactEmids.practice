@@ -14,7 +14,7 @@ import {
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import './style.css'
-import { isNull } from '../../../../utils/validations'
+import { isNull, getStatusTextBasedOnStatus } from '../../../../utils/validations'
 import { getUserInfo } from "../../../../utils/userUtility";
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
@@ -166,7 +166,10 @@ export class Feedback extends Component {
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
+                                                {this.props.patientDetails.deceasedInd &&
+                                                    <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails)}</span>}
+                                                </span>
                                             :
                                             ''
                                         }
