@@ -30,7 +30,13 @@ const EmergencyAttorenyDetails = ({
                     </div>
                 </div>
                     :
-                    <span>No Data Available</span>}
+                    <div className='SPNoInfo mb-5'>
+                        <div className='SPNoInfoContent'>
+                            <div className='SPInfoContentImage' />
+                            {<span className='SPNoInfoDesc'>No Data Available</span>}
+                        </div>
+                    </div>
+                }
             </div>
         </Fragment>
     );
