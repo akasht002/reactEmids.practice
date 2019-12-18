@@ -202,6 +202,7 @@ export function updatePersonalDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())    
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -237,6 +238,7 @@ export function updateEntityDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())

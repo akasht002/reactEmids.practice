@@ -40,12 +40,12 @@ export const Details = props => {
                 {' '}
                 Yrs Old
               </span>
-              <span>
+              {/* <span>
                 {props.personalDetail &&
                   props.personalDetail.yearOfExperience}
                 {' '}
                 Yrs Exp
-              </span>
+              </span> */}
             </p>
           </div>
         </div>

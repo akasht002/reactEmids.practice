@@ -39,7 +39,8 @@ export class EntityPersonalDetail extends React.PureComponent {
       ModalOrg: true,
       src: null,
       isAlertSaveModalOpen: false,
-      crop: SETTING.CROP_DEFAULT
+      crop: SETTING.CROP_DEFAULT,
+      yearOfExperience: 0
     };
     this.isImageSave = false;
     this.isChangePhoto = false
@@ -60,7 +61,7 @@ export class EntityPersonalDetail extends React.PureComponent {
         age: nextProps.personalDetail.age,
         genderName: nextProps.personalDetail.genderName,
         organization: nextProps.personalDetail.organization,
-        yearOfExperience: nextProps.personalDetail.yearOfExperience,
+        yearOfExperience: 0,
         description: nextProps.personalDetail.description,
         hourlyRate: nextProps.personalDetail.hourlyRate,
         url: nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
@@ -491,27 +492,6 @@ export class EntityPersonalDetail extends React.PureComponent {
                 className='form-control'
               />
             </div>
-            <div className='col-md-6 mb-2'>
-              <Input
-                name='YearsExperience'
-                label='Years of Experience'
-                autoComplete='off'
-                required='required'
-                type='text'
-                maxlength='2'
-                value={this.state.yearOfExperience}
-                textChange={e => {
-                  const re = /^[0-9\b]+$/
-                  if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({
-                      yearOfExperience: e.target.value,
-                      disabledSaveBtn: false
-                    })
-                  }
-                }}
-                className='form-control'
-              />
-            </div>
           </div>
         </div>
         <div className='col-md-12'>
@@ -810,7 +790,7 @@ export class EntityPersonalDetail extends React.PureComponent {
       firstName: this.props.personalDetail.firstName,
       lastName: this.props.personalDetail.lastName,
       age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      yearOfExperience: 0,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail.phoneNumber
@@ -843,7 +823,7 @@ export class EntityPersonalDetail extends React.PureComponent {
       firstName: this.props.personalDetail.firstName,
       lastName: this.props.personalDetail.lastName,
       age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
+      yearOfExperience: 0,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail.phoneNumber,
