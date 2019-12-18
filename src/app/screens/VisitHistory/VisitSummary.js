@@ -129,8 +129,8 @@ export class VisitSummary extends React.Component {
                         {profileData.fullName}
                       </i>
                     </span>
-                    {visitSummary.deceasedInd &&
-                          <span className='visit-summary-pg-status'>{getStatusTextBasedOnStatus(visitSummary)}</span>}
+                    {visitSummary.patient && visitSummary.patient.deceasedInd &&
+                          <span className='visit-summary-pg-status'>{getStatusTextBasedOnStatus(visitSummary.patient)}</span>}
                   </div>
                 </div>
               </div>
