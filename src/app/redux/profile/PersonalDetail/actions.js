@@ -221,6 +221,7 @@ export function updateOrganizationDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
