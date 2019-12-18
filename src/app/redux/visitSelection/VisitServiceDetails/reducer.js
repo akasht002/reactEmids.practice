@@ -15,8 +15,7 @@ const defaultState = {
     isScheduleLoading: false,
     cancelHiredRequest: false,
     disableShowMore: false,
-
-    //New Integration
+    questionAnswerList:[],
     visitserviceList: [],
     scheduleList: [],
     visitList: [],
@@ -102,6 +101,12 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
             return {
                 ...state,
                 VisitServiceElibilityStatus: action.data
+            };
+
+        case VisitServiceDetails.getQuestionsListSuccess:
+            return {
+                ...state,
+                questionAnswerList: action.data
             };
 
         case VisitServiceDetails.getDaysSuccess:
