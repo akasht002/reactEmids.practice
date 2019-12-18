@@ -67,7 +67,7 @@ class PersonalDetail extends React.PureComponent {
                   </span>
                   {
                   this.props.personalDetail.deceasedInd &&
-                  <span className='patient-status-indicator'><span></span>{getStatusTextBasedOnStatus(this.props.personalDetail.personalDetail)}</span>
+                  <span className='patient-status-indicator'><span></span>{getStatusTextBasedOnStatus(this.props.personalDetail)}</span>
                   }
                 </p>
               </div>
