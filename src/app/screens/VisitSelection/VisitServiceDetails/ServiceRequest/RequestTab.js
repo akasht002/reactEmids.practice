@@ -36,7 +36,7 @@ export const RequestTab = props => {
                                         <button test-accept='test-accept' class="btn btn-primary right_statusview" onClick={() => props.handelAccept(props.VisitServiceDetails.serviceRequestId)}>Accept</button>
                                     </React.Fragment>
                                 }
-                                <button class="btn btn-outline-primary right_statusview" onClick={props.toggleQuestionareModalOpen}>Questionaire</button>                           
+                                <button class="btn btn-outline-primary right_statusview" onClick={props.toggleQuestionareModalOpen}>Questionnaire</button>                           
                              </div>
                             
                             {statusName === VISIT_STATUS.open.keyValue &&

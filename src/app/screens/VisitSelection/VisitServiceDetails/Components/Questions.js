@@ -22,13 +22,14 @@ export const Questions = (props) => {
                                             answers.checked = true;
                                         }                                                                                     
                                         return (
-                                            <div className="form-radio col-md-3" key={(index+1)}>
+                                            <div className="form-radio col-md-4" key={(index+1)}>
                                                 <input className="form-radio-input"
                                                     id={questionList.serviceRequestAssessmentQuestionnaireId}
                                                     type="radio"
                                                     value={answers.answerName}
                                                     name={questionList.serviceRequestAssessmentQuestionnaireId}
                                                     defaultChecked= {answers.checked }
+                                                    disabled={true}
                                                 />
                                                 <label className="form-radio-label" htmlFor={(index+1)}>
                                                     <span className="RadioBoxIcon" /> {answers.answerName}</label>
@@ -52,7 +53,7 @@ export const Questions = (props) => {
                                                     className='form-control'
                                                     value={questionList.selectedAnswer}                                                   
                                                     maxLength={1000}
-                                                    // disabled={this.props.requestDetails.visitStatusId === 43}
+                                                    disabled={true}
                                                 />
                                     </div>}
                                 </div>
