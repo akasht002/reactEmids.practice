@@ -313,7 +313,7 @@ export const getEmergencyContactDetails = () => async (dispatch, getState) => {
     let patientId = getState().patientProfileState.patientId;
     dispatch(startLoading());
     try {
-        const resp = await PatientGet(`${API.getEmergencyContactDetails} ${patientId}`)
+        const resp = await PatientGet(`${API.getEmergencyContactDetails}${patientId}`)
         dispatch(getEmergencyContactDetailsSuccess(resp.data))
         dispatch(endLoading());
     } catch (error) {
@@ -325,7 +325,7 @@ export const getAttorneyContactDetails = () => async (dispatch, getState) => {
     let patientId = getState().patientProfileState.patientId;
     dispatch(startLoading());
     try {
-        const resp = await PatientGet(`${API.getAttorneyContactDetails} ${patientId}`)
+        const resp = await PatientGet(`${API.getAttorneyContactDetails}${patientId}`)
         dispatch(getAttorneyContactDetailsSuccess(resp.data))
         dispatch(endLoading());
     } catch (error) {

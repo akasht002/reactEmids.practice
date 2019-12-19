@@ -2,10 +2,10 @@ import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
-import EmergencyAttorenyDetails from "./Components/EmergencyAttorenyDetails";
+import EmergencyAttorneyDetails from "./Components/EmergencyAttorneyDetails";
 import { getEmergencyContactDetails, getAttorneyContactDetails } from "../../../redux/patientProfile/actions";
 
-const EmergencyAttorenyContact = (
+const EmergencyAttorneyContact = (
     {
         getEmergencyContactDetails,
         getAttorneyContactDetails,
@@ -26,11 +26,11 @@ const EmergencyAttorenyContact = (
         <Fragment>
             <div className='col-md-12 card CardWidget SPLanguages'>
                 <div className="row">
-                    <EmergencyAttorenyDetails
+                    <EmergencyAttorneyDetails
                         details={emergencyContactDetails}
                         header={'Emergency'}
                     />
-                    <EmergencyAttorenyDetails
+                    <EmergencyAttorneyDetails
                         details={attorneyContactDetails}
                         header={'Attorney'}
                     />
@@ -40,7 +40,7 @@ const EmergencyAttorenyContact = (
     )
 }
 
-EmergencyAttorenyContact.propTypes = {
+EmergencyAttorneyContact.propTypes = {
     getEmergencyContactDetails: PropTypes.func.isRequired,
     getAttorneyContactDetails: PropTypes.func.isRequired,
     emergencyContactDetails: PropTypes.object.isRequired,
@@ -61,4 +61,4 @@ export function mapStateToProps(state) {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EmergencyAttorenyContact));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EmergencyAttorneyContact));

@@ -13,7 +13,7 @@ import './styles.css'
 import { Path } from '../../../routes';
 import {clearState} from '../../../redux/patientProfile/actions';
 import { USERTYPES} from '../../../constants/constants';
-import EmergencyAttorenyContact from '../EmergencyAttorenyContact';
+import EmergencyAttorneyContact from '../EmergencyAttorneyContact';
 
 export class Profile extends Component {
 
@@ -60,7 +60,7 @@ export class Profile extends Component {
                 { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USERTYPES.PATIENT_AND_GUARDIAN) ? 
                 <PersonalDetail /> : <div>
                   <PersonalDetail />
-                  <EmergencyAttorenyContact />
+                  <EmergencyAttorneyContact />
                   <ClinicalCondition />
                   <PointService />
                   <Languages />
