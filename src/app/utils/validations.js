@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE, VISIT_PROCESSING_STATUS  } from '../constants/constants'
+import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE, VISIT_PROCESSING_STATUS, PATIENT_STATUS  } from '../constants/constants'
 import _ from 'lodash'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
@@ -302,4 +302,13 @@ export const restrictMultipleSpace = data => {
 export const getFieldsFirstValue = (array, field) => {
   let i = 0;
   return array[i][field]
+}
+
+export const getStatusTextBasedOnStatus = (props) => {
+  if((props && props.deceasedInd)) {
+    return PATIENT_STATUS.deceased
+  }
+  else {
+    return null
+  }
 }

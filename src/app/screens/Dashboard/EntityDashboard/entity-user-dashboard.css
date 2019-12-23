@@ -597,7 +597,7 @@ span.no-recoord-table {
 .all-individuals-tableblock td:nth-child(1),
 .all-individuals-tableblock th:nth-child(3),
 .all-individuals-tableblock td:nth-child(3) {
-    width: 10%;
+    width: 9%;
 }
 
 .all-individuals-tableblock th:nth-child(4),
@@ -612,7 +612,7 @@ span.no-recoord-table {
 
 .all-individuals-tableblock th:nth-child(5),
 .all-individuals-tableblock td:nth-child(5) {
-    width: 12%;
+    width: 10%;
 }
 
 .all-individuals-tableblock th:nth-child(2),
@@ -633,7 +633,11 @@ span.no-recoord-table {
 }
 
 .feedback-individuals-tableblock th:nth-child(4),
-.feedback-individuals-tableblock td:nth-child(4),
+.feedback-individuals-tableblock td:nth-child(4)
+{
+    width: 5%;
+}
+
 .feedback-individuals-tableblock th:nth-child(8),
 .feedback-individuals-tableblock td:nth-child(8) {
     width: 7%;
@@ -646,11 +650,15 @@ span.no-recoord-table {
 
 .feedback-individuals-tableblock th:nth-child(5),
 .feedback-individuals-tableblock td:nth-child(5) {
-    width: 12%;
+    width: 10%;
 }
 
 .feedback-individuals-tableblock th:nth-child(2),
-.feedback-individuals-tableblock td:nth-child(2),
+.feedback-individuals-tableblock td:nth-child(2)
+{
+    width: 12%;
+}
+
 .feedback-individuals-tableblock th:nth-child(6),
 .feedback-individuals-tableblock td:nth-child(6),
 .feedback-individuals-tableblock th:nth-child(7),
@@ -667,7 +675,10 @@ span.no-recoord-table {
 }
 
 .visit-individuals-tableblock th:nth-child(4),
-.visit-individuals-tableblock td:nth-child(4),
+.visit-individuals-tableblock td:nth-child(4)
+{
+    width: 5%;
+}
 .visit-individuals-tableblock th:nth-child(8),
 .visit-individuals-tableblock td:nth-child(8) {
     width: 7%;
@@ -680,11 +691,15 @@ span.no-recoord-table {
 
 .visit-individuals-tableblock th:nth-child(5),
 .visit-individuals-tableblock td:nth-child(5) {
-    width: 12%;
+    width: 10%;
 }
 
 .visit-individuals-tableblock th:nth-child(2),
-.visit-individuals-tableblock td:nth-child(2),
+.visit-individuals-tableblock td:nth-child(2)
+{
+    width: 12%;
+}
+
 .visit-individuals-tableblock th:nth-child(6),
 .visit-individuals-tableblock td:nth-child(6),
 .visit-individuals-tableblock th:nth-child(7),
