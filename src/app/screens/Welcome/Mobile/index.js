@@ -6,7 +6,7 @@ export class MobileLanding extends Component {
     render() {
         return (
             <Fragment>
-                <div className="full-block-view">
+                <div className="full-block-outer">
                     <div className="innerview-bg">
                         <div className="info-view">
                             <img alt="" className="logo-coreo" src={require("../../../../app/assets/MobileBannerImages/CoreoHomeWhite.png")} />
