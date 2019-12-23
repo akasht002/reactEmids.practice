@@ -98,17 +98,12 @@ export class PersonalDetail extends React.PureComponent {
               </div>
             </div>
             <div className={'SPAddressContent'}>
-              <div className={'width100 SPAddressTitle d-flex'}>
-                <span className={'SPAddressText primaryColor theme-primary'}>
-                  Emergency Contact
-                </span>
-              </div>
-              <div className={'width100 d-flex'}>
-                <span>
-                  {getLength(this.props.personalDetail.emergencyContact) > 0 ?
-                    formatPhoneNumber(this.props.personalDetail.emergencyContact) : ''}
-                </span>
-              </div>
+            <div className='SPAddressTitle'>
+              <span className='SPAddressText mb-1 theme-primary'>Height</span>
+              <p className='width100 d-flex'>{this.props.personalDetail.height} Inches</p>
+              <span className='SPAddressText mb-1 theme-primary'>Weight</span>
+              <p className='width100 d-flex'>{this.props.personalDetail.weight} Lbs</p>
+            </div>
             </div>
             {
               !this.props.personalDetail.deceasedInd &&

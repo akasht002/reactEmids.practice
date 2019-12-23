@@ -100,6 +100,18 @@ describe('PatientProfile actions', () => {
     it('should create an action to getSelectedClinicalConditionDetails', () => {
         expect(actions.getSelectedClinicalConditionDetails()).toBeDefined()
     })
+
+    it('should create an action to getPatientVitalsSuccess ', () => {
+        expect(actions.getPatientVitalsSuccess ()).toBeDefined()
+    })
+
+    it('should create an action to getEmergencyContactDetailsSuccess ', () => {
+        expect(actions.getEmergencyContactDetailsSuccess ()).toBeDefined()
+    })
+
+    it('should create an action to getAttorneyContactDetailsSuccess ', () => {
+        expect(actions.getAttorneyContactDetailsSuccess ()).toBeDefined()
+    })
 });
 
 
@@ -311,6 +323,38 @@ describe('PatientProfile async actions', () => {
 
         return store.dispatch(actions.getSelectedClinicalCondition(23)).then((response) => {
             store.dispatch(actions.getSelectedLanguageDetails(response.data))
+            expect(store.getActions()).toBeDefined()
+        }).catch(err => {
+        })
+    });
+
+    it('call getPatientVitals fn', () => {
+        fetchMock.get(API.getPatientVitals, {
+            body: { data: {} },
+            headers: { 'content-type': 'application/json' },
+            response: { data: {} }
+        })
+
+        const store = mockStore({ patientProfileState: {espID:34,patientId:45,userType:'G'}})
+
+        return store.dispatch(actions.getPatientVitals()).then((response) => {
+            store.dispatch(actions.getPatientVitalsSuccess(response.data))
+            expect(store.getActions()).toBeDefined()
+        }).catch(err => {
+        })
+    });
+
+    it('call getEmergencyContactDetails  fn', () => {
+        fetchMock.get(API.getEmergencyContactDetails , {
+            body: { data: {} },
+            headers: { 'content-type': 'application/json' },
+            response: { data: {} }
+        })
+
+        const store = mockStore({ patientProfileState: {espID:34,patientId:45,userType:'G'}})
+
+        return store.dispatch(actions.getEmergencyContactDetails ()).then((response) => {
+            store.dispatch(actions.getEmergencyContactDetailsSuccess(response.data))
             expect(store.getActions()).toBeDefined()
         }).catch(err => {
         })

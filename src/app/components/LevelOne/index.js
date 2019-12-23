@@ -30,6 +30,7 @@ import {CoreoPagination} from './CoreoPagination';
 import {CoreoTimePicker} from './CoreoTimePicker';
 import {PageResultCount} from './PageResultCount';
 import {RowPerPage} from './RowPerPage';
+import {PointOfService} from './PointOfService';
 
 export {
     Calendar,
@@ -65,5 +66,6 @@ export {
     CoreoPagination,
     CoreoTimePicker,
     PageResultCount,
-    RowPerPage
+    RowPerPage,
+    PointOfService
 };

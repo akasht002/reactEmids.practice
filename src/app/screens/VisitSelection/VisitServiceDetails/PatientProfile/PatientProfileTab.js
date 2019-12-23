@@ -4,7 +4,7 @@ import PersonalDetail from '../../../PatientProfile/PersonalDetail';
 import PointService from '../../../PatientProfile/PointService';
 import Languages from '../../../PatientProfile/Languages';
 import ClinicalCondition from '../../../PatientProfile/ClinicalCondition';
-import VitalDetails from '../../../PatientProfile/VitalDetails';
+import EmergencyAttorneyContact from '../../../PatientProfile/EmergencyAttorneyContact';
 
 export const PatientProfileTab = props => {
     return (
@@ -17,7 +17,7 @@ export const PatientProfileTab = props => {
              onClickConversation={props.onClickConversation}
              onClickVideoConference={props.onClickVideoConference}
             />
-            <VitalDetails />
+            <EmergencyAttorneyContact />
             <ClinicalCondition />
             <PointService />
             <Languages />

@@ -279,7 +279,7 @@ export function getPatientVitals() {
     return (dispatch, getState) => {
         let patientId = getState().patientProfileState.patientId;
         dispatch(startLoading());
-        PatientGet(API.getPatientVitals + patientId).then((resp) => {
+        return PatientGet(API.getPatientVitals + patientId).then((resp) => {
             dispatch(getPatientVitalsSuccess(resp.data))
             dispatch(endLoading());
         }).catch(() => {
@@ -294,3 +294,41 @@ export const getPatientVitalsSuccess = (data) => {
         data
     }
 }
+
+export const getEmergencyContactDetailsSuccess = (data) => {
+    return {
+        type: PatientProfile.getEmergencyContactDetailsSuccess,
+        data
+    }
+}
+
+export const getAttorneyContactDetailsSuccess = (data) => {
+    return {
+        type: PatientProfile.getAttorneyContactDetailsSuccess,
+        data
+    }
+}
+
+export const getEmergencyContactDetails = () => async (dispatch, getState) => {
+    let patientId = getState().patientProfileState.patientId;
+    dispatch(startLoading());
+    try {
+        const resp = await PatientGet(`${API.getEmergencyContactDetails}${patientId}`)
+        dispatch(getEmergencyContactDetailsSuccess(resp.data))
+        dispatch(endLoading());
+    } catch (error) {
+        dispatch(endLoading());
+    }
+};
+
+export const getAttorneyContactDetails = () => async (dispatch, getState) => {
+    let patientId = getState().patientProfileState.patientId;
+    dispatch(startLoading());
+    try {
+        const resp = await PatientGet(`${API.getAttorneyContactDetails}${patientId}`)
+        dispatch(getAttorneyContactDetailsSuccess(resp.data))
+        dispatch(endLoading());
+    } catch (error) {
+        dispatch(endLoading());
+    }
+};

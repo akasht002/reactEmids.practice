@@ -136,4 +136,28 @@ describe("PatientProfile reducer test case",()=>{
             data
         })).toBeDefined()
     })
+
+    it('Should handle the getEmergencyContactDetailsSuccess',()=>{
+        let data  ={}
+        expect(reducer([],{
+            type: PatientProfile.getEmergencyContactDetailsSuccess,
+            data
+        })).toBeDefined()
+    })
+
+    it('Should handle the getAttorneyContactDetailsSuccess',()=>{
+        let data  ={}
+        expect(reducer([],{
+            type: PatientProfile.getAttorneyContactDetailsSuccess,
+            data
+        })).toBeDefined()
+    })
+
+    it('Should handle the getPatientVitalsSuccess',()=>{
+        let data  ={}
+        expect(reducer([],{
+            type: PatientProfile.getPatientVitalsSuccess,
+            data
+        })).toBeDefined()
+    })
 });

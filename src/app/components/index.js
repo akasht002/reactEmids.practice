@@ -46,7 +46,8 @@ import {
     CoreoPagination,
     CoreoTimePicker,
     RowPerPage,
-    PageResultCount
+    PageResultCount,
+    PointOfService
 } from './LevelOne';
 import {
     CarouselComp,
@@ -107,5 +108,6 @@ export {
     CoreoCheckBox,
     RowPerPage,
     PageResultCount,
-    CoreoRadio
+    CoreoRadio,
+    PointOfService
 };
