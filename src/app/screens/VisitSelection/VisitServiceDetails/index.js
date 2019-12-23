@@ -29,7 +29,8 @@ import {
   editIndividualEditPopup,
   setEntityDashboard,
   modifiedPlanId,
-  clearVisitList
+  clearVisitList,
+  getServiceRequestAssessmentQuestionByID
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
 import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule, getPatientAddress } from '../../../redux/schedule/actions';
 import {
@@ -44,6 +45,7 @@ import { getUserInfo } from '../../../services/http'
 import {
   goToAssessmentVisitProcessing
 } from "../../../redux/dashboard/Dashboard/actions";
+import { Questions } from './Components/Questions'
 import { setServiceProviderFeedbackTab } from "../../../redux/dashboard/EntityDashboard/ServiceProvider/actions"
 import { Path } from '../../../routes';
 import { push, goBack } from '../../../redux/navigation/actions';
@@ -122,7 +124,8 @@ export class VisitServiceDetails extends Component {
       phoneNumber: '',
       conversationsModal: false,
       conversationErrMsg: '',
-      selectedDuration: null
+      selectedDuration: null,
+      isQuestionareModalOpen:false
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -137,6 +140,7 @@ export class VisitServiceDetails extends Component {
 
     if (this.props.ServiceRequestId) {
       this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+      this.props.getServiceRequestAssessmentQuestionByID(this.props.ServiceRequestId)
       this.props.getServiceRequestList(this.props.patientId);
       this.props.getEntityServiceProviderList(data, this.props.serviceVisitDetails.serviceProviderId);
       (caseInsensitiveComparer(this.props.activeTab, SERVICE_REQUEST_DETAILS_TAB.myPlan)) && this.props.getSchedulesList(this.props.patientId);
@@ -173,6 +177,18 @@ export class VisitServiceDetails extends Component {
       })
       this.props.editIndividualEditPopup(false)
     }
+  }
+
+  toggleQuestionareModalOpen =()=>{
+    this.setState({
+      isQuestionareModalOpen:!this.state.isQuestionareModalOpen
+    })
+  }
+
+  toggleQuestionareModalClose = () =>{
+    this.setState({
+      isQuestionareModalOpen:false
+    })
   }
 
   getVisitFirstAndLastDate = async() => {
@@ -742,7 +758,35 @@ highlightVisit = data => {
   this.props.setServicePlanVisitId(data.servicePlanVisitId)
 }
 
+dataC=(ans)=>{
+  if(ans.answerType!=="OpenText"){
+  let arr = []
+  for (const [index, value] of ans.answers.entries()) {
+    arr.push({
+      id: index,
+      answerName:value
+    })
+  }
+  return arr;
+  }else{
+      return []
+  }
+}
+
+
+formatJSON=(data)=>{
+let datas =  data.map((el)=> {
+    return ({
+      ...el,
+      answerss:this.dataC(el)
+    })
+  })
+  return datas
+}
+
   render() {
+    let srQuestionareDetaisModalContent= <Questions questionsLists={this.formatJSON(this.props.questionAnswerList)}/>;
+    
     let modalContent =
       <div className="row">
         <div className="col-md-12 mb-2">
@@ -905,6 +949,7 @@ highlightVisit = data => {
                     handelAccept={this.handelAccept}
                     handelCancel={this.handelCancel}
                     handelEngage={this.handelEngage}
+                    toggleQuestionareModalOpen={this.toggleQuestionareModalOpen}
                   />
                 }
                 <PlanTab
@@ -977,6 +1022,16 @@ highlightVisit = data => {
               discardbuttonLabel={'Cancel'}
               onDiscard={() => this.setState({ editModal: !this.state.editModal })}
             />
+          <ProfileModalPopup
+            isOpen={this.state.isQuestionareModalOpen}
+            toggle={this.toggleQuestionareModalOpen}
+            ModalBody={srQuestionareDetaisModalContent}
+            className='modal-lg asyncModal CertificationModal my-plan-editmodel'
+            modalTitle={'Questionnaire'}
+            centered
+            onClick={this.toggleQuestionareModalClose}
+            buttonLabel={'Ok'}
+          />
             <ModalPopup
               isOpen={this.state.standByModeAlertMsg}
               ModalBody={<span> Please turn off the stand-by mode to start the visit. </span>}
@@ -1113,7 +1168,8 @@ export function mapDispatchToProps(dispatch) {
     modifiedPlanId: (actualData, selectedData) => dispatch(modifiedPlanId(actualData, selectedData)),
     getPatientAddress: (data) => dispatch(getPatientAddress(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
-    clearVisitList: () => dispatch(clearVisitList())
+    clearVisitList: () => dispatch(clearVisitList()),
+    getServiceRequestAssessmentQuestionByID:data => dispatch(getServiceRequestAssessmentQuestionByID(data))
   }
 }
 
@@ -1148,7 +1204,8 @@ export function mapStateToProps(state) {
     activePage: VisitServiceDetailsState.activePage,
     planScheduleId: VisitServiceDetailsState.planScheduleId,
     isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup,
-    planId: VisitServiceDetailsState.planId
+    planId: VisitServiceDetailsState.planId,
+    questionAnswerList:VisitServiceDetailsState.questionAnswerList
   }
 }
 

@@ -17,6 +17,7 @@ import {paymentPathValid } from '../../redux/visitSelection/VisitServiceProcessi
 
 import './visitProcessing.css'
 import { getFullName } from '../../utils/stringHelper';
+import { getStatusTextBasedOnStatus } from '../../utils/validations';
 
 export class VisitSummary extends React.Component {
   constructor(props) {
@@ -128,6 +129,8 @@ export class VisitSummary extends React.Component {
                         {profileData.fullName}
                       </i>
                     </span>
+                    {visitSummary.patient && visitSummary.patient.deceasedInd &&
+                          <span className='visit-summary-pg-status'>{getStatusTextBasedOnStatus(visitSummary.patient)}</span>}
                   </div>
                 </div>
               </div>

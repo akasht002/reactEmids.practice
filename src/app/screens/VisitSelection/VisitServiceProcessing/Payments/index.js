@@ -18,6 +18,7 @@ import {
     getVisitServiceHistoryByIdDetail
   } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import './style.css'
+import { getStatusTextBasedOnStatus } from "../../../../utils/validations";
 
 export class Payments extends Component {
 
@@ -279,7 +280,10 @@ export class Payments extends Component {
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
+                                                {this.props.patientDetails.deceasedInd &&
+                                                    <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails)}</span>}
+                                                </span>
                                             :
                                             ''
                                         }
