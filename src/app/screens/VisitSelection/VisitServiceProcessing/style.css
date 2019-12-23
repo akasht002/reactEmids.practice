@@ -1253,6 +1253,28 @@ div.AddressCardWidget {
     }
 }
 
+.visit-processing-pg-status{
+    position: absolute;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    top: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    bottom: 0;
+    max-width: 300px;
+    right: 0;
+    left: 0;
+    text-align: left;
+    padding-left: 74px;
+}
+
+.requestContent .requestImageContent
+{
+    max-width:300px;
+}
 
 /*filter-address*/
 .FilterMiddleRight .tab-pane .AddressCardWidget .AddressPOS

@@ -157,7 +157,6 @@ export function getPersonalDetail () {
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
         dispatch(getServiceArea());
-        dispatch(endLoading())
       })
       .catch(err => {
         logError(err)
@@ -203,6 +202,7 @@ export function updatePersonalDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())    
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -221,6 +221,7 @@ export function updateOrganizationDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -238,6 +239,7 @@ export function updateEntityDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())

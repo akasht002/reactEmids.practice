@@ -266,7 +266,32 @@ i.SPIconEditPersonalDetails {
     display: none;
 }
 
-.SPAffiliatedList {
+.patient-status-indicator-pg
+{
+    position: absolute;
+    display: block;
+    bottom: 0;
+    top: 33px;
+    width: 123px;
+    height: 100%;
+    right: 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.BoardContainer .ServiceRequestBoard .BlockProfileDetails .BlockProfileDetailsName span:last-child
+{
+  color:#444;
+  font-weight:600;
+}
+
+.SPsubTitle span.patient-status-indicator:before {
+    background-color: red !important;
+    border: 1px solid red;
+}
+
+.SPAffiliatedList{
     font-size: 14px;
     color: #6d6d6d;
     margin-bottom: 25px;

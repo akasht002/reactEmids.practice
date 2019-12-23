@@ -149,7 +149,8 @@ export const DashboardConversationPagination = {
 
 
 export const USER_TYPE = {
-    SERVICE_PROVIDER_TYPE_ID: 2
+    SERVICE_PROVIDER_TYPE_ID: 2,
+    INDIVIDUAL_SERVICE_PROVIDER:1
 }
 
 export const SERVICE_PROVIDER_TYPES = {
@@ -587,3 +588,8 @@ export const MONTHLY_RECURRING_OPTIONS = {
 export const CALENDAR_DASHBOARD_LENGTH = 6;
 
 export const RECURRING_PATTERN_VALIDATION_MSG = 'Please Select the recurring pattern';
+
+export const PATIENT_STATUS = {
+    deceased: 'Deceased',
+    inActive: 'Inactive'
+}

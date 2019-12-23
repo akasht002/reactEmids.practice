@@ -1,5 +1,6 @@
 import React from "react";
 import {PERMISSIONS} from '../../../constants/constants';
+import { RouteHighlightInnerRoute } from '../../../data/MenuData'
 import './style.css'
 
 function AsideMenu(props) {
@@ -9,7 +10,7 @@ function AsideMenu(props) {
             return (
                 <li className={'profileSideNavigationList CursorPointer'}>
                     <div name={menu.name + '_' + PERMISSIONS.READ} 
-                        className={'profileSideNavigationLink ' + (path === menu.link ? 'active' : '')} 
+                        className={'profileSideNavigationLink ' + (path === menu.link || path === RouteHighlightInnerRoute[menu.id] ? 'active' : '')} 
                         onClick={() => {props.onClick(menu.link)}} >
                         <i className={menu.iconName} />
                         <span>{menu.title}</span>

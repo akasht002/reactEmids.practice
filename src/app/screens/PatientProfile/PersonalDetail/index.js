@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import * as action from '../../../redux/patientProfile/actions'
 import {
-  getLength
+  getLength, getStatusTextBasedOnStatus
 } from '../../../utils/validations'
 import { ProfileImage } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
@@ -65,6 +65,10 @@ export class PersonalDetail extends React.PureComponent {
                     {' '}
                     yrs
                   </span>
+                  {
+                  this.props.personalDetail.deceasedInd &&
+                  <span className='patient-status-indicator'><span></span>{getStatusTextBasedOnStatus(this.props.personalDetail)}</span>
+                  }
                 </p>
               </div>
             </div>
@@ -100,14 +104,17 @@ export class PersonalDetail extends React.PureComponent {
               <span className='SPAddressText mb-1 theme-primary'>Weight</span>
               <p className='width100 d-flex'>{this.props.personalDetail.weight} Lbs</p>
             </div>
-          </div>
-            <div className="d-flex profile-action-block">
+            </div>
+            {
+              !this.props.personalDetail.deceasedInd &&
+              <div className="d-flex profile-action-block">
               {
                 communicationData.map(item =>
                   <i className={item.className} title={item.title} onClick={() => this.performActionBasedOnTitle(item.title)}/>
                 )
               }
           </div>
+            }
           </div>
         </div>
       </Fragment>

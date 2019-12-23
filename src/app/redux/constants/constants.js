@@ -120,7 +120,7 @@ export const CARETEAM_SV_STATUS = ['ALL', 'Completed', 'Not Started', 'Over Due'
 
 export const DATE_FORMATS = {
     monDD: "MMM DD",
-    hhMinSession: "hh:mm A",
+    hhMinSession: "hh:mm a",
     yyyy_mm_dd: 'YYYY-MM-DD',
     mm: "MM",
     mmm: "MMM",

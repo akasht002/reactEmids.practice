@@ -30,3 +30,7 @@ export const MenuData = [
         name: SCREENS.NOTIFICATIONS
     },
 ];
+
+export const RouteHighlightInnerRoute = {
+    1:'/visitservicedetails'
+}
