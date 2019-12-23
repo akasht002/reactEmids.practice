@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { PointOfService } from '../../../../components';
 import { formatPhoneNumber } from '../../../../utils/formatName'
 
-const EmergencyAttorenyDetails = ({
+const EmergencyAttorneyDetails = ({
     header,
     details
 }) => {
@@ -42,9 +42,9 @@ const EmergencyAttorenyDetails = ({
     );
 };
 
-EmergencyAttorenyDetails.prototypes = {
+EmergencyAttorneyDetails.prototypes = {
     details: PropTypes.object.isRequired,
     header: PropTypes.string.isRequired
 };
 
-export default EmergencyAttorenyDetails;
+export default EmergencyAttorneyDetails;

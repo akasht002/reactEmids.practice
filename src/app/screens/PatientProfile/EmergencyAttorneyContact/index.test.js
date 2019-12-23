@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 
-import EmergencyAttorneyDetails from './index';
+import EmergencyAttorneyContact from './index';
 import { mapStateToProps, mapDispatchToProps } from './index'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -14,11 +14,11 @@ let props = {
     attorneyContactDetails: {}
 }
 
-describe('EmergencyAttorneyDetails', () => {
+describe('EmergencyAttorneyContact', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(
-            <EmergencyAttorneyDetails {...props} />
+            <EmergencyAttorneyContact {...props} />
         )
     })
     it('should return correct component', () => {

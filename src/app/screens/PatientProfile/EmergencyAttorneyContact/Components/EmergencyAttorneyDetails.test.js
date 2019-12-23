@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
 
-import EmergencyAttorenyDetails from './EmergencyAttorenyDetails';
+import EmergencyAttorneyDetails from './EmergencyAttorneyDetails';
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -15,7 +15,7 @@ describe('EmergencyAttorenyDetails', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(
-            <EmergencyAttorenyDetails {...props} />
+            <EmergencyAttorneyDetails {...props} />
         )
     })
     it('should return correct component', () => {
