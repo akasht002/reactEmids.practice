@@ -474,6 +474,27 @@ export const getfirstlastvisitdateSuccess = data => {
   }
 }
 
+
+export const getQuestionsListSuccess = data => {  
+  return {
+    type: VisitServiceDetails.getQuestionsListSuccess,
+    data
+  }
+}
+
+export function getServiceRequestAssessmentQuestionByID(id) {
+  return dispatch => {
+    return ServiceRequestGet(`${API.getSelectedServiceRequestAssessmentQuestionnaire}${id}`)
+      .then(resp => {        
+        dispatch(getQuestionsListSuccess(resp.data))
+      })
+      .catch(err => {
+        // dispatch(endLoadingProcessing())
+      })
+  }
+}
+
+
 export function selectESP(espId) {
   return (dispatch, getState) => {
     let espList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
