@@ -491,6 +491,18 @@ export class VistSummary extends React.Component {
                         </span>
                       </div>
                     </p>
+                    {isEntityUser() &&
+                    <React.Fragment>
+                      <p className="m-0">
+                        <span className="SummaryContentTableTitle">Start Point to POS</span>
+                        <span>{`${summaryDetail.startVisitPoint} (Miles)`}</span>
+                      </p>
+                      <p className="m-0">
+                        <span className="SummaryContentTableTitle">Stop Point to POS</span>
+                        <span>{`${summaryDetail.stopVisitPoint} (Miles)`}</span>
+                      </p>
+                    </React.Fragment>
+                    }
                   </div>
                 </div>
 
