@@ -372,6 +372,7 @@ export function acceptservicerequest(data) {
       .then(resp => {
         dispatch(getVisitServiceDetails(data.serviceRequestId));
         dispatch(getSchedulesList(data.patientId));
+        dispatch(endLoading())
       })
       .catch(err => {
         dispatch(push(Path.visitServiceList))
