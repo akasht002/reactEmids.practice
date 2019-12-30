@@ -213,5 +213,6 @@ export const API = {
     getPaymentAvailability: 'Common/LookupConfig/PaymentAvailability',
     getEmergencyContactDetails: 'patient/emergencycontact/',
     getAttorneyContactDetails: 'patient/attorney/',
-    getSelectedServiceRequestAssessmentQuestionnaire:'ServiceRequestAssessment/Answers/'
+    getSelectedServiceRequestAssessmentQuestionnaire:'ServiceRequestAssessment/Answers/',
+    getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/'
 }

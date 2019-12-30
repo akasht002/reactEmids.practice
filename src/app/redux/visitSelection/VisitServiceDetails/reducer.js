@@ -40,7 +40,8 @@ const defaultState = {
     planId: [],
     isVisitservicedetailLoading: false,
     isServiceRequestListLoading: false,
-    isEntityServiceProviderListLoading: false
+    isEntityServiceProviderListLoading: false,
+    isAnyEngagedServiceRequestSuccess: false
 };
 
 const VisitServiceDetailsState = (state = defaultState, action) => {
@@ -277,6 +278,11 @@ const VisitServiceDetailsState = (state = defaultState, action) => {
         return {
             ...state,
             visitList: []
+        }    
+        case VisitServiceDetails.getIsAnyEngagedServiceRequestSuccess:
+        return {
+            ...state,
+            isAnyEngagedServiceRequestSuccess: action.data
         }    
         default:
             return state;

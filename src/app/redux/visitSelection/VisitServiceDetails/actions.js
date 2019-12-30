@@ -372,6 +372,7 @@ export function acceptservicerequest(data) {
       .then(resp => {
         dispatch(getVisitServiceDetails(data.serviceRequestId));
         dispatch(getSchedulesList(data.patientId));
+        dispatch(getIsAnyEngagedServiceRequest(data.patientId))
         dispatch(endLoading())
       })
       .catch(err => {
@@ -476,7 +477,7 @@ export const getfirstlastvisitdateSuccess = data => {
 }
 
 
-export const getQuestionsListSuccess = data => {  
+export const getQuestionsListSuccess = data => {
   return {
     type: VisitServiceDetails.getQuestionsListSuccess,
     data
@@ -486,7 +487,7 @@ export const getQuestionsListSuccess = data => {
 export function getServiceRequestAssessmentQuestionByID(id) {
   return dispatch => {
     return ServiceRequestGet(`${API.getSelectedServiceRequestAssessmentQuestionnaire}${id}`)
-      .then(resp => {        
+      .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
       })
       .catch(err => {
@@ -514,9 +515,9 @@ export function selectESP(espId) {
 export function getEntityServiceProviderList(data, selectedESPId = null) {
   return (dispatch, getState) => {
     dispatch(loadingESPList(true))
-    let commonUrl = `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`    
+    let commonUrl = `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`
     let url = selectedESPId !== null ? `${commonUrl}/${selectedESPId}` :  `${commonUrl}`
-      Get(`${API.searchESP}` + url)
+    Get(`${API.searchESP}` + url)
       .then(resp => {
         let oldEspList = getState().visitSelectionState.VisitServiceDetailsState.entityServiceProvidersList;
         let modifiedList = [...oldEspList, ...resp.data];
@@ -545,16 +546,16 @@ export function getEntityServiceProviderListSearch(data, selectedESPId = null) {
   return (dispatch, getState) => {
     let commonUrl = `${getUserInfo().serviceProviderId}/${data.pageNumber}/${data.pageSize}`
     let url = selectedESPId !== null ?
-            `${commonUrl}/${selectedESPId}?searchtext=${data.searchKeyword}` :
-            `${commonUrl}?searchtext=${data.searchKeyword}`
-            Get(`${API.searchESP}` + url)
+      `${commonUrl}/${selectedESPId}?searchtext=${data.searchKeyword}` :
+      `${commonUrl}?searchtext=${data.searchKeyword}`
+    Get(`${API.searchESP}` + url)
       .then(resp => {
         let selectedESP = resp.data.map((type, index) => {
           return {
-              ...type,
-              selected: type.serviceProviderId === selectedESPId
+            ...type,
+            selected: type.serviceProviderId === selectedESPId
           }
-      });
+        });
         dispatch(getEntityServiceProviderListSuccess(selectedESP))
         if (resp.data.length < 9) {
           dispatch(disableShowmore(true))
@@ -865,3 +866,20 @@ export const clearVisitList = () => {
     type: VisitServiceDetails.clearVisitList
   }
 }
+
+export const getIsAnyEngagedServiceRequestSuccess = data => {
+  return {
+    type: VisitServiceDetails.getIsAnyEngagedServiceRequestSuccess,
+    data
+  }
+}
+
+export const getIsAnyEngagedServiceRequest = (patientId) => async (dispatch) => {
+  let serviceProviderId = getUserInfo().serviceProviderId;
+  try {
+    const resp = await ServiceRequestGet(`${API.getIsAnyEngagedServiceRequest}${patientId}${'/'}${serviceProviderId}`)
+    dispatch(getIsAnyEngagedServiceRequestSuccess(resp.data))
+  } catch (error) {
+    logError(error)
+  }
+};
