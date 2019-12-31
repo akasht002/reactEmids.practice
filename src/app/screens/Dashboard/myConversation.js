@@ -47,7 +47,8 @@ export class MyConversation extends React.Component {
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
             <span className='ProfileCardHeaderTitle theme-primary'>
-              My Conversations
+            {!entityUser && 'My Conversations'}
+              {/* Service Request */}
             </span>
            { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink theme-primary' to='/messagesummary'>View all</Link>}
           </div>

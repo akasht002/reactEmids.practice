@@ -106,3 +106,28 @@ display: none;
     cursor: pointer;
     background-color: #f9f8f8;
 }
+
+.right-empty-srblock {
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.right-empty-srblock img {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+@media (min-width: 1367px) {
+    .right-empty-srblock {
+        height: calc(100vh - 277px);
+    }
+}
