@@ -593,3 +593,5 @@ export const PATIENT_STATUS = {
     deceased: 'Deceased',
     inActive: 'Inactive'
 }
+
+export const NO_LOCATION_DATA = 'No Location Data'

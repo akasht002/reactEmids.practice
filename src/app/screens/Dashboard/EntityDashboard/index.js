@@ -16,6 +16,7 @@ import { setActiveTab, setFromDate, setToDate } from '../../../redux/dashboard/E
 import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import { getMessageFallBackInterval } from '../../../redux/asyncMessages/actions';
 import { createDataStore } from '../../../redux/telehealth/actions'
+import { getThresholdRadius } from '../../../redux/auth/user/actions';
 import './entity-user-dashboard.css'
 import { Tabs } from './Components/Tabs/Tabs';
 
@@ -65,6 +66,7 @@ export class EntityDashboard extends Component {
     this.props.getAboutUsContent();
     this.props.getBuildVersion();
     this.props.getMessageFallBackInterval();
+    this.props.getThresholdRadius();
     this.setState({ activeTab: this.props.activeTab })
   }
 
@@ -210,6 +212,7 @@ export function mapDispatchToProps(dispatch) {
     createDataStore: data => dispatch(createDataStore(data)),
     setFromDate: data => dispatch(setFromDate(data)),
     setToDate: data => dispatch(setToDate(data)),
+    getThresholdRadius: () => dispatch(getThresholdRadius())
   }
 }
 

@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { Get, CareTeamGet } from '../../../services/http';
+import { Get, CareTeamGet, ThirdPartyGet } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { remove } from '../../offline/actions';
@@ -143,3 +143,22 @@ export function setIsFormDirty(isDirty){
         data: isDirty
     }
 };
+
+export function getThresholdRadius() { 
+    return (dispatch) => {
+        return ThirdPartyGet(API.getThresholdRadius)          
+          .then(resp => {
+            dispatch(getThresholdRadiusSuccess(resp.data[0]));
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      }
+}
+
+export const getThresholdRadiusSuccess = (data) => {
+    return {
+        type: USER.getThresholdRadiusSuccess,
+        data
+    }
+}
