@@ -18,6 +18,7 @@ import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { DATE_FORMATS,ERROR_MSG } from '../../../../constants/constants'
 import { VISIT_SUMMARY } from '../../../../redux/constants/constants'
+import { isEntityUser } from "../../../../utils/userUtility";
 
 export class AssessmentSummary extends Component {
 
@@ -382,7 +383,7 @@ export class AssessmentSummary extends Component {
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
-                                        {getUserInfo().isEntityServiceProvider &&
+                                        {(getUserInfo().isEntityServiceProvider || isEntityUser()) &&
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>                                           
                                         }
                                     </div> 

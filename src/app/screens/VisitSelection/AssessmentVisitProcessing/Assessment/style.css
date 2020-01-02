@@ -89,6 +89,18 @@
     padding: 0 0 0 15px;
 }
 
+/* .rightTimerContent span.TimerStarted.running:first-child
+{
+    left: 0;
+    display: inline-flex;
+} */
+
+.rightTimerContent span.TimerStarted.running:last-child
+{
+    bottom: 0px;
+    position: relative;
+    text-align: left
+}
 @media (max-width: 1024px){
     .rightTimerContainer div.FeedbackTimer{
         top: 20px;

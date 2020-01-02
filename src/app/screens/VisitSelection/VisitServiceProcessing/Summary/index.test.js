@@ -20,6 +20,10 @@ jest.mock('../../../../services/http', () => ({
     })
 }))
 
+jest.mock('../../../../utils/userUtility', () => ({
+    isEntityUser: () => ({})
+}))
+
 Enzyme.configure({ adapter: new Adapter() })
 
 let store;

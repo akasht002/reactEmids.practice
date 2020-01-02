@@ -210,7 +210,7 @@ export class Assessment extends Component {
             />
         }
 
-        let startedTimes = this.props.startedTime.length > 0 ? this.props.startedTime: getUTCFormatedDate(this.props.PerformTasksList.visitStartTime, "hh:mm a")
+        let startedTimes = getUTCFormatedDate(visitStartTime, "hh:mm a")
 
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
             timerBtn = <a className="btn btn-primary" test-startButton='test-startButton' onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
@@ -277,11 +277,11 @@ export class Assessment extends Component {
                                             <span className="TimerContent">{ time }</span>
                                         </div>
                                         <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">{ timerBtn }</span>
+                                           {timerBtn}
+                                            {visitStatus !== SERVICE_STATES.YET_TO_START && startedTimes.length > 0 && 
+                                                <span className="TimerStarted running">Started at {startedTimes}</span>}
                                         </div>
-                                        {visitStatus !== SERVICE_STATES.YET_TO_START && startedTimes.length > 0 && <div className="col-md-5 rightTimerContent FeedbackTimer">
-                                            <span className="TimerStarted running">Started at {startedTimes}</span>
-                                        </div>}
+                                       
                                     </div>
                                 </div>
                             </div>
