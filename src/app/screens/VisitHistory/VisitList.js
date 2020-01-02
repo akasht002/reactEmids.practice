@@ -72,7 +72,7 @@ export const VisitList = props => {
                         </div>
                        
                       </div>
-                      {vistList.deceasedInd &&
+                      {(vistList.deceasedInd || !vistList.isActive) &&
                           <span className="patient-status-indicator-pg">{`(${getStatusTextBasedOnStatus(vistList)})`}</span>}
                     </div>
                   </div>

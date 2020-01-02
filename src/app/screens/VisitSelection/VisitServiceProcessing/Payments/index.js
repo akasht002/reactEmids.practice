@@ -281,7 +281,7 @@ export class Payments extends Component {
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
-                                                {this.props.patientDetails.deceasedInd &&
+                                                {(this.props.patientDetails.deceasedInd || !this.props.patientDetails.isActive) &&
                                                     <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails)}</span>}
                                                 </span>
                                             :

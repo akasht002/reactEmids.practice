@@ -308,6 +308,9 @@ export const getStatusTextBasedOnStatus = (props) => {
   if((props && props.deceasedInd)) {
     return PATIENT_STATUS.deceased
   }
+  else if((props && !props.isActive)) {
+    return PATIENT_STATUS.inActive
+  }
   else {
     return null
   }

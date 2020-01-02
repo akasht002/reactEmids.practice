@@ -66,7 +66,7 @@ export class PersonalDetail extends React.PureComponent {
                     yrs
                   </span>
                   {
-                  this.props.personalDetail.deceasedInd &&
+                  (this.props.personalDetail.deceasedInd || !this.props.personalDetail.isActive) &&
                   <span className='patient-status-indicator'><span></span>{getStatusTextBasedOnStatus(this.props.personalDetail)}</span>
                   }
                 </p>
@@ -106,7 +106,7 @@ export class PersonalDetail extends React.PureComponent {
             </div>
             </div>
             {
-              !this.props.personalDetail.deceasedInd &&
+              (!this.props.personalDetail.deceasedInd || this.props.personalDetail.isActive) &&
               <div className="d-flex profile-action-block">
               {
                 communicationData.map(item =>

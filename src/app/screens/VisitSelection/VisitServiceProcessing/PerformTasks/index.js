@@ -212,7 +212,7 @@ export class PerformTasks extends Component {
                                                 className="avatarImage avatarImageBorder" alt="patientImage" />
                                             <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i>
                                         </span>
-                                        {this.state.taskList.patient && this.state.taskList.patient.deceasedInd &&
+                                        {this.state.taskList.patient && (this.state.taskList.patient.deceasedInd || !this.state.taskList.patient.isActive) &&
                                           <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.state.taskList.patient)}</span>}
                                     </div>
                                 </div>
