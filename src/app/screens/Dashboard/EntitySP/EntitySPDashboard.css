@@ -109,7 +109,6 @@ display: none;
 
 .right-empty-srblock {
     width: 100%;
-    display: -ms-flexbox;
     display: flex;
     align-items: center;
     justify-content: center;
