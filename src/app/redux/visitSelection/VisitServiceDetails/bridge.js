@@ -42,5 +42,6 @@ export const VisitServiceDetails = {
     isServiceRequestListLoading: 'isServiceRequestListLoading/visitservicedetails',
     isEntityServiceProviderListLoading: 'isEntityServiceProviderListLoading/visitservicedetails',
     clearVisitList: 'clearVisitList/visitServiceDetails',    
-    getQuestionsListSuccess:'getServiceRequestAssessmentQuestionByID/visitServiceDetails'
+    getQuestionsListSuccess:'getServiceRequestAssessmentQuestionByID/visitServiceDetails',
+    getIsAnyEngagedServiceRequestSuccess: 'getIsAnyEngagedServiceRequestSuccess/visitServiceDetails'
   }

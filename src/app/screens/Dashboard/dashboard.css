@@ -216,14 +216,19 @@ li div.dropdown-menu {
 }
 
 .SPContentWidget .ProfileContainer.topProfile {
-    height: 620px;
-    margin-bottom: 20px;
-    width: calc(55% - 20px);
+    height: 596px;
+    margin-bottom: 15px;
+    width: calc(59% - 20px);
 }
 
 .SPContentWidget .ProfileContainer .card {
     width: 100%;
     margin: 0 0 20px 0;
+}
+
+.bottomProfile .innerWidget .ProfileCard
+{
+    height: 100%;
 }
 
 .SPContentWidget .bottomProfile {
@@ -910,16 +915,18 @@ div.ProfileSearchContainer,
 }
 
 .innerWidget .card.extended {
-    height: 620px;
+    height: 596px;
 }
+
+
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
-        height: 713px !important;
+        height: 740px !important;
     }
 
     .SPContentWidget .ProfileContainer .ProfileCard.extended {
-        height: 713px !important;
+        height: 740px !important;
     }
 
     .SPContentWidget .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
@@ -929,6 +936,11 @@ div.ProfileSearchContainer,
     .bottomProfile .innerWidget:first-child,
     .ProfileContainer.topProfile {
         height: 380px;
+    }
+
+    .ProfileContainer.bottomProfile .innerWidget:nth-child(2)
+    {
+        height: 350px !important;
     }
 
     .bottomProfile.ServiceProvider .innerWidget:first-child,
@@ -996,7 +1008,7 @@ div.ProfileSearchContainer,
     }
 
     .ProfileConversationWidget {
-        height: 230px;
+        height: 200px;
     }
 
     .ProfileConversationWidget.ServiceProvider {
@@ -1069,10 +1081,10 @@ div.ProfileSearchContainer,
 
 .SPContentWidget .ProfileContainer.bottomProfile {
     min-height: auto;
-    height: 620px;
+    height: 596px;
     z-index: 0;
-    margin-bottom: 20px;
-    width: calc(45% - 20px)
+    margin-bottom: 15px;
+    width: calc(41% - 20px)
 }
 
 .SPContentWidget .ProfileContainer.bottomProfile.entity-sp-block .innerWidget .card.ProfileCard {
@@ -1085,42 +1097,14 @@ div.ProfileSearchContainer,
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.bottomProfile {
-        height: 713px !important;
+        height: 740px !important;
     }
 
     .SPContentWidget .ProfileContainer.bottomProfile .topPalette.ProfileConversation {
         margin-bottom: 14px;
     }
-
-    .SPContentWidget .ProfileContainer .ProfileCard.extended {
-        height: 713px !important;
-    }
-
 }
 
-/*IE_11_&_IE_10*/
-
-@media all and (-ms-high-contrast:none) {
-    .ProfileConversationWidget {
-        height: auto;
-    }
-
-    /* IE10 */
-    *::-ms-backdrop,
-    .ProfileConversationWidget {
-        height: auto;
-    }
-
-    /* IE11 */
-}
-
-/*IE-Edge*/
-@supports (-ms-ime-align: auto) {
-    .ProfileConversationWidget {
-        height: auto;
-    }
-
-}
 
 /*cross-browser*/
 .rightPalette .TabBody .ScheduleTableRow .EntityUServiceProf {
@@ -1264,7 +1248,7 @@ div.ProfileSearchContainer,
 /*loading-bug_fixes*/
 
 .ProfileContainer.bottomProfile .innerWidget:nth-child(2) {
-    height: 340px;
+    height:254px;
     width: 100%;
     display: block;
     margin-top: 12px;

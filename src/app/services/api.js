@@ -214,5 +214,6 @@ export const API = {
     getEmergencyContactDetails: 'patient/emergencycontact/',
     getAttorneyContactDetails: 'patient/attorney/',
     getSelectedServiceRequestAssessmentQuestionnaire:'ServiceRequestAssessment/Answers/',
-    getThresholdRadius: 'Common/LookupConfig/ThresholdRadius'
+    getThresholdRadius: 'Common/LookupConfig/ThresholdRadius',
+    getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/'
 }

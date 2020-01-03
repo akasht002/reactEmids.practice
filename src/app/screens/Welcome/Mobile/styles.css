@@ -1,4 +1,4 @@
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1171px) {
 
     body {
         margin: 0;
@@ -26,9 +26,10 @@
         width: 100%;
         float: left;
         background-image: url('../../../../app/assets/MobileBannerImages/iPhoneX.png');
-        background-position: right bottom;
+        background-position: 100% 70%;
         background-repeat: no-repeat;
         overflow-y: auto;
+        height: 100%;
     }
 
     .info-view {
@@ -108,7 +109,7 @@
     }
 
     .innerview-bg {
-        background-position: -25px 205px;
+        background-position: -25px 140px;
         background-size: 157%;
     }
 }
