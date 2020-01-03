@@ -140,11 +140,6 @@ span.TimerContent.running{
     color: #d1d1d1;
 }
 
-/* .rightTimerContent span.TimerStarted.running{
-    position: relative;
-    bottom: 0;
-} */
-
 .rightTimerWidget.running{
     padding: 0 15px 0 0;
 }
