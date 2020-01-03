@@ -210,7 +210,7 @@ export class Assessment extends Component {
             />
         }
 
-        let startedTimes = getUTCFormatedDate(visitStartTime, "hh:mm a")
+        let startedTimes = getUTCFormatedDate(visitStartTime, DATE_FORMATS.hh_mm_a)
 
         if (visitStatus === SERVICE_STATES.YET_TO_START) {
             timerBtn = <a className="btn btn-primary" test-startButton='test-startButton' onClick={() => { this.startService(startService, serviceRequestVisitId) }}>Start Service</a>
