@@ -392,6 +392,10 @@ describe("VisitServiceDetails", function () {
         shallowWrapper.instance().handelEditShedule(10);
     });
 
+    it('Check the gotoAssessmentVisit', () => {
+        shallowWrapper.instance().gotoAssessmentVisit ();
+    });
+
     it('Check the  handelEditAssessment     ', () => {
         shallowWrapper.instance().handelEditAssessment(10);
     });

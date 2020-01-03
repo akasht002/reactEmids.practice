@@ -15,7 +15,7 @@ import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import './style.css'
 import { isNull, getStatusTextBasedOnStatus } from '../../../../utils/validations'
-import { getUserInfo } from "../../../../utils/userUtility";
+import { getUserInfo, isEntityUser } from "../../../../utils/userUtility";
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
 export class Feedback extends Component {
@@ -133,7 +133,7 @@ export class Feedback extends Component {
     }
 
     render() {
-        let isEntity = getUserInfo().isEntityServiceProvider;
+        let isEntity = (getUserInfo().isEntityServiceProvider || isEntityUser());
         let updatedIndicatorData = visitProcessingNavigationData(isEntity)
 
         return (

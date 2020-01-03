@@ -624,17 +624,21 @@ export class VisitServiceDetails extends Component {
     this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
     this.props.saveScheduleType(visitList.scheduleTypeId)
     let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
-    switch (visitList.visitStatusId) {
-      case VISIT_STATUS.startVisit.id:
-        return this.visitProcessing(visitId, visitList.scheduleTypeId)
-      case VISIT_STATUS.inProgress.id:
-        return this.visitProcessing(visitId, visitList.scheduleTypeId)
-      case VISIT_STATUS.completed.id:
-        return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
-      case VISIT_STATUS.paymentPending.id:
-        return this.visitProcessingSummary(visitId)
-      default:
-        return ''
+    if(visitList.scheduleTypeId !== VISIT_TYPE.assessment){
+      switch (visitList.visitStatusId) {
+        case VISIT_STATUS.startVisit.id:
+          return this.visitProcessing(visitId, visitList.scheduleTypeId)
+        case VISIT_STATUS.inProgress.id:
+          return this.visitProcessing(visitId, visitList.scheduleTypeId)
+        case VISIT_STATUS.completed.id:
+          return this.visitSummary(visitId, visitList.assignedServiceProviderId, visitList.scheduleTypeId)
+        case VISIT_STATUS.paymentPending.id:
+          return this.visitProcessingSummary(visitId)
+        default:
+          return ''
+      }
+    }else{
+      this.gotoAssessmentVisit(visitList)
     }
   }
 

@@ -9,11 +9,16 @@ import { SummaryDetails } from './bridge';
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-// jest.mock('../../../services/http', () => ({
-//     getUserInfo: () => ({
-//         serviceProviderId: 12
-//     })
-// }))
+jest.mock('../../../../services/http', () => ({
+    getUserInfo: () => ({
+        serviceProviderId: 12,
+        isEntityServiceProvider: true
+    })
+}))
+
+jest.mock('../../../../utils/userUtility', () => ({
+    isEntityUser: () => ({})       
+}))
 
 describe('actions', () => {
     it('should create an action to getSummaryDetailsSuccess  ', () => {

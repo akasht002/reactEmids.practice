@@ -95,8 +95,6 @@ export class AssessmentFeedback extends Component {
 
     onClickConfirm = () => {
         this.selectedAnswers = [];
-        this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
-        this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
         this.props.goToSummary()
     }
 

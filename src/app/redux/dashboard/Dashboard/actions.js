@@ -397,10 +397,10 @@ export function goToAssessmentVisitProcessing(data){
         dispatch(setServiceProviderFeedbackTab(true))
         dispatch(getVisitServiceHistoryByIdDetail(visitID))
         const assessmentQuestionList = {
-          serviceProviderId: parseInt(data.providerId, 10),
+          serviceProviderId: parseInt(data.providerId, 10) || data.serviceProviderId,
           visitId: visitID
         }
-        if(data.visitTypeId === VISIT_TYPE.assessment){
+        if(data.visitTypeId === VISIT_TYPE.assessment || data.scheduleTypeId === VISIT_TYPE.assessment){
           dispatch(getAssessmentQuestionsList(assessmentQuestionList))
         }
       break; 

@@ -17,6 +17,7 @@ import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 import { DATE_FORMATS } from "../../../../constants/constants";
+import { isEntityUser } from "../../../../utils/userUtility";
 
 export class Summary extends Component {
 
@@ -400,7 +401,7 @@ export class Summary extends Component {
                                                 </div>}
                                             </div>
 
-                                            {getUserInfo().isEntityServiceProvider ?
+                                            {(getUserInfo().isEntityServiceProvider || isEntityUser()) ?
                                                 ''
                                                 :
                                                 <div className="row EstimatedCostWidget theme-primary">
@@ -450,7 +451,7 @@ export class Summary extends Component {
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
-                                        {getUserInfo().isEntityServiceProvider ?
+                                        {(getUserInfo().isEntityServiceProvider || isEntityUser()) ?
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
                                             :
                                             <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
