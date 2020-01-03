@@ -117,7 +117,7 @@ span.title-view {
 
 .plan-tableview td:nth-child(1) time {
     width: 24%;
-    padding-left: 14px;
+    padding-left: 5px;
 }
 
 .plan-tableview .EntityUServiceProf {
