@@ -9,6 +9,7 @@ import userManager from '../../../utils/userManager';
 import {objectCreationRoles} from '../../../utils/roleUtility';
 import {startLoading, endLoading} from '../../loading/actions';
 import {USER} from './bridge'
+import { logError } from '../../../utils/logError';
 
 export const setUserRoles = (data) => {
     return {
@@ -144,17 +145,14 @@ export function setIsFormDirty(isDirty){
     }
 };
 
-export function getThresholdRadius() { 
-    return (dispatch) => {
-        return ThirdPartyGet(API.getThresholdRadius)          
-          .then(resp => {
-            dispatch(getThresholdRadiusSuccess(resp.data[0]));
-          })
-          .catch(err => {
-            console.log(err);
-          })
-      }
-}
+export const getThresholdRadius = () => async (dispatch) => {
+    try {
+        const resp = await ThirdPartyGet(API.getThresholdRadius)          
+        dispatch(getThresholdRadiusSuccess(resp.data[0]));
+    } catch (error) {
+        logError(error)
+    }
+};
 
 export const getThresholdRadiusSuccess = (data) => {
     return {

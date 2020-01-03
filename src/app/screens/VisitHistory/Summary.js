@@ -20,7 +20,7 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
-import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS, NO_LOCATION_DATA } from '../../constants/constants'
+import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS, ERROR_MESSAGE } from '../../constants/constants'
 import Moment from 'react-moment'
 import { Assessment } from "./assessment";
 import { caseInsensitiveComparer } from "../../utils/comparerUtility";
@@ -416,8 +416,8 @@ export class VistSummary extends React.Component {
     let feedbackContent = this.getFeedbackContent(this.props.VisitFeedback)
     let isAssessment = this.props.savedScheduleType === VISIT_TYPE.assessment;
     let isEntity = getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID;
-    let startPointToPOS = ((summaryDetail.startLatitude === 0) && (summaryDetail.startLongitude === 0)) ? NO_LOCATION_DATA : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.startLatitude, summaryDetail.startLongitude)} (Miles)`
-    let stopPointToPOS = ((summaryDetail.endLatitude === 0) && (summaryDetail.endLongitude === 0)) ? NO_LOCATION_DATA : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.endLatitude, summaryDetail.endLongitude)} (Miles)`
+    let startPointToPOS = ((summaryDetail.startLatitude === 0) && (summaryDetail.startLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.startLatitude, summaryDetail.startLongitude)} (Miles)`
+    let stopPointToPOS = ((summaryDetail.endLatitude === 0) && (summaryDetail.endLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.endLatitude, summaryDetail.endLongitude)} (Miles)`
     let radiusIndicator = (Number.parseFloat(this.props.thresholdRadius) <= startPointToPOS) ? 'inside-radius-indicator' : 'outside-radius-indicator'
     return (
       <React.Fragment>
@@ -687,6 +687,7 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export function mapStateToProps(state) {
+  const {thresholdRadius} = state.authState.userState
   return {
     QuestionsList:
       state.visitSelectionState.VisitServiceProcessingState.FeedbackState
@@ -706,7 +707,7 @@ export function mapStateToProps(state) {
     activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab,
     summaryDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceDetails,
     isServiceProviderFeedbackTab: state.dashboardState.VisitServiceProviderState.isServiceProviderFeedbackTab,
-    thresholdRadius: state.authState.userState.thresholdRadius 
+    thresholdRadius 
   };
 }
 

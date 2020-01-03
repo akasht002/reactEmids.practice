@@ -594,4 +594,6 @@ export const PATIENT_STATUS = {
     inActive: 'Inactive'
 }
 
-export const NO_LOCATION_DATA = 'No Location Data'
+export const ERROR_MESSAGE = {
+    noLocationData: 'No Location Data'
+}
