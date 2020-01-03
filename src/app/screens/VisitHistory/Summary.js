@@ -416,9 +416,9 @@ export class VistSummary extends React.Component {
     let feedbackContent = this.getFeedbackContent(this.props.VisitFeedback)
     let isAssessment = this.props.savedScheduleType === VISIT_TYPE.assessment;
     let isEntity = getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID;
-    let startPointToPOS = ((summaryDetail.startLatitude === 0) && (summaryDetail.startLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.startLatitude, summaryDetail.startLongitude)} (Miles)`
-    let stopPointToPOS = ((summaryDetail.endLatitude === 0) && (summaryDetail.endLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.endLatitude, summaryDetail.endLongitude)} (Miles)`
-    let radiusIndicator = (Number.parseFloat(this.props.thresholdRadius) <= startPointToPOS) ? 'inside-radius-indicator' : 'outside-radius-indicator'
+    let startPointToPOS = summaryDetail && ((summaryDetail.startLatitude === 0) && (summaryDetail.startLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.startLatitude, summaryDetail.startLongitude)} (Miles)`
+    let stopPointToPOS = summaryDetail && ((summaryDetail.endLatitude === 0) && (summaryDetail.endLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.endLatitude, summaryDetail.endLongitude)} (Miles)`
+    let radiusIndicator = (Number.parseFloat(this.props.thresholdRadius) >= startPointToPOS) ? 'inside-radius-indicator' : 'outside-radius-indicator'
     return (
       <React.Fragment>
         <form className="ServiceContent">
