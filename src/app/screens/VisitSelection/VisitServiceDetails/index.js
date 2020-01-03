@@ -7,6 +7,7 @@ import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, ModalPopup, A
 import {
   getServiceRequestList,
   getVisitServiceDetails,
+  getIsAnyEngagedServiceRequest,
   getSchedulesList,
   getVisitList,
   getVisitStatus,
@@ -157,6 +158,7 @@ export class VisitServiceDetails extends Component {
     this.props.ServiceRequestStatus();
     this.props.getVisitStatus();
     this.props.getPatientAddress(this.props.patientId);
+    this.props.getIsAnyEngagedServiceRequest(this.props.patientId);
     this.getVisitFirstAndLastDate();
   }
 
@@ -920,7 +922,7 @@ let datas =  data.map((el)=> {
     let updatedTabdata = this.props.ServiceRequestId === 0 ?
       tabdata.slice(1, tabdata.length) :
       shouldPatientProfile ? tabdata : tabdata.slice(0, 2);
-    let isDisabledAddSchedule = this.props.scheduleList && this.props.scheduleList.length > 0 && this.props.scheduleList[0].isAnyAvailableHiredCard;
+    let isDisabledAddSchedule = this.props.isAnyEngagedServiceRequestSuccess;
 
     return (
       <Fragment>
@@ -1169,7 +1171,8 @@ export function mapDispatchToProps(dispatch) {
     getPatientAddress: (data) => dispatch(getPatientAddress(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
     clearVisitList: () => dispatch(clearVisitList()),
-    getServiceRequestAssessmentQuestionByID:data => dispatch(getServiceRequestAssessmentQuestionByID(data))
+    getServiceRequestAssessmentQuestionByID:data => dispatch(getServiceRequestAssessmentQuestionByID(data)),
+    getIsAnyEngagedServiceRequest: (data) => dispatch(getIsAnyEngagedServiceRequest(data))
   }
 }
 
@@ -1205,7 +1208,8 @@ export function mapStateToProps(state) {
     planScheduleId: VisitServiceDetailsState.planScheduleId,
     isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup,
     planId: VisitServiceDetailsState.planId,
-    questionAnswerList:VisitServiceDetailsState.questionAnswerList
+    questionAnswerList:VisitServiceDetailsState.questionAnswerList,
+    isAnyEngagedServiceRequestSuccess: VisitServiceDetailsState.isAnyEngagedServiceRequestSuccess
   }
 }
 
