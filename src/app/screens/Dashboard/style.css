@@ -204,6 +204,11 @@ div.ProfileSelectSorting {
     margin: 0 0 20px 0;
 }
 
+.bottomProfile .SPContentWidget .ProfileContainer .card
+{
+    height: 100%;
+}
+
 .SPContentWidget .bottomProfile {
     flex-direction: column;
 }
