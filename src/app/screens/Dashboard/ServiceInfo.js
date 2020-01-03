@@ -7,6 +7,7 @@ import { getFields } from '../../utils/validations'
 import { formatName } from '../../utils/formatName';
 import { SERVICE_REQUEST } from '../../constants/constants';
 import { MessageTypes } from '../../data/AsyncMessage';
+import { Link } from 'react-router-dom'
 
 export const ServiceCalendarInfo = props => {
   return props.Servicelist.slice(0, 3).map((conversations, index) => {
@@ -17,7 +18,7 @@ export const ServiceCalendarInfo = props => {
             <i className={'ServicesTime ' + conversations.slotDescription} />
           </div>
           <div className='ProfileServices'>
-            <span className='ServicesTitle'>
+            <span className='ServicesTitle theme-primary'>
               {conversations.serviceTypes &&
                 conversations.serviceTypes.toString()}
             </span>
@@ -91,7 +92,7 @@ export const ServiceProviderRequestDetails = props => {
                 props.handleClick(sp.serviceRequestId)
               }}
             >
-              <span className='ServicesTitle'>
+              <span className='ServicesTitle theme-primary'>
                 {sp.serviceRequestTypeDetails &&
                   getFields(
                     sp.serviceRequestTypeDetails,
@@ -146,7 +147,7 @@ export const ServiceProviderRequestDetails = props => {
     })
 }
 
-function getPartcipitantHeader(participants) {
+export function getPartcipitantHeader(participants) {
   let header = "";
   if (participants && participants.length > 0) {
     participants.map(participant => {
@@ -208,7 +209,7 @@ export const MyConversionDetail = props => {
                 } else if (index === 2) {
                   return (
                     <div className='avatarContainer'>
-                      <div key={index} className='avatarImage totalMembers'>
+                      <div key={index} className='avatarImage totalMembers theme-primary-light'>
                         {'+' + (conversations.participantList.length - 2)}
                       </div>
                     </div>
@@ -243,7 +244,7 @@ export const MyConversionDetail = props => {
   })
 }
 
-export const MyConversionDefault = () => {
+export const MyConversionDefault = (props) => {
   let style = {
     display: 'none'
   };
@@ -255,11 +256,13 @@ export const MyConversionDefault = () => {
             <div className='avatarContainer' />
           </div>
           <div className='MsgThreadContent m-auto'>
+          <Link to='/messagesummary'>
           <div class="no-blockinfo-top">
-          <div className="NoProfileServices No-Coverastion-Block">
-          <span class="NoInfoText"><span class="NoServiceInfoLink primaryColor">New Coverastion</span></span>
+          <div className="NoProfileServices No-Coverastion-Block theme-primary-light">
+          <span class="NoInfoText"><span class="NoServiceInfoLink theme-primary">New Conversation</span></span>
           </div>
            </div>
+           </Link>
           </div>
         </div>
       </li>

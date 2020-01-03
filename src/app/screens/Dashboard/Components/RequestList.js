@@ -31,7 +31,7 @@ export const ServiceProviderRequestDetails = props => {
                   props.handleClick(sp)
                 }}
               >
-                <span className='ServicesTitle'>
+                <span className='ServicesTitle theme-primary'>
                   {sp.serviceRequestTypeDetails &&
                     getFields(
                       sp.serviceRequestTypeDetails,

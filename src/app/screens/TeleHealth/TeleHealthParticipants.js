@@ -3,7 +3,7 @@ import { Scrollbars } from '../../components';
 import {getState} from '../../utils/userUtility';
 import './styles.css';
 
-export default class TeleHealthParticipants extends Component {
+export  class TeleHealthParticipants extends Component {
 
     getParticipants = () => {
         return [ 
@@ -43,7 +43,7 @@ export default class TeleHealthParticipants extends Component {
         return (
             <div className="TeleHealthParticipantList">
                 <div className="TeleHealthParticipantListHeader">
-                    <span className="sideParticipantsTitle primaryColor">Participants</span>
+                    <span className="sideParticipantsTitle theme-primary">Participants</span>
                     {this.props.initiator && <span onClick={this.props.ToggleAddParticipantsListView}><i className="addParticipantsButton" /></span>}
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -60,3 +60,5 @@ export default class TeleHealthParticipants extends Component {
         );
     }
 }
+
+export default  TeleHealthParticipants 

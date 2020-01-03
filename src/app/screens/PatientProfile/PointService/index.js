@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import * as action from '../../../redux/patientProfile/actions'
 
-class PointService extends React.Component {
+export class PointService extends React.Component {
 
   componentDidMount() {
     this.props.getPointService()
@@ -53,10 +53,10 @@ class PointService extends React.Component {
     return (
       <div className='col-md-12 card CardWidget SPCertificate'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Point of Service</h4>
+          <h4 className='theme-primary'>Point of Service</h4>
         </div>
         <div className='SPCertificateContainer width100'>
-          <ul className='SPCertificateList'>
+          <ul className='SPCertificateList theme-primary'>
             {this.props.PointServiceList.length > 0
               ? <div>
                 {PointServiceList}
@@ -81,13 +81,13 @@ class PointService extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPointService: () => dispatch(action.getPointService())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     PointServiceList: state.patientProfileState.pointOfServiceList
   }

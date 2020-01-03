@@ -2,7 +2,7 @@ import { API } from '../../../../services/api';
 import { Post } from '../../../../services/http';
 import { startLoading, endLoading } from '../../../loading/actions';
 import { DATE_FORMATS, API_RESPONSE } from '../../../constants/constants';
-import { getTimeZoneOffset } from '../../../../utils/dateUtility';
+import { getTimeZoneOffset, getHHMinSession } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'
 import { getFullName } from '../../../../utils/stringHelper'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
@@ -11,7 +11,7 @@ import { VisitServiceList } from './bridge'
 import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
-import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
+import { ENTITY_DASHBOARD_STATUS, VISIT_PROCESSING_STATUS, VISIT_STATUS } from '../../../../constants/constants';
 import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/actions';
 import { VisitServiceRequestList } from '../ServiceRequest/bridge';
 
@@ -86,7 +86,8 @@ export function getVisitServiceTableList(data) {
                             ...res,
                             patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
                             providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
-                            schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getUTCFormatedDate(res.visitDate, DATE_FORMATS.hhMinSession)}`,
+                            schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getHHMinSession(res.visitDate)}`,
+                            visitStatus: caseInsensitiveComparer(res.visitStatus, VISIT_PROCESSING_STATUS.inProgress.title) ? VISIT_STATUS.inProgress.keyValue : res.visitStatus
                         }
                     })
                     dispatch(getVisitsTableListSuccess(data))

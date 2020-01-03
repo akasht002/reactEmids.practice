@@ -14,7 +14,7 @@ import "./AvailabilityStyles.css";
 import { dateDifference, formattedDateMoment } from '../../../utils/validations';
 import EllipsisText from "react-ellipsis-text";
 
-class BlackoutDays extends Component {
+export class BlackoutDays extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -200,7 +200,7 @@ class BlackoutDays extends Component {
           <div className="col-md-12 card CardWidget SPBlackoutDays">
           { !this.props.showBalckout ? 
             <div className="SPCardTitle d-flex">
-                 <h4 className={"primaryColor"}>Blackout Days</h4>
+                 <h4 className={"theme-primary"}>Blackout Days</h4>
                   <i
                     className={"SPIconLarge SPIconAdd"}
                     onClick={this.toggleBlackout.bind(this, "add")}
@@ -208,7 +208,8 @@ class BlackoutDays extends Component {
             </div> :  ""
           }
             <div className={"SPCertificateContainer width100"}>
-              <ul className={"SPCertificateList"}>{blackoutData}</ul>
+            <i className={"SPIconLarge SPIconAdd"} onClick={this.toggleBlackout.bind(this, "add")} />
+            <ul className={"SPCertificateList theme-primary"}>{blackoutData}</ul>
             </div>
           </div>
         </div>
@@ -243,13 +244,13 @@ class BlackoutDays extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
     blackoutDays: state.profileState.AvailabilityState.blackoutDays
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     getBlackOutDays: () => dispatch(getBlackOutDays()),
     addBlackOutDay: data => dispatch(addBlackOutDay(data)),

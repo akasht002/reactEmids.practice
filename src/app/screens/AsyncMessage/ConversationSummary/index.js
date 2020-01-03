@@ -23,7 +23,7 @@ import { USERTYPES } from '../../../constants/constants';
 import { isEntityServiceProvider } from '../../../utils/userUtility';
 import {Preloader} from '../../../components';
 
-class ConversationSummary extends Component {
+export class ConversationSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -108,7 +108,7 @@ class ConversationSummary extends Component {
             <AsideScreenCover >
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 class="primaryColor m-0">Conversation Summary</h5>
+                        <h5 class="theme-primary m-0">Conversation Summary</h5>
                     </div>
                     {!isEntityServiceProvider() &&
                         <div class="ProfileHeaderButton">
@@ -122,7 +122,7 @@ class ConversationSummary extends Component {
                         gotoConversations={this.onClickConversation}
                         getUnreadMsgCounts={this.props.unreadMsgCounts} />
                 <div className="row"> 
-                    <div className="col-md-12 p-0 AsyncConversationPagination">
+                    <div className="col-md-12 p-0 AsyncConversationPagination theme-primary">
                         {this.props.conversation.length > 0 &&
                             <Pagination
                                 activePage={this.state.activePage}
@@ -161,7 +161,7 @@ class ConversationSummary extends Component {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         fetchConversationSummary: (pageNumber) => dispatch(onFetchConversationSummary(pageNumber)),
         createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
@@ -176,7 +176,7 @@ function mapDispatchToProps(dispatch) {
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         conversation: state.asyncMessageState.conversationSummary,
         isLoading: state.asyncMessageState.isLoading,

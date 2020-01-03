@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getPatientVitals } from '../../../redux/patientProfile/actions';
 
-class VitalDetails extends React.Component {
+export class VitalDetails extends React.Component {
 
   constructor(props) {
     super(props)
@@ -43,16 +43,14 @@ class VitalDetails extends React.Component {
       <Fragment>
         <div className='col-md-12 card CardWidget SPLanguages'>
           <div className='SPCardTitle d-flex vital-block-title'>
-            <h4 className='primaryColor'>Vital</h4>
+            <h4 className='theme-primary'>Vital</h4>
           </div>
 
           <div className='ConnectionsWidget CoreoWidget vital-block'>
             <p className='CoreoAssociationHeader mb-1'>Height</p>
-            <p className="">{this.props.vitalDetails.height}</p>
+            <p className="">{this.props.vitalDetails.height} Inches</p>
             <p className='CoreoAssociationHeader mb-1'>Weight</p>
-            <p className="">{this.props.vitalDetails.weight}</p>
-            <p className='CoreoAssociationHeader mb-1'>Emergency Contact</p>
-            <p className=''>{this.props.vitalDetails.emergencyContact}</p>
+            <p className="">{this.props.vitalDetails.weight} Lbs</p>
           </div>
         </div>
       </Fragment>
@@ -60,13 +58,13 @@ class VitalDetails extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPatientVitals: () => dispatch(getPatientVitals())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     vitalDetails: state.patientProfileState.vitalDetails,
   }

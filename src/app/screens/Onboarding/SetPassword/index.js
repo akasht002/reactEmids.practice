@@ -10,7 +10,7 @@ import '../styles.css';
 import { USERTYPES } from "../../../constants/constants";
 import {getEulaContent} from '../../../redux/auth/UserAgreement/actions'
 
-class SetPassword extends React.Component {
+export class SetPassword extends React.Component {
 
     constructor(props) {
         super(props);
@@ -70,7 +70,7 @@ class SetPassword extends React.Component {
             });
         } 
         return (
-            <ScreenCover isLoading={this.props.isLoading}>
+            <ScreenCover isLoading={this.props.isLoading} test-setPassword="test-setPassword">
                 <CoreoWizScreen
                     menus={ContactMenu}
                     activeCoreoWiz={2}
@@ -83,7 +83,7 @@ class SetPassword extends React.Component {
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
-                                <h4 className="font-weight-normal mb-4 defaualt-purple">Set My Password</h4>
+                                <h4 className="font-weight-normal mb-4 defaualt-purple theme-primary">Set My Password</h4>
                                 <form className="form tempPassForm my-2 my-lg-0">
                                     <div className="form-group my-4">
                                     </div>
@@ -136,7 +136,7 @@ class SetPassword extends React.Component {
                                         <label className="form-check-label license-agreespan">
                                             <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.checked })} />
                                             <span className="CheckboxIcon"></span>
-                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="primaryColor" onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
+                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="theme-primary" onClick={() =>this.setState({agreementModal: true})}>End User License Agreement</Link>.
                                         </label>
                                     </div>
                                     {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match.</span>}
@@ -176,7 +176,7 @@ class SetPassword extends React.Component {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onSetPassword: (data) => dispatch(setPassword(data)),
@@ -186,7 +186,7 @@ function mapDispatchToProps(dispatch) {
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         userEmail: state.onboardingState.setPasswordState.userEmail,
         isLoading: state.onboardingState.setPasswordState.loading,

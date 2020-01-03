@@ -1,0 +1,20 @@
+export const TeleHealth = {
+    generateTokenSuccess: 'generate_token_success/telehealth',
+    setLinkedParticipants: 'set_linked_participants/telehealth',
+    setLinkedPatients: 'set_linked_patients/telehealth',
+    clearLinkedParticipants: 'clear_linked_participants/telehealth',
+    getRoomIdSuccess: 'getRoomIdSuccess/telehealth',
+    getParticipantByConfernceIdSuccess: 'get_participant_by_confernceId_success/telehealth',
+    getAllParticipantsSuccess: 'get_all_participants_success/telehealth',
+    setRoomId : 'set_roomId/telehealth',
+    clearRoom: 'clear_room/telehealth',
+    invitaionCame: 'invitaion_came/telehealth',
+    clearInvitaion: 'clear_invitaion/telehealth',
+    setInitiator: 'setInitiator/telehealth',
+    saveContextData: 'saveContextData/telehealth',
+    setInvitedRoomId: 'setInvitedRoomId/telehealth',
+    clearExistingRoom: 'clearExistingRoom/telehealth',
+    newRequestCame: 'NewRequestCame/telehealth',
+    clearInitiator: 'clearInitiator/telehealth',
+    createDataStore: 'createDataStore/telehealth'
+};

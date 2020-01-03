@@ -1,6 +1,6 @@
 import {
     VisitNotificationSettings
-} from './actions'
+} from './bridge'
 
 const defaultState = {
     pushNotification: [],

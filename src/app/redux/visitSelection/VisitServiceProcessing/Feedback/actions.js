@@ -9,6 +9,7 @@ import { Path } from '../../../../routes'
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { visitHistoryLoading } from '../../../../redux/visitHistory/VisitServiceDetails/actions'
 import {QuestionsList} from './bridge'
+import { isEntityUser } from '../../../../utils/userUtility';
 
 export const getQuestionsListSuccess = data => {
   return {
@@ -39,7 +40,7 @@ export const endLoadingProcessing = () => {
 export function getQuestionsList() {
   return dispatch => {
     dispatch(startLoadingProcessing())
-    ServiceRequestGet(API.getQuestionsList)
+    return ServiceRequestGet(API.getQuestionsList)
       .then(resp => {
         dispatch(getQuestionsListSuccess(resp.data))
         dispatch(endLoadingProcessing())
@@ -51,9 +52,9 @@ export function getQuestionsList() {
 }
 
 export function saveAnswers(data) {
-  let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
-  let  saveAnswers  = isEntityServiceProvider ? API.saveAnswersForEsp : API.saveAnswers
-  let model = isEntityServiceProvider ? {
+  let isPlan = (getUserInfo().isEntityServiceProvider || isEntityUser())
+  let  saveAnswers  = isPlan ? API.saveAnswersForEsp : API.saveAnswers
+  let model = isPlan ? {
     servicePlanVisitId: data.serviceRequestVisitId,
     serviceProviderId: data.serviceProviderId,
     answers: data.answers
@@ -72,8 +73,8 @@ export function saveAnswers(data) {
   }
 }
 export function saveAnswerFeedback(data) {
-  return (dispatch, getState) => {
-    let isPlan = getUserInfo().isEntityServiceProvider
+  return (dispatch) => {
+    let isPlan = (getUserInfo().isEntityServiceProvider || isEntityUser()) 
     let  saveAnswers  = isPlan ? API.saveAnswersForEsp : API.saveAnswers
     data.servicePlanVisitId = isPlan && data.serviceRequestVisitId
     data.serviceProviderId = getUserInfo().serviceProviderId 

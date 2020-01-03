@@ -47,7 +47,7 @@ class Filter extends Component {
             <div className={"CTFilter FilterWidget entity-filter-block " + this.props.isOpen}>
                 <div className="filterOverlay individual"></div>
                 <div className="FilterWidgetForm">
-                    <div className="FilterContainer FilterTop">
+                    <div className="FilterContainer FilterTop theme-primary-light">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
                     </div>
@@ -138,6 +138,7 @@ class Filter extends Component {
                                     <div className="form-group">
                                         <label className="mb-3">Select the Service Type(s)</label>
                                         <ServiceTypeList
+                                            test-serviceTypeList='test-serviceTypeList'
                                             serviceType={this.props.serviceType}
                                             handleServiceType  ={(item, e) => { this.props.handleServiceType  (item, e) }}
                                         />
@@ -167,10 +168,11 @@ class Filter extends Component {
                     </Scrollbars>
                     <div className="FilterContainer FilterBottom">
                         <button className="btn btn-outline-primary mr-2"
+                            test-applyReset='test-applyReset'
                             onClick={() =>
                                 this.props.applyReset()}>Reset</button>
 
-                        <button className="btn btn-primary" onClick={() => {
+                        <button className="btn btn-primary" test-applyFilter='test-applyFilter' onClick={() => {
                             this.props.applyFilter()
                         }}>Apply</button>
                     </div>

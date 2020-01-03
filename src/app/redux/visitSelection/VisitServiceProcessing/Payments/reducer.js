@@ -1,6 +1,4 @@
-import {
-    paymentsCardList
-} from './actions'
+import { paymentsCardList } from './bridge';
 
 const defaultState = {
     CardList: '',

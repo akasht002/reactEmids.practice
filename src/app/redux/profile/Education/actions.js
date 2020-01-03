@@ -3,12 +3,7 @@ import { Get, Post, Put, Delete } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { getUserInfo } from '../../../services/http';
 import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
-
-export const Education = {
-    getEducationSuccess: 'get_education_success/education',
-    addEducationSuccess: 'add_education_success/education',
-    getEducationFieldDetails: 'get_education_field_details/education'
-};
+import { Education } from './bridge';
 
 export const getEducationSuccess = (data) => {
     return {

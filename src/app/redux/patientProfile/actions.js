@@ -65,7 +65,7 @@ export function getESPEducation() {
     return (dispatch, getState) => {
         let serviceProviderId = getState().patientProfileState.espID
         dispatch(startLoading());
-        Get(API.education + serviceProviderId+'/Education').then((resp) => {
+        return Get(API.education + serviceProviderId+'/Education').then((resp) => {
             dispatch(getESPEducationSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -79,7 +79,7 @@ export function getESPImage () {
     return (dispatch, getState) => {
       let serviceProviderId =  getState().patientProfileState.espID
       dispatch(startLoading())
-      Get(API.getImage + serviceProviderId)
+      return Get(API.getImage + serviceProviderId)
         .then(resp => {
           dispatch(uploadESPImgSuccess(resp.data))
           dispatch(endLoading())
@@ -94,7 +94,7 @@ export function getESPImage () {
     return (dispatch, getState) => {
       let serviceProviderId = getState().patientProfileState.espID
       dispatch(startLoading())
-      Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
+      return Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
         .then(resp => {
           dispatch(getESPPersonalDetailSuccess(resp.data))
           dispatch(endLoading())
@@ -109,7 +109,7 @@ export function getESPImage () {
 export function getProfilePercentage() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        PatientGet(API.getPatientProfilePercentage + patientId)
+        return PatientGet(API.getPatientProfilePercentage + patientId)
         .then((resp) => {            
             dispatch(getProfilePercentageSuccess(resp.data))
         }).catch((err) => {
@@ -132,7 +132,7 @@ export function getPersonalDetail() {
             dispatch(getPersonalDetailGuardian(patientId));
         }else{
             dispatch(startLoading())
-            PatientGet(API.getPatientPersonalDetail + patientId + '/PatientDetails')
+            return PatientGet(API.getPatientPersonalDetail + patientId + '/PatientDetails')
             .then(resp => {
                 dispatch(getPersonalDetailSuccess(resp.data))
                 dispatch(endLoading())
@@ -148,7 +148,7 @@ export function getPersonalDetail() {
 export function getPersonalDetailGuardian(userId) {
     return (dispatch) => {
       dispatch(startLoading())
-      PatientGet(API.getPersonalDetailGuardian + userId)
+      return PatientGet(API.getPersonalDetailGuardian + userId)
         .then(resp => {
             let data = {
                 ...resp.data,
@@ -182,7 +182,7 @@ export function getImage() {
         if(userType === USERTYPES.GUARDIAN || userType === USERTYPES.PATIENT_AND_GUARDIAN){
             dispatch(getImageGuardian(patientId));
         }else{
-            PatientGet(API.getPatientImage + patientId)
+            return PatientGet(API.getPatientImage + patientId)
             .then(resp => {
                 dispatch(getImgSuccess(resp.data))
             })
@@ -194,7 +194,7 @@ export function getImage() {
 
 export function getImageGuardian(userId) {
     return (dispatch) => {
-      PatientGet(API.getImageGuardian + userId)
+        return PatientGet(API.getImageGuardian + userId)
         .then(resp => {
             dispatch(getImgSuccess(resp.data))
         })
@@ -213,7 +213,7 @@ export const getPointServiceSuccess = data => {
 export function getPointService() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        PatientGet(API.getPatientAddress + patientId + '/PatientAddress')
+        return PatientGet(API.getPatientAddress + patientId + '/PatientAddress')
         .then(resp => {
             dispatch(getPointServiceSuccess(resp.data))
         })
@@ -232,7 +232,7 @@ export const getManageConnectionSuccess = data => {
 export function getManageConnection () {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        PatientGet(API.getPatientConnections + patientId + '/' + USERTYPES.PATIENT)
+        return PatientGet(API.getPatientConnections + patientId + '/' + USERTYPES.PATIENT)
         .then(resp => {
             dispatch(getManageConnectionSuccess(resp.data.users))
         })
@@ -251,7 +251,7 @@ export const getSelectedLanguageDetails = (data) => {
 export function getSelectedLanguages() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        PatientGet(API.getPatientLanguages + patientId + '/Languages').then((resp) => {
+        return PatientGet(API.getPatientLanguages + patientId + '/Languages').then((resp) => {
             dispatch(getSelectedLanguageDetails(resp.data))
         }).catch(() => {
         })
@@ -268,7 +268,7 @@ export const getSelectedClinicalConditionDetails = (data) => {
 export function getSelectedClinicalCondition() {
     return (dispatch, getState) => {
         const patientId = getState().patientProfileState.patientId;
-        PatientGet(API.getPatientClinicalCondition + patientId).then((resp) => {
+        return PatientGet(API.getPatientClinicalCondition + patientId).then((resp) => {
             dispatch(getSelectedClinicalConditionDetails(resp.data))
         }).catch(() => {
         })
@@ -279,7 +279,7 @@ export function getPatientVitals() {
     return (dispatch, getState) => {
         let patientId = getState().patientProfileState.patientId;
         dispatch(startLoading());
-        PatientGet(API.getPatientVitals + patientId).then((resp) => {
+        return PatientGet(API.getPatientVitals + patientId).then((resp) => {
             dispatch(getPatientVitalsSuccess(resp.data))
             dispatch(endLoading());
         }).catch(() => {
@@ -294,3 +294,41 @@ export const getPatientVitalsSuccess = (data) => {
         data
     }
 }
+
+export const getEmergencyContactDetailsSuccess = (data) => {
+    return {
+        type: PatientProfile.getEmergencyContactDetailsSuccess,
+        data
+    }
+}
+
+export const getAttorneyContactDetailsSuccess = (data) => {
+    return {
+        type: PatientProfile.getAttorneyContactDetailsSuccess,
+        data
+    }
+}
+
+export const getEmergencyContactDetails = () => async (dispatch, getState) => {
+    let patientId = getState().patientProfileState.patientId;
+    dispatch(startLoading());
+    try {
+        const resp = await PatientGet(`${API.getEmergencyContactDetails}${patientId}`)
+        dispatch(getEmergencyContactDetailsSuccess(resp.data))
+        dispatch(endLoading());
+    } catch (error) {
+        dispatch(endLoading());
+    }
+};
+
+export const getAttorneyContactDetails = () => async (dispatch, getState) => {
+    let patientId = getState().patientProfileState.patientId;
+    dispatch(startLoading());
+    try {
+        const resp = await PatientGet(`${API.getAttorneyContactDetails}${patientId}`)
+        dispatch(getAttorneyContactDetailsSuccess(resp.data))
+        dispatch(endLoading());
+    } catch (error) {
+        dispatch(endLoading());
+    }
+};

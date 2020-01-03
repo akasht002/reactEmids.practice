@@ -118,7 +118,7 @@ export function getVisitServiceLists(data) {
     return (dispatch) => {
         dispatch(visitHistoryLoading(true));
         let serviceProviderId = getUserInfo().serviceProviderId;
-        ServiceRequestGet(API.getVisitHistoryList + serviceProviderId + '/' + data.pageNumber + '/' + data.pageSize + '/' + data.sortOrder + '/' + data.sortName).then((resp) => {
+        return ServiceRequestGet(API.getVisitHistoryList + serviceProviderId + '/' + data.pageNumber + '/' + data.pageSize + '/' + data.sortOrder + '/' + data.sortName).then((resp) => {
             dispatch(getVisitServiceHistoryListSuccess(resp.data))
             dispatch(visitHistoryLoading(false));
         }).catch((err) => {
@@ -131,7 +131,7 @@ export function getVisitServiceListSort(data) {
     return (dispatch) => {
         dispatch(startLoading());
         let serviceProviderId = getUserInfo().serviceProviderId;
-        ServiceRequestGet(API.getSortedVisitHistory + serviceProviderId + '/' + data.sortByOrder + '/' + data.sortByColumn).then((resp) => {
+        return ServiceRequestGet(API.getSortedVisitHistory + serviceProviderId + '/' + data.sortByOrder + '/' + data.sortByColumn).then((resp) => {
             dispatch(getVisitServiceHistoryListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -166,7 +166,7 @@ export function getFilteredData(data) {
     return (dispatch) => {
         dispatch(visitHistoryLoading(true));
         let serviceProviderId = getUserInfo().serviceProviderId;
-        ServiceRequestPost(API.getFilteredVisitHistory, { ...data, serviceProviderId }).then((resp) => {
+        return ServiceRequestPost(API.getFilteredVisitHistory, { ...data, serviceProviderId }).then((resp) => {
             dispatch(getVisitServiceHistoryDetailsSuccess(resp.data))
             dispatch(visitHistoryLoading(false));
         }).catch((err) => {
@@ -180,7 +180,7 @@ export function getSort(data) {
         dispatch(startLoading());
         let serviceProviderId = getUserInfo().serviceProviderId;
         let url = serviceProviderId + "/" + data.sortByOrder + "/" + data.sortByColumn + "?fromDate=" + data.fromDate + "&toDate=" + data.toDate
-        Get(API.getSortedVisitHistory + url, baseURLServiceRequest).then((resp) => {
+        return Get(API.getSortedVisitHistory + url, baseURLServiceRequest).then((resp) => {
             dispatch(getVisitServiceHistoryDetailsSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -193,7 +193,7 @@ export function getServiceProviderRating(data) {
     return (dispatch, getState) => {
         let {isServiceProviderFeedbackTab} = getState().dashboardState.VisitServiceProviderState
         let getRatingAndFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? 
-        (isServiceProviderFeedbackTab ? API.getPlanVisitFeedBack : API.getVisitFeedbackForEntity) : API.getRatingAndFeedback
+        (isServiceProviderFeedbackTab ? API.getVisitFeedbackForEntity : API.getPlanVisitFeedBack) : API.getRatingAndFeedback
         dispatch(startLoading())
         ServiceRequestGet(getRatingAndFeedback + data).then((resp) => {
             dispatch(getSubmittedResponse(resp.data))
@@ -207,7 +207,7 @@ export function getServiceProviderRating(data) {
 export function getAllServiceProviders() {
     return (dispatch, getState) => {
         //dispatch(startLoading())
-        ServiceRequestGet(API.getAllServiceProviders).then((resp) => {
+        return ServiceRequestGet(API.getAllServiceProviders).then((resp) => {
             dispatch(getServiceProviders(resp.data))
             //dispatch(endLoading())
         }).catch((err) => {
@@ -219,7 +219,7 @@ export function getAllServiceProviders() {
 export function getServiceCategory() {
     return (dispatch, getState) => {
        // dispatch(startLoading());
-        ServiceRequestGet(API.getServiceCategory).then((resp) => {
+       return ServiceRequestGet(API.getServiceCategory).then((resp) => {
             dispatch(getServiceCategorySuccess(resp.data));
             //dispatch(endLoading());
         }).catch((err) => {
@@ -281,7 +281,7 @@ export function getHistoryListCount() {
     return (dispatch, getState) => {
         let serviceProviderId = getUserInfo().serviceProviderId;
         //dispatch(startLoading());
-        ServiceRequestGet(API.getHistoryListCount + serviceProviderId).then((resp) => {
+        return ServiceRequestGet(API.getHistoryListCount + serviceProviderId).then((resp) => {
             dispatch(getHistoryListCountSuccess(resp.data));
             //dispatch(endLoading());
         }).catch((err) => {
@@ -294,7 +294,7 @@ export function getVisitFeedBack(data) {
     return (dispatch, getState) => {
         let {isServiceProviderFeedbackTab} = getState().dashboardState.VisitServiceProviderState
         let getVisitFeedback = (getUserInfo().isEntityServiceProvider || isEntityUser())? 
-        (isServiceProviderFeedbackTab ? API.getPlanVisitFeedBack : API.getVisitFeedbackForEntity) : API.getVisitFeedback
+        (isServiceProviderFeedbackTab ? API.getVisitFeedbackForEntity : API.getPlanVisitFeedBack) : API.getVisitFeedback
         dispatch(startLoading());
         ServiceRequestGet(getVisitFeedback + data).then((resp) => {
             dispatch(getVisitFeedBackSuccess(resp.data))
@@ -309,7 +309,7 @@ export function getAllPatientForServiceProviders(data) {
     let serviceProviderId = getUserInfo().serviceProviderId;
     return (dispatch, getState) => {
         //dispatch(startLoading())
-        ServiceRequestGet(API.getAllPatientForServiceProviders + serviceProviderId).then((resp) => {
+        return ServiceRequestGet(API.getAllPatientForServiceProviders + serviceProviderId).then((resp) => {
             dispatch(getAllPatientForServiceProvidersSuccess(resp.data))
           //  dispatch(endLoading())
         }).catch((err) => {

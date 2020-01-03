@@ -15,7 +15,7 @@ import { checkEmail, checkSpace } from '../../../utils/validations'
 import Help from '../../../assets/HelpDoc/Help.pdf';
 import '../styles.css';
 
-class VerifyUserID extends React.Component {
+export class VerifyUserID extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -90,7 +90,7 @@ class VerifyUserID extends React.Component {
     render() {
         
         return (
-            <ScreenCover isLoading={this.props.isLoading}>
+            <ScreenCover isLoading={this.props.isLoading} test-verifyUserID='test-verifyUserID'>
                 <CoreoWizScreen 
                     menus={ContactMenu} 
                     activeCoreoWiz={0} 
@@ -102,7 +102,7 @@ class VerifyUserID extends React.Component {
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
-                                <h4 className="font-weight-normal mb-4 verify-title">Verify My Email Address</h4>
+                                <h4 className="font-weight-normal mb-4 verify-title theme-primary">Verify My Email Address</h4>
                                 <form className="form my-2 px-0 my-lg-0 col-md-6">
                                     <Input
                                         id="userId"
@@ -129,7 +129,7 @@ class VerifyUserID extends React.Component {
                                     <span className="text-success d-block mb-2">Hi {this.props.serviceProviderDetails.fullName}, we found you.</span>
                                 </div>}
                                 {this.props.isEmailNotExist && <div className={"MsgWithIcon MsgWrongIcon"}>
-                                    <span className="text-danger d-block mb-2">We did not find your Email Address. Please retry or contact <a className="primaryColor px-1" href = {Help} target = "_blank">Support</a>.</span>
+                                    <span className="text-danger d-block mb-2">We did not find your Email Address. Please retry or contact <a className="theme-primary px-1" href = {Help} target = "_blank">Support</a>.</span>
                                 </div>}
                                 {!this.state.emailValid && <div className="MsgWithIcon MsgWrongIcon">
                                     <span className="text-danger d-block mb-2">Please enter a valid Email Address. e.g. abc@xyz.com</span>
@@ -160,7 +160,7 @@ class VerifyUserID extends React.Component {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         onClickNext: (data) => dispatch(onUserEmailNext(data)),
@@ -171,7 +171,7 @@ function mapDispatchToProps(dispatch) {
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         isLoading: state.onboardingState.verifyUserIDState.loading,
         isEmailExist: state.onboardingState.verifyUserIDState.isEmailExist,

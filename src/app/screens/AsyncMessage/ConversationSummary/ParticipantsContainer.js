@@ -15,7 +15,7 @@ import { USERTYPES } from '../../../constants/constants';
 
 const conversationId = 0;
 
-class ParticipantsContainer extends Component {
+export class ParticipantsContainer extends Component {
     state = {
         selectedParticipants: [],
         title: '',
@@ -132,7 +132,7 @@ class ParticipantsContainer extends Component {
                 Please select an Individual to continue.
             </span>}
 
-            <p className="primaryColor mb-0 mt-4">Add Participants</p>
+            <p className="theme-primary mb-0 mt-4">Add Participants</p>
             <ParticipantsList
                 selectedParticipants={this.state.selectedParticipants}
                 conversationId={conversationId}
@@ -159,7 +159,7 @@ class ParticipantsContainer extends Component {
 };
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         createNewConversation: (data) => dispatch(onCreateNewConversation(data)),
         getLinkedPatients: () => dispatch(getLinkedPatients()),
@@ -169,7 +169,7 @@ function mapDispatchToProps(dispatch) {
 };
 
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         patients: state.asyncMessageState.linkedPatients,
         loggedInUser: state.authState.userState.userData.userInfo

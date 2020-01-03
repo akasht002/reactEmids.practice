@@ -10,7 +10,7 @@ import Help from '../../../assets/HelpDoc/Help.pdf';
 import '../styles.css';
 import { USERTYPES } from "../../../constants/constants";
 
-class VerifyContact extends React.Component {
+export class VerifyContact extends React.Component {
 
     constructor(props) {
         super(props);
@@ -97,7 +97,7 @@ class VerifyContact extends React.Component {
             });
         } 
         return (
-            <ScreenCover isLoading={this.props.isLoading}>
+            <ScreenCover isLoading={this.props.isLoading} test-verifyContact='test-verifyContact'>
                 <CoreoWizScreen menus={ContactMenu} activeCoreoWiz={1} displayNextButton={true} displayPrevButton={false} isNextDisabled={!this.state.temporaryPassCode} onNextClick={this.onClickButtonNext} onPreviousClick={this.onClickButtonPrevious} onCancelClick={this.onClickButtonCancel}>
                     <div className="container-fluid mainContent px-5 d-flex align-items-start flex-column">
                         <div className="row d-block">
@@ -134,7 +134,7 @@ class VerifyContact extends React.Component {
                         </div>
                         <div className="row mt-auto verify-msgie11">
                             {this.state.passCodeSentMsg && <span className="text-success d-block mb-3 width100 MsgWithIcon MsgSuccessIcon">The temporary passcode has been {this.state.clickHereResent && <span>re</span>}sent to your registered Contact Number.</span>}
-                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="primaryColor px-1" onClick={this.onClickReSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <a href = {Help} target = "_blank" className="primaryColor px-1">Support</a></span>
+                            <span className={"mb-3 width100 " + this.state.invisible}>Haven't received your passcode yet? <Link className="theme-primary px-1" onClick={this.onClickReSendPasscode} to="/verifycontact">Click here</Link> to resend or Contact <a href = {Help} target = "_blank" className="theme-primary px-1">Support</a></span>
                         </div>
                     </div>
                 </CoreoWizScreen>
@@ -157,7 +157,7 @@ class VerifyContact extends React.Component {
     }
 };
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onClickCancel: () => dispatch(onCancelClick()),
         sendPassCode: (data) => (dispatch(sendTemporaryPasscode(data))),
@@ -168,7 +168,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         serviceProviderDetails: state.onboardingState.verifyContactState.serviceProviderDetails,
         isPasscodeSent: state.onboardingState.verifyContactState.isPasscodeSent,

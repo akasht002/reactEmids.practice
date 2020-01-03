@@ -75,7 +75,7 @@ export const ServiceCalendarList = props => {
           dateVal.map( data => {
             return (
               <React.Fragment>
-                  <h6 className='VisitScheduleTitle'> 
+                  <h6 className='VisitScheduleTitle theme-primary'> 
                   <Moment format="MMM DD, dddd">
                             {data}
                   </Moment>

@@ -26,7 +26,7 @@ import { formatContactNumber, formatContactNumberValue } from '../../../utils/va
 import { emptyString } from '../../../utils/arrayUtility'
 import { ImageInstruction } from '../Components/ImageInstruction'
 
-class PersonalDetail extends React.PureComponent {
+export class PersonalDetail extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -387,7 +387,6 @@ class PersonalDetail extends React.PureComponent {
 
     let modalContent
     let modalTitle = 'Edit Personal Details'
-    let modalType = ''
     const cityDetail = this.props.cityDetail && this.props.cityDetail.map((city, i) => {
       return { label: city.name, value: city.id + '-' + city.name }
     });
@@ -437,6 +436,7 @@ class PersonalDetail extends React.PureComponent {
           ModalBody={<span>Do you want to discard the changes?</span>}
           btn1='YES'
           btn2='NO'
+          test-discardPopup='test-discardPopup'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
@@ -453,9 +453,11 @@ class PersonalDetail extends React.PureComponent {
           toggle={this.reset}
           ModalBody={<span>Please insert a image less than 2 MB and should be in the format of JPEG, PNG, GIF.</span>}
           btn1='OK'
+          test-image='test-image'
           className='modal-sm'
           headerFooter='d-none'
           centered='centered'
+          test-sizePopup='test-sizePopup'
           onConfirm={() =>
             this.setState({
               isAlertModalOpen: false
@@ -471,6 +473,7 @@ class PersonalDetail extends React.PureComponent {
           ModalBody={<span>Do you want to discard the changes?</span>}
           btn1='YES'
           btn2='NO'
+          test-savePopup='test-savePopup'
           className='modal-sm'
           headerFooter='d-none'
           footer='d-none'
@@ -496,6 +499,7 @@ class PersonalDetail extends React.PureComponent {
           uploadedImageFile={this.state.uploadedImageFile}
           crop={this.state.crop}
           onCropChange={this.onCropChange}
+          test-crop='test-crop'
           changeCroppedImage={(croppedImage) => {
             this.setState({ croppedImageUrl: croppedImage })
           }}
@@ -544,7 +548,7 @@ class PersonalDetail extends React.PureComponent {
                 {this.props.personalDetail &&
                   `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
               </h3>
-              <p className={'SPsubTitle'}>
+              <p className={'SPsubTitle theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.genderName}
@@ -563,7 +567,7 @@ class PersonalDetail extends React.PureComponent {
               </p>
             </div>
             <div className={'col p-0'}>
-              <h3 className={'ratePerHour primaryColor'}>
+              <h3 className={'ratePerHour theme-primary'}>
                 <span>
                   {this.props.personalDetail &&
                     this.props.personalDetail.hourlyRate}
@@ -575,7 +579,7 @@ class PersonalDetail extends React.PureComponent {
             <div className={'SPAffiliatedList'}>
               {this.props.personalDetail &&
                 this.props.personalDetail.affiliationName &&
-                <span className={'AffiliatedList'}>
+                <span className={'AffiliatedList theme-primary'}>
                   Affiliated to In
                 {' '}
                   <bd>
@@ -586,7 +590,7 @@ class PersonalDetail extends React.PureComponent {
             </div>
           </div>
           <div className={'width100 description-block-profile'}>
-          <span className={'primaryColor'}>Description</span>
+          <span className={'theme-primary'}>Description</span>
 
             <span>{(this.props.personalDetail && this.props.personalDetail.description !== '') ? this.props.personalDetail.description
               : <span className={'SPDescriptionNone'} onClick={this.togglePersonalDetails}>Edit your profile here</span>}</span>
@@ -595,7 +599,7 @@ class PersonalDetail extends React.PureComponent {
         <div className={'SPDetailsContainer SPAddressWidget'}>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Address</span>
+              <span className={'SPAddressText theme-primary'}>Address</span>
             </div>
             <div className={'width100 d-flex'}>
               <span className={'AddressContentLabel'}>Street</span>
@@ -618,7 +622,7 @@ class PersonalDetail extends React.PureComponent {
           </div>
           <div className={'SPAddressContent'}>
             <div className={'width100 SPAddressTitle d-flex'}>
-              <span className={'SPAddressText primaryColor'}>Phone</span>
+              <span className={'SPAddressText theme-primary'}>Phone</span>
             </div>
             <div className={'width100 d-flex'}>
               <span>
@@ -641,7 +645,7 @@ class PersonalDetail extends React.PureComponent {
     return (
       <div className='row'>
         <div className='col-md-12'>
-          <h4 className='primaryColor text-left editProfileHeader'>
+          <h4 className='theme-primary text-left editProfileHeader'>
             Introduction
           </h4>
         </div>
@@ -657,7 +661,7 @@ class PersonalDetail extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>
-              <i className='addImageBtn' onClick={this.handleChange} />
+              <i className='addImageBtn theme-primary' onClick={this.handleChange} />
             </div>
           </div>
         </div>
@@ -671,6 +675,7 @@ class PersonalDetail extends React.PureComponent {
                 required='required'
                 type='text'
                 maxlength='100'
+                test-firstName = "test-firstName"
                 value={this.state.firstName}
                 className={"form-control custome-placeholder " + (this.state.firstNameInvaild && 'inputFailure')}
                 textChange={e => {
@@ -732,6 +737,7 @@ class PersonalDetail extends React.PureComponent {
                   options={genderDetail}
                   simpleValue
                   placeholder='Select Gender'
+                  test-gender='test-gender'
                   onChange={value => {
                     this.setState({
                       selectedGender: value,
@@ -930,7 +936,7 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Address
               </h4>
             </div>
@@ -1056,7 +1062,7 @@ class PersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Phone
               </h4>
             </div>
@@ -1092,7 +1098,7 @@ class PersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     getAffiliationDetail: () => dispatch(action.getAffiliationDetail()),
@@ -1104,7 +1110,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

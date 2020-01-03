@@ -12,7 +12,7 @@ import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { getServiceTypeImage } from '../../../../utils/validations';
+import { getServiceTypeImage, getStatusTextBasedOnStatus } from '../../../../utils/validations';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { getUserInfo } from "../../../../services/http";
@@ -188,7 +188,7 @@ export class PerformTasks extends Component {
                 {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -196,7 +196,7 @@ export class PerformTasks extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitNumber}</span>
@@ -212,6 +212,8 @@ export class PerformTasks extends Component {
                                                 className="avatarImage avatarImageBorder" alt="patientImage" />
                                             <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i>
                                         </span>
+                                        {this.state.taskList.patient && this.state.taskList.patient.deceasedInd &&
+                                          <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.state.taskList.patient)}</span>}
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +265,7 @@ export class PerformTasks extends Component {
                                             <div onClick={() => {
                                                 serviceType.collapse = !serviceType.collapse;
                                                 this.setState({ collapse: !this.state.collapse });
-                                            }} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + serviceType.collapse}>
+                                            }} id={'toggle' + serviceType.serviceRequestTypeDetailsId} className={"TabContainer " + serviceType.collapse} test-tabContainer='test-tabContainer'>
                                                 <img src={require(`../../../../assets/ServiceTypes/${image_url}`)} className="ServiceTasksImg" alt="categoryImage" />
                                                 <div className="TabHeaderContent">
                                                     <span className="TabHeaderText">{serviceType.serviceTypeDescription}</span>
@@ -298,7 +300,7 @@ export class PerformTasks extends Component {
                                                                         }}
                                                                         disabled={visitStatus === SERVICE_STATES.YET_TO_START}
                                                                     />
-                                                                    <label className='ServicesLink' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
+                                                                    <label className='ServicesLink theme-primary' htmlFor={taskList.serviceRequestTypeTaskVisitId}>
                                                                         <div className='servicesDesc'>
                                                                             <span className='serviceName'>{taskList.serviceTaskDescription}</span>
                                                                         </div>
@@ -317,7 +319,7 @@ export class PerformTasks extends Component {
                                 <div className='bottomButton'>
                                     <div className='col-md-5 d-flex mr-auto bottomTaskbar'>
                                         <span className="bottomTaskName">Tasks</span>
-                                        <span className="bottomTaskRange">
+                                        <span className="bottomTaskRange theme-primary">
                                             <i style={{ width: this.percentageCompletion && this.percentageCompletion + '%' }} className="bottomTaskCompletedRange" />
                                         </span>
                                         <span className="bottomTaskPercentage">{this.percentageCompletion && this.percentageCompletion}%</span>
@@ -340,6 +342,7 @@ export class PerformTasks extends Component {
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
+                        test-proceedModal='test-proceedModal'
                         onConfirm={() => this.saveData()}
                         onCancel={() => this.setState({
                             isModalOpen: !this.state.isModalOpen,
@@ -353,6 +356,7 @@ export class PerformTasks extends Component {
                         btn2="No"
                         className="modal-sm"
                         headerFooter="d-none"
+                        test-endModal='test-endModal'
                         centered={true}
                         onConfirm={() => { this.setState({ isStopModalOpen: !this.state.isStopModalOpen }); this.startService(0, this.state.taskList.serviceRequestVisitId) }}
                         onCancel={() => this.setState({
@@ -365,7 +369,7 @@ export class PerformTasks extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getPerformTasksList: (data) => dispatch(getPerformTasksList(data, true)),
         addPerformedTask: (data, startServiceAction) => dispatch(addPerformedTask(data, startServiceAction)),
@@ -377,7 +381,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         PerformTasksList: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         ServiceRequestVisitId: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.ServiceRequestVisitId,

@@ -7,22 +7,22 @@ import { PAGE_SIZE_OPTIONS, VISIT_STATUS, VISIT_PROCESSING_STATUS } from '../../
 import { getServiceTypeImage } from '../../../../utils/validations'
 import { isEntityUser } from '../../../../utils/userUtility';
 import { getUserInfo } from '../../../../services/http'
-import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { convert24To12Hrs } from "../../../../utils/dateUtility";
 import { getEntityProcessingStatus } from '../../../../utils/validations'
 import './style.css';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 
-const renderServiceTypeImages = serviceTypes => {
+export const renderServiceTypeImages = serviceTypes => {
     let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
     return (
         updatedServiceTypes.slice(0, 3).map(type =>
             <div>
-                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
+                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn theme-primary"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
             </div>
         ))
 }
 
-const getServiceTypeImageBasedOnId = serviceTypeId => {
+export const getServiceTypeImageBasedOnId = serviceTypeId => {
     return getServiceTypeImage(serviceTypeId)
 }
 
@@ -38,7 +38,7 @@ const renderServiceTypesInToolTip = serviceTypes => {
     ))
 }
 
-const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
+export const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
     const data = {
         visitStatusId: visitStatusId,
         isPaymentModeEnabled: isPaymentModeEnabled,
@@ -59,7 +59,7 @@ const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => 
     }
 }
 
-const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
+export const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabled) => {
     const data = {
         visitStatusId: visitStatusId,
         isPaymentModeEnabled: isPaymentModeEnabled,
@@ -85,7 +85,7 @@ export const Table = props => {
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
     return (
         <Fragment>
-            <table className="table-responsive plan-tableview" cellpadding="6" cellspacing="6">
+            <table className="table-responsive plan-tableview theme-primary" cellpadding="6" cellspacing="6">
                 <thead>
                     <tr>
                         {props.header.map(item => {
@@ -100,17 +100,19 @@ export const Table = props => {
                 </thead>
                 <tbody>
                     {props.visitList.map(item => {
-                        let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : getUTCFormatedDate(item.visitStartTime, DATE_FORMATS.hh_mm_a)
+                        let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : convert24To12Hrs(item.visitStartTime)
                         let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         let isIndividualServiceProvider = !((item.visitStatusId === VISIT_STATUS.startVisit.id) && isEntity && isEntityServiceProvider)
-                        return <tr>
+                        let isStartVisit = (item.visitStatusId === VISIT_STATUS.startVisit.id) && !(isEntity || isEntityServiceProvider)
+                        let activeRowClass = (props.servicePlanVisitId === item.servicePlanVisitId) ? 'active-row-view' : ''
+                        return <tr className={activeRowClass} onClick={() => props.highlightVisit(item)}>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
                             <td>{isIndividualServiceProvider && startTime}</td>
-                            <td>{isIndividualServiceProvider && duration}</td>
+                            <td>{isStartVisit ? '': duration}</td>
                             <td>
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
-                                    {item.serviceTypes.length > 3 && <div className="service-typesview-more tooltip">3+
+                                    {item.serviceTypes.length > 3 && <div className="service-typesview-more tooltip theme-primary">3+
                                         <div class="bottom">
                                             <h3>Service Types</h3>
                                             <div className="inner-block-SRtypes">
@@ -123,7 +125,7 @@ export const Table = props => {
                             </td>
                             {
                                 isEntity &&
-                                <td>
+                                <td className={item.visitStatusId === VISIT_STATUS.cancelled.id && 'disable-assign-provider'}>
                                     <AssignServiceProvider
                                         visitList={item}
                                         getServicePlanVisitId={item.servicePlanVisitId}
@@ -141,7 +143,7 @@ export const Table = props => {
                                 :
                                 <td>
                                     <div class="ScheduleRowButton">
-                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
+                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn theme-primary"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
                                             {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
                                         </span>
                                     </div>
@@ -159,14 +161,16 @@ export const Table = props => {
                     })}
                 </tbody>
             </table>
-            <div className="table-result-block">
-                <RowPerPage
-                    pageSize={props.rowPageSize}
-                    pageSizeChange={props.rowPageChange}
-                    pageSizeOption={PAGE_SIZE_OPTIONS}
-                />
-                <span className="page-result">Total {props.totalResult} results</span>
-            </div>
+            {props.visitList.length !== 0 &&
+                <div className="table-result-block">
+                    <RowPerPage
+                        pageSize={props.rowPageSize}
+                        pageSizeChange={props.rowPageChange}
+                        pageSizeOption={PAGE_SIZE_OPTIONS}
+                    />
+                    <span className="page-result">Total {props.totalResult} results</span>
+                </div>
+            }
         </Fragment>
     )
 }

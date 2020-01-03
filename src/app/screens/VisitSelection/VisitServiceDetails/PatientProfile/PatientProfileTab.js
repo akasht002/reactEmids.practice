@@ -4,20 +4,20 @@ import PersonalDetail from '../../../PatientProfile/PersonalDetail';
 import PointService from '../../../PatientProfile/PointService';
 import Languages from '../../../PatientProfile/Languages';
 import ClinicalCondition from '../../../PatientProfile/ClinicalCondition';
-import VitalDetails from '../../../PatientProfile/VitalDetails';
+import EmergencyAttorneyContact from '../../../PatientProfile/EmergencyAttorneyContact';
 
 export const PatientProfileTab = props => {
     return (
         <Fragment>
             <TabPane tabId='3' className='TabBody'>
-            <div className="colorblock"></div>
+            <div className="colorblock theme-primary-gradient"></div>
              <div className="my-patientblock">   
             <PersonalDetail 
              showPhoneNumber={props.showPhoneNumber}
              onClickConversation={props.onClickConversation}
              onClickVideoConference={props.onClickVideoConference}
             />
-            <VitalDetails />
+            <EmergencyAttorneyContact />
             <ClinicalCondition />
             <PointService />
             <Languages />

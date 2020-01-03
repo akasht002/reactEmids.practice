@@ -1,22 +1,28 @@
 import React from 'react';
-import { CoreoPagination } from '../index';
-import renderer from 'react-test-renderer';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16'
 
-test('CoreoPagination Component Testing', () => {
-    const component = renderer.create(
-        <CoreoPagination
-            activePage={1}
-            itemsCountPerPage={10}
-            totalItemsCount={1000}
-            pageRangeDisplayed={20}
-            itemClass='PaginationItem'
-            itemClassFirst='PaginationIcon First'
-            itemClassPrev='PaginationIcon Prev'
-            itemClassNext='PaginationIcon Next'
-            itemClassLast='PaginationIcon Last'>
-        </CoreoPagination>,
-    );
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+import { CoreoPagination } from '../index';
+
+Enzyme.configure({ adapter: new Adapter() })
+
+describe('CoreoPagination', () => {
+    it('should return correct component', () => {
+        const wrapper = shallow(
+            <CoreoPagination
+                activePage={1}
+                itemsCountPerPage={10}
+                totalItemsCount={1000}
+                pageRangeDisplayed={20}
+                itemClass='PaginationItem'
+                itemClassFirst='PaginationIcon First'
+                itemClassPrev='PaginationIcon Prev'
+                itemClassNext='PaginationIcon Next'
+                itemClassLast='PaginationIcon Last'>
+            </CoreoPagination>
+        )
+        expect(wrapper).toBeDefined();
+    })
 });
+
 

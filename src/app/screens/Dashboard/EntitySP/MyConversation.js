@@ -1,6 +1,6 @@
 import React ,{Fragment} from "react";
 
-function EntityUserMyConversionDefault(){
+export function EntityUserMyConversionDefault(){
 
     let initConversations = []
   
@@ -8,15 +8,8 @@ function EntityUserMyConversionDefault(){
       initConversations.push(<Fragment>
         {
           <li className="list-group-item NoInformation myConversationContainer">
-          <div className="myConversationContent">
-            <div className="avatarWidget">
-              <div className="avatarContainer"/>
-            </div>
-            <div className="MsgThreadContent m-auto">
-              <div className="NoProfileServices">
-                <i className="NoInformationIcon"/><span>No Conversations</span>
-              </div>
-            </div>
+          <div className="right-empty-srblock">
+          <img src={require('../../../assets/images/service-request-feature.png')} alt="Service-Request" />
           </div>
          </li>
         }

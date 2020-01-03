@@ -1,23 +1,22 @@
-
-.navbarProfile{
+.navbarProfile {
     height: 60px;
     z-index: 3;
 }
 
-.Icon.icon-back:hover{
+.Icon.icon-back:hover {
     cursor: pointer;
 }
 
-.SearchInput{
+.SearchInput {
     border: none !important;
     width: 100%
 }
 
-.SearchWidget{
+.SearchWidget {
     margin: 0 60px;
 }
 
-.topWidgetBG{
+.topWidgetBG {
     position: absolute;
     height: 300px;
     top: 0;
@@ -26,32 +25,32 @@
     z-index: -1;
 }
 
-.SPTitleText{
+.SPTitleText {
     font-size: 20px;
     font-weight: normal;
 }
 
-.mainWidgetProfile{
+.mainWidgetProfile {
     position: relative;
-    max-height: calc( 100vh - 100px );
+    max-height: calc(100vh - 100px);
 }
 
-.mainWidgetOverflow{
-    max-height: calc( 100vh - 60px );
+.mainWidgetOverflow {
+    max-height: calc(100vh - 60px);
     padding: 15px 0;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-div.mainProfileContent{
+div.mainProfileContent {
     display: block;
     position: relative;
-    max-height: calc( 100vh - 60px );
-    background-color: rgba(0,0,0,0);
+    max-height: calc(100vh - 60px);
+    background-color: rgba(0, 0, 0, 0);
     z-index: 2;
 }
 
-.SPdpContainer{
+.SPdpContainer {
     display: block;
     position: relative;
     width: 170px;
@@ -59,7 +58,7 @@ div.mainProfileContent{
     margin: 0 auto;
 }
 
-.card.CardWidget{
+.card.CardWidget {
     padding: 0;
     margin: 0 0 20px 0;
     -webkit-border-radius: 2px;
@@ -76,6 +75,7 @@ div.mainProfileContent{
     left: 0;
     height: 170px;
 }
+
 .SPdpCircle {
     stroke: #2ab498;
     fill: none;
@@ -95,11 +95,12 @@ div.mainProfileContent{
         stroke-dasharray: 0 100;
     }
 }
+
 .SPdpImage {
     position: relative;
     display: block;
     width: 150px;
-    height:150px;
+    height: 150px;
     padding: 0;
     margin: 0 auto;
     top: 10px;
@@ -109,14 +110,14 @@ div.mainProfileContent{
 }
 
 
-.card.SPDetails{
+.card.SPDetails {
     display: flex;
     flex-direction: row;
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
 }
 
-.SPRating{
+.SPRating {
     display: inline-block;
     width: fit-content;
     width: -moz-fit-content;
@@ -128,13 +129,13 @@ div.mainProfileContent{
     padding: 4px 12px;
 }
 
-.SPDetailsContainer{
+.SPDetailsContainer {
     min-height: 100px;
     border-left: 1px solid #e1e1e1;
     padding: 40px;
 }
 
-i.SPIconEditPersonalDetails{
+i.SPIconEditPersonalDetails {
     position: absolute;
     top: 30px;
     right: 30px;
@@ -144,20 +145,20 @@ i.SPIconEditPersonalDetails{
     border: 0;
 }
 
-.SPdpWidget{
+.SPdpWidget {
     width: 250px;
     text-align: center;
 }
 
-.SPNameWidget{
+.SPNameWidget {
     width: 525px;
 }
 
-.SPAddressWidget{
+.SPAddressWidget {
     width: 335px;
 }
 
-.SPName{
+.SPName {
     position: relative;
     font-weight: normal;
     font-size: 22px;
@@ -176,7 +177,7 @@ i.SPIconEditPersonalDetails{
     background-repeat: no-repeat;
 }
 
-.SPPatientName:after{
+.SPPatientName:after {
     display: none;
 }
 
@@ -184,7 +185,8 @@ i.SPIconEditPersonalDetails{
     display: table;
     width: fit-content;
     margin-left: auto;
-    border: 2px solid #7a329f;;
+    border: 2px solid #7a329f;
+    ;
     padding: 4px 12px;
     line-height: 28px;
     text-align: center;
@@ -198,7 +200,7 @@ i.SPIconEditPersonalDetails{
     transform: skew(-24deg);
 }
 
-.ratePerHour span{
+.ratePerHour span {
     display: block;
     width: fit-content;
     margin: 0 10px;
@@ -209,44 +211,44 @@ i.SPIconEditPersonalDetails{
     transform: skew(24deg);
 }
 
-.ratePerHour span:before{
+.ratePerHour span:before {
     content: '$';
     margin-right: 0px;
 }
 
-.ratePerHour span:after{
+.ratePerHour span:after {
     content: '/hr';
     font-size: 14px;
 }
 
-.SPCardTitle{
+.SPCardTitle {
     width: 100%;
     padding: 30px;
     flex-direction: row;
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
-    -webkit-box-pack: justify!important;
-    -ms-flex-pack: justify!important;
-    justify-content: space-between!important;
+    -webkit-box-pack: justify !important;
+    -ms-flex-pack: justify !important;
+    justify-content: space-between !important;
 }
 
-.SPCardTitle h4{
+.SPCardTitle h4 {
     font-size: 20px;
     font-weight: normal;
     margin: 0;
 }
 
-.SPsubTitle{
+.SPsubTitle {
     display: block;
 }
 
-.SPsubTitle span{
+.SPsubTitle span {
     display: inline-block;
     font-size: 14px;
     color: #444444;
 }
 
-.SPsubTitle span:before{
+.SPsubTitle span:before {
     content: '';
     position: relative;
     display: inline-block;
@@ -260,8 +262,33 @@ i.SPIconEditPersonalDetails{
     border-radius: 50%;
 }
 
-.SPsubTitle span:first-child:before{
+.SPsubTitle span:first-child:before {
     display: none;
+}
+
+.patient-status-indicator-pg
+{
+    position: absolute;
+    display: block;
+    bottom: 0;
+    top: 33px;
+    width: 123px;
+    height: 100%;
+    right: 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.BoardContainer .ServiceRequestBoard .BlockProfileDetails .BlockProfileDetailsName span:last-child
+{
+  color:#444;
+  font-weight:600;
+}
+
+.SPsubTitle span.patient-status-indicator:before {
+    background-color: red !important;
+    border: 1px solid red;
 }
 
 .SPAffiliatedList{
@@ -270,17 +297,17 @@ i.SPIconEditPersonalDetails{
     margin-bottom: 25px;
 }
 
-.SPAffiliatedList:after{
+.SPAffiliatedList:after {
     display: block;
     color: #7a329f;
 }
 
-.SPAffiliatedList .AffiliatedList{
+.SPAffiliatedList .AffiliatedList {
     display: block;
     margin-bottom: 8px;
 }
 
-.SPAffiliatedList .AffiliatedList:before{
+.SPAffiliatedList .AffiliatedList:before {
     content: '';
     position: relative;
     display: inline-block;
@@ -295,18 +322,18 @@ i.SPIconEditPersonalDetails{
     background-repeat: no-repeat;
 }
 
-.AffiliatedList bd{
+.AffiliatedList bd {
     font-weight: 600;
 }
 
-.SPDesc{
+.SPDesc {
     font-size: 16px;
     color: #6c6c6c;
     line-height: 20px;
     margin: 0;
 }
 
-.SPAddressTitle{
+.SPAddressTitle {
     display: block;
     margin-bottom: 10px;
 }
@@ -316,33 +343,33 @@ i.SPIconEditPersonalDetails{
     font-weight: 600;
 }
 
-.AddressContentLabel{
+.AddressContentLabel {
     font-weight: 600;
     width: 56px;
     margin: 0 4px 4px 0;
 }
 
-.SPAddressContent{
+.SPAddressContent {
     color: #444444;
     margin: 0 0 30px;
 }
 
-#map{
+#map {
     height: 340px;
     background-color: #cccccc;
     margin: 0 30px 30px 30px
 }
 
-.card.SPServices{
+.card.SPServices {
     padding: 0;
 }
 
-.SPTabWidget{
+.SPTabWidget {
     display: flex;
     flex-direction: column;
 }
 
-.SPTabHeader{
+.SPTabHeader {
     width: 100%;
     order: 1;
     padding: 0 30px;
@@ -352,18 +379,18 @@ i.SPIconEditPersonalDetails{
     transition: all linear .2s;
 }
 
-.SPTabHeader:hover{
+.SPTabHeader:hover {
     cursor: pointer;
     background-color: #e9d9f9;
 }
 
-.SPTabTitle{
+.SPTabTitle {
     display: flex;
     padding: 20px 40px 20px 0;
     border-top: 1px solid #eaeaea;
 }
 
-.SPTabTitle:after{
+.SPTabTitle:after {
     content: '';
     position: absolute;
     right: 40px;
@@ -384,7 +411,7 @@ i.SPIconEditPersonalDetails{
     transition: all linear .3s;
 }
 
-.SPTabTitleContent{
+.SPTabTitleContent {
     width: 100%;
     font-size: 18px;
     font-weight: 600;
@@ -395,30 +422,34 @@ i.SPIconEditPersonalDetails{
     transition: all linear .2s;
 }
 
-.SPTabWidget div.SPTabContent{
+.SPTabWidget div.SPTabContent {
     width: 100%;
     order: 2;
     padding: 25px 30px;
 }
 
-.SPTabContent.collapsing, .SPTabContent.show{
+.SPTabContent.collapsing,
+.SPTabContent.show {
     display: flex;
     flex-wrap: wrap;
 }
 
-.SPTabContent.show ~ .SPTabHeader, .SPTabContent.collapsing ~ .SPTabHeader{
+.SPTabContent.show~.SPTabHeader,
+.SPTabContent.collapsing~.SPTabHeader {
     background-color: #e9d9f9;
 }
 
-.SPTabContent.show ~ .SPTabHeader .SPTabTitleContent, .SPTabContent.collapsing ~ .SPTabHeader .SPTabTitleContent{
+.SPTabContent.show~.SPTabHeader .SPTabTitleContent,
+.SPTabContent.collapsing~.SPTabHeader .SPTabTitleContent {
     font-weight: 600;
 }
 
-.SPTabContent.show ~ .SPTabHeader .SPTabTitle{
-    border-color: rgba(0,0,0,0);
+.SPTabContent.show~.SPTabHeader .SPTabTitle {
+    border-color: rgba(0, 0, 0, 0);
 }
 
-.SPTabContent.show ~ .SPTabHeader .SPTabTitle:after, .SPTabContent.collapsing ~ .SPTabHeader .SPTabTitle:after{
+.SPTabContent.show~.SPTabHeader .SPTabTitle:after,
+.SPTabContent.collapsing~.SPTabHeader .SPTabTitle:after {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
@@ -426,7 +457,7 @@ i.SPIconEditPersonalDetails{
     transform: rotate(180deg);
 }
 
-.SPServiceCount{
+.SPServiceCount {
     display: block;
     height: 20px;
     width: 20px;
@@ -437,7 +468,7 @@ i.SPIconEditPersonalDetails{
     color: #ffffff;
 }
 
-.SPSkillsList{
+.SPSkillsList {
     display: flex;
     flex-direction: row;
     -webkit-flex-direction: row;
@@ -448,7 +479,7 @@ i.SPIconEditPersonalDetails{
     padding: 0 30px 20px 30px;
 }
 
-.SPSkillsItems{
+.SPSkillsItems {
     font-size: 14px;
     margin: 10px 10px 10px 0;
     color: #444444;
@@ -457,11 +488,9 @@ i.SPIconEditPersonalDetails{
     border-radius: 20px;
 }
 
-.SPAvailability{
+.SPAvailability {}
 
-}
-
-.SPAvailWidget{
+.SPAvailWidget {
     display: flex;
     flex-direction: row;
     -webkit-flex-direction: row;
@@ -471,7 +500,7 @@ i.SPIconEditPersonalDetails{
     padding: 0 15px 20px;
 }
 
-.SPAvailContainer{
+.SPAvailContainer {
     width: 17.22%;
     height: 196px;
     border: 1px solid #e2e2e2;
@@ -481,12 +510,12 @@ i.SPIconEditPersonalDetails{
     margin: 0 15px 10px;
 }
 
-.SPAvailTitle{
+.SPAvailTitle {
     display: block;
     position: relative;
 }
 
-.SPAvailTitle:after{
+.SPAvailTitle:after {
     content: '___';
     display: block;
     position: absolute;
@@ -495,7 +524,7 @@ i.SPIconEditPersonalDetails{
     color: #7a329f;
 }
 
-.SPAvailTitleText{
+.SPAvailTitleText {
     position: relative;
     font-size: 16px;
     color: #494949;
@@ -505,7 +534,7 @@ i.SPIconEditPersonalDetails{
     padding: 15px;
 }
 
-.SPAvailTitleText:after{
+.SPAvailTitleText:after {
     content: '';
     position: absolute;
     height: 20px;
@@ -519,17 +548,18 @@ i.SPIconEditPersonalDetails{
     background-repeat: no-repeat;
 }
 
-.SPAvailContent{
+.SPAvailContent {
     display: block;
     position: relative;
     padding: 15px 0;
 }
 
-.Available .SPAvailContent, .trueAvailable .SPAvailContent{
+.Available .SPAvailContent,
+.trueAvailable .SPAvailContent {
     padding: 0;
 }
 
-.SPAvailItems{
+.SPAvailItems {
     display: block;
     position: relative;
     padding: 5px 15px 5px 40px;
@@ -544,12 +574,15 @@ i.SPIconEditPersonalDetails{
     user-select: none;
 }
 
-.availabilityCheck ~ label:hover, .availabilityCheck:checked ~ label, .SPAvailItems.active{
+.availabilityCheck~label:hover,
+.availabilityCheck:checked~label,
+.SPAvailItems.active {
     background-color: #f0e6f2;
     color: #4f4f4f;
 }
 
-.availabilityCheck ~ label:before, .SPAvailItems:before {
+.availabilityCheck~label:before,
+.SPAvailItems:before {
     content: '';
     position: absolute;
     height: 8px;
@@ -562,59 +595,68 @@ i.SPIconEditPersonalDetails{
     background-color: #eaeaea;
 }
 
-.availabilityCheck:checked ~ label:before, .SPAvailItems.active:before {
+.availabilityCheck:checked~label:before,
+.SPAvailItems.active:before {
     background-color: #39ae99;
 }
 
-.SPAvailItems:hover{
+.SPAvailItems:hover {
     cursor: pointer;
 }
 
-.availabilityCheck{
+.availabilityCheck {
     position: absolute;
     opacity: 0;
 }
 
-.SPCertificateContainer{
-}
+.SPCertificateContainer {}
 
-.SPCertificateList{
+.SPCertificateList {
     list-style: none;
     padding: 0 30px;
     margin: 0;
 }
 
-.SPSCertificateItems, .SPWorkHistoryItems, .SPEducationItems, .SPAddressItems{
+.SPSCertificateItems,
+.SPWorkHistoryItems,
+.SPEducationItems,
+.SPAddressItems {
     display: flex;
     position: relative;
     flex-direction: row;
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     padding: 25px 0 25px 60px;
-    border-top: 1px solid rgba(225,225,225,.4);
+    border-top: 1px solid rgba(225, 225, 225, .4);
 }
 
-.SPSCertificateItems:first-child, .SPWorkHistoryItems:first-child, .SPEducationItems:first-child, .SPAddressItems:first-child{
+.SPSCertificateItems:first-child,
+.SPWorkHistoryItems:first-child,
+.SPEducationItems:first-child,
+.SPAddressItems:first-child {
     padding-top: 0;
     border: 0;
 }
 
-.SPCertificateHeader span{
+.SPCertificateHeader span {
     font-weight: 400;
 }
 
-.SPWorkYear{
+.SPWorkYear {
     font-size: 16px;
     font-weight: 600;
     margin-right: 40px;
 }
 
-.SPEducationDesc{
+.SPEducationDesc {
     font-size: 14px;
     color: #444444;
 }
 
-.SPSCertificateItems:before, .SPWorkHistoryItems:before, .SPEducationItems:before, .SPAddressItems:before{
+.SPSCertificateItems:before,
+.SPWorkHistoryItems:before,
+.SPEducationItems:before,
+.SPAddressItems:before {
     content: '';
     position: absolute;
     height: 40px;
@@ -626,54 +668,55 @@ i.SPIconEditPersonalDetails{
     background-repeat: no-repeat;
 }
 
-.SPSCertificateItems:before{
+.SPSCertificateItems:before {
     background-image: url("../../../assets/images/Certificate.svg");
 }
 
-.SPEducationItems:before{
+.SPEducationItems:before {
     background-image: url("../../../assets/images/EducationWhite.svg");
 }
 
-.SPWorkHistoryItems:before{
+.SPWorkHistoryItems:before {
     background-image: url("../../../assets/images/WorkWhite.svg");
     background-size: 24px;
 }
 
-.SPAddressItems:before{
+.SPAddressItems:before {
     background-image: url("../../../assets/images/POS.svg");
 }
 
-.SPCertificateContent{
+.SPCertificateContent {
     width: 100%;
     top: -3px;
     position: relative;
 }
 
-.SPCertificateHeader{
+.SPCertificateHeader {
     font-size: 16px;
     color: #444444;
     margin: 0 0 4px 0;
     font-weight: 600;
 }
 
-.SPCertificateSubtle, .SPCertificateDesc{
+.SPCertificateSubtle,
+.SPCertificateDesc {
     display: block;
     font-size: 14px;
     font-weight: 100;
 }
 
-.SPCertificateSubtle{
+.SPCertificateSubtle {
     color: #919090;
     margin-bottom: 10px;
 }
 
-.SPCertificateDesc{
+.SPCertificateDesc {
     color: #444444;
     font-weight: 400;
 }
 
-.pModalPadding0 .SPTabHeader.true, .SPTabHeader:hover
-{
+.pModalPadding0 .SPTabHeader.true,
+.SPTabHeader:hover {
     background-color: #f2f5f7;
 }
 
@@ -684,7 +727,7 @@ div.Select-menu-outer {
     border-top: 0;
 }
 
-.Select.is-open > .Select-control span.Select-arrow {
+.Select.is-open>.Select-control span.Select-arrow {
     /* border-color: #999999; */
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
@@ -693,43 +736,45 @@ div.Select-menu-outer {
     transform: rotate(180deg);
 }
 
-.SPTabContentEdit div.SPIconServicesCheckbox{
+.SPTabContentEdit div.SPIconServicesCheckbox {
     height: 160px;
     width: 160px;
     margin: 10px !important;
 }
 
-.SPIconServicesCheckbox label.form-check-label{
+.SPIconServicesCheckbox label.form-check-label {
     height: 160px;
     width: 160px;
     margin: 0;
 }
 
-.ModalPadding0 div.modal-body{
+.ModalPadding0 div.modal-body {
     padding: 10px 0;
 }
 
-div.SPTabContentEdit{
+div.SPTabContentEdit {
     padding: 10px 20px !important;
 }
 
-.SPTabWidgetEdit .SPTabHeader .SPTabTitle{
+.SPTabWidgetEdit .SPTabHeader .SPTabTitle {
     padding: 14px 40px 14px 0;
 }
 
-.SPTabContentEdit.collapsing~.SPTabHeader, .SPTabContentEdit.show~.SPTabHeader, .SPTabWidgetEdit .SPTabHeader:hover{
+.SPTabContentEdit.collapsing~.SPTabHeader,
+.SPTabContentEdit.show~.SPTabHeader,
+.SPTabWidgetEdit .SPTabHeader:hover {
     background-color: #f2f5f7;
 }
 
-.SPTabWidgetEdit .SPTabHeader .SPTabTitle:after{
+.SPTabWidgetEdit .SPTabHeader .SPTabTitle:after {
     display: inline-block;
 }
 
-.SPTabWidgetEdit .SPTabHeader .SPTabTitle .SPTabTitleContent{
+.SPTabWidgetEdit .SPTabHeader .SPTabTitle .SPTabTitleContent {
     font-size: 16px;
 }
 
-.SPTabWidgetEdit .SPTabHeader .SPTabTitle .SPServiceCount{
+.SPTabWidgetEdit .SPTabHeader .SPTabTitle .SPServiceCount {
     height: 18px;
     width: 18px;
     font-size: 14px;
@@ -739,7 +784,7 @@ div.SPTabContentEdit{
     padding: 0 10px;
 }
 
-.AvailabilityWidget .SPAvailWidget .SPAvailContainer{
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer {
     margin: 0 10px 20px;
     margin-left: 0px;
     border-radius: 6px;
@@ -747,19 +792,22 @@ div.SPTabContentEdit{
     -webkit-border-radius: 6px;
 }
 
-.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText:after{
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText:after {
     display: none;
 }
 
-.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText:hover, .addImageBtn:hover, .UploadImageBtn:hover, .addImageInput:hover{
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText:hover,
+.addImageBtn:hover,
+.UploadImageBtn:hover,
+.addImageInput:hover {
     cursor: pointer;
 }
 
-.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText input{
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitle .SPAvailTitleText input {
     opacity: 0;
 }
 
-.AvailabilityWidget .SPAvailWidget .trueAvailable .SPAvailTitle .SPAvailTitleText:after{
+.AvailabilityWidget .SPAvailWidget .trueAvailable .SPAvailTitle .SPAvailTitleText:after {
     content: '';
     position: absolute;
     top: 10px;
@@ -771,41 +819,45 @@ div.SPTabContentEdit{
     width: 24px;
 }
 
-.availabilityModal div.modal-body{
+.availabilityModal div.modal-body {
     padding: 0;
 }
 
-.trueAvailable{
+.trueAvailable {
     border: 1px solid #7a329f;
 }
 
-.trueAvailable .SPAvailTitle:before{
+.trueAvailable .SPAvailTitle:before {
     display: block;
 }
 
-.WorkHistoryModal .modal-content .modal-body, .educationModal .modal-content .modal-body, .CertificationModal .modal-content .modal-body, .LanguagesModal .modal-content .modal-body, .editSkillsModal .modal-content .modal-body {
+.WorkHistoryModal .modal-content .modal-body,
+.educationModal .modal-content .modal-body,
+.CertificationModal .modal-content .modal-body,
+.LanguagesModal .modal-content .modal-body,
+.editSkillsModal .modal-content .modal-body {
     padding: 20px 30px;
 }
 
-div.CertificationModal{
+div.CertificationModal {
     width: 100%;
 }
 
-.modal-body .Select-menu-outer{
+.modal-body .Select-menu-outer {
     /* position: relative; */
 }
 
-.SPBlackoutItems{
+.SPBlackoutItems {
     display: flex;
     position: relative;
     flex-direction: row;
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     padding: 15px 0 10px 0;
-    border-top: 1px solid rgba(225,225,225,.4);
+    border-top: 1px solid rgba(225, 225, 225, .4);
 }
 
-.SPBlackoutDate{
+.SPBlackoutDate {
     display: flex;
     position: relative;
     width: calc(100% - 360px);
@@ -814,34 +866,34 @@ div.CertificationModal{
     -ms-flex-direction: column;
 }
 
-.SPBlackoutDate .date{
+.SPBlackoutDate .date {
     display: block;
     font-weight: 600;
     color: #494949;
 }
 
-.SPBlackoutDate .day{
+.SPBlackoutDate .day {
     font-size: 12px;
     color: #999797;
 }
 
-.SPBlackoutItems .SPIconEdit{
+.SPBlackoutItems .SPIconEdit {
     top: 10px;
 }
 
-.card.SPBlackoutDays{
+.card.SPBlackoutDays {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
 }
 
-.BlackoutModal .modal-content{
+.BlackoutModal .modal-content {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
 }
 
-.BlackoutModal .modal-content .modal-body{
+.BlackoutModal .modal-content .modal-body {
     height: fit-content;
     padding: 15px 30px;
     overflow-y: auto;
@@ -870,17 +922,18 @@ div.CertificationModal{
     opacity: 0;
 }*/
 
-.editProfileImageContainer, .profileImage{
+.editProfileImageContainer,
+.profileImage {
     position: relative;
 }
 
-.editProfileHeader{
+.editProfileHeader {
     font-size: 22px;
     font-weight: 400;
     margin-bottom: 20px;
 }
 
-.editDpImage{
+.editDpImage {
     display: block;
     height: 150px;
     width: 150px;
@@ -896,13 +949,13 @@ div.CertificationModal{
     right: 0;
 }
 
-.uploadWidget{
+.uploadWidget {
     position: absolute;
     bottom: -30px;
     width: 100%;
 }
 
-.addImageBtn{
+.addImageBtn {
     display: block;
     position: relative;
     width: 34px;
@@ -915,7 +968,7 @@ div.CertificationModal{
     background-color: #79319d;
 }
 
-.addImageBtn:before{
+.addImageBtn:before {
     content: "";
     position: absolute;
     left: 0;
@@ -928,7 +981,7 @@ div.CertificationModal{
     background-repeat: no-repeat;
 }
 
-.addImageInput{
+.addImageInput {
     position: absolute;
     left: 92px;
     height: 40px;
@@ -938,47 +991,46 @@ div.CertificationModal{
     right: 0;
 }
 
-.UploadProfileImageContainer{
+.UploadProfileImageContainer {
     max-height: 325px;
     background-color: #464646;
     background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
     background-size: 4px 3px;
-    background-position: 0 0,5px 0,5px -5px,0 5px;
-    margin-bottom: 24px;;
+    background-position: 0 0, 5px 0, 5px -5px, 0 5px;
+    margin-bottom: 24px;
+    ;
 }
 
-.UploadedImage{
+.UploadedImage {
     max-height: 325px;
     max-width: 100%;
     display: block;
     margin: 0 auto;
 }
 
-.UploadedImageLimitation{
+.UploadedImageLimitation {
     padding-left: 18px;
 }
 
-.UploadedImageLimitation li{
+.UploadedImageLimitation li {
     font-size: 14px;
     color: rgba(68, 68, 68, 0.65);
 }
 
-.SPIconServicesCheckbox label span{
+.SPIconServicesCheckbox label span {
     height: 70px;
     font-size: 16px;
     font-weight: 400;
     color: #444444;
 }
 
-.SPIconServicesCheckbox label:after{
+.SPIconServicesCheckbox label:after {
     top: 20px;
 }
 
-.availabilityCheck:checked ~ label{
+.availabilityCheck:checked~label {}
 
-}
-
-.SPGuardianList{
+.SPGuardianList {
     display: flex;
     flex-direction: row;
     -webkit-flex-direction: row;
@@ -989,24 +1041,24 @@ div.CertificationModal{
     padding: 0 15px 20px;
 }
 
-.SPGuardianItems{
+.SPGuardianItems {
     display: block;
     width: 20%;
     list-style: none;
 }
 
-.SPGuardianContent{
+.SPGuardianContent {
     padding: 15px;
 }
 
-.SPGuardianImage{
+.SPGuardianImage {
     display: block;
     width: 100px;
     border-radius: 50%;
     margin: 0 auto;
 }
 
-.SPAddGuardianDesc{
+.SPAddGuardianDesc {
     display: flex;
     flex-direction: column;
     -webkit-flex-direction: column;
@@ -1016,7 +1068,7 @@ div.CertificationModal{
     margin-top: 15px;
 }
 
-.SPGuardianName{
+.SPGuardianName {
     font-size: 16px;
     font-weight: 600;
 }
@@ -1025,11 +1077,11 @@ div.CertificationModal{
     display: none;
 }
 
-.LinesEllipsis--clamped ~ .readMore {
+.LinesEllipsis--clamped~.readMore {
     display: block;
 }
 
-.SPContactContent .SPIconXLarge{
+.SPContactContent .SPIconXLarge {
     margin: 0 0 0 20px;
 }
 
@@ -1037,17 +1089,19 @@ div.CertificationModal{
     margin: 0;
 }
 
-.SPNoInfo, .SPNoInfoContent, .SPNoInfoDesc{
+.SPNoInfo,
+.SPNoInfoContent,
+.SPNoInfoDesc {
     display: block;
     width: 100%;
     text-align: center;
 }
 
-.SPPOSHeader{
+.SPPOSHeader {
     font-size: 18px;
 }
 
-.SPInfoContentImage{
+.SPInfoContentImage {
     display: block;
     position: relative;
     width: 100%;
@@ -1058,16 +1112,16 @@ div.CertificationModal{
     background-repeat: no-repeat;
 }
 
-.SPNoInfoDesc{
+.SPNoInfoDesc {
     margin: 15px 0;
     color: #9e9e9e;
 }
 
-.SPNoInfoDesc i{
+.SPNoInfoDesc i {
     top: 4px;
 }
 
-.ProfileImageMultiSelect img.react-gravatar{
+.ProfileImageMultiSelect img.react-gravatar {
     height: 40px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -1075,16 +1129,16 @@ div.CertificationModal{
     width: 40px;
 }
 
-.Select.ProfileImageMultiSelect div.Select-value{
+.Select.ProfileImageMultiSelect div.Select-value {
     padding: 0;
     max-width: 100%;
 }
 
-.Select.ProfileImageMultiSelect div.Select-control{
+.Select.ProfileImageMultiSelect div.Select-control {
     /*border: 0;*/
 }
 
-.ProfileImageMultiSelect .Select-control{
+.ProfileImageMultiSelect .Select-control {
     height: 50px;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -1093,31 +1147,32 @@ div.CertificationModal{
     border-color: #acacac;
 }
 
-.ProfileImageMultiSelect .Select-control:hover{
+.ProfileImageMultiSelect .Select-control:hover {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
 }
 
-.ProfileImageMultiSelect .Select-placeholder{
+.ProfileImageMultiSelect .Select-placeholder {
     padding: 10px;
 }
 
-.ProfileImageMultiSelect .Select-menu-outer{
+.ProfileImageMultiSelect .Select-menu-outer {
     border: 1px solid #acacac;
 }
 
-.LanguagesModal .modal-body, .LanguagesModal .modal-content{
+.LanguagesModal .modal-body,
+.LanguagesModal .modal-content {
     overflow: initial;
 }
 
-@media (min-width: 992px){
+@media (min-width: 992px) {
     div.modal-lg {
-        max-width: 800px!important;
+        max-width: 800px !important;
     }
 }
 
-.SelectFormControl .Select-control{
+.SelectFormControl .Select-control {
     height: 28px;
     border: 0;
     border-bottom: 1px solid #acacac;
@@ -1126,24 +1181,27 @@ div.CertificationModal{
     border-radius: 0;
 }
 
-.SelectFormControl .Select-control .Select-input{
+.SelectFormControl .Select-control .Select-input {
     height: 26px;
 }
 
-.SelectFormControl .Select-control .Select-input > input{
+.SelectFormControl .Select-control .Select-input>input {
     padding: 5px 0 10px;
 }
 
-.SelectFormControl .Select-control .Select-value, .SelectFormControl .Select-control .Select-placeholder{
+.SelectFormControl .Select-control .Select-value,
+.SelectFormControl .Select-control .Select-placeholder {
     padding: 0 0 10px 0;
     top: -6px;
 }
 
-.SelectFormControl .Select-menu-outer{
+.SelectFormControl .Select-menu-outer {
     position: absolute !important;
 }
 
-.SelectFormControl > .Select-control .Select-value, .SelectFormControl > .Select-control .Select-placeholder, .SelectFormControl > .Select-control .Select-value .Select-value-label{
+.SelectFormControl>.Select-control .Select-value,
+.SelectFormControl>.Select-control .Select-placeholder,
+.SelectFormControl>.Select-control .Select-value .Select-value-label {
     padding: 0 !important;
 }
 
@@ -1154,11 +1212,8 @@ div.CertificationModal{
     border-radius: 0 !important;
 }
 
-.LanguagesModal .modal-body, .LanguagesModal .modal-content, .editSkillsModal .modal-body, .editSkillsModal .modal-content{
-    /*overflow: initial;*/
-}
-
-.SPAddGuardianContainer h5, .SPAddGuardianContainer hr{
+.SPAddGuardianContainer h5,
+.SPAddGuardianContainer hr {
     margin: 0 30px;
 }
 
@@ -1172,7 +1227,7 @@ div.CertificationModal{
     padding: 10px 30px;
 }
 
-.SPAddGuardianContainer .MyConnectionsContent .ConnectionsWidget .AddGuardianIcon{
+.SPAddGuardianContainer .MyConnectionsContent .ConnectionsWidget .AddGuardianIcon {
     top: 20px;
 }
 
@@ -1184,7 +1239,9 @@ div.CertificationModal{
     margin: 10px 0;
 }
 
-.ConnectionsWidget .GuardianList, .ConnectionsWidget .GuardianList .GuardianItems .GuardianContent, .AddGuardianDesc {
+.ConnectionsWidget .GuardianList,
+.ConnectionsWidget .GuardianList .GuardianItems .GuardianContent,
+.AddGuardianDesc {
     display: flex;
     display: -moz-flex;
     flex-wrap: wrap;
@@ -1202,7 +1259,8 @@ div.CertificationModal{
     margin: 0;
 }
 
-.ConnectionsWidget .GuardianList .GuardianItems .GuardianContent, .AddGuardianDesc {
+.ConnectionsWidget .GuardianList .GuardianItems .GuardianContent,
+.AddGuardianDesc {
     flex-direction: column;
     text-align: center;
 }
@@ -1227,94 +1285,137 @@ div.CertificationModal{
     font-size: 14px;
 }
 
-
 /*UI_fixes_24_10*/
 
-.CertificationModal .modal-footer, .ModalPadding0 .modal-footer, .LanguagesModal .modal-footer, .availabilityModal .modal-footer
-{
+.CertificationModal .modal-footer,
+.ModalPadding0 .modal-footer,
+.LanguagesModal .modal-footer,
+.availabilityModal .modal-footer {
     padding: 10px 30px;
     height: 60px;
 }
 
 
-.CertificationModal .modal-footer .btn.disabled
-{
-background-color:#dcd6df !important;
-opacity: initial !important;
-border-radius:4px;
--webkit-border-radius:4px;
--moz-webkit-border-radius:4px;
+.CertificationModal .modal-footer .btn.disabled {
+    background-color: #dcd6df !important;
+    opacity: initial !important;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-webkit-border-radius: 4px;
 }
 
-
-
-.SPTabContent .SPIconServices span
-{
-color:#444;
+.SPTabContent .SPIconServices span {
+    color: #444;
 }
 
-.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitleText
-{
-color: #444;
+.AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitleText {
+    color: #444;
 }
 
-.vital-block
-{
-padding: 0 30px 20px 30px;
+.vital-block {
+    padding: 0 30px 20px 30px;
 }
 
-.vital-block p
-{
-font-size:14px;
-color:#444;
-margin-top: 0px;
+.vital-block p {
+    font-size: 14px;
+    color: #444;
+    margin-top: 0px;
 }
 
-.vital-block .CoreoAssociationHeader
-{
-font-weight:600;
-font-size: 16px;
+.vital-block .CoreoAssociationHeader {
+    font-weight: 600;
+    font-size: 16px;
 }
 
-.vital-block-title
-{
-padding-bottom:10px;
+.vital-block-title {
+    padding-bottom: 22px;
+}
+
+.SPDetailsContainer.SPAddressWidget .SPAddressTitle {
+    margin-bottom: 0px;
+}
+
+.SPDetailsContainer.SPAddressWidget .SPAddressContent {
+    margin-bottom: 16px;
+}
+
+.emergency-address-block {
+    width: 100%;
+    position: relative;
+}
+
+.emergency-address-block ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.emergency-address-block ul li p {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 14px;
+    color: #444444;
+    font-weight: 100;
+}
+
+.emergency-address-block ul li p span {
+    color: #1e3d5c;
+    font-weight: 600;
+    margin: 0 4px 4px 0;
+    font-size: 1rem;
+    width: 56px;
+}
+
+.ConnectionsWidget .CoreoAssociationHeader {
+    color: #444444;
+}
+
+.emergency-address-block .SPAddressItems {
+    display: block;
+    padding-bottom: 0px;
+}
+
+.emergency-address-block .SPAddressItems::before {
+    top: 5px;
+}
+
+.CoreoWidget.vital-block {
+    padding-bottom: 0px;
+}
+
+.CoreoWidget.vital-block p {
+    min-height: 20px;
+}
+
+.edit-emgncy-cont-model {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.edit-emgncy-cont-model label.from-group {
+    font-weight: 600;
+}
+
+.border-design {
+    border-right: 1px solid #e1e1e1;
+}
+
+.border-design:last-child {
+    border-right: none;
 }
 
 @media only screen and (max-width: 1024px) {
     .BlackoutModal .modal-content .modal-body {
-        height:100%;
+        height: 100%;
         padding: 15px 30px;
-        overflow-y:auto;
-    }
-    .BlackoutModal .modal-footer
-    {
-    clear: both;
-    }
-}
-
-
-
-@media (max-width: 1024px) {
-    .GuardianList .GuardianItems {
-        width: 25%;
-    }
-}
-
-@media (max-width: 768px) {
-    .GuardianList .GuardianItems {
-        width: 33.333%;
-    }
-}
-
-@media (max-width: 468px) {
-    .GuardianList .GuardianItems:first-child {
-        border: none;
+        overflow-y: auto;
     }
 
-    .GuardianList .GuardianItems {
-        width: 100%;
-        border-top:1px solid #e1e1e1;
+    .BlackoutModal .modal-footer {
+        clear: both;
     }
 }
 

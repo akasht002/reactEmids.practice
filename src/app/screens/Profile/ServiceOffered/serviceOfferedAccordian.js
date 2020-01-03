@@ -2,7 +2,7 @@ import React from "react";
 import { Collapse } from 'reactstrap';
 import ServiceOfferedIcons from '../ServiceOffered/serviceOfferedIcons'
 
-class ServiceOfferedAccordian extends React.Component {
+export class ServiceOfferedAccordian extends React.Component {
 
     constructor(props) {
         super(props);
@@ -26,7 +26,7 @@ class ServiceOfferedAccordian extends React.Component {
                     <div className={'SPTabTitle ' + this.props.category.isOpen}>
                         <h5 className={'SPTabTitleContent'}>{this.props.category.serviceCategoryDescription}</h5>
                         {this.props.type === 'view' ?
-                            <span className={'SPServiceCount'}>{this.props.category.serviceTypeModel.length}</span>
+                            <span className={'SPServiceCount theme-primary'}>{this.props.category.serviceTypeModel.length}</span>
                             :
                             ''
                         }

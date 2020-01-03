@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { UserAvatarMultiSelect } from "../../../components";
 
-export default class SelectPatient extends Component {
+export class SelectPatient extends Component {
     state = {
         Patients: []
     };
@@ -28,7 +28,7 @@ export default class SelectPatient extends Component {
 
         return (
             <div className="form-group">
-                <label className='primaryColor'>Select Individual</label>
+                <label className='theme-primary'>Select Individual</label>
                     <UserAvatarMultiSelect
                     listItems={this.state.Patients}
                     multi={false}
@@ -40,3 +40,5 @@ export default class SelectPatient extends Component {
         );
     };
 };
+
+export default  SelectPatient

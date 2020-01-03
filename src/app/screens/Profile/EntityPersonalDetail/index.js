@@ -23,7 +23,7 @@ import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatPhoneNumber } from '../../../utils/formatName'
 import ImageModal from '../PersonalDetail/ImageModal';
 
-class EntityPersonalDetail extends React.PureComponent {
+export class EntityPersonalDetail extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -60,7 +60,6 @@ class EntityPersonalDetail extends React.PureComponent {
         age: nextProps.personalDetail.age,
         genderName: nextProps.personalDetail.genderName,
         organization: nextProps.personalDetail.organization,
-        yearOfExperience: nextProps.personalDetail.yearOfExperience,
         description: nextProps.personalDetail.description,
         hourlyRate: nextProps.personalDetail.hourlyRate,
         url: nextProps.personalDetail.entity && nextProps.personalDetail.entity.websiteUrl,
@@ -361,7 +360,7 @@ class EntityPersonalDetail extends React.PureComponent {
     return (
       <div className='row'>
         <div className='col-md-12'>
-          <h4 className='primaryColor text-left editProfileHeader'>
+          <h4 className='theme-primary text-left editProfileHeader'>
             Introduction
           </h4>
         </div>
@@ -378,7 +377,7 @@ class EntityPersonalDetail extends React.PureComponent {
             />
             <span className='editDpImage' />
             <div className='uploadWidget' name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}>
-              <i className='addImageBtn' onClick={this.handleChange} />
+              <i className='addImageBtn theme-primary' onClick={this.handleChange} />
             </div>
           </div>
         </div>
@@ -491,27 +490,6 @@ class EntityPersonalDetail extends React.PureComponent {
                 className='form-control'
               />
             </div>
-            <div className='col-md-6 mb-2'>
-              <Input
-                name='YearsExperience'
-                label='Years of Experience'
-                autoComplete='off'
-                required='required'
-                type='text'
-                maxlength='2'
-                value={this.state.yearOfExperience}
-                textChange={e => {
-                  const re = /^[0-9\b]+$/
-                  if (e.target.value === '' || re.test(e.target.value)) {
-                    this.setState({
-                      yearOfExperience: e.target.value,
-                      disabledSaveBtn: false
-                    })
-                  }
-                }}
-                className='form-control'
-              />
-            </div>
           </div>
         </div>
         <div className='col-md-12'>
@@ -574,7 +552,7 @@ class EntityPersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Address
               </h4>
             </div>
@@ -706,7 +684,7 @@ class EntityPersonalDetail extends React.PureComponent {
         <div className='col-md-12 mb-2'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4 className='primaryColor text-left editProfileHeader'>
+              <h4 className='theme-primary text-left editProfileHeader'>
                 Phone
               </h4>
             </div>
@@ -810,7 +788,6 @@ class EntityPersonalDetail extends React.PureComponent {
       firstName: this.props.personalDetail.firstName,
       lastName: this.props.personalDetail.lastName,
       age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail.phoneNumber
@@ -820,7 +797,6 @@ class EntityPersonalDetail extends React.PureComponent {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       age: this.state.age,
-      yearOfExperience: this.state.yearOfExperience,
       description: this.state.description,
       hourlyRate: this.state.hourlyRate,
       phoneNumber: this.state.phoneNumber
@@ -843,7 +819,6 @@ class EntityPersonalDetail extends React.PureComponent {
       firstName: this.props.personalDetail.firstName,
       lastName: this.props.personalDetail.lastName,
       age: this.props.personalDetail.age,
-      yearOfExperience: this.props.personalDetail.yearOfExperience,
       description: this.props.personalDetail.description,
       hourlyRate: this.props.personalDetail.hourlyRate,
       phoneNumber: this.props.personalDetail.phoneNumber,
@@ -877,7 +852,7 @@ class EntityPersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     updateEntityDetail: data => dispatch(action.updateEntityDetail(data)),
@@ -888,7 +863,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     personalDetail: state.profileState.PersonalDetailState.personalDetail,
     updatePersonalDetailSuccess: state.profileState.PersonalDetailState

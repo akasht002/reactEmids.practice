@@ -117,7 +117,7 @@ span.title-view {
 
 .plan-tableview td:nth-child(1) time {
     width: 24%;
-    padding-left: 14px;
+    padding-left: 5px;
 }
 
 .plan-tableview .EntityUServiceProf {
@@ -254,11 +254,12 @@ span.title-view {
     margin-right: 10px;
 }
 
-.SP-viewplantable span {
+.plan-tableview .EntityUServiceProf .SP-viewplantable span {
     color: #222;
     font-weight: 500;
     font-size: 14px;
     text-align: left;
+    max-width: calc(100% - 45px);
 }
 
 .SP-viewplantable span a {
@@ -499,4 +500,16 @@ span.title-view {
 .status-view-btn:hover {
     background: transparent !important;
     color: #7a329f;
+}
+
+.disable-assign-provider {
+    cursor: context-menu !important;
+    z-index: 10000;
+}
+
+.disable-assign-provider .EntityUServiceProf, .disable-assign-provider .SP-viewplantable, .disable-assign-provider .SP-viewplantable span a 
+{
+    cursor: context-menu !important;
+    pointer-events: none;
+    z-index: 10000;
 }

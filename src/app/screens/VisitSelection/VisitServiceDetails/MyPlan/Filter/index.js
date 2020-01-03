@@ -47,7 +47,7 @@ export class Filter extends Component {
             <div className={"FilterWidget " + this.props.isOpen}>
 
                 <div className="FilterWidgetForm my-plan-filter">
-                    <div className="FilterContainer FilterTop">
+                    <div className="FilterContainer FilterTop theme-primary-light">
                         <span>Filters</span>
                         <span className="FilterCloseIcon" onClick={this.props.toggle} />
                     </div>
@@ -113,7 +113,7 @@ export class Filter extends Component {
 
                                 <TabPane tabId="3" id="Service_Category_tab">
                                     <div className="form-group">
-                                        <label>Categories & Types</label>
+                                        <label>Select Service Category</label>
                                     </div>
                                     <div className="form-group">
                                         <ServiceCategory
@@ -142,16 +142,17 @@ export class Filter extends Component {
                                         entityServiceProvidersList={this.props.entityServiceProvidersList}
                                         handleEsp={this.props.handleEsp}
                                     />
-                                    <ul className="show-more-assignSP">
-                                        <li
-                                            class="list-group-item ProfileShowMore"
-                                            onClick={this.props.clickShowMore}
-                                            disabled={this.props.disableShowmore}
-                                        >
-                                            Show more
-                                        <i class="ProfileIconShowMore"></i>
-                                        </li>
-                                    </ul>
+                                    {!this.props.disableShowmore &&
+                                        <ul className="show-more-assignSP">
+                                            <li
+                                                class="list-group-item ProfileShowMore theme-primary-light"
+                                                onClick={this.props.clickShowMore}
+                                                disabled={this.props.disableShowmore}
+                                            >
+                                                Show more
+                                            <i class="ProfileIconShowMore"></i>
+                                            </li>
+                                        </ul>}
                                 </TabPane>
                             </TabContent>
                         </Scrollbars>

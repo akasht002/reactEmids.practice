@@ -8,7 +8,7 @@ import './VisitNotificationSettings.css';
 import { NotificationCheckBox } from './NotificationCheckBox';
 import { setIsFormDirty } from '../../../redux/auth/user/actions';
 import { Preloader } from "../../../components"
-class VisitNotificationSettings extends React.Component {
+export class VisitNotificationSettings extends React.Component {
 
     constructor(props) {
         super(props);
@@ -54,15 +54,15 @@ class VisitNotificationSettings extends React.Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileCardBody NotificationsSettingsBody'>
                     <div className='ProfileCardHeader'>
-                        <span className='NotificationsHeaderTitle primaryColor'>My Settings</span>
+                        <span className='NotificationsHeaderTitle theme-primary'>My Settings</span>
                     </div>
                     <div className='NotificationsSettingsContainer'>
-                        <h6 className='NotificationsListHeader'>Notifications</h6>
+                        <h6 className='NotificationsListHeader theme-primary'>Notifications</h6>
                         {this.props.isLoading && <Preloader/>}
                         <Scrollbars speed={2} smoothScrolling={true} horizontal={false} className='NotificationsSettingsWidget'>
                             <div className='card NotificationsSettingsListBox'>
                                 <div className='NotificationsSettingsListItems'>
-                                    <h6>
+                                    <h6 className="theme-primary">
                                         Push Notifications
                                 </h6>
                                     {this.props.pushNotification && this.props.pushNotification.map((pList) => {
@@ -75,7 +75,7 @@ class VisitNotificationSettings extends React.Component {
                                     })}
                                 </div>
                                 <div className='NotificationsSettingsListItems'>
-                                    <h6>
+                                    <h6 className="theme-primary">
                                         Email Notifications
                                 </h6>
                                     {this.props.emailNotification && this.props.emailNotification.map((eList) => {
@@ -99,7 +99,7 @@ class VisitNotificationSettings extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getVisitNotificationSettings: () => dispatch(getVisitNotificationSettings()),
         updateVisitNotificationSettings: (data) => dispatch(updateVisitNotificationSettings(data)),
@@ -109,7 +109,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         pushNotification: state.visitNotificationState.VisitNotificationSettingsState.pushNotification,
         emailNotification: state.visitNotificationState.VisitNotificationSettingsState.emailNotification,

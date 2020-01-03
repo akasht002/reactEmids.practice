@@ -1,6 +1,4 @@
-import {
-    Languages
-} from './actions'
+import { Languages } from './bridge';
 
 const defaultState = {
     LanguagesList: [],

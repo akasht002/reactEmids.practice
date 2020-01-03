@@ -27,15 +27,20 @@ export const RequestTab = props => {
                                 />
                             </div>
                         }
-                        <div class={isEntity ? "right-block-view" : "individual-spblock-full"}>
-                            {statusName === VISIT_STATUS.requested.keyValue &&
-                                <div className="btn-right-view">
-                                    <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelReject(props.VisitServiceDetails.serviceRequestId)}>Reject</button>
-                                    <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelAccept(props.VisitServiceDetails.serviceRequestId)}>Accept</button>
-                                </div>
-                            }
+                        <div class={isEntity ? "right-block-view" : "individual-spblock-full"}> 
+                             <div className="btn-right-view">
+                                {
+                                    statusName === VISIT_STATUS.requested.keyValue &&
+                                    <React.Fragment>
+                                        <button test-reject='test-reject' class="btn btn-outline-primary right_statusview" onClick={() => props.handelReject(props.VisitServiceDetails.serviceRequestId)}>Reject</button>
+                                        <button test-accept='test-accept' class="btn btn-primary right_statusview" onClick={() => props.handelAccept(props.VisitServiceDetails.serviceRequestId)}>Accept</button>
+                                    </React.Fragment>
+                                }
+                                <button class="btn btn-outline-primary right_statusview" onClick={props.toggleQuestionareModalOpen}>Questionnaire</button>                           
+                             </div>
+                            
                             {statusName === VISIT_STATUS.open.keyValue &&
-                                <button class="btn btn-outline-primary right_statusview" onClick={() => props.handelEngage(props.VisitServiceDetails.serviceRequestId)}>Engage</button>
+                                <button test-engage='test-engage' class="btn btn-outline-primary right_statusview" onClick={() => props.handelEngage(props.VisitServiceDetails.serviceRequestId)}>Engage</button>
                             }
                                                         
                             {/* May Required in feature.*/}

@@ -15,18 +15,18 @@ export const AssignServiceProvider = props => {
                                 <Fragment>
                                     <div className="assign-SP-card">
                                         <div className="card">
-                                            <fieldset>
+                                            <fieldset className={item.selected === true && 'selected-box-border'}>
                                                 <div className="checkblock">
                                                     <input
                                                         type="radio"
                                                         className="form-radio-input"
                                                         checked={item.selected === true}
-                                                        id={item.serviceProviderId}
+                                                        id={item.serviceProviderId + "ESPId"}
                                                         name={'form-radio-input'}
                                                         value={item.serviceProviderId}
-                                                        onChange={(e) => { props.handleAssignServiceProvider(e.target.id) }}
+                                                        onChange={(e) => { props.handleAssignServiceProvider(e.target.value) }}
                                                     />
-                                                    <label className="" htmlFor={item.serviceProviderId}><span className="RadioBoxIcon" /></label>
+                                                    <label className="" htmlFor={item.serviceProviderId + "ESPId"}><span className="RadioBoxIcon" /></label>
                                                 </div>
                                                 <div className="Spname-image-block">
                                                     <img className="ProfileImage" src={espImage} alt="espImage" />

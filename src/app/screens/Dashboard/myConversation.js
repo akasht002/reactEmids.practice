@@ -14,7 +14,7 @@ import {getUnreadMessageCounts} from '../../redux/asyncMessages/actions';
 import { getUserInfo } from '../../services/http';
 import { Preloader } from '../../components';
 
-class MyConversation extends React.Component {
+export class MyConversation extends React.Component {
   componentDidMount() {
     let data = {
       page_no: '1',
@@ -46,10 +46,10 @@ class MyConversation extends React.Component {
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
-            <span className='ProfileCardHeaderTitle primaryColor'>
-              My Conversations
+            <span className='ProfileCardHeaderTitle theme-primary'>
+            {!entityUser && 'My Conversations'}
             </span>
-           { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink' to='/messagesummary'>View all</Link>}
+           { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink theme-primary' to='/messagesummary'>View all</Link>}
           </div>
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>
@@ -63,7 +63,7 @@ class MyConversation extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getConversationDetail: (data) => dispatch(getConversationDetail(data)),
     getUnreadMessageCounts: () => dispatch(getUnreadMessageCounts()),
@@ -71,7 +71,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     conversationDetail: state.dashboardState.dashboardState.conversationDetail,
     loggedInUser: state.authState.userState.userData.userInfo,

@@ -7,7 +7,7 @@ import {
   MessageURLGet
 } from '../../../services/http'
 import { API } from '../../../services/api'
-import { startLoading, endLoading } from '../../loading/actions'
+import { endLoading } from '../../loading/actions'
 import { formatDate } from '../../../utils/validations'
 import {
   PAGE_NO,
@@ -38,6 +38,8 @@ import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/F
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
 import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
+import { logError } from '../../../utils/logError';
+import { setServiceProviderFeedbackTab } from '../EntityDashboard/ServiceProvider/actions';
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -78,7 +80,6 @@ export const getServiceVisitCountSuccess = data => {
 
 export function getServiceVisitCount (data) {
   return (dispatch, getState) => {
-    dispatch(startLoading())
     return ServiceRequestGet(
       API.getServiceVisitsCount +
         getUserInfo().serviceProviderId +
@@ -89,10 +90,9 @@ export function getServiceVisitCount (data) {
     )
       .then(resp => {
         dispatch(getServiceVisitCountSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }
@@ -196,21 +196,18 @@ export const getServiceProviderDetailSuccess = data => {
 }
 export function updateEntityServiceVisit (data, pageNo) {
   return (dispatch, getState) => {
-    dispatch(startLoading())
     return ServiceRequestPost(API.assignServiceVisit, data)
       .then(resp => {
         dispatch(getVisitServiceSchedule(data.serviceRequestId, pageNo, true))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }
 
 export function getServiceProviderDetail (data) {
-  return (dispatch, getState) => {
-    dispatch(startLoading())
+  return (dispatch) => {
     return ServiceRequestGet(
       API.getServiceProviders +
         getUserInfo().serviceProviderId +
@@ -223,10 +220,8 @@ export function getServiceProviderDetail (data) {
     )
       .then(resp => {
         dispatch(getServiceProviderDetailSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
       })
   }
 }
@@ -263,11 +258,8 @@ export function getConversationDetail (data) {
 
 export function updateStandByMode (data) {
   return dispatch => {
-    dispatch(startLoading())
-
     return Put(API.updateStandByMode + getUserInfo().serviceProviderId + '/' + data)
       .then(resp => {
-        dispatch(endLoading())
       })
       .catch(err => {
         try {
@@ -280,7 +272,7 @@ export function updateStandByMode (data) {
           } else {
           }
         }
-        console.log(err)
+        logError(err)
       })
   }
 }
@@ -305,7 +297,7 @@ export function getConversationSummaryDashboardSignalR (conversationId) {
   }
 }
 
-const getConversationSummaryItemSignalRSuceess = data => {
+export const getConversationSummaryItemSignalRSuceess = data => {
   return (dispatch, getState) => {
     let state = getState()
     let conversationSummaryData = [
@@ -371,6 +363,7 @@ export function goToServiceVisitProcessing(data){
         dispatch(formDirtyPerformTask());
         break;
       case VISIT_SUMMARY :
+        dispatch(setServiceProviderFeedbackTab(true))
         dispatch(getVisitServiceHistoryByIdDetail(visitId))
         const assessmentQuestionList = {
           serviceProviderId: parseInt(data.providerId, 10),
@@ -401,6 +394,7 @@ export function goToAssessmentVisitProcessing(data){
         dispatch(push(Path.assessmentSummary))
       break; 
       case VISIT_SUMMARY :       
+        dispatch(setServiceProviderFeedbackTab(true))
         dispatch(getVisitServiceHistoryByIdDetail(visitID))
         const assessmentQuestionList = {
           serviceProviderId: parseInt(data.providerId, 10),

@@ -29,5 +29,6 @@ export const IndividualsList = {
     setMemberContractId: 'setMemberContractId/individual',
     setAgeRange: 'setAgeRange/individual',
     setClinicalConditions: 'setClinicalConditions/individual',
-    setImpersinated: 'setImpersinated/individual'
+    setImpersinated: 'setImpersinated/individual',
+    setFeedbackCount: 'setFeedbackCount/individual'
 }

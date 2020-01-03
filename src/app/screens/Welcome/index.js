@@ -10,7 +10,7 @@ import { Path } from "../../routes";
 import {withAuth} from '@okta/okta-react'
 import { isSecureLogin } from "../../redux/auth/user/actions";
 
-class Welcome extends Component {
+export class Welcome extends Component {
 
     constructor(props) {
         super(props);
@@ -116,7 +116,7 @@ class Welcome extends Component {
             width: this.state.sliderWidth
         };
         return (
-            <ScreenCover menus={menus}>
+            <ScreenCover menus={menus} test-welcome='test-welcome'>
                 <div className="container-fluid p-0">
                     <div className="width100 onBoardingWidget">
                         <div className="container-fluid onBoardingContent">
@@ -134,12 +134,12 @@ class Welcome extends Component {
                                                 const style1 = {
                                                     width: this.state.sliderWidth + 'px',
                                                     height: this.state.sliderHeight + 'px',
-                                                    backgroundImage: 'linear-gradient(rgba(60, 16, 83, .35), rgba(102, 48, 127, .35)), url(' + require("../../assets/images/home/coverImg" + this.state.activeIndex + ".jpg") + ')'
+                                                    backgroundImage: 'linear-gradient(rgba(30, 61, 92, .3), rgba(49, 84, 119, .3)), url(' + require("../../assets/images/home/coverImg" + this.state.activeIndex + ".jpg") + ')'
                                                 };
                                                 return (
                                                     <div style={style1}
                                                         className={index + 1 === this.state.activeIndex ? 'sliderItem slide1' : 'hide slide1'}>
-                                                        <div className="sliderInnerContent">
+                                                        <div className="sliderInnerContent theme-primary-gradient">
                                                             <h1 className="sliderTitleText">{item.title}</h1>
                                                             <span className="sliderLabelText">{item.label}</span>
                                                         </div>
@@ -173,7 +173,7 @@ class Welcome extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         onLogin: () => dispatch(onLogin())
     }

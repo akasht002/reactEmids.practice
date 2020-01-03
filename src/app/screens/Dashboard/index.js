@@ -22,7 +22,7 @@ import './EntitySP/EntitySPDashboard.css'
 import moment from 'moment'
 import { createDataStore } from '../../redux/telehealth/actions'
 
-class Dashboard extends React.Component {
+export class Dashboard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -41,7 +41,6 @@ class Dashboard extends React.Component {
 
   }
   componentDidMount() {
-    this.props.getPersonalDetail();
     this.props.getSpBusyInVisit();
     this.props.clearSbMode();
     this.props.getProfilePercentage();
@@ -165,7 +164,7 @@ class Dashboard extends React.Component {
       >
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
-            <h5 className='primaryColor m-0'>Dashboard</h5>
+            <h5 className='theme-primary m-0'>Dashboard</h5>
           </div>
           {
             (!entityUser && getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) ?
@@ -175,7 +174,7 @@ class Dashboard extends React.Component {
                   <input type='checkbox' checked={this.state.isChecked}
                     onChange={this.onValueChange}
                   />
-                  <span className='sliderSwitch round' />
+                  <span className='sliderSwitch round theme-primary' />
                 </label>
               </div>
               :
@@ -253,7 +252,7 @@ class Dashboard extends React.Component {
     )
   }
 }
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     updateStandByMode: data => dispatch(updateStandByMode(data)),
     getPersonalDetail: () => dispatch(getPersonalDetail()),
@@ -268,7 +267,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     profileState: state.profileState.PersonalDetailState.personalDetail,
     busyInVisit: state.profileState.PersonalDetailState.spBusyInVisit,

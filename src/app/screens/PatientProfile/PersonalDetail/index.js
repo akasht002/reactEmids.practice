@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import * as action from '../../../redux/patientProfile/actions'
 import {
-  getLength
+  getLength, getStatusTextBasedOnStatus
 } from '../../../utils/validations'
 import { ProfileImage } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
 import './index.css'
 import { communicationData } from './communicationData';
 
-class PersonalDetail extends React.PureComponent {
+export class PersonalDetail extends React.PureComponent {
 
   componentDidMount () {
     this.props.getPersonalDetail()
@@ -55,7 +55,7 @@ class PersonalDetail extends React.PureComponent {
                   {this.props.personalDetail &&
                     `${this.props.personalDetail.firstName || ''} ${this.props.personalDetail.lastName || ''} `}
                 </h3>
-                <p className={'SPsubTitle'}>
+                <p className={'SPsubTitle theme-primary'}>
                   <span>
                     {this.props.personalDetail && this.props.personalDetail.gender && this.props.personalDetail.gender.genderName}
                     {' '}
@@ -65,6 +65,10 @@ class PersonalDetail extends React.PureComponent {
                     {' '}
                     yrs
                   </span>
+                  {
+                  this.props.personalDetail.deceasedInd &&
+                  <span className='patient-status-indicator'><span></span>{getStatusTextBasedOnStatus(this.props.personalDetail)}</span>
+                  }
                 </p>
               </div>
             </div>
@@ -72,7 +76,7 @@ class PersonalDetail extends React.PureComponent {
               <div className={'SPAffiliatedList'} />
             </div>
             <div className={'width100 description-block-profile'}>
-            <span className={'primaryColor'}>Description</span>
+            <span className={'theme-primary'}>Description</span>
               <div className='SPDesc'>
                 {this.props.personalDetail &&
                   this.props.personalDetail.description}
@@ -82,7 +86,7 @@ class PersonalDetail extends React.PureComponent {
           <div className={'SPDetailsContainer SPAddressWidget'}>
             <div className={'SPAddressContent'}>
               <div className={'width100 SPAddressTitle d-flex'}>
-                <span className={'SPAddressText primaryColor'}>
+                <span className={'SPAddressText theme-primary'}>
                   Primary Phone Number
                 </span>
               </div>
@@ -93,13 +97,24 @@ class PersonalDetail extends React.PureComponent {
                 </span>
               </div>
             </div>
-            <div className="d-flex profile-action-block">
+            <div className={'SPAddressContent'}>
+            <div className='SPAddressTitle'>
+              <span className='SPAddressText mb-1 theme-primary'>Height</span>
+              <p className='width100 d-flex'>{this.props.personalDetail.height} Inches</p>
+              <span className='SPAddressText mb-1 theme-primary'>Weight</span>
+              <p className='width100 d-flex'>{this.props.personalDetail.weight} Lbs</p>
+            </div>
+            </div>
+            {
+              !this.props.personalDetail.deceasedInd &&
+              <div className="d-flex profile-action-block">
               {
                 communicationData.map(item =>
                   <i className={item.className} title={item.title} onClick={() => this.performActionBasedOnTitle(item.title)}/>
                 )
               }
           </div>
+            }
           </div>
         </div>
       </Fragment>
@@ -107,7 +122,7 @@ class PersonalDetail extends React.PureComponent {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     getPersonalDetail: () => dispatch(action.getPersonalDetail()),
     getImage: () => dispatch(action.getImage()),
@@ -115,7 +130,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+export function mapStateToProps (state) {
   return {
     personalDetail: state.patientProfileState.personalDetail,
     profileImgData: state.patientProfileState.imageData,

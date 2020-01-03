@@ -42,7 +42,7 @@ export const clearVisitServiceList = () => {
     return (dispatch) => {
         let serviceProviderId = getUserInfo().serviceProviderId
         dispatch(startLoading());
-        elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
+        return elasticSearchGet(API.getServiceRequestList + `${serviceProviderId}/${data.pageNumber}/${data.pageSize}`).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -112,3 +112,10 @@ export const setServiceRequestStatusSuccess = (data) => {
         data
     }
 }
+
+export const setPageNumber = (data) => {
+    return {
+        type: VisitServiceList.setPageNumber,
+        data
+    }
+};

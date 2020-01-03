@@ -13,7 +13,7 @@ import {
  } from '../../../redux/profile/Availability/actions';
  import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
-class Availability extends Component {
+export class Availability extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -103,7 +103,7 @@ class Availability extends Component {
                     <div className={'SPAvailTitle'}>
                          <span className={'SPAvailTitleText'}>{day.dayName}</span>              
                     </div>
-                    <div className={'SPAvailContent'}>
+                    <div className={'SPAvailContent theme-primary-light'}>
                         {slots}
                     </div>
                 </div>
@@ -155,7 +155,7 @@ class Availability extends Component {
             <Fragment>
                 <div className="col-md-12 card CardWidget SPAvailability">
                     <div className={"SPCardTitle d-flex"}>
-                        <h4 className={"primaryColor"}>Availability</h4>
+                        <h4 className={"theme-primary"}>Availability</h4>
                         { this.props.isUser &&
                         <div>
                             { !availableSlot && this.props.availableDays.days && this.props.availableDays.days.length > 0 ?
@@ -167,7 +167,7 @@ class Availability extends Component {
                     </div>
                      <div className={'width100 SPAvailWidget'}>
                         { availableDays && !availableSlot ? availableDays : 
-                            <ul className="SPEducationList width100">
+                            <ul className="SPEducationList width100 theme-primary">
                             <div className='SPNoInfo'>
                                 <div className='SPNoInfoContent'>
                                     <div className='SPInfoContentImage' />
@@ -179,7 +179,7 @@ class Availability extends Component {
                      </div>
                      {
                          this.props.blackoutDays && this.props.blackoutDays.blockOutDates.length > 0 ? 
-                         <p className={"primaryColor indexColor"} onClick={this.toggleBlackoutModal}>Show Blackout Day(s)</p> : ''
+                         <p className={"theme-primary indexColor"} onClick={this.toggleBlackoutModal}>Show Blackout Day(s)</p> : ''
                      }
    
                 </div>
@@ -224,7 +224,7 @@ class Availability extends Component {
     }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
         availableDays: state.profileState.AvailabilityState.availableDays,
         blackoutDays: state.profileState.AvailabilityState.blackoutDays,
@@ -232,7 +232,7 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
     return {
         updateAvailabilityDays: data => dispatch(updateAvailabilityDays(data)),
         getAvailableDays: () => dispatch(getAvailableDays()),

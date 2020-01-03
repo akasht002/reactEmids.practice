@@ -5,7 +5,7 @@ import {
   getSelectedLanguages
 } from '../../../redux/patientProfile/actions'
 
-class Languages extends React.Component {
+export class Languages extends React.Component {
 
   componentDidMount() {
     this.props.getSelectedLanguages()
@@ -29,7 +29,7 @@ class Languages extends React.Component {
     return (
       <div className='col-md-12 card CardWidget SPLanguages'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Languages Spoken</h4>
+          <h4 className='theme-primary'>Languages Spoken</h4>
         </div>
         <div className='SPCertificateContainer width100'>
           {this.props.selectedLanguagesList.languages &&
@@ -56,13 +56,13 @@ class Languages extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getSelectedLanguages: () => dispatch(getSelectedLanguages())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     selectedLanguagesList: state.patientProfileState.languageList
   }

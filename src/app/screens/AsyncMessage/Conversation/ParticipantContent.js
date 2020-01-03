@@ -13,7 +13,7 @@ import { setParticipantProfile, setESP} from '../../../redux/patientProfile/acti
 import { push } from '../../../redux/navigation/actions';
 import { setServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
 
-class ParticipantContent extends Component {
+export class ParticipantContent extends Component {
 
     constructor() {
         super();
@@ -287,7 +287,7 @@ class ParticipantContent extends Component {
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
-                        <span className="mr-auto primaryColor sideParticipantsTitle">Participants</span>
+                        <span className="mr-auto theme-primary sideParticipantsTitle">Participants</span>
                         <span className="ml-auto d-flex">
                             { accesDenied && <button className="addParticipantsButton" onClick={this.toggleAddParticipantsView} />}
                             <button className="ParticipantClose" onClick={this.props.toggleParticipantList} />
@@ -313,7 +313,7 @@ class ParticipantContent extends Component {
             participantsHeader =
                 <td className="participantsTitle align-middle">
                     <div className="Content d-flex">
-                        <span className="mr-auto primaryColor sideParticipantsTitle">Add Participants</span>
+                        <span className="mr-auto theme-primary sideParticipantsTitle">Add Participants</span>
                         <span className="ml-auto">
                             <i className="ParticipantOptionOpen" onClick={this.toggleAddParticipantsView} /></span>
                     </div>
@@ -355,7 +355,7 @@ class ParticipantContent extends Component {
 };
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         addParticipants: (data) => dispatch(onAddParticipant(data)),
         removeParticipant: (data) => dispatch(onRemoveParticipant(data)),
@@ -369,7 +369,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         loggedInUser: state.authState.userState.userData.userInfo,
     }

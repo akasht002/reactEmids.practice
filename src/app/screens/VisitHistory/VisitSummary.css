@@ -1,65 +1,67 @@
-.VisitSummaryWidget{
+.VisitSummaryWidget {
     display: flex;
     display: -moz-flex;
 }
 
-.VisitSummaryWidget .LeftWidget{
+.VisitSummaryWidget .LeftWidget {
     width: 60%;
     border-right: 1px solid #dcdcdc;
 }
 
-.VisitSummaryWidget .RightWidget{
+.VisitSummaryWidget .RightWidget {
     width: 40%;
 }
 
-.LeftWidget .LeftContent, .RightWidget .RightContent{
+.LeftWidget .LeftContent,
+.RightWidget .RightContent {
     padding: 20px 30px 30px 30px;
 }
 
-.SummaryContentTitle{
+.SummaryContentTitle {
     color: #7a329f;
     font-size: 18px;
     font-weight: 600;
 }
 
-.CategoryName{
+.CategoryName {
     color: #444444;
 }
 
-.CategoryName span{
+.CategoryName span {
     display: block;
 }
 
-.CategoryTitle{
+.CategoryTitle {
     margin-bottom: 5px;
 }
 
-.CategorySub{
+.CategorySub {
     font-size: 14px;
 }
 
-.CostTableWidget{
+.CostTableWidget {
     position: relative;
     padding-right: 15px;
 }
 
-.CostTableWidget .CostTableContainer{
+.CostTableWidget .CostTableContainer {
     color: #444444;
 }
 
-.CostTableWidget .CostTableContainer p span, .EstimatedCostWidget .EstimatedCostContainer p span{
+.CostTableWidget .CostTableContainer p span,
+.EstimatedCostWidget .EstimatedCostContainer p span {
     display: block;
 }
 
-.CostTableWidget .CostTableContainer.Cost{
+.CostTableWidget .CostTableContainer.Cost {
     text-align: right;
 }
 
-.CostTableContainer.Cost p.TotalCost span{
+.CostTableContainer.Cost p.TotalCost span {
     font-weight: 600;
 }
 
-div.EstimatedCostWidget{
+div.EstimatedCostWidget {
     border: 1px solid #7a329f;
     padding: 10px 15px;
     margin: 30px 0 0 0;
@@ -68,45 +70,48 @@ div.EstimatedCostWidget{
     border-radius: 4px;
 }
 
-.EstimatedCostWidget .EstimatedCostContainer.Label{
+.EstimatedCostWidget .EstimatedCostContainer.Label {
     padding-left: 0;
 }
 
-.EstimatedCostWidget .EstimatedCostContainer.Cost, .CostTableContainer .TotalCost{
+.EstimatedCostWidget .EstimatedCostContainer.Cost,
+.CostTableContainer .TotalCost {
     text-align: right;
     font-weight: 600;
     padding-right: 0;
 }
 
-.EstimatedCostWidget .EstimatedCostContainer p{
+.EstimatedCostWidget .EstimatedCostContainer p {
     margin: 0;
     color: #7a329f;
 }
 
-.EstimatedCostWidget .EstimatedCostContainer p span:first-child{
+.EstimatedCostWidget .EstimatedCostContainer p span:first-child {
     margin-bottom: 5px;
 }
 
-.SummaryRange{
+.SummaryRange {
     display: flex;
     display: -moz-flex;
     font-size: 14px;
 }
 
-.SummaryRange .bottomTaskName, .SummaryRange .bottomTaskRange{
+.SummaryRange .bottomTaskName,
+.SummaryRange .bottomTaskRange {
     margin-right: 10px;
 }
 
-.SummaryRange .bottomTaskRange{
+.SummaryRange .bottomTaskRange {
     width: 100%;
     top: 10px;
 }
 
-.SummaryRange .bottomTaskRange, .SummaryRange .bottomTaskRange .bottomTaskCompletedRange{
+.SummaryRange .bottomTaskRange,
+.SummaryRange .bottomTaskRange .bottomTaskCompletedRange {
     height: 5px;
 }
 
-.CostTableContainer.Total{
+.CostTableContainer.Total {
     display: flex;
     display: -moz-flex;
     justify-content: space-between;
@@ -115,7 +120,7 @@ div.EstimatedCostWidget{
     margin: 0 0 0 15px;
 }
 
-.EditIcon{
+.EditIcon {
     position: absolute;
     right: 3px;
     top: 3px;
@@ -127,17 +132,17 @@ div.EstimatedCostWidget{
     background-position: center
 }
 
-.EditIcon:hover{
+.EditIcon:hover {
     cursor: pointer;
 }
 
-.DisclaimerText{
+.DisclaimerText {
     font-size: 12px;
     color: #8c8c8c;
     margin-top: 10px;
 }
 
-.SignatureColumn{
+.SignatureColumn {
     height: 320px;
     width: 100%;
     border: 1px solid #acacac;
@@ -146,82 +151,82 @@ div.EstimatedCostWidget{
     border-radius: 4px;
 }
 
-.SignatureColumn.Patient{
+.SignatureColumn.Patient {
     height: 160px;
 }
 
-.react-numeric-input{
+.react-numeric-input {
     margin-right: 20px;
     margin-left: 5px;
 }
 
-.react-numeric-input, .react-numeric-input input{
+.react-numeric-input,
+.react-numeric-input input {
     width: 45px !important;
     height: 25px;
     font-size: 14px;
 }
 
-.react-numeric-input b{
+.react-numeric-input b {
     background: #ffffff !important;
     border: 0 !important;
     box-shadow: none !important;
 }
 
-.react-numeric-input b i{
+.react-numeric-input b i {
     border-width: 0 5px 4px !important;
 }
 
-.react-numeric-input b:last-child i{
+.react-numeric-input b:last-child i {
     border-width: 4px 5px 0 !important;
 }
 
-.NumericInput{
+.NumericInput {}
 
-}
-
-.NumericInput:focus, .NumericInput:hover{
+.NumericInput:focus,
+.NumericInput:hover {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
     outline: 0;
 }
 
-.AdjustTimeForm{
+.AdjustTimeForm {
     padding: 20px;
-    color:#444;
-}
-.AdjustTimeForm .AdjustTimeContent input
-{
-    color:#444;
+    color: #444;
 }
 
-.AdjustTimeForm .AdjustTimeText{
+.AdjustTimeForm .AdjustTimeContent input {
+    color: #444;
+}
+
+.AdjustTimeForm .AdjustTimeText {
     font-weight: 600;
 }
 
-.AdjustTimeForm .AdjustTimeContent{
+.AdjustTimeForm .AdjustTimeContent {
     font-size: 14px;
     margin-bottom: 60px;
 }
 
 /*********************************************************************************************************************/
 
-.SummaryTime{
+.SummaryTime {
     font-size: 14px;
     margin-bottom: 5px;
 }
 
-.SummaryTime span{
+.SummaryTime span {
     display: inline-block;
     width: 90px;
 }
 
-.SummaryTime .SummaryTotalTime{
+.SummaryTime .SummaryTotalTime {
     width: auto;
     font-weight: 600;
 }
 
-.TabContainerWidget.Individual .TabContainer{
+.TabContainerWidget.Individual .TabContainer {
     padding: 15px 30px 15px 0;
     height: 80px;
 }
@@ -231,32 +236,31 @@ div.EstimatedCostWidget{
     position: relative;
 }
 
-.TabContainerWidget.Individual .TabContainer .TabHeaderContent .TabHeaderText{
+.TabContainerWidget.Individual .TabContainer .TabHeaderContent .TabHeaderText {
     font-size: 16px;
 }
 
-.TabContainerWidget.Individual .TabContainer:after{
+.TabContainerWidget.Individual .TabContainer:after {
     right: 10px;
 }
 
-.ServiceList.Summary label.ServicesLink{
+.ServiceList.Summary label.ServicesLink {
     margin: 0 0 0 60px;
 }
 
-.accordion .ServiceList.Summary label.ServicesLink .serviceName.non_completedtask
-{
-color: #444444;
+.accordion .ServiceList.Summary label.ServicesLink .serviceName.non_completedtask {
+    color: #444444;
 }
 
 .ServiceList.Summary:before {
     left: 24px;
 }
 
-.ServicesLink.active{
+.ServicesLink.active {
     color: #28a745;
 }
 
-.SPRating{
+.SPRating {
     font-size: 14px;
     font-weight: 600;
     color: #6d6d6d;
@@ -268,105 +272,103 @@ color: #444444;
     border: 1px solid #b7b7b7;
 }
 
-.FeedbackLink{
+.FeedbackLink {
     font-weight: 600;
     color: #7a329f;
 }
 
-.FeedbackLink:hover{
+.FeedbackLink:hover {
     cursor: pointer;
 }
 
-.modal-body div.bottomButton{
+.modal-body div.bottomButton {
     display: none;
 }
 
-.FeedbackModal .modal-body{
+.FeedbackModal .modal-body {
     padding: 0;
 }
 
-button.btn.CancelSignature{
+button.btn.CancelSignature {
     padding: 5px 8px !important;
     font-size: 14px;
     margin-top: 15px;
 }
 
-.VisitSummaryWidget .LeftWidget.FullContainer{
+.VisitSummaryWidget .LeftWidget.FullContainer {
     width: 100% !important;
     border: 0;
 }
 
-.SummaryContentTable p{
+.SummaryContentTable p {
     display: flex;
     justify-content: space-between;
 }
 
-.SummaryRangeWidget{
+.SummaryRangeWidget {
     width: 200px;
     text-align: right;
 }
 
-.SummaryContentTable p span{
+.SummaryContentTable p span {
     width: calc(100% - 130px);
     text-align: right;
 }
 
-.SummaryContentTable p span.SummaryContentTableTitle{
+.SummaryContentTable p span.SummaryContentTableTitle {
     width: 200px;
     margin-right: 5px;
     text-align: left;
 }
 
-.VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget
-{
-padding: 0px 0px 15px;
+.VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget {
+    padding: 0px 0px 15px;
 }
 
-.VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio
-{
-flex: 0 0 33.333333%;
-max-width: 33.333333%;
-position: relative;
-width: 100%;
+.VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    position: relative;
+    width: 100%;
 }
 
-.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange
-{
-background-color: #7A329F;
+.VisitSummaryWidget .LeftWidget .bottomTaskCompletedRange {
+    background-color: #7A329F;
 }
 
 
 /*********************************************************************************************************************/
 
-@media (max-width: 1920px){
+@media (max-width: 1920px) {
     div.modal-lg {
         max-width: 1350px;
     }
 }
 
-@media (max-width: 1366px){
+@media (max-width: 1366px) {
     div.modal-lg {
         max-width: 1100px;
     }
 }
 
-@media (max-width: 1244px){
+@media (max-width: 1244px) {
     div.modal-lg {
         max-width: 900px;
     }
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
     .VisitSummaryWidget {
         flex-direction: column;
     }
 
-    .VisitSummaryWidget .LeftWidget, .VisitSummaryWidget .RightWidget{
+    .VisitSummaryWidget .LeftWidget,
+    .VisitSummaryWidget .RightWidget {
         width: 100%;
         border: 0;
     }
 
-    .VisitSummaryWidget .LeftWidget{
+    .VisitSummaryWidget .LeftWidget {
         border-bottom: 1px solid #dcdcdc;
     }
 
@@ -374,12 +376,13 @@ background-color: #7A329F;
         margin-bottom: 0;
     }
 
-    .SummaryContentTable p span, .SummaryRangeWidget{
+    .SummaryContentTable p span,
+    .SummaryRangeWidget {
         width: calc(100% - 130px);
         text-align: right;
     }
 
-    .SummaryContentTable p span.SummaryContentTableTitle{
+    .SummaryContentTable p span.SummaryContentTableTitle {
         width: 125px;
         margin-right: 5px;
         text-align: left;
@@ -387,7 +390,9 @@ background-color: #7A329F;
 }
 
 @media (max-width: 480px) {
-    .LeftWidget .LeftContent, .RightWidget .RightContent {
+
+    .LeftWidget .LeftContent,
+    .RightWidget .RightContent {
         padding: 0 20px 20px;
     }
 
@@ -395,40 +400,45 @@ background-color: #7A329F;
         margin: 20px 0 10px 0;
     }
 
-    .CostTableContainer, .SummaryContentTable p{
+    .CostTableContainer,
+    .SummaryContentTable p {
         font-size: 14px;
     }
 
-    .SummaryContentTable p span, .SummaryRangeWidget{
+    .SummaryContentTable p span,
+    .SummaryRangeWidget {
         width: calc(100% - 120px);
         text-align: right;
     }
 
-    .SummaryContentTable p span.SummaryContentTableTitle{
+    .SummaryContentTable p span.SummaryContentTableTitle {
         width: 115px;
         margin-right: 5px;
         text-align: left;
     }
 
-    .CostTableContainer.Label, .EstimatedCostContainer.Label{
+    .CostTableContainer.Label,
+    .EstimatedCostContainer.Label {
         width: 72%;
         padding: 0 0 0 15px;
     }
-    .CostTableContainer.Cost, .EstimatedCostContainer.Cost{
+
+    .CostTableContainer.Cost,
+    .EstimatedCostContainer.Cost {
         width: 28%;
         padding: 0 15px 0 0;
     }
 
-    div.EstimatedCostWidget{
+    div.EstimatedCostWidget {
         margin: 15px 0 0;
         font-size: 14px;
     }
 
-    .RightContent p{
+    .RightContent p {
         font-size: 14px;
     }
 
-    .RightContent p.SummaryContentTitle{
+    .RightContent p.SummaryContentTitle {
         font-size: 18px;
     }
 
@@ -440,7 +450,7 @@ background-color: #7A329F;
         font-size: 14px;
     }
 
-    .SummaryRange{
+    .SummaryRange {
         margin-bottom: 20px;
     }
 
@@ -453,11 +463,38 @@ background-color: #7A329F;
     cursor: pointer;
 }
 
-.FeedbackModal
-{
-width: 100% !important;
+.FeedbackModal {
+    width: 100% !important;
 }
 
-.alertedQuestionnaire{
+.alertedQuestionnaire {
     color: #c04e59;
+}
+
+.question-higlight {
+    color: #7a329f;
+    font-weight: 600;
+}
+
+.visit-summary-pg-status {
+    position: absolute;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    top: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    bottom: 0;
+    max-width: 300px;
+    right: 0;
+    left: 0;
+    text-align: left;
+    padding-left: 74px;
+}
+
+.requestContent .requestImageContent
+{
+    max-width:300px;
 }

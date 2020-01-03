@@ -11,7 +11,8 @@ import {
   SORT_ORDER,
   PAGE_RANGE,
   SERVICE_REQUEST_DETAILS_TAB,
-  ENTITY_DASHBOARD_STATUS
+  ENTITY_DASHBOARD_STATUS,
+  VISIT_STATUS
 } from '../../../../constants/constants'
 import {
   getVisitServiceCountList,
@@ -36,7 +37,10 @@ import { StatCard } from '../Components/StatCard'
 import { setActiveStatusForAllTab } from '../../../../redux/dashboard/EntityDashboard/Individuals/actions'
 import {
   getServiceRequestId,
-  setActiveTab
+  setActiveTab,
+  setServicePlanVisitId,
+  setVisitDate,
+  setEntityDashboard
 } from '../../../../redux/visitSelection/VisitServiceDetails/actions'
 import { setPatient } from "../../../../redux/patientProfile/actions";
 import {
@@ -57,6 +61,8 @@ import Search from '../Components/Search';
 
 import { RowPerPage } from '../../../../components';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
+import { restrictSpecialChars, restrictMultipleSpace } from '../../../../utils/validations';
+import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 export class ServiceVisits extends Component {
   constructor(props) {
     super(props)
@@ -139,6 +145,7 @@ export class ServiceVisits extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.all
       await this.props.getVisitServiceCountList(count, false, () =>  this.onSuccess(list))
       await this.setState({
         rowMin: DEFAULT_PAGE_NUMBER,
@@ -267,14 +274,21 @@ export class ServiceVisits extends Component {
 
   impersinateServiceVisit = data => {
     this.props.setImpersinated(true)
-    if (this.state.status === 'LowTaskCompletions') {
+    if (caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.serviceVisits.statCard.lowTaskCompletions) || (data.visitStatusId === VISIT_STATUS.completed.id)) {
       this.props.getServiceRequestId(0)
       this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
     } else {
+      this.props.setServicePlanVisitId(data.servicePlanVisitId)
+      let visitDate = {
+        startVisitDateForWeb: this.props.fromDate,
+        endVisitDateForWeb: this.props.toDate
+      }
+      this.props.setEntityDashboard(true)
+      this.props.setVisitDate(visitDate)
       this.props.getServiceRequestId(data.serviceRequestId);
       this.props.setPatient(data.patientId)
       this.props.setActiveTab(SERVICE_REQUEST_DETAILS_TAB.myPlan)
-      this.props.goToVisitServiceDetails();
+      this.props.goToVisitServiceDetails();  
     }
   }
 
@@ -380,7 +394,7 @@ export class ServiceVisits extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(restrictMultipleSpace(e.target.value))
     })
   }
 
@@ -430,7 +444,7 @@ export class ServiceVisits extends Component {
               closeSearch={this.closeSearch}
             />
           <span
-              className='primaryColor profile-header-filter'
+              className='profile-header-filter theme-primary'
               onClick={this.toggleFilter}
             >
               Filters
@@ -491,7 +505,7 @@ export class ServiceVisits extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getVisitServiceCountList: (data, filterApplied, onSuccess) => dispatch(getVisitServiceCountList(data, filterApplied, onSuccess)),
     getVisitServiceTableList: data => dispatch(getVisitServiceTableList(data)),
@@ -516,10 +530,13 @@ function mapDispatchToProps(dispatch) {
     checkServiceRequestStatus: (data, id, checked) => dispatch(checkServiceRequestStatus(data, id, checked)),
     setServiceRequestStatus: data => dispatch(setServiceRequestStatus(data)),
     resetFilter: () => dispatch(resetFilter()),
+    setServicePlanVisitId: data => dispatch(setServicePlanVisitId(data)),
+    setVisitDate: data => dispatch(setVisitDate(data)),
+    setEntityDashboard: data => dispatch(setEntityDashboard(data))
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     visitServiceCountList: state.dashboardState.VisitServiceCountListState
       .visitServiceCountList,

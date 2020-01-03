@@ -15,7 +15,6 @@ import { AsideMenu } from './AsideMenu';
 import { DashboardWizFlow } from './Dashboard/WizFlow';
 import Scrollbars from "../LevelOne/CustomScrollbar";
 import { StarRating } from "./StarRating";
-import { GeneralModalPopup } from './GeneralModalPopup';
 import {LoginCover} from './LoginCover';
 import {ProfileImage} from './ProfileImage';
 import {StopWatch} from './StopWatch';
@@ -31,6 +30,7 @@ import {CoreoPagination} from './CoreoPagination';
 import {CoreoTimePicker} from './CoreoTimePicker';
 import {PageResultCount} from './PageResultCount';
 import {RowPerPage} from './RowPerPage';
+import {PointOfService} from './PointOfService';
 
 export {
     Calendar,
@@ -50,7 +50,6 @@ export {
     DashboardWizFlow,
     Scrollbars,
     StarRating,
-    GeneralModalPopup,
     LoginCover,
     ProfileImage,
     StopWatch,
@@ -67,5 +66,6 @@ export {
     CoreoPagination,
     CoreoTimePicker,
     PageResultCount,
-    RowPerPage
+    RowPerPage,
+    PointOfService
 };

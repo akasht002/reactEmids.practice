@@ -31,7 +31,6 @@ import {
     AsideMenu,
     DashboardWizFlow,
     StarRating,
-    GeneralModalPopup,
     ProfileImage,
     StopWatch,
     ModalTemplate,
@@ -47,7 +46,8 @@ import {
     CoreoPagination,
     CoreoTimePicker,
     RowPerPage,
-    PageResultCount
+    PageResultCount,
+    PointOfService
 } from './LevelOne';
 import {
     CarouselComp,
@@ -87,7 +87,6 @@ export {
     Scrollbars,
     DashboardWizFlow,
     StarRating,
-    GeneralModalPopup,
     LoginCover,
     ProfileImage,
     StopWatch,
@@ -109,5 +108,6 @@ export {
     CoreoCheckBox,
     RowPerPage,
     PageResultCount,
-    CoreoRadio
+    CoreoRadio,
+    PointOfService
 };

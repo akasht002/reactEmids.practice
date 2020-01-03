@@ -9,7 +9,7 @@ import { push } from "../../../redux/navigation/actions";
 import { SERVICE_REQ_STATUS } from '../../../constants/constants'
 import _ from 'lodash'
 
-class AssignServiceProvider extends Component {
+export class AssignServiceProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +32,7 @@ class AssignServiceProvider extends Component {
           autoComplete='false'
           required='required'
           type='text'
-          placeholder='search'
+          placeholder='Enter keyword to Search'
           className='form-control searchParticipants'
           textChange={(e) => {
             this.onchangeSearchServiceProvider(e)
@@ -148,7 +148,7 @@ class AssignServiceProvider extends Component {
               </div>
             </Fragment>
             :
-            <span className="SP-viewplantable"  onClick={this.togglePersonalDetails}>
+            <span className="SP-viewplantable theme-primary"  onClick={this.togglePersonalDetails}>
               <img alt="" src={require('../../../assets/images/Blank_Profile_icon.png')}></img>
               <span><a>Assign Provider</a></span>
             </span>
@@ -178,7 +178,7 @@ class AssignServiceProvider extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     setESP: data => dispatch(setESP(data)),
     goToESPProfile: () => dispatch(push(Path.ESPProfile)),
@@ -186,7 +186,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     serviceProviderList: state.dashboardState.dashboardState.serviceProviderList,
   }

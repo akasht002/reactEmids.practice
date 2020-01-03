@@ -8,7 +8,7 @@ import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 import _ from 'lodash'
 
 
-class ServiceOffered extends React.Component {
+export class ServiceOffered extends React.Component {
 
     constructor(props) {
         super(props);
@@ -110,7 +110,7 @@ class ServiceOffered extends React.Component {
             <div>
 
                 <div className={"SPCardTitle d-flex"}>
-                    <h4 className={"primaryColor"}>Services Offered</h4>
+                    <h4 className={"theme-primary"}>Services Offered</h4>
                     {this.props.isUser && <div>
                         { this.props.serviceOfferedList && this.props.serviceOfferedList.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editServiceOffered} />
@@ -170,7 +170,7 @@ class ServiceOffered extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getServiceOffered: () => dispatch(getServiceOffered()),
         addServiceOfferd: (data) => dispatch(addServiceOfferd(data)),
@@ -180,7 +180,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         serviceOfferedList: state.profileState.serviceOfferedState.serviceOfferedList,
         serviceOfferedDetails: state.profileState.serviceOfferedState.serviceOfferedDetails,

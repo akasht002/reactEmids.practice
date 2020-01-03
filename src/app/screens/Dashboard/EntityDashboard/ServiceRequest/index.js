@@ -54,6 +54,7 @@ import { filterTabs } from './filterTabs';
 import Search from '../Components/Search';
 import { RowPerPage } from '../../../../components';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
+import { restrictSpecialChars, restrictMultipleSpace } from '../../../../utils/validations';
 
 export class ServiceRequest extends Component {
   constructor(props) {
@@ -90,6 +91,7 @@ export class ServiceRequest extends Component {
   }
 
   async componentDidMount() {
+    this.filterTabs = this.getFilterTabBasedOnStatus(this.state.status)
     const count = this.getCountData(this.state)
     this.setState({ status: this.props.activeSubTab })
     const list = this.getFilterData({
@@ -214,6 +216,7 @@ export class ServiceRequest extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.serviceRequests.statCard.all
       await this.props.getServiceRequestCountList(count)
       await this.props.getServiceRequestTableList(list)
       await this.setState({
@@ -395,7 +398,7 @@ export class ServiceRequest extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(restrictMultipleSpace(e.target.value))
     })
   }
 
@@ -456,7 +459,7 @@ export class ServiceRequest extends Component {
               closeSearch={this.closeSearch}
             />
           <span
-              className='primaryColor profile-header-filter'
+              className='profile-header-filter theme-primary'
               onClick={this.toggleFilter}
             >
               Filters
@@ -503,9 +506,7 @@ export class ServiceRequest extends Component {
             handleChangeServiceCategory={this.handleChangeServiceCategory}
             selectedOption={this.props.selectedOption}
             serviceType={this.props.serviceType}
-            handleServiceType  ={(item, e) => {
-              this.handleServiceType  (item, e)
-            }}
+            handleServiceType  ={this.handleServiceType}
             applyFilter={this.applyFilter}
             applyReset={this.applyReset}
             scheduleType={this.props.scheduleType}
@@ -522,7 +523,7 @@ export class ServiceRequest extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getServiceRequestCountList: (data, filterApplied) =>
       dispatch(getServiceRequestCountList(data, filterApplied)),
@@ -553,7 +554,7 @@ function mapDispatchToProps(dispatch) {
    }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     visitServiceRequestCountList: state.dashboardState
       .VisitServiceRequestState.visitServiceRequestCountList,

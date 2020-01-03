@@ -34,8 +34,7 @@ import {
   CARETEAM_STATUS,
   SORT_ORDER,
   PAGE_RANGE,
-  SERVICE_REQUEST_DETAILS_TAB,
-  entityDashboardTab
+  SERVICE_REQUEST_DETAILS_TAB
 } from '../../../../constants/constants'
 import { getUserInfo } from '../../../../utils/userUtility';
 import { ProfileModalPopup, RowPerPage, Preloader } from '../../../../components'
@@ -62,6 +61,7 @@ import { filterTabs } from './filterTabs';
 import Search from '../Components/Search'
 import { setServiceProviderFeedbackTab } from '../../../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
 import { pushSpliceHandler } from '../../../../utils/stringHelper';
+import { restrictSpecialChars, restrictMultipleSpace } from '../../../../utils/validations';
 
 export class Individuals extends Component {
   constructor(props) {
@@ -176,6 +176,7 @@ export class Individuals extends Component {
       prevProps.fromDate !== this.props.fromDate ||
       prevProps.toDate !== this.props.toDate
     ) {
+      count.tab = ENTITY_DASHBOARD_STATUS.individuals.statCard.all
       await this.props.getIndividualsCountList(count)
       await this.props.getIndividualsList(list)
       await this.setState({
@@ -319,13 +320,14 @@ export class Individuals extends Component {
       patientId: this.state.patientId,
       pageNumber: pageNumber,
       pageSize: DEFAULT_PAGE_SIZE,
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
+      fromDate: this.props.fromDate,
+      toDate: this.props.toDate,
+      serviceProviderId: getUserInfo().serviceProviderId
     }
     this.props.getIndividualsFeedbackList(model);
   }
 
-  impersinateIndividual = async data => {
+  impersinateIndividual = data => {
     this.props.setImpersinated(true)
     switch (true) {
       case caseInsensitiveComparer(this.state.status, ENTITY_DASHBOARD_STATUS.individuals.statCard.visit):
@@ -353,7 +355,7 @@ export class Individuals extends Component {
         this.setState({
           feedbackAlertModal: !this.state.feedbackAlertModal,
           feedbackServiceVisits: this.props.individualsFeedbackList,
-          patientId: data.individualId
+          patientId: data.patientId
         })
         break;
       default:
@@ -373,7 +375,7 @@ export class Individuals extends Component {
   }
 
   goToPgVisitSummary = (data) => {
-    this.props.setServiceProviderFeedbackTab(false)
+    this.props.setServiceProviderFeedbackTab(true)
     this.props.getVisitServiceHistoryByIdDetail(data.servicePlanVisitId)
   }
 
@@ -401,12 +403,14 @@ export class Individuals extends Component {
   }
 
   onChangeSlider = data => {
+    if(data.min >= 0 && data.max<=120){
     let ageRange = {
       minimumAge: data.min,
       maximumAge: data.max
     }
     this.props.setAgeRange(ageRange)
   }
+}
 
   handleGenderType = data => {
     this.props.setGenderId(data.id)
@@ -492,7 +496,7 @@ export class Individuals extends Component {
 
   handleSearchkeyword = e => {
     this.setState({
-      searchKeyword: e.target.value
+      searchKeyword: restrictSpecialChars(restrictMultipleSpace(e.target.value))
     })
   }
 
@@ -503,7 +507,7 @@ export class Individuals extends Component {
       <FeedbackAlert
         feedbackServiceVisits={this.props.individualsFeedbackList}
         goToVisitSummary={this.goToPgVisitSummary}
-        pageCount={this.props.individualsFeedbackList.length > 0 && this.props.individualsFeedbackList[0].pageCount}
+        pageCount={this.props.feedBackCount}
         pageNumberChangeFeedback={this.pageNumberChangeFeedback}
         activePageFeedback={this.state.activePageFeedback}
         isLoaded={this.props.isLoadingFeedbackList}
@@ -531,7 +535,7 @@ export class Individuals extends Component {
               handleSearchData={this.handleSearchData}
               closeSearch={this.closeSearch}
             />
-          <span className='profile-header-filter'
+          <span className='profile-header-filter theme-primary'
               onClick={this.toggleFilter}
             >
               Filters
@@ -553,6 +557,7 @@ export class Individuals extends Component {
           </div>
           <div className={`tab-table-view ${noResultsFoundcss}`}>
             <div className="full-block-tableview">
+             
               <Grid
                 data={this.props.individualsList}
                 header={this.getHeaderBasedOnStatus(this.state.status)}
@@ -661,7 +666,8 @@ export function mapStateToProps(state) {
     ageRange: state.dashboardState.individualsListState.ageRange,
     clinicalConditions: state.dashboardState.individualsListState.clinicalConditions,
     activeTab: state.dashboardState.individualsListState.activeTab,
-    isImpersinated: state.dashboardState.individualsListState.isImpersinated
+    isImpersinated: state.dashboardState.individualsListState.isImpersinated,
+    feedBackCount: state.dashboardState.individualsListState.feedBackCount
   }
 }
 

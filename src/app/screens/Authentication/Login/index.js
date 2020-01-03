@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { onLogin } from '../../redux/auth/login/actions' 
-import { ScreenCover, CoreoWizScreen, Button } from '../../components';
-import userManager from '../../utils/userManager';
+import { onLogin } from '../../../redux/auth/login/actions' 
+import { ScreenCover, CoreoWizScreen, Button,Scrollbars } from '../../../components';
+import userManager from '../../../utils/userManager';
 
-import { Scrollbars } from 'react-custom-scrollbars';
 
-class Login extends PureComponent {
+
+export class Login extends PureComponent {
   
   onBtnPress = () => {
     userManager.signinRedirect();
@@ -40,13 +40,13 @@ class Login extends PureComponent {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     onLogin: () => dispatch(onLogin())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     setPasswordLinkStatus: state.onboardingState.setPasswordState.setPasswordStatus
   }

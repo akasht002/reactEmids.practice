@@ -6,7 +6,7 @@ import { ThemeProvider } from '@zendeskgarden/react-theming'
 import { SelectField, Select,Item } from '@zendeskgarden/react-select'
 import { isFutureDay} from '../../utils/dateUtility'
 import { isEntityServiceProvider, getUserInfo } from '../../utils/userUtility';
-import { ModalPopup } from '../../components'
+import { ModalPopup, AlertPopup } from '../../components'
 import { formatPhoneNumber } from "../../utils/formatName"
 import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT,VISIT_TYPE } from "../../constants/constants";
 import { SERVICE_VISIT_STATUS,START_VISIT } from '../../redux/constants/constants';
@@ -30,7 +30,7 @@ import {
   import { saveScheduleType } from '../../redux/visitSelection/VisitServiceDetails/actions';
 
 
-class QuickMenu extends Component {
+export class QuickMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -112,12 +112,15 @@ class QuickMenu extends Component {
       visitStatusId: conversations.visitStatusId,
       isPaymentModeEnabled: conversations.isPaymentModeEnabled,
     }
-    if(isEntityServiceProvider()){
-        options = [
-          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
-            onClick={(e) => this.onClickServiceVisitAction(conversations)}>
-            <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {getEntityProcessingStatus(data)} 
-          </Item>,
+    let visitProcessingOption = 
+      <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
+        onClick={(e) => this.onClickServiceVisitAction(conversations)}>
+        <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {getEntityProcessingStatus(data)} 
+      </Item>
+
+    if(isEntityServiceProvider()) {
+        options = conversations.deceasedInd ? [visitProcessingOption] : [
+          visitProcessingOption,
           <Item className='ListItem CTDashboard' key='item-1'
           onClick={(e) => { this.handlePhoneNumber(conversations) }}>
             <i className='iconPhone' /> Phone Call
@@ -138,18 +141,18 @@ class QuickMenu extends Component {
       </Item>]
 
         !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
-        options = [ 
-          <Item disabled={(!isFutureDay(conversations.visitDate) && conversations.visitStatusId === START_VISIT)} className='ListItem CTDashboard' key='item-4' 
-          onClick={(e) => this.onClickServiceVisitAction(conversations)}>
-                <i className={conversations.visitStatusId && list.iconImage} />
-                {getEntityProcessingStatus(data)} 
-          </Item>,   
+        options = conversations.deceasedInd ? [visitProcessingOption] : [ 
+          visitProcessingOption,   
           ...commonOptions,    
         ]
         :
         options = commonOptions;
    }
    return options
+   }
+
+   closeStandByModeAlertPopup = () => {
+     this.setState({standByModeAlertMsg: false})
    }
    
     render() {
@@ -194,13 +197,18 @@ class QuickMenu extends Component {
                 }
                 }
             />
+            <AlertPopup
+              message='Please turn off the stand-by mode to start the visit.'
+              isOpen={this.state.standByModeAlertMsg}
+              onAcceptClick={this.closeStandByModeAlertPopup}
+            />
                 </React.Fragment>
             )
     }
 }
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getServiceProviderVists: (data,pageNumber,flag) => dispatch(getServiceProviderVists(data,pageNumber,flag)),
         getServiceVisitCount: data => dispatch(getServiceVisitCount(data)),
@@ -218,7 +226,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit, 
     }

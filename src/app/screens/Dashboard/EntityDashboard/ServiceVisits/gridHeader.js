@@ -6,7 +6,8 @@ export let allServiceVisits = {
     schedule: 'Schedule',
     task: 'Task',
     providerFullName: 'Entity Provider',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'all-serviceVisits-tableblock'
 }
 
 export let cancelledServiceVisits = {
@@ -16,7 +17,8 @@ export let cancelledServiceVisits = {
     visitStatus: 'Status',
     schedule: 'Schedule',
     providerFullName: 'Entity Provider',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'cancelled-serviceVisits-tableblock'
 }
 
 export let lowTaskServiceVisits = {
@@ -27,7 +29,8 @@ export let lowTaskServiceVisits = {
     schedule: 'Schedule',
     task: 'Task',
     providerFullName: 'Entity Provider',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'lowtask-serviceVisits-tableblock'
 }
 
 export let overDueServiceVisits = {
@@ -37,5 +40,6 @@ export let overDueServiceVisits = {
     visitStatus: 'Status',
     schedule: 'Schedule',
     providerFullName: 'Entity Provider',
-    icon: 'Actions'
+    icon: 'Actions',
+    className: 'overdue-serviceVisits-tableblock'
 }

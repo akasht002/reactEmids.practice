@@ -13,9 +13,9 @@ import './styles.css'
 import { Path } from '../../../routes';
 import {clearState} from '../../../redux/patientProfile/actions';
 import { USERTYPES} from '../../../constants/constants';
-import VitalDetails from '../VitalDetails';
+import EmergencyAttorneyContact from '../EmergencyAttorneyContact';
 
-class Profile extends Component {
+export class Profile extends Component {
 
   componentDidMount() {
     if (!this.props.patientId) { 
@@ -45,7 +45,7 @@ class Profile extends Component {
           <a ref={(el) => {this.helpDocEl = el}} href = {Help} target = "_blank"></a>
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
             {this.props.isLoading && <Preloader/>}
-            <div className='width100 topWidgetBG' />
+            <div className='width100 topWidgetBG theme-primary-gradient' />
             <div className='container mainProfileContent bgWhite'>
               <div className='row d-flex justify-content-center m-auto'>
                 <div className='col-md-12'>
@@ -60,7 +60,7 @@ class Profile extends Component {
                 { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USERTYPES.PATIENT_AND_GUARDIAN) ? 
                 <PersonalDetail /> : <div>
                   <PersonalDetail />
-                  <VitalDetails />
+                  <EmergencyAttorneyContact />
                   <ClinicalCondition />
                   <PointService />
                   <Languages />
@@ -86,7 +86,7 @@ class Profile extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     clearInvitaion: () => dispatch(clearInvitaion()),
     joinVideoConference: () => dispatch(joinVideoConference()),
@@ -96,7 +96,7 @@ function mapDispatchToProps(dispatch) {
   }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     patientId: state.patientProfileState.patientId,

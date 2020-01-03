@@ -5,7 +5,7 @@ import { weekdays } from '../../../data/Profle_Availability/weekdays';
 import './AvailabilityStyles.css';
 import BlackoutDays from './BlackoutDays';
 
-class AvailabilityEdit extends Component {
+export class AvailabilityEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -104,7 +104,7 @@ class AvailabilityEdit extends Component {
                         <div className={'SPAvailTitle'}>
                             <span className={'SPAvailTitleText'}>{day.dayName}</span>
                         </div>
-                        <div className={'SPAvailContent'}>
+                        <div className={'SPAvailContent theme-primary-light'}>
                             {this.getSlots(day, i)}
                         </div>
                     </div>
@@ -149,7 +149,7 @@ class AvailabilityEdit extends Component {
            <React.Fragment>
              <div className={'AvailabilityWidget'}>
                 <div className={"SPCardTitle"}>
-                    <h4 className={"primaryColor"}>Available Days</h4>
+                    <h4 className={"theme-primary"}>Available Days</h4>
                 </div>
                 <div className={'width100 SPAvailWidget'}>
                     {availableDays}
@@ -163,7 +163,7 @@ class AvailabilityEdit extends Component {
     }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
          existingAvailableDays: state.profileState.AvailabilityState.availableDays
     } 

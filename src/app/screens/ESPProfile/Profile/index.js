@@ -19,7 +19,7 @@ import {
 } from '../../../redux/telehealth/actions'
 import './styles.css'
 
-class Profile extends Component {
+export class Profile extends Component {
   state = {
     selectedLink: '',
     showValidationPopUp: false
@@ -77,7 +77,7 @@ class Profile extends Component {
             ]}
           />
           <div className='width100 mainWidgetProfile mainWidgetOverflow'>
-            <div className='width100 topWidgetBG' />
+            <div className='width100 topWidgetBG theme-primary-gradient' />
             <div className='container mainProfileContent bgWhite'>
               <div className='row d-flex-view justify-content-center m-auto'>
                 <div className='col-md-12'>
@@ -165,7 +165,7 @@ class Profile extends Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     getProfilePercentage: () => dispatch(getProfilePercentage()),
     navigateProfileHeader: link => dispatch(push(link)),
@@ -177,7 +177,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-function mapStateToProps (state) {
+export function mapStateToProps (state) {
   return {
     profilePercentage: state.profileState.progressIndicatorState
       .profilePercentage,

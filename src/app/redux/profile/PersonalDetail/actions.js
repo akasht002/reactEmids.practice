@@ -6,6 +6,7 @@ import { getProfilePercentage } from '../../profile/ProgressIndicator/actions';
 import { getUserInfo } from '../../../services/http';
 import { getServiceArea } from '../serviceArea/action';
 import { NO_STATE_ID } from '../../constants/constants';
+import { logError } from '../../../utils/logError';
 
 export const PersonalDetails = {
   get_personal_detail_success : "profile/get_personal_detail_success",
@@ -77,7 +78,7 @@ export const clearSbMode = () => {
 export function getGender () {
   return (dispatch) => {
     dispatch(startLoading())
-    Get(API.getGender)
+    return Get(API.getGender)
       .then(resp => {
         dispatch(getGenderSuccess(resp.data))
         dispatch(endLoading())
@@ -136,14 +137,12 @@ export function getImage () {
     if(getState().profileState.PersonalDetailState.serviceProviderId){
       serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
     };
-    dispatch(startLoading())
     Get(API.getImage + serviceProviderId)
       .then(resp => {
         dispatch(uploadImgSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }
@@ -154,30 +153,27 @@ export function getPersonalDetail () {
     if(getState().profileState.PersonalDetailState.serviceProviderId){
       serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
     };
-    dispatch(startLoading())
     Get(API.getPersonalDetail + serviceProviderId + '/ProfileView')
       .then(resp => {
         dispatch(getPersonalDetailSuccess(resp.data))
         dispatch(getServiceArea());
-        dispatch(endLoading())
       })
       .catch(err => {
+        logError(err)
         dispatch(endLoading())
       })
   }
 }
 
 export function getSpBusyInVisit () {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     let serviceProviderId = getUserInfo().serviceProviderId;
-    dispatch(startLoading())
     Get(API.getSpBusyInVisit + serviceProviderId)
       .then(resp => {
         dispatch(getSpBusyInVisitSuccess(resp.data))
-        dispatch(endLoading())
       })
       .catch(err => {
-        dispatch(endLoading())
+        logError(err)
       })
   }
 }
@@ -206,6 +202,7 @@ export function updatePersonalDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())    
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -224,6 +221,7 @@ export function updateOrganizationDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())
@@ -241,6 +239,7 @@ export function updateEntityDetail (data) {
       .then(resp => {
         dispatch(getPersonalDetail())
         dispatch(getProfilePercentage())
+        dispatch(endLoading())
       })
       .catch(err => {
         dispatch(getPersonalDetail())

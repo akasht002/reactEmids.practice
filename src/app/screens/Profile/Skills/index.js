@@ -7,7 +7,7 @@ import {compare,difference} from "../../../utils/comparerUtility";
 import {SCREENS, PERMISSIONS} from '../../../constants/constants';
 
 
-class Skills extends Component {
+export class Skills extends Component {
     
     constructor(props) {
         super(props);
@@ -150,7 +150,7 @@ class Skills extends Component {
         return (
             <div>
                 <div className="SPCardTitle d-flex">
-                    <h4 className="primaryColor">Skills and Experience</h4>
+                    <h4 className="theme-primary">Skills and Experience</h4>
                     {this.props.isUser &&  <div>
                         { this.props.selectedSkillsList.skills && this.props.selectedSkillsList.skills.length > 0 ?
                         <i name={SCREENS.PROFILE + '_' + PERMISSIONS.UPDATE} className="SPIconMedium SPIconEdit" onClick={this.editSkills} />

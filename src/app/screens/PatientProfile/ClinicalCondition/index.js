@@ -5,7 +5,7 @@ import {
   getSelectedClinicalCondition
 } from '../../../redux/patientProfile/actions'
 
-class ClinicalCondition extends React.Component {
+export class ClinicalCondition extends React.Component {
 
   componentDidMount() {
     this.props.getSelectedClinicalCondition()
@@ -25,7 +25,7 @@ class ClinicalCondition extends React.Component {
     return (
       <div className='col-md-12 card CardWidget SPSkills'>
         <div className='SPCardTitle d-flex'>
-          <h4 className='primaryColor'>Clinical Conditions</h4>
+          <h4 className='theme-primary'>Clinical Conditions</h4>
         </div>
         <div className="SPSkillsContainer width100">
           {this.props.selectedClinicalConditionsList &&
@@ -52,14 +52,14 @@ class ClinicalCondition extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getSelectedClinicalCondition: () =>
       dispatch(getSelectedClinicalCondition())
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     selectedClinicalConditionsList: state.patientProfileState.clinicalConditionList
   }

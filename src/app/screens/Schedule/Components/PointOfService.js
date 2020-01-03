@@ -5,7 +5,6 @@ import { Input } from "../../../components/Base";
 import { Locationsettings } from "../../../constants/config"
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
-import { formatContactNumberValue } from "../../../utils/validations";
 
 let elem1 = ''; let elem2 = '';
 
@@ -72,7 +71,7 @@ export class PointOfService extends Component {
             CustomPOSAddress = <div className='CustomPOS'>
                 <h6>Enter a new location</h6>
                 <div className={'row'}>
-                    <div className={'col-md-4 mb-2'}>
+                    <div className={'col-md-4 mb-2 padding-less-10'}>
                         <Input
                             name="addressType"
                             label="Address Type"
@@ -129,7 +128,7 @@ export class PointOfService extends Component {
                                 Please enter City
                             </span>}
                     </div>
-                    <div className={'col-md-4 mb-2'}>
+                    <div className={'col-md-4 mb-2 padding-less-10'}>
                         <div className='form-group'>
                             <label className='m-0'>State</label>
                             <ThemeProvider>
@@ -172,7 +171,7 @@ export class PointOfService extends Component {
                             textChange={this.props.handelNewAddress}
                             className={
                                 'form-control ' +
-                                (this.props.nextClicked &&
+                                (this.props.onClickSave &&
                                     !this.props.zip &&
                                     'inputFailure')
                             }

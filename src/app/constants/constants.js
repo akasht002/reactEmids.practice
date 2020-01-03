@@ -149,7 +149,8 @@ export const DashboardConversationPagination = {
 
 
 export const USER_TYPE = {
-    SERVICE_PROVIDER_TYPE_ID: 2
+    SERVICE_PROVIDER_TYPE_ID: 2,
+    INDIVIDUAL_SERVICE_PROVIDER:1
 }
 
 export const SERVICE_PROVIDER_TYPES = {
@@ -262,7 +263,8 @@ export const DATE_FORMATS = {
     hhMinSec: "HH:mm:ss",
     hh_mm_a: 'hh:mm a',
     visitFormat:'ddd, DD MMM',
-    mm_dd_yyy: 'MM/DD/YYYY'
+    mm_dd_yyy: 'MM/DD/YYYY',
+    mmmyyy: 'MMM YYYY'
 }
 
 
@@ -425,13 +427,13 @@ export const ENTITY_DASHBOARD_STATUS = {
             visit: 'Visit',
             feedback: 'Feedback'
         },
-    },    
+    },
     serviceRequests: {
         statCard: {
             all: 'All',
             open: 'Open',
             cancelled: 'Cancelled'
-        }    
+        }
     },
     serviceVisits: {
         statCard: {
@@ -439,7 +441,7 @@ export const ENTITY_DASHBOARD_STATUS = {
             lowTaskCompletions: 'LowTaskCompletions',
             cancelled: 'Cancelled',
             overDue: 'Overdue'
-        }    
+        }
     }
 }
 
@@ -489,6 +491,7 @@ export const VISIT_PROCESSING_STATUS = {
     },
     inProgress: {
         id: 44,
+        visitId: 40,
         title: 'In Progress'
     },
     completed: {
@@ -515,10 +518,10 @@ export const FilterActiveTab = {
     "gender": '1',
     "categories": '7',
     "status": '8',
-    "recurring": '9' 
+    "recurring": '9'
 }
 
-export const ENTITY_SR_STATUS = ['Open', 'Engaged'];
+export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Cancelled'];
 
 export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'OverDue'];
 
@@ -575,4 +578,18 @@ export const SCHEDULE_TYPES = {
         id: 2,
         name: 'Standard'
     }
+}
+
+export const MONTHLY_RECURRING_OPTIONS = {
+    days: 1,
+    months: 2
+}
+
+export const CALENDAR_DASHBOARD_LENGTH = 6;
+
+export const RECURRING_PATTERN_VALIDATION_MSG = 'Please Select the recurring pattern';
+
+export const PATIENT_STATUS = {
+    deceased: 'Deceased',
+    inActive: 'Inactive'
 }

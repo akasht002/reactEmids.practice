@@ -6,7 +6,7 @@ import { MessageTypes } from '../../../data/AsyncMessage';
 import { formatName } from '../../../utils/formatName';
 import { isEntityServiceProvider } from '../../../utils/userUtility';
 
-class MessageList extends Component {
+export class MessageList extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.messagesStart.scrollIntoView({ behavior: "auto" });
@@ -45,7 +45,7 @@ class MessageList extends Component {
                         return (
                             <div key={index} className="avatarContainer">
                                 <div
-                                    className="avatarImage totalMembers">
+                                    className="avatarImage totalMembers theme-primary-light">
                                     {"+" + extraParticipants}
                                 </div>
                             </div>

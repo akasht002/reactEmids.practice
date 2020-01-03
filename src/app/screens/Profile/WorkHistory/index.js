@@ -20,7 +20,7 @@ import {
     getLength
 } from '../../../utils/validations'
 
-class WorkHistory extends Component {
+export class WorkHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -523,7 +523,7 @@ class WorkHistory extends Component {
                 return (
             <div className="col-md-12 card CardWidget SPWorkHistory">
                         <div className="SPCardTitle d-flex">
-                            <h4 className="primaryColor">Work History</h4>
+                            <h4 className="theme-primary">Work History</h4>
                             {this.props.isUser &&
                                 <i className="SPIconLarge SPIconAdd" name={SCREENS.PROFILE + '_' + PERMISSIONS.CREATE}
                                     onClick={() => this.setState({ isWorkHistoryModalOpen: true, isAdd: true })} />}
@@ -531,8 +531,8 @@ class WorkHistory extends Component {
 
                         <div className="SPCertificateContainer width100">
 
-                            {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList"> {workhistoryList} </ul> :
-                                <ul className="SPCertificateList">
+                            {this.props.workhistoryList.length > 0 ? <ul className="SPCertificateList theme-primary"> {workhistoryList} </ul> :
+                                <ul className="SPCertificateList theme-primary">
                                     <div className='SPNoInfo'>
                                         <div className='SPNoInfoContent'>
                                             <div className='SPInfoContentImage' />
@@ -591,7 +591,7 @@ class WorkHistory extends Component {
                 }
             }
             
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
                         getWorkHistory: () => dispatch(getWorkHistory()),
                     addWorkHistory: (data) => dispatch(addWorkHistory(data)),
@@ -601,7 +601,7 @@ function mapDispatchToProps(dispatch) {
                 }
             };
             
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
                         workhistoryList: state.profileState.WorkHistoryState.workhistoryList,
                     addeworkhistorySuccess: state.profileState.WorkHistoryState.addeworkhistorySuccess,

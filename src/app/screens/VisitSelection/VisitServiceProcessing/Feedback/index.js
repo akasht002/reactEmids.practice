@@ -14,7 +14,7 @@ import {
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import './style.css'
-import { isNull } from '../../../../utils/validations'
+import { isNull, getStatusTextBasedOnStatus } from '../../../../utils/validations'
 import { getUserInfo } from "../../../../utils/userUtility";
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 
@@ -103,7 +103,6 @@ export class Feedback extends Component {
     onClickConfirm = () => {
         this.selectedAnswers = [];
         this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
-        this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
     }
 
     onSubmit = () => {
@@ -143,7 +142,7 @@ export class Feedback extends Component {
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -151,7 +150,7 @@ export class Feedback extends Component {
                     <div className='card mainProfileCard'>
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -166,7 +165,10 @@ export class Feedback extends Component {
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
+                                                {this.props.patientDetails.patient && this.props.patientDetails.patient.deceasedInd &&
+                                                    <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails.patient)}</span>}
+                                                </span>
                                             :
                                             ''
                                         }
@@ -218,11 +220,11 @@ export class Feedback extends Component {
                                                                         <div className="form-radio col-md-3" key={answer.id}>
                                                                             <input className="form-radio-input"
                                                                                 id={answer.id}
+                                                                                test-input="test-input"
                                                                                 type="radio"
                                                                                 value={answer.answerName}
                                                                                 name={questionList.feedbackQuestionnaireId}
                                                                                 onChange={(e) => {
-                                                                                    answer.checked = e.target.checked;
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
                                                                                 checked={answer.checked}
@@ -292,6 +294,7 @@ export class Feedback extends Component {
                         ModalBody={<span>Your feedback is still incomplete. Are you sure you want to continue?</span>}
                         btn1="Confirm"
                         btn2="Cancel"
+                        test-feedback="test-feedback"
                         className="modal-sm"
                         headerFooter="d-none"
                         centered={true}
@@ -306,6 +309,7 @@ export class Feedback extends Component {
                         ModalBody={<span>Do you want to discard the changes?</span>}
                         btn1='YES'
                         btn2='NO'
+                        test-discard="test-discard"
                         className='modal-sm'
                         headerFooter='d-none'
                         centered='centered'
@@ -322,7 +326,7 @@ export class Feedback extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getQuestionsList: () => dispatch(getQuestionsList()),
         saveAnswers: (data) => dispatch(saveAnswers(data)),
@@ -337,7 +341,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         QuestionsList: state.visitSelectionState.VisitServiceProcessingState.FeedbackState.QuestionsList,
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,

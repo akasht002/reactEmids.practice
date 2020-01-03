@@ -45,7 +45,6 @@
     cursor: pointer;
     border-right: 1px solid #dcdcdc;
     cursor: pointer;
-    line-height: 55px;
     margin-bottom: 0 !important;
 }
 
@@ -76,7 +75,7 @@
     display: block;
     padding: 0px 30px;
     font-size: 16px;
-    line-height: 54px;
+    line-height: 53px;
 }
 
 .active-tabview {
@@ -315,7 +314,7 @@
     position: absolute;
     width: 100% !important;
     height: calc(100vh - 250px);
-    top: 40%;
+    top: 63%;
 }
 
 .label_viewstatus {
@@ -326,12 +325,13 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    float:right;
+    float: right;
 }
 
 .right-block-view .btn-right-view .right_statusview {
     position: relative;
 }
+
 .right-block-view .right_statusview {
     position: absolute;
     right: 0;
@@ -375,7 +375,7 @@
     margin-right: 15px;
     line-height: 34px;
     cursor: pointer;
-    font-size:14px;
+    font-size: 14px;
 }
 
 .filter-block button {
@@ -384,12 +384,13 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border: 1px solid #7a329f;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 20px;
-    padding: 6px 12px;
+    padding: 6px 12px !important;
     background: #fff;
     color: #7a329f;
     cursor: pointer;
+    height: 35px;
 }
 
 .filter-block button:hover {
@@ -406,6 +407,14 @@
 .filter-block .profile-header-filter {
     margin-right: 15px;
     line-height: 34px;
+}
+
+.left-listblock {
+    height: 100%;
+}
+
+.right-tablelist {
+    height: 100%;
 }
 
 .left-listblock {
@@ -473,19 +482,19 @@
 @media (min-width: 1367px) {
 
     .tab_content_block {
-        max-height: calc(100vh - 260px);
+        max-height: calc(100vh - 200px);
     }
 
     .left-listblock {
-        max-height: calc(100vh - 292px);
+        max-height: calc(100vh - 230px);
     }
 
     .right-tablelist {
-        max-height: calc(100vh - 260px);
+        max-height: calc(100vh - 230px);
     }
 
     .plan-tableview tbody {
-        height: calc(100vh - 400px) !important;
+        height: calc(100vh - 345px) !important;
     }
 
     .right-customewidth .right-tablelist .table-result-block {
@@ -504,7 +513,7 @@
     padding: 0px 25px 25px 25px;
 }
 
-.individual-spblock-full .ServiceTypeLink {
+.individual-spblock-full .visit-srq-slider .ServiceTypeLink {
     border: 1px solid #d1d1d1 !important;
     cursor: context-menu !important;
 }
@@ -571,6 +580,7 @@
 
 .individual-spblock-full .ServiceCategoryContent .SPAvailContainer.Available {
     margin-bottom: 10px;
+    border-color: #d1d1d1!important;
 }
 
 .individual-spblock-full .ContentTitle.Summary span.ContentTitle.Summary {
@@ -579,11 +589,13 @@
 
 .edit-block {
     width: 10% !important;
-    margin-top: -31px !important;
+    margin-top: -3px !important;
+    z-index: 9999;
 }
 
 .schedule-listblock fieldset {
     position: relative;
+    padding:10px;
 }
 
 .edit-block button {
@@ -651,22 +663,57 @@
     display: block !important;
 }
 
+.active-row-view
+{
+    background: #f2ebf3;
+    border-left: 3px solid #702d8e !important;
+    border-top: 1px solid #bd9fcb !important;
+    border-bottom: 1px solid #bd9fcb !important;
+    cursor: pointer;
+}
+
+.active-listblock{
+    background: #f2ebf3 !important;
+}    
 .my-plan-editmodel .pd-right-0 {
     padding-right: 0px !important;
 }
 
-.my-plan-editmodel  .search-block_SP span.ProfileIconSearch
-{
-    margin-right:0px;
+.my-plan-editmodel .search-block_SP span.ProfileIconSearch {
+    margin-right: 0px;
 }
 
-.my-plan-editmodel .assign-sp-block
-{
+.my-plan-editmodel .assign-sp-block {
     position: relative;
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
 
+.right-block-view .ServiceTypesSlider.Summary .ServiceTypeList input:checked+label,
+.right-block-view .ServiceTypesSlider.Summary .ServiceTypeLink:hover,
+.right-block-view .ServiceCategoryContent .SPAvailContainer.Available {
+    border-color: #d1d1d1 !important;
+    cursor: context-menu;
+}
+
+.right-block-view .availabilityCheck~label:hover,
+.right-block-view .availabilityCheck:checked~label,
+.right-block-view .SPAvailItems.active {
+    cursor: context-menu !important;
+}
+
+.right-block-view .SPAvailContent .SPAvailItems {
+    cursor: context-menu !important;
+}
+
+.right-block-view .SPAvailTitleText {
+    cursor: context-menu !important;
+}
+
+.individual-spblock-full .ServiceContent .AvailabilityWidget .SPAvailWidget .SPAvailContainer .SPAvailTitleText,
+.individual-spblock-full .ServiceCategoryContent .SPAvailContainer.Available .SPAvailContent label.SPAvailItems:hover {
+    cursor: context-menu !important;
+}
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
     .individual-spblock-full .sr-feature-pic img {
@@ -736,4 +783,91 @@
         height: 0;
     }
 
+}
+
+.empty-planblock {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin: 0 auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+.empty-planblock img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.empty-planblock span {
+    color: #7a329f;
+    font-size: 14px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-right: 22px;
+}
+
+.empty-planblock p {
+    color: #444;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    display: block;
+    margin-bottom: 30px;
+}
+
+/*IE11*/
+@media all and (-ms-high-contrast:none) {
+    .plan-tableview .EntityUServiceProf .SP-viewplantable {
+        display: table;
+    }
+
+    *::-ms-backdrop,
+    .plan-tableview .EntityUServiceProf .SP-viewplantable {
+        display: table;
+    }
+
+    .plan-tableview .EntityUServiceProf .SP-viewplantable span {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    *::-ms-backdrop,
+    .plan-tableview .EntityUServiceProf .SP-viewplantable span {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .my-plan-editmodel .assign-sp-block {
+        position: relative;
+        flex-direction: row;
+        justify-content: flex-start;
+        clear: both;
+    }
+
+    *::-ms-backdrop,
+    .my-plan-editmodel .assign-sp-block {
+        position: relative;
+        flex-direction: row;
+        justify-content: flex-start;
+        clear: both;
+    }
+
+    .my-plan-editmodel .assign-sp-block .assign-SP-card {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    *::-ms-backdrop,
+    .my-plan-editmodel .assign-sp-block .assign-SP-card {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }

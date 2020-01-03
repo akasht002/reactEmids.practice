@@ -1,108 +1,151 @@
 import React from 'react';
-import Enzyme, { shallow, configure, mount, render } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
-import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import sinon from 'sinon';
 
-import { ResetPassword,mapDispatchToProps,mapStateToProps } from './index.js';
+import { ResetPassword, mapDispatchToProps, mapStateToProps } from './index.js';
 
 
-jest.dontMock('../ResetPassword');
+// jest.mock('../AuthCover', () => ({
+//   AuthCover: 'mockAuthover'
+// }))
 
 Enzyme.configure({ adapter: new Adapter() })
 
-let wrapper,store,wrapperShallow;
+let wrapper, store;
 const mockStore = configureStore();
 const dispatch = sinon.spy();
 const defaultState = {
-  isLoading:true,
-  url:""
+  isLoading: true,
+  userName:'',
+  match:{
+    params : {
+        uid: 234,
+        token: 'dfdf',
+        userType:'I'
+    }
+  },
+  loadingState: { isLoading :true },
+  authState: {
+      resetPasswordState: {
+        resetPasswordSuccess: true,
+        resetPasswordLinkStatus: true,
+        resetPasswordStatus: true,
+      }
+  },
+  resetPasswordSuccess: true,
+  resetPasswordLinkStatus: true,
+  resetPasswordStatus: true,
+  onClickReset: jest.fn(),
+  getEmailId: jest.fn(),
+  formDirty: jest.fn(),
 };
 
 store = mockStore(defaultState);
 
-function setup() {
-  const props = {
-    isLoading:true,
-    match:{url:"sdffffffffffg"},
-    getEmailId: jest.fn(),
-    formDirty: jest.fn(),
-    onClickReset:jest.fn()
-  }
-  const initialProps = {
-    getEmailId: jest.fn(),
-    formDirty: jest.fn(),
-    onClickReset:jest.fn(),
-    url:""
-  };
+
+
+describe("ResetPassword Component", function () {
+  let wrapper;
+
+  beforeEach(() => {
+    const props = defaultState;
+    wrapper = shallow(
+        <ResetPassword  dispatch={dispatch} store={store} {...defaultState} />
+    )
+    wrapper.setState({
+        showModalOnCancel: false,
+        firstName: '',
+        lastName: '',
+        contactNumber: ''
+    })
+    }); 
+
+    it('Check the ResetPassword Details body', () => {
+      wrapper.setState({
+      })
+      expect(wrapper).toBeDefined()
+    }); 
   
-  const enzymeWrapper = mount(<MemoryRouter>
-                            <ResetPassword dispatch={dispatch}  store={store} {...initialProps} 
-                            match={{params: {uid: 1},path: "", url: ""}}/> 
-                          </MemoryRouter>)
+    it('Check the confirm password value', () => {
+      const onClickReset = jest.fn()
+      const input = wrapper.find('[name="confirmPass"]')
+      input.simulate("change", { target: { name: 'confirmPass', value: 'Emids@123' } });
+      expect(onClickReset.mock.calls.length).toBe(0)
+  
+      const button = wrapper.find('[label="Reset My Password"]');
+      button.simulate("click")
+    })
+    it('should test initial state', () => {
+      const initialState = defaultState
+      expect(mapStateToProps(initialState)).toBeDefined();
+    }); 
 
-  return {
-    props,
-    enzymeWrapper
-  }
-}
-
-
-beforeEach(() => {
- 
-}); 
-
-
-describe("ResetPassword", function () {  
-
-  it('Check ResetPassword Component contains resetPassword body div', () => { 
-    const { enzymeWrapper} = setup()
-    expect(enzymeWrapper.find('.resetPassword-body').length).toEqual(1);
-  })
-
-  it('Check ResetPassword Component contains login body div', () => { 
-    const { enzymeWrapper} = setup()
-    expect(enzymeWrapper.find('.login-body').length).toEqual(1);
-  })
-
-  it('Check the password field', () => {  
-    let mockFn = jest.fn(); 
-    const { enzymeWrapper, props } = setup();
-    enzymeWrapper.instance().textChange = mockFn;
-    expect(enzymeWrapper.find('[name="newPass"]').props().onBlur(''));
-    expect(props.onClickReset.mock.calls.length).toBe(0)
+  it('Check the mapDispatchToProps fn()', () => {
+    const dispatch = jest.fn();
+    mapDispatchToProps(dispatch).onClickReset();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).getEmailId();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
+    mapDispatchToProps(dispatch).formDirty();
+    expect(dispatch.mock.calls[0][0]).toBeDefined();
   });
 
-  it('Check the confirm password field', () => { 
-    const { enzymeWrapper, props } = setup();
-    expect(enzymeWrapper.find('[name="confirmPass"]').props().onBlur(''));
-    expect(props.onClickReset.mock.calls.length).toBe(0)
+  it('Check the onClickButtonReset Details body', () => {
+    wrapper.setState({
+      passwordMatch : true,
+      passwordCombination :true,
+      pass :'er',
+      confirmPass:'jh'
+    })
+    wrapper.instance().onClickButtonReset()
   });
 
-  it('Check the password value', () => {   
-    const { enzymeWrapper, props } = setup()
-    const input = enzymeWrapper.find('[name="newPass"]')
-    input.simulate("change", { target: { name: 'newPass', value: 'Emids@123'}});  
-    expect(props.onClickReset.mock.calls.length).toBe(0)
-    
-    const button = enzymeWrapper.find('[label="Reset My Password"]');
-    button.simulate("click")
- })
+  it('Check the onClickButtonReset Details body', () => {
+    wrapper.setState({
+      passwordMatch : true,
+      passwordCombination :true,
+      pass :'',
+      confirmPass:''
+    })
+    wrapper.instance().onClickButtonReset()
+  });
 
- it('Check the confirm password value', () => {   
-    const { enzymeWrapper, props } = setup()
-    const input = enzymeWrapper.find('[name="confirmPass"]')
-    input.simulate("change", { target: { name: 'confirmPass', value: 'Emids@123'}});  
-    expect(props.onClickReset.mock.calls.length).toBe(0)
-    
-    const button = enzymeWrapper.find('[label="Reset My Password"]');
-    button.simulate("click")
- })
+  it('Check the onClickButtonReset Details body', () => {
+    wrapper.setState({
+      pass :'',
+      confirmPass:''
+    })
+    wrapper.instance().onClickButtonReset()
+  });
 
- it('Check onClickButtonReset method called once',()=>{
-    const { enzymeWrapper, props } = setup()
-    enzymeWrapper.setState({isFieldDirty: false})
-     expect(props.onClickReset.mock.calls.length).toBe(0)  
-   });
+  
+
+  it('Check the validatePassword Details body', () => {
+    wrapper.setState({pass:'test',confirmPass:'test'})
+    wrapper.instance().validatePassword()
+  });
+
+  it('Check the validatePassword Details body', () => {
+    wrapper.setState({pass:'test',confirmPass:'test123'})
+    wrapper.instance().validatePassword()
+  });
+
+  it('Check the validatePassword Details body', () => {
+    wrapper.setState({pass:false})
+    wrapper.instance().validatePassword()
+  });
+
+  it('Check the onChangeNewPassword Details body', () => {
+    // wrapper.setState({pass:false})
+    wrapper.instance().onChangeNewPassword({target:{value:true}})
+  });
+
+  it('Check the onChangeConfirmPassword Details body', () => {
+    // wrapper.setState({pass:false})
+    wrapper.instance().onChangeConfirmPassword({target:{value:true}})
+  });
+
 });

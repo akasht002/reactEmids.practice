@@ -6,7 +6,7 @@ import TeleHealthWidget from './TeleHealthWidget';
 import { generateToken, clearRoom  } from '../../redux/telehealth/actions';
 import './styles.css';
 
-class TeleHealth extends Component {
+export class TeleHealth extends Component {
 
     constructor(props) {
         super(props);
@@ -55,7 +55,7 @@ class TeleHealth extends Component {
             <AsideScreenCover>
                 <div className='TeleHealth ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Video Conference</h5>
+                        <h5 className='theme-primary m-0'>Video Conference</h5>
                         <span className="TeleHealthViewParticipants" onClick={() => { }} />
                     </div>
                 </div>
@@ -73,14 +73,14 @@ class TeleHealth extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         generateToken: () => dispatch(generateToken()),
         clearRoom: () => dispatch(clearRoom())
     }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         telehealthToken: state.telehealthState.token,
         roomId: state.telehealthState.roomId

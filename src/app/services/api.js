@@ -61,7 +61,6 @@ export const API = {
     getServiceVisitsCount: 'VisitProcessing/ServicerProvider/ServiceVisitCount/',
     getServiceVisitsHistoryById: 'VisitProcessing/ServiceRequestVisitSummaryDetails/',
     getServicePlanVisitSummaryDetails:'servicevisit/serviceplanvisitsummarydetails/',
-    // getServiceVisitsHistoryById: 'ServiceRequest/VisitSummary/',
     updateAssessmentVisitStartEndTime:'servicevisit/updatevisitstartendtime',
     getProfilePercentage: 'ServiceProvider/ProgressIndicator/',
     getBlackOutDays: 'ServiceProvider/',
@@ -212,5 +211,9 @@ export const API = {
     getPatientVitals: 'patient/get-patient-coreo-association/',
     getPlanVisitFeedBack: 'feedback/patient/feedbackdetails/',
     getPaymentAvailability: 'Common/LookupConfig/PaymentAvailability',
-    getUserIdForCT: 'ServiceProviderOnBoarding/'
+    getUserIdForCT: 'ServiceProviderOnBoarding/',
+    getEmergencyContactDetails: 'patient/emergencycontact/',
+    getAttorneyContactDetails: 'patient/attorney/',
+    getSelectedServiceRequestAssessmentQuestionnaire:'ServiceRequestAssessment/Answers/',
+    getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/'
 }

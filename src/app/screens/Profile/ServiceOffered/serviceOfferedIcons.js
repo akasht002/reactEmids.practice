@@ -1,6 +1,6 @@
 import React from "react";
 
-class ServiceOfferedIcons extends React.Component {
+export class ServiceOfferedIcons extends React.Component {
 
     render() {
 
@@ -10,7 +10,7 @@ class ServiceOfferedIcons extends React.Component {
             )
         } else if (this.props.type === 'edit') {
             return (
-                <div className="form-check form-check-inline selectType SPIconServicesCheckbox">
+                <div className="form-check form-check-inline selectType SPIconServicesCheckbox theme-primary-light">
                     <input
                         id={'_'+ this.props.service.serviceTypeId}
                         className="form-check-input"

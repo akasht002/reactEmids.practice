@@ -24,7 +24,7 @@ import '../styles.css';
 import { push } from '../../../redux/navigation/actions';
 import { Path } from '../../../routes';
 
-class Conversation extends Component {
+export class Conversation extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -284,7 +284,7 @@ class Conversation extends Component {
                 {this.props.isLoading && <Preloader />}
                     <div className='ProfileHeaderWidget'>
                         <div className='ProfileHeaderTitle'>
-                            <h5 className='primaryColor m-0'>My Conversations</h5>
+                            <h5 className='theme-primary m-0'>My Conversations</h5>
                         </div>
                     </div>
                     <div className="container-fluid SPContentWidget MessageCardWidget">
@@ -361,7 +361,7 @@ class Conversation extends Component {
 };
 
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         getConversations: (conversationId) => dispatch(onFetchConversation(conversationId)),
         onSaveTitle: (data) => dispatch(onSaveTitle(data)),
@@ -377,7 +377,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         conversation: state.asyncMessageState.conversation,
         isLoading: state.asyncMessageState.isLoading,

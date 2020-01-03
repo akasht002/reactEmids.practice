@@ -1,11 +1,6 @@
 import { AuthGet, AuthPut } from '../../../services/http';
 import { API } from '../../../services/api';
-
-export const UserAgreement = {
-    getUserInfoSuccess: 'getUserInfoSuccess/userAgreement',
-    getEulaContentSuccess: 'getEulaContentSuccess/userAgreement',
-    updateEulaSuccess: 'updateEulaSuccess/userAgreement'
-};
+import { UserAgreement } from './bridge'
 
 export const getUserInfoSuccess = (data) => {
     return {

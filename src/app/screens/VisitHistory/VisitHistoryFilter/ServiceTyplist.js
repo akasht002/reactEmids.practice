@@ -5,7 +5,7 @@ function ServiceTypeList(props){
     let ServiceTempalte = props.serviceType && props.serviceType.map((item, index) =>{
         let catNum = index + 1;
         return(
-             <div className="CheckSet" key={catNum}>
+             <div className="CheckSet theme-primary-light" key={catNum}>
                 <input 
                     className="ServiceCheckbox" 
                     name={"ServiceList"} 

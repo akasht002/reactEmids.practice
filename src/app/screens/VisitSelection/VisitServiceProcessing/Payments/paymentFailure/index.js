@@ -13,6 +13,7 @@ import { setPatient } from '../../../../../redux/patientProfile/actions';
 import {updateServiceRequestId} from '../../../../../redux/visitSelection/VisitServiceProcessing/Payments/actions';
 
 import '../style.css'
+import { getStatusTextBasedOnStatus } from "../../../../../utils/validations";
 
 export class PaymentFailure extends Component {
 
@@ -56,7 +57,7 @@ export class PaymentFailure extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='primaryColor m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Service Requests</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -65,7 +66,7 @@ export class PaymentFailure extends Component {
 
                         <div className='CardContainers TitleWizardWidget'>
                             <div className='TitleContainer'>
-                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon" />
+                                <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
                                         <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
@@ -80,7 +81,10 @@ export class PaymentFailure extends Component {
                                                             : require('../../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
+                                                {this.props.patientDetails.patient && this.props.patientDetails.patient.deceasedInd &&
+                                                    <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails.patient)}</span>}
+                                                </span>
                                             :
                                             ''
                                         }
@@ -125,7 +129,7 @@ export class PaymentFailure extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
     return {
         goVisitServiceList: () => dispatch(push(Path.visitServiceList)),
         updateServiceRequestId: (data) => dispatch(updateServiceRequestId(data)),
@@ -135,7 +139,7 @@ function mapDispatchToProps(dispatch) {
     }
 };
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
     return {
         patientDetails: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.PerformTasksList,
         startedTime: state.visitSelectionState.VisitServiceProcessingState.PerformTasksState.startedTime,

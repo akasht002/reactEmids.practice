@@ -7,7 +7,7 @@ import {
   getServiceProviderDetail
 } from '../../redux/dashboard/Dashboard/actions'
 
-class MyServiceProviders extends React.Component {
+export class MyServiceProviders extends React.Component {
   constructor (props) {
     super(props)
     this.state = {     
@@ -82,12 +82,12 @@ class MyServiceProviders extends React.Component {
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
-            <span className='ProfileCardHeaderTitle primaryColor'>
+            <span className='ProfileCardHeaderTitle theme-primary'>
               Service Providers
             </span>
-            <Link className='ProfileCardHeaderLink' to='/'>View all</Link>
+            <Link className='ProfileCardHeaderLink theme-primary' to='/'>View all</Link>
           </div>
-          <div className='topPalette'>
+          <div className='topPalette theme-primary'>
             <div className='monthPalette'>
               <Select
                 id='ProfileMonth'
@@ -114,13 +114,13 @@ class MyServiceProviders extends React.Component {
     )
   }
 }
-function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     getServiceProviderDetail: (data) => dispatch(getServiceProviderDetail(data))
   }
 }
 
-function mapStateToProps (state) {
+export function mapStateToProps (state) {
   return {
     serviceProvider: state.dashboardState.dashboardState.serviceProvider,
   }

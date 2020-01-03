@@ -30,7 +30,7 @@ export const Details = props => {
               {props.personalDetail &&
                 `${props.personalDetail.firstName || ''} ${props.personalDetail.lastName || ''} `}
             </h3>
-            <p className={'SPsubTitle'}>
+            <p className={'SPsubTitle theme-primary'}>
               <span>
                 {props.personalDetail &&
                   props.personalDetail.genderName}
@@ -39,12 +39,6 @@ export const Details = props => {
                 {props.personalDetail && props.personalDetail.age}
                 {' '}
                 Yrs Old
-              </span>
-              <span>
-                {props.personalDetail &&
-                  props.personalDetail.yearOfExperience}
-                {' '}
-                Yrs Exp
               </span>
             </p>
           </div>
@@ -81,7 +75,7 @@ export const Details = props => {
       <div className={'SPDetailsContainer SPAddressWidget'}>
         <div className={'SPAddressContent'}>
           <div className={'width100 SPAddressTitle d-flex'}>
-            <span className={'SPAddressText primaryColor'}>Address</span>
+            <span className={'SPAddressText theme-primary'}>Address</span>
           </div>
           <div className={'width100 d-flex'}>
             <span className={'AddressContentLabel'}>Street</span>
@@ -110,7 +104,7 @@ export const Details = props => {
         </div>
         <div className={'SPAddressContent'}>
           <div className={'width100 SPAddressTitle d-flex'}>
-            <span className={'SPAddressText primaryColor'}>Phone</span>
+            <span className={'SPAddressText theme-primary'}>Phone</span>
           </div>
           <div className={'width100 d-flex'}>
             <span>

@@ -19,7 +19,7 @@ import { createDataStore } from '../../../redux/telehealth/actions'
 import './entity-user-dashboard.css'
 import { Tabs } from './Components/Tabs/Tabs';
 
-class EntityDashboard extends Component {
+export class EntityDashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -98,11 +98,13 @@ class EntityDashboard extends Component {
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle entity-dashboard-topview'>
             <div className='ProfileHeaderLeft'>
-              <h5 className='primaryColor m-0'>Dashboard</h5>
+              <h5 className='theme-primary m-0'>Dashboard</h5>
             </div>
             <div className='ProfileHeaderRight'>
+              {
+                !disableDate && 
               <div>
-                <div className='entity-date-filter'>
+                <div className='entity-date-filter theme-primary'>
                   <Calendar
                     startDate={
                       this.state.fromDate &&
@@ -116,7 +118,7 @@ class EntityDashboard extends Component {
                     disabled={disableDate}
                   />
                 </div>
-                <div className='entity-date-filter'>
+                <div className='entity-date-filter theme-primary'>
                   <Calendar
                     startDate={
                       this.state.toDate && formateStateDate(this.state.toDate)
@@ -129,7 +131,7 @@ class EntityDashboard extends Component {
                     disabled={disableDate}
                   />
                 </div>
-                <div className='entity-date-filter'>
+                <div className='entity-date-filter theme-primary'>
                   <button
                     className='btn btn-outline-primary CTHeaderFilterToday'
                     onClick={this.todaysDate}
@@ -138,7 +140,7 @@ class EntityDashboard extends Component {
                     Today
                   </button>
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
         </div>
@@ -199,7 +201,7 @@ class EntityDashboard extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     setActiveTab: data => dispatch(setActiveTab(data)),
     getBuildVersion: () => dispatch(getBuildVersion()),
@@ -211,7 +213,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     activeTab: state.dashboardState.individualsListState.activeTab,
     fromDate: state.dashboardState.individualsListState.fromDate,

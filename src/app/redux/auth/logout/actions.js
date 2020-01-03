@@ -4,13 +4,7 @@ import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
 import { USER_LOCALSTORAGE } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
-
-export const LOGOUT = {
-    start: 'fetch_start/logout',
-    end: 'fetch_end/logout',
-    success: 'fetch_success/logout',
-    failed: 'fetch_failed/logout',
-};
+import {LOGOUT} from './bridge'
 
 export const logoutStart = () => {
     return {
