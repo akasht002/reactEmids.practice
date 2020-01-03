@@ -106,7 +106,7 @@ export class PersonalDetail extends React.PureComponent {
             </div>
             </div>
             {
-              (!this.props.personalDetail.deceasedInd && this.props.personalDetail.isActive) &&
+              (!this.props.personalDetail.deceasedInd) &&
               <div className="d-flex profile-action-block">
               {
                 communicationData.map(item =>
