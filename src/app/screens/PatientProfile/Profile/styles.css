@@ -271,13 +271,13 @@ i.SPIconEditPersonalDetails {
     position: absolute;
     display: block;
     bottom: 0;
-    top: 33px;
+    bottom: -10px;
     width: 123px;
-    height: 100%;
     right: 0;
     text-align: center;
     font-weight: 600;
     font-size: 14px;
+    clear: both;
 }
 
 .BoardContainer .ServiceRequestBoard .BlockProfileDetails .BlockProfileDetailsName span:last-child

@@ -311,7 +311,7 @@ export class Summary extends Component {
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
-                                                {this.props.patientDetails.patient && this.props.patientDetails.patient.deceasedInd &&
+                                                {this.props.patientDetails.patient && (this.props.patientDetails.patient.deceasedInd || !this.props.patientDetails.patient.isActive) &&
                                                     <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails.patient)}</span>}
                                             </span>
                                             :

@@ -537,7 +537,7 @@ export class VisitServiceList extends Component {
                                 <div className='BlockProfileDetails'>
                                     <div className='BlockProfileDetailsName'>
                                         <span>{serviceList.patientFirstName} {patientLastName}</span>
-                                        {serviceList.deceasedInd && <span>{` (${getStatusTextBasedOnStatus(serviceList)})`}</span>}
+                                        {(serviceList.deceasedInd || !serviceList.isActive) && <span>{` (${getStatusTextBasedOnStatus(serviceList)})`}</span>}
                                     </div>
                                 </div>
                                 <div className='BlockProfileDetailsStatus'>
