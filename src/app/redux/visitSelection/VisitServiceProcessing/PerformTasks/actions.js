@@ -61,7 +61,7 @@ export const startLoadingProcessing = () => {
 };
 
 export function getPerformTasksList(data, startOrStop, goToAssessment = false) {
-    let getServiceRequestPerformTasks = getUserInfo().isEntityServiceProvider ? API.getServiceRequestPerformTasksForEsp : API.getServiceRequestPerformTasks
+    let getServiceRequestPerformTasks = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getServiceRequestPerformTasksForEsp : API.getServiceRequestPerformTasks
     return (dispatch) => {
         dispatch(getServiceRequestVisitId(data))       
         ServiceRequestGet(getServiceRequestPerformTasks + data).then((resp) => {
@@ -81,7 +81,7 @@ export function getPerformTasksList(data, startOrStop, goToAssessment = false) {
 };
 
 export function getServiceVisitId(data, startOrStop) {
-    let getServiceRequestPerformTasks = getUserInfo().isEntityServiceProvider ? API.getServiceRequestPerformTasksForEsp : API.getServiceRequestPerformTasks
+    let getServiceRequestPerformTasks = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getServiceRequestPerformTasksForEsp : API.getServiceRequestPerformTasks
     return (dispatch) => {
         dispatch(startLoadingProcessing());
         dispatch(getServiceRequestVisitId(data))
@@ -99,7 +99,7 @@ export function getServiceVisitId(data, startOrStop) {
 };
 
 export function addPerformedTask(data, startServiceAction) {
-    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let isEntityServiceProvider = (getUserInfo().isEntityServiceProvider || isEntityUser())
     let savePerformedTask = isEntityServiceProvider ? API.savePerformedTaskForEsp : API.savePerformedTask + data.serviceRequestVisitId
     let model = isEntityServiceProvider ? {
         serviceProviderId: data.serviceProviderId,
@@ -121,7 +121,7 @@ export function addPerformedTask(data, startServiceAction) {
 
 
 export function startOrStopService(data, visitId, startedTime) {
-    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let isEntityServiceProvider = (getUserInfo().isEntityServiceProvider || isEntityUser())
     let startOrStopService = isEntityServiceProvider ? API.startOrStopServiceForEsp : API.startOrStopService
     return (dispatch) => {
         let  model = isEntityServiceProvider ? 
@@ -146,7 +146,7 @@ export function startOrStopService(data, visitId, startedTime) {
 };
 
 export function getSummaryDetails(data) {
-    let getSummaryDetails = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getSummaryDetails
+    let getSummaryDetails = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getSummaryDetailsForEsp : API.getSummaryDetails
     return (dispatch) => {
         dispatch(startLoadingProcessing());
         ServiceRequestGet(getSummaryDetails + data).then((resp) => {

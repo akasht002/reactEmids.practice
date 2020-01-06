@@ -17,6 +17,7 @@ import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { getUserInfo } from "../../../../services/http";
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
+import { isEntityUser } from "../../../../utils/userUtility";
 
 export class PerformTasks extends Component {
 
@@ -180,7 +181,7 @@ export class PerformTasks extends Component {
             timerBtn = <a className="btn btn-primary" onClick={() => { this.setState({ isStopModalOpen: true }) }}>Stop Service</a>
         }
 
-        let isEntity = getUserInfo().isEntityServiceProvider;
+        let isEntity = (getUserInfo().isEntityServiceProvider || isEntityUser());
         let updatedIndicatorData = visitProcessingNavigationData(isEntity)
 
         return (
@@ -212,7 +213,7 @@ export class PerformTasks extends Component {
                                                 className="avatarImage avatarImageBorder" alt="patientImage" />
                                             <i className='requestName'>{this.state.taskList.patient && this.state.taskList.patient.firstName} {this.state.taskList.patient && this.state.taskList.patient.lastName}</i>
                                         </span>
-                                        {this.state.taskList.patient && this.state.taskList.patient.deceasedInd &&
+                                        {this.state.taskList.patient && (this.state.taskList.patient.deceasedInd || !this.state.taskList.patient.isActive) &&
                                           <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.state.taskList.patient)}</span>}
                                     </div>
                                 </div>

@@ -17,6 +17,7 @@ import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 import { DATE_FORMATS } from "../../../../constants/constants";
+import { isEntityUser } from "../../../../utils/userUtility";
 
 export class Summary extends Component {
 
@@ -311,7 +312,7 @@ export class Summary extends Component {
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
-                                                {this.props.patientDetails.patient && this.props.patientDetails.patient.deceasedInd &&
+                                                {this.props.patientDetails.patient && (this.props.patientDetails.patient.deceasedInd || !this.props.patientDetails.patient.isActive) &&
                                                     <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails.patient)}</span>}
                                             </span>
                                             :
@@ -400,7 +401,7 @@ export class Summary extends Component {
                                                 </div>}
                                             </div>
 
-                                            {getUserInfo().isEntityServiceProvider ?
+                                            {(getUserInfo().isEntityServiceProvider || isEntityUser()) ?
                                                 ''
                                                 :
                                                 <div className="row EstimatedCostWidget theme-primary">
@@ -450,7 +451,7 @@ export class Summary extends Component {
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
-                                        {getUserInfo().isEntityServiceProvider ?
+                                        {(getUserInfo().isEntityServiceProvider || isEntityUser()) ?
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
                                             :
                                             <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>

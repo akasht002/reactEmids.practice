@@ -15,5 +15,6 @@ export const vistServiceHistoryDetails = {
     getAllPatientForServiceProviders: "getAllPatientForServiceProviders/visitHistory",
     clearPatientForServiceProviders: "clearPatientForServiceProviders/visitHistory",
     formDirty: 'formDirty/visitHistory',
-    visitHistoryLoading: 'visitHistoryLoading/visitHistory'
+    visitHistoryLoading: 'visitHistoryLoading/visitHistory',
+    getAssessmentQuestionsListSuccess: 'getAssessmentQuestionsListSuccess/visitHistory'
 };

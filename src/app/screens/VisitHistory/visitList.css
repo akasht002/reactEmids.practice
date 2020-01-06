@@ -471,6 +471,15 @@ vertical-align: middle;
     width: 135px; 
 }
 
+.visitListContainerLeft .visitListContent .visitListNameContainer
+{
+    position: relative;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
 
 /*IE_11_&_IE_10*/
 
