@@ -1028,7 +1028,7 @@ let datas =  data.map((el)=> {
             isOpen={this.state.isQuestionareModalOpen}
             toggle={this.toggleQuestionareModalOpen}
             ModalBody={srQuestionareDetaisModalContent}
-            className='modal-lg asyncModal CertificationModal my-plan-editmodel'
+            className='modal-lg asyncModal CertificationModal my-plan-editmodel questionnaire-model-pop'
             modalTitle={'Questionnaire'}
             centered
             onClick={this.toggleQuestionareModalClose}
