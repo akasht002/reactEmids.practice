@@ -166,7 +166,7 @@ span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetail
 .form-radio-input:checked~.form-radio-label,
 .CheckSet input:checked~label,
 .ServiceTypeList input:checked+label,
-.checkmark.theme-primary {
+.checkmark.theme-primary, .form-radio-label:hover {
     border: 1px solid #1e3d5c !important;
 }
 
