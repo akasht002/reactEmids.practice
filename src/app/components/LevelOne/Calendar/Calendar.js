@@ -16,6 +16,7 @@ class Calendar extends Component {
                 <label className="width100" onClick={e => this.calendar.state.open && e.preventDefault()}> {this.props.label}
                     <DatePicker
                         id={this.props.id}
+                        disabledKeyboardNavigation
                         selected={this.props.startDate}
                         onChange={this.props.onDateChange}
                         onChangeRaw={this.props.onDateChangeRaw}
