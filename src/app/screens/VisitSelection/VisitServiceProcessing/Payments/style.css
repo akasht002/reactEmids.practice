@@ -1,23 +1,23 @@
-.VisitPaymentContentTitle{
+.VisitPaymentContentTitle {
     color: #7a329f;
     font-size: 18px;
     font-weight: 600;
 }
 
-.VisitPaymentAmountPaid i{
+.VisitPaymentAmountPaid i {
     color: #7a329f;
     font-weight: 600;
     margin-left: 30px;
     font-style: normal;
 }
 
-.VisitPaymentContainer{
+.VisitPaymentContainer {
     display: flex;
     display: -moz-flex;
     flex-direction: column;
 }
 
-.VisitPaymentContainer .bottomButton{
+.VisitPaymentContainer .bottomButton {
     display: flex;
     display: -moz-flex;
     padding: 20px 30px;
@@ -26,38 +26,38 @@
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
 }
 
-.VisitPaymentWidget{
+.VisitPaymentWidget {
     padding: 30px 30px 0 30px;
 }
 
-.CardTypeContent label{
+.CardTypeContent label {
     margin-bottom: 30px;
 }
 
-.VisitPaymentWidget .FeedbackQuestion{
+.VisitPaymentWidget .FeedbackQuestion {
     margin-bottom: 15px;
 }
 
-.FeedbackAnswerWidget label.form-radio-label{
+.FeedbackAnswerWidget label.form-radio-label {
     font-weight: normal;
     padding: 15px 20px 15px 50px;
 }
 
-.VisitPaymentWidget .FeedbackQuestionWidget{
+.VisitPaymentWidget .FeedbackQuestionWidget {
     padding: 0;
 }
 
-.VisitPaymentWidget .FeedbackAnswerWidget{
+.VisitPaymentWidget .FeedbackAnswerWidget {
     margin: 0 0 0 -30px;
 }
 
-.VisitPaymentWidget .FeedbackAnswerWidget .form-radio{
+.VisitPaymentWidget .FeedbackAnswerWidget .form-radio {
     padding: 0 0 0 30px;
     margin: 0;
     margin-bottom: 14px;
 }
 
-.CardTypeContainer{
+.CardTypeContainer {
     display: flex;
     display: -moz-flex;
     flex-direction: row;
@@ -65,7 +65,7 @@
     align-items: center;
 }
 
-.CardTypeContainerLeft{
+.CardTypeContainerLeft {
     display: flex;
     display: -moz-flex;
     flex-direction: column;
@@ -73,42 +73,42 @@
     font-size: 16px;
 }
 
-.CardTypeContainerLeft span.ExpireDate{
+.CardTypeContainerLeft span.ExpireDate {
     color: #8c8c8c;
     font-size: 14px;
     margin-top: 5px;
 }
 
-.CardTypeContainerLeft span.ExpireDate i{
+.CardTypeContainerLeft span.ExpireDate i {
     font-weight: 600;
     font-style: normal;
 }
 
-.CardTypeContainerRight img{
+.CardTypeContainerRight img {
     height: 25px;
 }
 
-.VisitPaymentExpiryWidget{
+.VisitPaymentExpiryWidget {
     display: flex;
     flex-direction: row;
 }
 
-.CardDetailsWidget{
+.CardDetailsWidget {
     margin-bottom: 40px;
 }
 
-.VisitPaymentExpiryContent .VisitPaymentExpiry{
+.VisitPaymentExpiryContent .VisitPaymentExpiry {
     height: 40px;
     min-height: 30px;
     border-color: #acacac;
 }
 
-.VisitPaymentExpiryContent{
+.VisitPaymentExpiryContent {
     width: 20%;
     margin-right: 30px;
 }
 
-.VisitPaymentSuccess{
+.VisitPaymentSuccess {
     height: calc(100vh - 410px);
     min-height: 170px;
     display: flex;
@@ -116,7 +116,8 @@
     align-items: center;
 }
 
-.VisitPaymentSuccessMsg, .VisitPaymentFailureMsg{
+.VisitPaymentSuccessMsg,
+.VisitPaymentFailureMsg {
     font-size: 16px;
     font-weight: 600;
     display: flex;
@@ -133,12 +134,13 @@
     color: #c04e59;
 }
 
-.VisitPaymentSuccessMsg img, .VisitPaymentFailureMsg img{
+.VisitPaymentSuccessMsg img,
+.VisitPaymentFailureMsg img {
     height: 40px;
     margin-bottom: 15px;
 }
 
-span.NewCardButton{
+span.NewCardButton {
     font-size: 14px;
     padding: 8px 20px !important;
 }
@@ -148,14 +150,14 @@ span.NewCardButton{
     border-bottom: 1px solid #acacac;
 }
 
-@media(max-width: 1024px){
+@media(max-width: 1024px) {
     div.PaymentCardContainer .form-radio {
         width: 46.17%;
     }
 }
 
-@media(max-width: 768px){
-    .VisitPaymentWidget .FeedbackAnswerWidget .form-radio{
+@media(max-width: 768px) {
+    .VisitPaymentWidget .FeedbackAnswerWidget .form-radio {
         width: 100%;
         flex: 0 0 100%;
     }
@@ -188,7 +190,7 @@ span.NewCardButton{
         background-size: 10px;
     }
 
-    .PaymentCardNumber{
+    .PaymentCardNumber {
         font-size: 14px;
     }
 
@@ -196,51 +198,51 @@ span.NewCardButton{
         padding: 20px 20px 0;
     }
 
-    .VisitPaymentExpiryContent{
+    .VisitPaymentExpiryContent {
         width: 50%;
     }
 
-    .CardTypeContainerLeft{
+    .CardTypeContainerLeft {
         font-size: 14px;
     }
 }
 
-@media(max-width: 480px){
+@media(max-width: 480px) {
     div.PaymentCardContainer .form-radio {
         width: 100%;
     }
 }
 
 
-.FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio .RadioBoxIcon
-{
-left: 25px;
+.FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio .RadioBoxIcon {
+    left: 25px;
 }
-.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label
-{
-    background-color: 	rgb(211,211,211,  0.3);
+
+.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label {
+    background-color: rgb(211, 211, 211, 0.3);
     cursor: context-menu;
 }
-.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label:hover
-{
-    background-color: 	rgb(211,211,211,  0.3);
-    cursor: context-menu;
-    border: 1px solid #e1e1e1;
+
+.questionnaire-model-pop .FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label:hover,
+.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label:hover {
+
+    border-color: #e1e1e1 !important;
 }
 
-.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label+span.RadioBoxIcon::before
+.questionnaire-model-pop .FeedbackAnswerWidget input.form-radio-input:checked+.form-radio-label:hover,
+.FeedbackAnswerWidget input.form-radio-input:checked+.form-radio-label:hover {
 
-{
-background:	rgba(0,0,0, 0.5);
+    border-color: #1e3d5c !important;
 }
 
-
-.FeedbackWidget .FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label span.RadioBoxIcon
-{
-    border: 1px solid rgba(0,0,0, 0.5) !important;   
+.FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label+span.RadioBoxIcon::before {
+    background: rgba(0, 0, 0, 0.5);
 }
-.FeedbackWidget .FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label span.RadioBoxIcon::before
 
-{
-background:	rgba(0,0,0, 0.5);
+.FeedbackWidget .FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label span.RadioBoxIcon {
+    border: 1px solid rgba(0, 0, 0, 0.5) !important;
+}
+
+.FeedbackWidget .FeedbackAnswerWidget input.form-radio-input:disabled+.form-radio-label span.RadioBoxIcon::before {
+    background: rgba(0, 0, 0, 0.5);
 }
