@@ -634,7 +634,6 @@ export function getVisitList(data) {
       .catch(err => {
         logError(err)
       })
-      // dispatch(isServiceRequestListLoading(false));
   }
 };
 
@@ -647,7 +646,7 @@ export function getVisitListCount(data) {
         dispatch(isServiceRequestListLoading(false));
       })
       .catch(err => {
-        // dispatch(isServiceRequestListLoading(false));
+        logError(err)
       })
   }
 };
