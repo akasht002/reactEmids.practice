@@ -59,3 +59,6 @@ export const disableZeroInFirstChar = e => {
     }
 }
 
+export const unique = (array,key) => {
+    return _.chain(array).map(key).uniq().value()
+  }

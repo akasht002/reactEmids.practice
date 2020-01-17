@@ -6,6 +6,8 @@ import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
+import { getQuestionsListSuccess } from '../Assessment/actions';
+import { getQuestionsListSuccess as getFeedBackQuestion } from '../Feedback/actions'
 import { updateServiceRequestId } from '../Payments/actions';
 import { getDoubleDigitTime } from '../../../../utils/dateUtility'
 import { getUpdatedPerformTasksList } from '../PerformTasks/actions'
@@ -247,7 +249,7 @@ export function onUpdateTime(data, visitId) {
     }
 }
 
-export function saveSummaryDetails(data) {
+export function saveSummaryDetails(data) { 
     let isEntityServiceProvider = (getUserInfo().isEntityServiceProvider || isEntityUser())
     let saveSummaryDetails = isEntityServiceProvider ? API.saveSummaryDetailsForEsp : `${API.saveSummaryDetails}${data.serviceRequestVisitId}`
     let model = isEntityServiceProvider ? {
@@ -267,6 +269,8 @@ export function saveSummaryDetails(data) {
         }).catch((err) => {
             dispatch(endLoading());
         })
+        dispatch(getQuestionsListSuccess({}))
+        dispatch(getFeedBackQuestion({}))
     }
 };
 

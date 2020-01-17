@@ -418,7 +418,7 @@ export class VistSummary extends React.Component {
     let isEntity = getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID;
     let startPointToPOS = summaryDetail && ((summaryDetail.startLatitude === 0) && (summaryDetail.startLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.startLatitude, summaryDetail.startLongitude).toFixed(2)} (Miles)`
     let stopPointToPOS = summaryDetail && ((summaryDetail.endLatitude === 0) && (summaryDetail.endLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.endLatitude, summaryDetail.endLongitude).toFixed(2)} (Miles)`
-    let radiusIndicator = (Number.parseFloat(this.props.thresholdRadius) >= startPointToPOS) ? 'inside-radius-indicator' : 'outside-radius-indicator'
+    let radiusIndicator = (Number.parseFloat(this.props.thresholdRadius) >= Number.parseFloat(startPointToPOS)) ? 'inside-radius-indicator' : 'outside-radius-indicator'
     return (
       <React.Fragment>
         <form className="ServiceContent">

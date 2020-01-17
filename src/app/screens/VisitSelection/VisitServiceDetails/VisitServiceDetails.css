@@ -333,7 +333,7 @@
 }
 
 .right-block-view .right_statusview {
-    position: absolute;
+    position: relative;
     right: 0;
     margin-right: 15px;
 }
@@ -714,6 +714,17 @@
 .individual-spblock-full .ServiceCategoryContent .SPAvailContainer.Available .SPAvailContent label.SPAvailItems:hover {
     cursor: context-menu !important;
 }
+
+
+.questionnaire-model-pop .FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio input {
+    cursor: context-menu;
+}
+
+.questionnaire-model-pop .FeedbackQuestionWidget {
+    Padding: 0 0px 15px;
+}
+
+
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
     .individual-spblock-full .sr-feature-pic img {

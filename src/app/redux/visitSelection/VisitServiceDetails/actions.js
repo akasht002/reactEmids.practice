@@ -623,7 +623,6 @@ export function getVisitList(data) {
     data.endDate = isEntityDashboard ? visitDate.endVisitDateForWeb : data.startDate
     !isEntityUser() &&
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
-    dispatch(isServiceRequestListLoading(true));
     ServiceRequestPost(getVisitList, data)
       .then(resp => {
         let pageNumber = resp && resp.data.length > 0 && resp.data[0].pageNumber
@@ -634,22 +633,20 @@ export function getVisitList(data) {
       })
       .catch(err => {
         logError(err)
-        dispatch(isServiceRequestListLoading(false));
       })
   }
 };
 
 export function getVisitListCount(data) {
   let getVisitListCount = getUserInfo().isEntityServiceProvider ? API.getEspVisitListCount : (isEntityUser() ? API.getVisitListCount : API.getIspVisitListCount)
-  return (dispatch) => {
-    dispatch(isServiceRequestListLoading(true));
+  return (dispatch) => {    
     ServiceRequestPost(getVisitListCount, data)
       .then(resp => {
         dispatch(getVisitListCountSuccess(resp.data))
         dispatch(isServiceRequestListLoading(false));
       })
       .catch(err => {
-        dispatch(isServiceRequestListLoading(false));
+        logError(err)
       })
   }
 };

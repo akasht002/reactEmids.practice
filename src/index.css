@@ -1027,6 +1027,11 @@ div.scrollarea .scrollbar-container.vertical {
     text-align: justify;
 }
 
+.ReactCrop__image
+{
+    max-height: 100% !important;
+}
+
 /*IE_11_&_IE_10_for_EULA*/
 
 @media all and (-ms-high-contrast:none) {
