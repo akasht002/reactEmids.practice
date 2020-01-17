@@ -2,8 +2,10 @@ import React, { Fragment } from 'react';
 import { Carousel } from '../../../../components';
 import { RECURRING_PATTERN, MORNING, AFTERNOON, EVENING} from '../../../../constants/constants';
 import Moment from 'react-moment';
+import { unique } from '../../../../utils/arrayUtility';
 
 export const Details = props => {
+    let serviceCategories = props.details && unique(props.details.serviceCategories,"serviceCategoryDescription").join(', ')
 
     function recurringPattern() {
         if (props.details.occurence !== 0) {
@@ -106,7 +108,7 @@ export const Details = props => {
                 <div className='ServiceCategoryContent'>
                     <h2 className='ServicesTitle theme-primary'>Service Category</h2>
                     <p className='ScheduleTypeTitle'>
-                        {props.details.serviceCategoryDescription}
+                        {serviceCategories}
                     </p>
                     <h2 className='ServicesTitle theme-primary'>Service Types</h2>
                     <div className='ServiceType visit-srq-slider WhiteBG'>
