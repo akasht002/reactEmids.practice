@@ -622,6 +622,7 @@ export class VisitServiceDetails extends Component {
 
   navigateToparticularPageBasedonId = visitList => {
     this.props.setActiveTab(serviceRequestDetailsTab.myPlan)
+    this.props.setServiceProviderFeedbackTab(true)
     this.props.saveScheduleType(visitList.scheduleTypeId)
     let visitId = visitList.servicePlanVisitId ? visitList.servicePlanVisitId : visitList.serviceRequestVisitId
     if(visitList.scheduleTypeId !== VISIT_TYPE.assessment){
