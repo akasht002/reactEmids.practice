@@ -13,13 +13,14 @@ import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { checkNumber,divideIfNotZero } from '../../../../utils/validations';
+import { checkNumber,divideIfNotZero,nullCheckArray } from '../../../../utils/validations';
 import { formatDateSingle,getSecondsFromTime } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { DATE_FORMATS,ERROR_MSG } from '../../../../constants/constants'
 import { VISIT_SUMMARY } from '../../../../redux/constants/constants'
 import { isEntityUser } from "../../../../utils/userUtility";
+import { setAddNewScheduledClicked } from "../../../../redux/visitSelection/VisitServiceDetails/actions"
 
 export class AssessmentSummary extends Component {
 
@@ -62,9 +63,9 @@ export class AssessmentSummary extends Component {
         this.setState({
             signatureImage: nextProps.signatureImage.signature && nextProps.signatureImage.signature,
             summaryDetails: nextProps.SummaryDetails,
-            updatedHour: durations[0] || 0,
-            updatedMin: durations[1] || 0,
-            updatedSec: durations[2] || 0
+            updatedHour:  nullCheckArray(durations,0),
+            updatedMin:  nullCheckArray(durations,1),
+            updatedSec:  nullCheckArray(durations,2)
         })
     }
 
@@ -137,6 +138,7 @@ export class AssessmentSummary extends Component {
                 image: this.state.signatureImage,
             }
             this.props.saveSummaryDetails(data);
+            this.props.setAddNewScheduledClicked(true)
         } else {
             this.setState({ isSignatureModalOpen: true })
         }
@@ -478,7 +480,8 @@ export function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         calculationActualData: () => dispatch(calculationActualData()),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data)),
-        goBack: () => dispatch(goBack())
+        goBack: () => dispatch(goBack()),
+        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data))
     }
 };
 
