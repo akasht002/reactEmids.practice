@@ -19,6 +19,9 @@ import { startLoading, endLoading } from '../loading/actions';
 import { API_ERROR_CODE, DEFAULT_PAGE_SIZE_ESP_LIST } from "../constants/constants";
 import { formatAssessmentData } from './modal/assessment'
 import { uniqBy } from 'lodash'
+import { SERVICE_CATEGORY } from '../../constants/constants';
+import { logError } from '../../utils/logError';
+import _ from 'lodash';
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -27,7 +30,15 @@ export const getServiceCategorySuccess = (data) => {
     }
 }
 
-export const getServiceTypeSuccess = (data) => {
+export const getServiceTypeSuccess = (data, serviceTypeIds) => {
+    if(serviceTypeIds && serviceTypeIds.length > 0) {
+        _.forEach(data, function (obj) {
+            obj.isChecked = serviceTypeIds.indexOf(obj.serviceTypeId) > -1
+        })
+    }
+    else {
+        _.forEach(data, function (obj) { obj.isChecked = false; });
+    }
     return {
         type: Schedule.getServiceTypeSuccess,
         data
@@ -146,6 +157,9 @@ export function getServiceCategory(id, selectedData, isEditable) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
+            let serviceCategoryIndex = resp.data && resp.data.findIndex(element => element.serviceCategoryId === SERVICE_CATEGORY.adl.id);
+            let serviceCategoryId = [resp.data[serviceCategoryIndex].serviceCategoryId]
+            dispatch(setServiceCategoryId(serviceCategoryId))
             dispatch(getServiceCategorySuccess(resp.data));
             let categoryId = id ? id : 1
             !isEditable && dispatch(getServiceType(categoryId, selectedData))
@@ -155,9 +169,10 @@ export function getServiceCategory(id, selectedData, isEditable) {
 }
 
 export function getServiceType(id, selectedData = []) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(getServiceTypeSuccess([]))
         let serviceCategoryId = id;
+        let {serviceTypeIds} = getState().scheduleState
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
             let type = resp.data.filter((type) => {
@@ -172,14 +187,15 @@ export function getServiceType(id, selectedData = []) {
                 }
             });
 
-            dispatch(getServiceTypeSuccess(data))
+            dispatch(getServiceTypeSuccess(data, serviceTypeIds))
         }).catch((err) => {
         })
     }
 }
 
 export function selectOrClearAllServiceType(data, isSelectAll) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        let {serviceTypeIds} = getState().scheduleState
         let serviceCategoryId = data;
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
@@ -189,8 +205,9 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
 
             data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: isSelectAll }))
 
-            dispatch(getServiceTypeSuccess(data))
+            dispatch(getServiceTypeSuccess(data, serviceTypeIds))
         }).catch((err) => {
+            logError(err)
         })
     }
 }
@@ -425,4 +442,46 @@ export function getIndividualSchedulesDetails(scheduleId) {
     }
 };
 
+export const setselectedServices = (data,isChecked) => {
+    return (dispatch,getState) => {
+        let services = getState().scheduleState.services
+        let updatedServices  = null ;
+        if(isChecked){
+            updatedServices = [...services,data]
+        }          
+        else{
+            updatedServices = services.filter(item => item.serviceTypeId !== data.serviceTypeId);
+        }
+        dispatch(setselectedServicesSuccess(updatedServices))
+    } 
+}
 
+export const setselectedServicesSuccess = data =>{
+    return {
+        type:Schedule.selectedServices,
+        data
+    }
+}
+
+export const checkServiceType = (data, id, checked) => {
+    var foundIndex = data.findIndex(element => element.serviceTypeId === id);
+    data[foundIndex].isChecked = checked;
+      return {
+        type: Schedule.getServiceTypeSuccess,
+        data
+    }
+}
+
+export const setServiceTypeIds = data => {
+    return {
+        type: Schedule.setServiceTypeIds,
+        data
+    } 
+}
+
+export const setServiceCategoryId = data => {
+    return {
+        type: Schedule.setServiceCategoryId,
+        data
+    } 
+}

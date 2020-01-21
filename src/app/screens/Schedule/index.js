@@ -32,7 +32,11 @@ import {
     createOrEditAssessment,
     isScheduleEdit,
     isAssessmentEdit,
-    clearServiceDetails
+    clearServiceDetails,
+    setServiceTypeIds,
+    checkServiceType,
+    setselectedServices,
+    setServiceCategoryId
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, getMinutes, getHours } from "../../utils/dateUtility";
 import './Components/styles.css'
@@ -44,6 +48,7 @@ import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions'
 import moment from 'moment'
 import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY, SCHEDULE_RECURRENCE_FIELD } from '../../constants/constants'
+import { pushSpliceHandler } from "../../utils/stringHelper";
 
 export class Schedule extends Component {
     constructor(props) {
@@ -308,6 +313,8 @@ export class Schedule extends Component {
     handleServiceCategory = (id, clearServiceTypes = false) => {
         this.categoryId = id;
         this.serviceTypes = [];
+        let serviceCategoryIds = pushSpliceHandler(this.props.serviceCategoryIds, id) 
+        this.props.setServiceCategoryId(serviceCategoryIds)
         this.props.getServiceType(id);
         if(!clearServiceTypes){
             this.isDataEntered = true;
@@ -325,6 +332,10 @@ export class Schedule extends Component {
                 return item.serviceTypeId === parseInt(e.target.value, 0);
             }), 1);
         }
+        let serviceTypeIds = pushSpliceHandler(this.props.serviceTypeIds, data.serviceTypeId)
+        this.props.setselectedServices(data, e.target.checked)
+        this.props.checkServiceType(this.props.serviceTypeList, data.serviceTypeId, e.target.checked)
+        this.props.setServiceTypeIds(serviceTypeIds)
         this.setState({
             serviceTypeId: this.serviceTypes,
             serviceTypeSelected: false
@@ -1096,8 +1107,11 @@ export function mapDispatchToProps(dispatch) {
         isScheduleEdit: data => dispatch(isScheduleEdit(data)),
         assessmentEdit: data => dispatch(isAssessmentEdit(data)),
         clearServiceDetails: () => dispatch(clearServiceDetails()),
-        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data))
-
+        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data)),
+        setServiceTypeIds: data => dispatch(setServiceTypeIds(data)),
+        checkServiceType: (data, id, checked) => dispatch(checkServiceType(data, id, checked)),
+        setselectedServices: (data,isChecked) => dispatch(setselectedServices(data,isChecked)),
+        setServiceCategoryId: data => dispatch(setServiceCategoryId(data))
     }
 }
 
@@ -1121,6 +1135,8 @@ export function mapStateToProps(state) {
         assessmentDetails: scheduleState.assessmentDetails,
         scheduleList: state.visitSelectionState.VisitServiceDetailsState.scheduleList,
         isAddNewScheduleClicked: state.visitSelectionState.VisitServiceDetailsState.isAddNewScheduleClicked,
+        serviceCategoryIds: state.scheduleState.serviceCategoryIds,
+        serviceTypeIds: state.scheduleState.serviceTypeIds
     }
 }
 

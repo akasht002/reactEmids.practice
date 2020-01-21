@@ -14,7 +14,10 @@ const defaultState = {
     assessmentSuccess: false,
     individualSchedulesDetails: {},
     isAssessmentEdit: false,
-    isIndividualScheduleEdit: false
+    isIndividualScheduleEdit: false,
+    serviceTypeIds: [],
+    serviceCategoryIds: [],
+    services: []
 };
 
 const scheduleState = (state = defaultState, action) => {
@@ -121,7 +124,21 @@ const scheduleState = (state = defaultState, action) => {
                 assessmentDetails: {},
                 individualSchedulesDetails: {}
             };
-
+        case Schedule.setServiceTypeIds:
+        return {
+            ...state,
+            serviceTypeIds: action.data
+        };
+        case Schedule.setServiceCategoryId:
+        return {
+            ...state,
+            serviceCategoryIds: action.data
+        };
+        case Schedule.selectedServices:
+        return {
+            ...state,
+            services: action.data
+        };
         default:
             return state;
     }
