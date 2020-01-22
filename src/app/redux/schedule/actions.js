@@ -208,14 +208,17 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
             data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, isChecked: isSelectAll }))
 
             if(isSelectAll) {
-                // let duplicateData =  [...services, ...data]
+                let duplicateData =  [...services, ...data]
+                let uniqueData = []
                 // updatedServiceTypes = duplicateData.filter((data,i)=>{
-                //     const object = duplicateData[i]
-                //     return index === duplicateData.findIndex(obj => {
+                //     const object = data
+                //     return i === duplicateData.findIndex(obj => {
                 //         return obj === object;
                 //       });
                 // })
-                updatedServiceTypes = [...services, ...data]
+                duplicateData.map(x => uniqueData.filter(a => a.serviceTypeId === x.serviceTypeId).length > 0 ? null : uniqueData.push(x))
+                console.log('uniqueData: ', uniqueData)
+                updatedServiceTypes = uniqueData
                 updatedServiceTypeids = [...serviceTypeIds, ...data.map(obj => obj.serviceTypeId)]  
             }
             else {
