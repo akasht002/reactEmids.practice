@@ -6,7 +6,9 @@ import moment from "moment";
 import Moment from 'react-moment';
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup, Preloader } from '../../../../components';
-import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration, calculationActualData } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, 
+    updateVisitProcessingUpdateBilledDuration, calculationActualData,getSavedSignatureSuccess } 
+from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getUserInfo } from '../../../../services/http';
@@ -67,6 +69,10 @@ export class AssessmentSummary extends Component {
             updatedMin:  nullCheckArray(durations,1),
             updatedSec:  nullCheckArray(durations,2)
         })
+    }
+
+    componentWillUnmount(){
+        this.props.getSavedSignatureSuccess('')
     }
 
     handlePatientProfile = (data) => {
@@ -481,7 +487,8 @@ export function mapDispatchToProps(dispatch) {
         calculationActualData: () => dispatch(calculationActualData()),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data)),
         goBack: () => dispatch(goBack()),
-        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data))
+        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data)),
+        getSavedSignatureSuccess: data => dispatch(getSavedSignatureSuccess(data))
     }
 };
 
