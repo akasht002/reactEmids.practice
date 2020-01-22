@@ -195,17 +195,42 @@ export function getServiceType(id, selectedData = []) {
 
 export function selectOrClearAllServiceType(data, isSelectAll) {
     return (dispatch, getState) => {
-        let {serviceTypeIds} = getState().scheduleState
+        let {services, serviceTypeIds} = getState().scheduleState
         let serviceCategoryId = data;
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
+            let updatedServiceTypes = null
+            let updatedServiceTypeids = [...serviceTypeIds] 
             let type = resp.data.filter((type) => {
                 return type.serviceCategoryId === serviceCategoryId
             });
 
-            data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: isSelectAll }))
+            data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, isChecked: isSelectAll }))
 
-            dispatch(getServiceTypeSuccess(data, serviceTypeIds))
+            if(isSelectAll) {
+                // let duplicateData =  [...services, ...data]
+                // updatedServiceTypes = duplicateData.filter((data,i)=>{
+                //     const object = duplicateData[i]
+                //     return index === duplicateData.findIndex(obj => {
+                //         return obj === object;
+                //       });
+                // })
+                updatedServiceTypes = [...services, ...data]
+                updatedServiceTypeids = [...serviceTypeIds, ...data.map(obj => obj.serviceTypeId)]  
+            }
+            else {
+                serviceTypeIds.forEach(() => 
+                    data.forEach(e2 => {
+                        let index = serviceTypeIds.indexOf(e2.serviceTypeId);
+                         serviceTypeIds.splice(index,1)
+                    })    
+                )
+               updatedServiceTypeids = serviceTypeIds
+                services.filter(item => item.serviceTypeId !== data.find(element => element.serviceTypeId))
+            }
+            dispatch(selectOrClearAllServiceTypeSuccess(data, serviceTypeIds))
+            dispatch(setselectedServicesSuccess(updatedServiceTypes))
+            dispatch(setServiceTypeIds(_.uniq(updatedServiceTypeids)))
         }).catch((err) => {
             logError(err)
         })
@@ -482,6 +507,13 @@ export const setServiceTypeIds = data => {
 export const setServiceCategoryId = data => {
     return {
         type: Schedule.setServiceCategoryId,
+        data
+    } 
+}
+
+export const selectOrClearAllServiceTypeSuccess = data => {
+    return {
+        type: Schedule.getServiceTypeSuccess,
         data
     } 
 }
