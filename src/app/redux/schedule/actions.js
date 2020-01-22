@@ -199,7 +199,7 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
         let serviceCategoryId = data;
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
-            let updatedServiceTypes = null
+            let updatedServiceTypes = [...services]
             let updatedServiceTypeids = [...serviceTypeIds] 
             let type = resp.data.filter((type) => {
                 return type.serviceCategoryId === serviceCategoryId
@@ -210,13 +210,12 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
             if(isSelectAll) {
                 let duplicateData =  [...services, ...data]
                 let uniqueData = []
-                // updatedServiceTypes = duplicateData.filter((data,i)=>{
-                //     const object = data
-                //     return i === duplicateData.findIndex(obj => {
-                //         return obj === object;
-                //       });
-                // })
-                duplicateData.map(x => uniqueData.filter(a => a.serviceTypeId === x.serviceTypeId).length > 0 ? null : uniqueData.push(x))
+                // duplicateData.map(x => uniqueData.filter(a => a.serviceTypeId === x.serviceTypeId).length > 0 ? null : uniqueData.push(x))
+                uniqueData= duplicateData.filter((data, index, self) =>
+                                                    index === self.findIndex((t) => (
+                                                        t.serviceTypeId === data.serviceTypeId
+                                                    ))
+                                                    )
                 console.log('uniqueData: ', uniqueData)
                 updatedServiceTypes = uniqueData
                 updatedServiceTypeids = [...serviceTypeIds, ...data.map(obj => obj.serviceTypeId)]  
@@ -229,7 +228,14 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
                     })    
                 )
                updatedServiceTypeids = serviceTypeIds
-                services.filter(item => item.serviceTypeId !== data.find(element => element.serviceTypeId))
+                // services.filter(item => item.serviceTypeId !== data.find(element => element.serviceTypeId))
+                services.forEach(() => 
+                data.forEach(e2 => {
+                    let index = services.indexOf(e2.serviceTypeId);
+                    services.splice(index,1)
+                })    
+            )
+            updatedServiceTypes = services
             }
             dispatch(selectOrClearAllServiceTypeSuccess(data, serviceTypeIds))
             dispatch(setselectedServicesSuccess(updatedServiceTypes))
