@@ -59,3 +59,34 @@ export const disableZeroInFirstChar = e => {
     }
 }
 
+export const removeDuplicates = duplicateData => {
+    let uniqueData = []
+    uniqueData = duplicateData.filter((data, index, self) =>
+    index === self.findIndex((t) => (
+        t.serviceTypeId === data.serviceTypeId
+    ))
+    )
+    return uniqueData;
+}
+
+export const removeArrayElements = (orignalArray, removalArray) => {
+    let result = []
+    result = orignalArray.filter(ar =>
+        !removalArray.find(rm =>
+         (rm.serviceTypeId === ar)
+      ))
+    return result;
+}
+
+export const removeArrayObjects = (orignalArray, removalArray) => {
+    let result = []
+    result = orignalArray.filter(ar =>
+        !removalArray.find(rm =>
+         (rm.serviceTypeId === ar.serviceTypeId)
+      ))
+    return result;
+}
+
+export const unique = (array,key) => {
+    return _.chain(array).map(key).uniq().value()
+  }

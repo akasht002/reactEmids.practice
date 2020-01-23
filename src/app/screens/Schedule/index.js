@@ -11,7 +11,7 @@ import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty, formatContactNumber } from "../../utils/validations";
-import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip } from '../../utils/arrayUtility';
+import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip, unique } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
     getServiceCategory,
@@ -49,6 +49,7 @@ import { push } from '../../redux/navigation/actions'
 import moment from 'moment'
 import { RECURRING_PATTERN_OPTIONS, PAGE_NO, DEFAULT_PAGE_SIZE_ESP_LIST, SCHEDULE_TYPE_OPTIONS, CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT, SERVICE_CATEGORY, SCHEDULE_RECURRENCE_FIELD } from '../../constants/constants'
 import { pushSpliceHandler } from "../../utils/stringHelper";
+import { omit } from 'lodash';
 
 export class Schedule extends Component {
     constructor(props) {
@@ -805,10 +806,14 @@ export class Schedule extends Component {
             selectedPOS
         } = this.state
 
+        let serviceTypes = this.props.services.map((types) => {
+            let updatedTypes = omit(types, ['serviceCategoryId']);
+            return updatedTypes
+        });
         let data = {
             planScheduleId: this.state.planScheduleId,
             name: "",
-            categoryId: this.categoryId,
+            serviceCategoryIds: unique(this.props.services,"serviceCategoryId"),
             startDate: startDate,
             endDate: isRecurring ? endDate : startDate,
             startTime: isIndividualScheduleEdit ? getHourMin(startTime) : this.formatedStartTime,
@@ -818,7 +823,7 @@ export class Schedule extends Component {
             serviceProviderId: this.espId ? this.espId : 0,
             patientId: this.props.patientId,
             isRecurring: isRecurring,
-            serviceTypes: this.serviceTypes,
+            serviceTypes: serviceTypes,
             address: this.address,
             schedulePattern: isRecurring ? selectedRecurringType : 31,
             patientAddressId: selectedPOS === '0' ? 0 : this.state.patientAddressId,
@@ -1136,7 +1141,8 @@ export function mapStateToProps(state) {
         scheduleList: state.visitSelectionState.VisitServiceDetailsState.scheduleList,
         isAddNewScheduleClicked: state.visitSelectionState.VisitServiceDetailsState.isAddNewScheduleClicked,
         serviceCategoryIds: state.scheduleState.serviceCategoryIds,
-        serviceTypeIds: state.scheduleState.serviceTypeIds
+        serviceTypeIds: state.scheduleState.serviceTypeIds,
+        services: state.scheduleState.services
     }
 }
 

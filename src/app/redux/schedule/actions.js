@@ -22,6 +22,7 @@ import { uniqBy } from 'lodash'
 import { SERVICE_CATEGORY } from '../../constants/constants';
 import { logError } from '../../utils/logError';
 import _ from 'lodash';
+import { removeArrayElements, removeArrayObjects, removeDuplicates } from '../../utils/arrayUtility';
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -175,20 +176,21 @@ export function getServiceType(id, selectedData = []) {
         let {serviceTypeIds} = getState().scheduleState
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
-            let type = resp.data.filter((type) => {
+            let serviceTypes = resp.data.filter((type) => {
                 return type.serviceCategoryId === serviceCategoryId;
             });
-            data = type[0].serviceTypeTaskViewModel.map((type, index) => {
+            data = serviceTypes[0].serviceTypeTaskViewModel.map((type, index) => {
                 return {
                     ...type,
+                    serviceCategoryId: serviceTypes[0].serviceCategoryId,
                     selected: selectedData.some((selectedType) => {
                         return selectedType.serviceTypeId === type.serviceTypeId
                     })
                 }
             });
-
             dispatch(getServiceTypeSuccess(data, serviceTypeIds))
         }).catch((err) => {
+            logError(err)
         })
     }
 }
@@ -201,41 +203,20 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
             let data = []
             let updatedServiceTypes = [...services]
             let updatedServiceTypeids = [...serviceTypeIds] 
-            let type = resp.data.filter((type) => {
+            let serviceTypes = resp.data.filter((type) => {
                 return type.serviceCategoryId === serviceCategoryId
             });
 
-            data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, isChecked: isSelectAll }))
+            data = serviceTypes[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, serviceCategoryId: serviceTypes[0].serviceCategoryId, isChecked: isSelectAll }))
 
             if(isSelectAll) {
                 let duplicateData =  [...services, ...data]
-                let uniqueData = []
-                // duplicateData.map(x => uniqueData.filter(a => a.serviceTypeId === x.serviceTypeId).length > 0 ? null : uniqueData.push(x))
-                uniqueData= duplicateData.filter((data, index, self) =>
-                                                    index === self.findIndex((t) => (
-                                                        t.serviceTypeId === data.serviceTypeId
-                                                    ))
-                                                    )
-                console.log('uniqueData: ', uniqueData)
-                updatedServiceTypes = uniqueData
+                updatedServiceTypes = removeDuplicates(duplicateData)
                 updatedServiceTypeids = [...serviceTypeIds, ...data.map(obj => obj.serviceTypeId)]  
             }
             else {
-                serviceTypeIds.forEach(() => 
-                    data.forEach(e2 => {
-                        let index = serviceTypeIds.indexOf(e2.serviceTypeId);
-                         serviceTypeIds.splice(index,1)
-                    })    
-                )
-               updatedServiceTypeids = serviceTypeIds
-                // services.filter(item => item.serviceTypeId !== data.find(element => element.serviceTypeId))
-                services.forEach(() => 
-                data.forEach(e2 => {
-                    let index = services.indexOf(e2.serviceTypeId);
-                    services.splice(index,1)
-                })    
-            )
-            updatedServiceTypes = services
+                updatedServiceTypeids = removeArrayElements(serviceTypeIds, data)
+                updatedServiceTypes = removeArrayObjects(services, data)
             }
             dispatch(selectOrClearAllServiceTypeSuccess(data, serviceTypeIds))
             dispatch(setselectedServicesSuccess(updatedServiceTypes))
