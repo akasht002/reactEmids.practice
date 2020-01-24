@@ -73,7 +73,7 @@ export function checkFormatDate (value) {
 }
 
 export function formateStateDate (date) {
-  return date ? moment(date) : null
+  return date ? moment(date, DATE_FORMAT) : null
 }
 
 export function formateStateDateValue (date) {
@@ -332,8 +332,12 @@ export const calculateDistanceFromCoordinates =(lat1, lon1, lat2, lon2, unit) =>
       dist = Math.acos(dist);
       dist = dist * 180/Math.PI;
       dist = dist * 60 * 1.1515; //distance in miles
-      if (unit=="K") { dist = dist * 1.609344 } //distanse in kilometers
-      if (unit=="N") { dist = dist * 0.8684 } //distance in nautical miles
+      if (unit ==="K") { dist = dist * 1.609344 } //distanse in kilometers
+      if (unit ==="N") { dist = dist * 0.8684 } //distance in nautical miles
       return dist;
   }
+}
+
+export const nullCheckArray = (array,index) => {
+   return array && array[index] ? array[index] : 0;
 }

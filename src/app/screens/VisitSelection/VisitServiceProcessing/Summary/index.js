@@ -18,6 +18,7 @@ import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
 import { DATE_FORMATS } from "../../../../constants/constants";
 import { isEntityUser } from "../../../../utils/userUtility";
+import { setAddNewScheduledClicked } from "../../../../redux/visitSelection/VisitServiceDetails/actions"
 
 export class Summary extends Component {
 
@@ -139,6 +140,7 @@ export class Summary extends Component {
                 TaxRate: parseFloat(this.state.summaryDetails.taxAmount)
             }
             this.props.saveSummaryDetails(data);
+            this.props.setAddNewScheduledClicked(true)
         } else {
             this.setState({ isSignatureModalOpen: true })
         }
@@ -537,7 +539,8 @@ export function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         calculationActualData: () => dispatch(calculationActualData()),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data)),
-        goBack: () => dispatch(goBack())
+        goBack: () => dispatch(goBack()),
+        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data))
     }
 };
 
