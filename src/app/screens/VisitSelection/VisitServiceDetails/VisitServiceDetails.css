@@ -71,7 +71,7 @@
 
 .tab_view_list li a {
     text-decoration: none;
-    color: #444 !important;
+    color: #444;
     display: block;
     padding: 0px 30px;
     font-size: 16px;
@@ -79,8 +79,13 @@
 }
 
 .active-tabview {
-    color: #7a329f !important;
+    color: #1e3d5c !important;
     background: #f2ebf3;
+}
+
+.tab_view .tab_view_list li a
+{
+    color: #444444;
 }
 
 .tab_content_block {
