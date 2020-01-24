@@ -62,8 +62,8 @@ export const disableZeroInFirstChar = e => {
 export const removeDuplicates = duplicateData => {
     let uniqueData = []
     uniqueData = duplicateData.filter((data, index, self) =>
-    index === self.findIndex((t) => (
-        t.serviceTypeId === data.serviceTypeId
+    index === self.findIndex((obj) => (
+        obj.serviceTypeId === data.serviceTypeId
     ))
     )
     return uniqueData;
@@ -71,18 +71,18 @@ export const removeDuplicates = duplicateData => {
 
 export const removeArrayElements = (orignalArray, removalArray) => {
     let result = []
-    result = orignalArray.filter(ar =>
-        !removalArray.find(rm =>
-         (rm.serviceTypeId === ar)
+    result = orignalArray.filter(orgElement =>
+        !removalArray.find(rmElement =>
+         (rmElement.serviceTypeId === orgElement)
       ))
     return result;
 }
 
 export const removeArrayObjects = (orignalArray, removalArray) => {
     let result = []
-    result = orignalArray.filter(ar =>
-        !removalArray.find(rm =>
-         (rm.serviceTypeId === ar.serviceTypeId)
+    result = orignalArray.filter(orgElement =>
+        !removalArray.find(rmElement =>
+         (rmElement.serviceTypeId === orgElement.serviceTypeId)
       ))
     return result;
 }

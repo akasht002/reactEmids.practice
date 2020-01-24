@@ -21,7 +21,7 @@ import { formatAssessmentData } from './modal/assessment'
 import { uniqBy } from 'lodash'
 import { SERVICE_CATEGORY } from '../../constants/constants';
 import { logError } from '../../utils/logError';
-import _ from 'lodash';
+import { forEach, uniq } from 'lodash';
 import { removeArrayElements, removeArrayObjects, removeDuplicates } from '../../utils/arrayUtility';
 
 export const getServiceCategorySuccess = (data) => {
@@ -33,12 +33,12 @@ export const getServiceCategorySuccess = (data) => {
 
 export const getServiceTypeSuccess = (data, serviceTypeIds) => {
     if(serviceTypeIds && serviceTypeIds.length > 0) {
-        _.forEach(data, function (obj) {
+        forEach(data, function (obj) {
             obj.isChecked = serviceTypeIds.indexOf(obj.serviceTypeId) > -1
         })
     }
     else {
-        _.forEach(data, function (obj) { obj.isChecked = false; });
+        forEach(data, function (obj) { obj.isChecked = false; });
     }
     return {
         type: Schedule.getServiceTypeSuccess,
@@ -179,7 +179,7 @@ export function getServiceType(id, selectedData = []) {
             let serviceTypes = resp.data.filter((type) => {
                 return type.serviceCategoryId === serviceCategoryId;
             });
-            data = serviceTypes[0].serviceTypeTaskViewModel.map((type, index) => {
+            data = serviceTypes.length > 0 && serviceTypes[0].serviceTypeTaskViewModel.map((type, index) => {
                 return {
                     ...type,
                     serviceCategoryId: serviceTypes[0].serviceCategoryId,
@@ -220,7 +220,7 @@ export function selectOrClearAllServiceType(data, isSelectAll) {
             }
             dispatch(selectOrClearAllServiceTypeSuccess(data, serviceTypeIds))
             dispatch(setselectedServicesSuccess(updatedServiceTypes))
-            dispatch(setServiceTypeIds(_.uniq(updatedServiceTypeids)))
+            dispatch(setServiceTypeIds(uniq(updatedServiceTypeids)))
         }).catch((err) => {
             logError(err)
         })
