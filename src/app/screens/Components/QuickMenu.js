@@ -134,7 +134,7 @@ export class QuickMenu extends Component {
         <Item className='ListItem CTDashboard' key='item-2'
           onClick={(e) => { this.onClickConversation(conversations) }}>
           <i className='iconConversation' /> Conversation
-      </Item>,
+       </Item>,
         <Item className='ListItem CTDashboard' key='item-3'
           onClick={(e) => { this.onClickVideoConference(conversations) }}>
           <i className='iconVideoCon' /> Video Conference

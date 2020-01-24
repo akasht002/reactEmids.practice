@@ -1,24 +1,28 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import moment from "moment";
 import Moment from 'react-moment';
 import SignaturePad from 'react-signature-pad-wrapper'
 import { Scrollbars, DashboardWizFlow, ModalPopup, ProfileModalPopup, Preloader } from '../../../../components';
-import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, updateVisitProcessingUpdateBilledDuration, calculationActualData } from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
+import { getSummaryDetail, onUpdateTime, saveSummaryDetails, saveSignature, getSavedSignature, 
+    updateVisitProcessingUpdateBilledDuration, calculationActualData,getSavedSignatureSuccess } 
+from '../../../../redux/visitSelection/VisitServiceProcessing/Summary/actions';
 import { AssessmentProcessingWizNavigationData } from '../../../../data/AssessmentProcessingWizNavigationData';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
 import { getUserInfo } from '../../../../services/http';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
 import { push, goBack } from '../../../../redux/navigation/actions';
-import { checkNumber,divideIfNotZero } from '../../../../utils/validations';
+import { checkNumber,divideIfNotZero,nullCheckArray } from '../../../../utils/validations';
 import { formatDateSingle,getSecondsFromTime } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { DATE_FORMATS,ERROR_MSG } from '../../../../constants/constants'
 import { VISIT_SUMMARY } from '../../../../redux/constants/constants'
 import { isEntityUser } from "../../../../utils/userUtility";
+import { setAddNewScheduledClicked } from "../../../../redux/visitSelection/VisitServiceDetails/actions"
 
 export class AssessmentSummary extends Component {
 
@@ -56,14 +60,19 @@ export class AssessmentSummary extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {        
+    componentWillReceiveProps(nextProps) {      
+        let durations =nextProps.SummaryDetails.originalTotalDuration &&  nextProps.SummaryDetails.originalTotalDuration.split(":")  
         this.setState({
             signatureImage: nextProps.signatureImage.signature && nextProps.signatureImage.signature,
             summaryDetails: nextProps.SummaryDetails,
-            updatedHour: nextProps.CalculationsData.totalHours,
-            updatedMin: nextProps.CalculationsData.totalMinutes,
-            updatedSec: nextProps.CalculationsData.totalSeconds
+            updatedHour:  nullCheckArray(durations,0),
+            updatedMin:  nullCheckArray(durations,1),
+            updatedSec:  nullCheckArray(durations,2)
         })
+    }
+
+    componentWillUnmount(){
+        this.props.getSavedSignatureSuccess('')
     }
 
     handlePatientProfile = (data) => {
@@ -124,7 +133,7 @@ export class AssessmentSummary extends Component {
         let seconds = (+duration[0]) * 60 * 60 + (+duration[1]) * 60 + (+duration[2]);
         let originalTotalDuration = (seconds / 60);
 
-        if (this.state.signatureImage) {
+        if (this.state.signatureImage || this.props.signatureImage) {
             const data = {
                 serviceRequestVisitId: this.state.summaryDetails.servicePlanVisitId,
                 serviceProviderId: this.state.summaryDetails.serviceProviderId,
@@ -135,6 +144,7 @@ export class AssessmentSummary extends Component {
                 image: this.state.signatureImage,
             }
             this.props.saveSummaryDetails(data);
+            this.props.setAddNewScheduledClicked(true)
         } else {
             this.setState({ isSignatureModalOpen: true })
         }
@@ -190,6 +200,60 @@ export class AssessmentSummary extends Component {
         this.props.goBackToFeedback();
     }
 
+
+    onChangeFormData = (e) => {
+        checkNumber(e.target.value) && this.setState({ [e.target.name]: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
+    }
+
+    
+
+    getAdjustTimeModalContent = (hour,minutes) =>{
+            return (
+                <form className="AdjustTimeForm">
+                <p className="AdjustTimeText">
+                    Time taken to complete the service
+                </p>
+                <p className="AdjustTimeContent">
+                    <span className="mr-3">
+                        HH <input
+                            type="text"
+                            value={checkNumber(this.state.updatedHour) ? this.state.updatedHour : ''}
+                            name = {"updatedHour"}
+                            onChange = {this.onChangeFormData}
+                            style={{ width: 10 + '%' }}
+                            min={0}
+                            max={this.props.CalculationsData.totalHours || 24}
+                            maxLength={2}
+                        />
+                    </span>
+                    <span className="mr-3">
+                        MM <input
+                            type="text"
+                            value={checkNumber(this.state.updatedMin) ? this.state.updatedMin : ''}
+                            name = {"updatedMin"}
+                            onChange = {this.onChangeFormData}
+                            style={{ width: 10 + '%' }}
+                            min={0}
+                            max={59}
+                            maxLength={2}
+                        />
+                    </span>                    
+                    <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
+                    <span className="mt-4 d-block text-danger">{this.state.emptyErrMessage}</span>
+                </p>
+
+                <p className="AdjustTimeText">
+                    Note: Maximum adjustable time is                  
+
+                    <span> {hour}</span>
+                    <span>:</span>
+                    <span>{minutes}</span>
+                    <span> (HH:MM)</span>
+                </p>
+            </form>
+            )
+    }
+
     render() {
         let modalContent = '';
 
@@ -207,53 +271,7 @@ export class AssessmentSummary extends Component {
         let minutes = this.props.SummaryDetails.originalTotalDuration && this.props.SummaryDetails.originalTotalDuration.substr(3, 2);
 
         if (this.state.isModalOpen) {
-            modalContent = <form className="AdjustTimeForm">
-                <p className="AdjustTimeText">
-                    Time taken to complete the service
-                </p>
-                <p className="AdjustTimeContent">
-                    <span className="mr-3">
-                        HH <input
-                            type="text"
-                            value={checkNumber(this.state.updatedHour) ? this.state.updatedHour : ''}
-                            onChange={(e) => {
-                                if (checkNumber(e.target.value)) {
-                                    this.setState({ updatedHour: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
-                                }
-                            }}
-                            style={{ width: 10 + '%' }}
-                            min={0}
-                            max={this.props.CalculationsData.totalHours}
-                        />
-                    </span>
-                    <span className="mr-3">
-                        MM <input
-                            type="text"
-                            value={checkNumber(this.state.updatedMin) ? this.state.updatedMin : ''}
-                            onChange={(e) => {
-                                if (checkNumber(e.target.value)) {
-                                    this.setState({ updatedMin: e.target.value, timeErrMessage: '', emptyErrMessage: '' })
-                                }
-                            }}
-                            style={{ width: 10 + '%' }}
-                            min={0}
-                            max={59}
-                            maxlength={2}
-                        />
-                    </span>                    
-                    <span className="mt-4 d-block text-danger">{this.state.timeErrMessage}</span>
-                    <span className="mt-4 d-block text-danger">{this.state.emptyErrMessage}</span>
-                </p>
-
-                <p className="AdjustTimeText">
-                    Note: Maximum adjustable time is                  
-
-                    <span> {hour}</span>
-                    <span>:</span>
-                    <span>{minutes}</span>
-                    <span> (HH:MM)</span>
-                </p>
-            </form>
+            modalContent = this.getAdjustTimeModalContent(hour,minutes)
         }
 
 
@@ -468,7 +486,9 @@ export function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         calculationActualData: () => dispatch(calculationActualData()),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data)),
-        goBack: () => dispatch(goBack())
+        goBack: () => dispatch(goBack()),
+        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data)),
+        getSavedSignatureSuccess: data => dispatch(getSavedSignatureSuccess(data))
     }
 };
 
@@ -486,6 +506,20 @@ export function mapStateToProps(state) {
         signatureImage: state.visitSelectionState.VisitServiceProcessingState.SummaryState.signature,
         taskPercentage: state.visitSelectionState.VisitServiceProcessingState.AssessmentState.taskPercentage,
     };
+};
+
+AssessmentSummary.propTypes = {
+    isLoading: PropTypes.bool,
+    SummaryDetails: PropTypes.object,
+    CalculationsData: PropTypes.object,
+    actualTimeDiff: PropTypes.any.isRequired,
+    patientDetails: PropTypes.object,
+    requestDetails: PropTypes.object,
+    startedTime: PropTypes.any.isRequired,
+    ServiceRequestVisitId: PropTypes.any.isRequired,
+    eligibilityCheck: PropTypes.any.isRequired,
+    signatureImage: PropTypes.any.isRequired,
+    taskPercentage: PropTypes.any.isRequired
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AssessmentSummary));

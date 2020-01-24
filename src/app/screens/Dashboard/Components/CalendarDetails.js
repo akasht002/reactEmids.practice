@@ -107,8 +107,8 @@ export const calenderDetails = (props,conversations,options,index) => {
            getFullName(conversations.patientFirstName,conversations.patientLastName)
          }
        </span>
-     </div>
-     <QuickMenu conversations = {conversations}/>   
+     </div>        
+          <QuickMenu conversations = {conversations}/> 
      </div>
    </li>
     )
