@@ -444,10 +444,16 @@ export const getAssessmentDetailsById = (id) => {
 }
 
 export function getIndividualSchedulesDetails(scheduleId) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading());
+        let {services, serviceTypeIds} = getState().scheduleState
         return ServiceRequestGet(API.getIndividualSchedulesDetails + scheduleId).then((resp) => {
+            let serviceTypes = resp.data && resp.data.serviceTypes
             dispatch(getIndividualSchedulesDetailsSuccess(resp.data));
+            let updatedServiceTypeids = [...serviceTypeIds, ...serviceTypes.map(obj => obj.serviceTypeId)] 
+            let updatedServices =  [...services, ...serviceTypes]
+            dispatch(setselectedServicesSuccess(updatedServices))
+            dispatch(setServiceTypeIds(updatedServiceTypeids))
             dispatch(isScheduleEdit(true));
             dispatch(push(Path.schedule));
             dispatch(endLoading());

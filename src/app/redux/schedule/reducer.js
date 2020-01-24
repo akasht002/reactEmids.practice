@@ -122,7 +122,10 @@ const scheduleState = (state = defaultState, action) => {
             return {
                 ...state,
                 assessmentDetails: {},
-                individualSchedulesDetails: {}
+                individualSchedulesDetails: {},
+                services: [],
+                serviceTypeIds: [],
+                serviceCategoryIds: []
             };
         case Schedule.setServiceTypeIds:
         return {

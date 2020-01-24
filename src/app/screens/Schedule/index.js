@@ -95,7 +95,7 @@ export class Schedule extends Component {
             planTypeAlertPopup: false,
             monthlyOptions: 1
         }
-        this.serviceTypes = [];
+        this.serviceTypes = this.props.services;
         this.categoryId = SERVICE_CATEGORY.adl.id;
         this.address = {}
         this.espId = '';
@@ -303,6 +303,7 @@ export class Schedule extends Component {
             this.selectedDuration = ''
             this.handleAssignServiceProvider(null, true);
             this.handleServiceCategory(SERVICE_CATEGORY.adl.id, true)
+            this.props.clearServiceDetails()
         }
     }
 
@@ -313,7 +314,7 @@ export class Schedule extends Component {
 
     handleServiceCategory = (id, clearServiceTypes = false) => {
         this.categoryId = id;
-        this.serviceTypes = [];
+        this.serviceTypes = this.props.services;
         let serviceCategoryIds = pushSpliceHandler(this.props.serviceCategoryIds, id) 
         this.props.setServiceCategoryId(serviceCategoryIds)
         this.props.getServiceType(id);
@@ -347,7 +348,7 @@ export class Schedule extends Component {
     selectAllTypes = (isSelectAll) => {
         this.props.selectOrClearAllServiceType(this.categoryId, isSelectAll)
         if (isSelectAll) {
-            this.serviceTypes = this.props.serviceTypeList;
+            this.serviceTypes = this.props.services;
         } else {
             this.serviceTypes = [];
         }
@@ -933,7 +934,7 @@ export class Schedule extends Component {
                                             handleServiceType={this.handleServiceType}
                                             selectedServiceType={this.state.selectedServiceType}
                                             categoryId={this.state.checkedServiceCategoryId}
-                                            serviceTypeSelected={this.serviceTypes}
+                                            serviceTypeSelected={this.props.services}
                                             onClickSave={this.state.onClickSave}
                                         />
                                     </div>
