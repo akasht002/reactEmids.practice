@@ -139,3 +139,10 @@ export const DATE_FORMATS = {
 export const API_RESPONSE = {
     statusText: 'No Content'
 }
+
+export const NOTIFICATIONS = {
+    pushNotification: {
+        videoConfrences: 'Video Conferences',
+        conversations: 'Conversations'
+    }
+}
