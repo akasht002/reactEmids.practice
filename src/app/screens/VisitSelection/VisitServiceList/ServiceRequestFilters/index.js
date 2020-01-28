@@ -114,7 +114,7 @@ class Filter extends Component {
                                     <div className="form-group">
                                         <label>Select the Date range</label>
                                     </div>
-                                    <div className="col-md-12 mb-4 p-0">
+                                    <div className="form-group">
                                         <Calendar
                                             startDate={this.props.startDate && formateStateDateValue(this.props.startDate)}
                                             onDateChange={this.props.dateChanged}
@@ -126,7 +126,7 @@ class Filter extends Component {
                                             label="From Date"
                                         />
                                     </div>
-                                    <div className="col-md-12 mb-4 p-0">
+                                    <div className="form-group">
                                         <Calendar
                                             startDate={this.props.endDate && formateStateDateValue(this.props.endDate)}
                                             onDateChange={this.props.todateChanged}

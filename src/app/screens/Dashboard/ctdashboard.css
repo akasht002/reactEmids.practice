@@ -243,7 +243,8 @@ padding-left: 34px;
 
 .FilterContainer .scrollarea-content {
 width: 100%;
-overflow: auto;
+overflow-x: hidden;
+overflow-y: auto;
 }
 
 .CTFilter.FilterMiddle .scrollarea-content {
