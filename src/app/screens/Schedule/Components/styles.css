@@ -76,6 +76,13 @@
   width: 100%;
 }
 
+.ServiceTypesWidget.PostSR .ServiceTypeList input {
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  cursor: pointer;
+}
+
 
 .Service-Cat-Typesblock .slick-list .slick-track {
   display: flex;
