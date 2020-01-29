@@ -16,7 +16,7 @@ import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
-import { DATE_FORMATS } from "../../../../constants/constants";
+import { DATE_FORMATS, ORG_SERVICE_PROVIDER_TYPE_ID } from "../../../../constants/constants";
 import { isEntityUser } from "../../../../utils/userUtility";
 import { setAddNewScheduledClicked } from "../../../../redux/visitSelection/VisitServiceDetails/actions"
 
@@ -199,6 +199,8 @@ export class Summary extends Component {
 
     render() {
 
+        let isIndividual = !(getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID);
+        
         let modalContent = '';
 
         let validationContent = '';
@@ -347,7 +349,7 @@ export class Summary extends Component {
                                 <div className="VisitSummaryWidget">
                                     <div className="LeftWidget">
                                         <div className="LeftContent">
-                                            <p className="SummaryContentTitle theme-primary">Service Visit Details</p>
+                                            <p className="SummaryContentTitle theme-primary">Service {isIndividual && 'Visit'} Details</p>
                                             <div className="row">
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
@@ -368,7 +370,7 @@ export class Summary extends Component {
                                                     <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
-                                            <p className="SummaryContentTitle theme-primary">Payment Details</p>
+                                            <p className="SummaryContentTitle theme-primary">{isIndividual ? 'Payment' : 'Visit'} Details</p>
 
                                             <div className="row CostTableWidget">
                                                 {!this.state.signatureImage ?
