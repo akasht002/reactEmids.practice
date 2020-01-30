@@ -87,7 +87,7 @@ export function getVisitServiceTableList(data) {
                             providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
                             schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getHHMinSession(res.visitDate)}`,
                             visitStatus: caseInsensitiveComparer(res.visitStatus, VISIT_PROCESSING_STATUS.inProgress.title) ? VISIT_STATUS.inProgress.keyValue : res.visitStatus,
-                            serviceCategory: concatCommaWithSpace(res.serviceCategory)
+                            serviceCategory: res.serviceCategory && concatCommaWithSpace(res.serviceCategory)
                         }
                     })
                     dispatch(getVisitsTableListSuccess(data))
