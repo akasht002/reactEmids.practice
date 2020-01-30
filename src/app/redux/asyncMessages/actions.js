@@ -12,6 +12,7 @@ import { USERTYPES, Pagination } from '../../constants/constants';
 import { startLoading, endLoading } from '../loading/actions';
 import {invokeSignalr} from '../../utils/signalrUtility';
 import { AsyncMessageActions } from './bridge';
+import { isEntityUser } from '../../utils/userUtility';
 
 let interval = null;
 
@@ -264,13 +265,13 @@ export function onCreateNewConversation(data) {
         const userInfo = getUserInfo();
         let asyncData = {
             createdBy: userInfo.coreoHomeUserId,
-            createdByType: USERTYPES.SERVICE_PROVIDER,
+            createdByType: isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER,
             title: data.title,
             context: data.context,
             participantList: [
                 {
                     userId: userInfo.coreoHomeUserId,
-                    participantType: USERTYPES.SERVICE_PROVIDER,
+                    participantType: isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER,
                     participantId: userInfo.serviceProviderId
                 },
                 ...data.participantList
