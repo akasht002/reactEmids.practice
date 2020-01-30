@@ -4,8 +4,7 @@ import { startLoading, endLoading } from '../../../loading/actions';
 import { DATE_FORMATS, API_RESPONSE } from '../../../constants/constants';
 import { getTimeZoneOffset, getHHMinSession } from '../../../../utils/dateUtility';
 import { getValue } from '../../../../utils/userUtility'
-import { getFullName } from '../../../../utils/stringHelper'
-import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { getFullName, concatCommaWithSpace } from '../../../../utils/stringHelper'
 import moment from 'moment';
 import { VisitServiceList } from './bridge'
 import { logError } from '../../../../utils/logError';
@@ -87,7 +86,8 @@ export function getVisitServiceTableList(data) {
                             patientFullName: getFullName(getValue(res.patientFirstName), getValue(res.patientLastName)),
                             providerFullName: getFullName(getValue(res.entityServiceProviderFirstName), getValue(res.entityServiceProviderLastName)),
                             schedule: res.visitDate && `${moment(res.visitDate, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmm)}, ${getHHMinSession(res.visitDate)}`,
-                            visitStatus: caseInsensitiveComparer(res.visitStatus, VISIT_PROCESSING_STATUS.inProgress.title) ? VISIT_STATUS.inProgress.keyValue : res.visitStatus
+                            visitStatus: caseInsensitiveComparer(res.visitStatus, VISIT_PROCESSING_STATUS.inProgress.title) ? VISIT_STATUS.inProgress.keyValue : res.visitStatus,
+                            serviceCategory: concatCommaWithSpace(res.serviceCategory)
                         }
                     })
                     dispatch(getVisitsTableListSuccess(data))

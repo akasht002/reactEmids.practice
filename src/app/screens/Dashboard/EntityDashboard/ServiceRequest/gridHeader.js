@@ -1,6 +1,6 @@
 export let allServiceRequests = {
     serviceRequestId: 'SR ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',
@@ -10,7 +10,7 @@ export let allServiceRequests = {
 
 export let cancelledServiceRequests = {
     serviceRequestId: 'SR ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',
@@ -20,7 +20,7 @@ export let cancelledServiceRequests = {
 
 export let openServiceRequests = {
     serviceRequestId: 'SR ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',

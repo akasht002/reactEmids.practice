@@ -1,6 +1,6 @@
 export let allServiceVisits = {
     servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     patientFullName: 'Individuals',
     visitStatus: 'Status',
     schedule: 'Schedule',
@@ -12,7 +12,7 @@ export let allServiceVisits = {
 
 export let cancelledServiceVisits = {
     servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     patientFullName: 'Individuals',
     visitStatus: 'Status',
     schedule: 'Schedule',
@@ -23,7 +23,7 @@ export let cancelledServiceVisits = {
 
 export let lowTaskServiceVisits = {
     servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     patientFullName: 'Individuals',
     visitStatus: 'Status',
     schedule: 'Schedule',
@@ -35,7 +35,7 @@ export let lowTaskServiceVisits = {
 
 export let overDueServiceVisits = {
     servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     patientFullName: 'Individuals',
     visitStatus: 'Status',
     schedule: 'Schedule',
