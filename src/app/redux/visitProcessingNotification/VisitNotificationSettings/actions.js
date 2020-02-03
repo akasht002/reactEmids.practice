@@ -2,10 +2,11 @@ import { API } from '../../../services/api';
 import { Get, Post } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import {getUserInfo} from '../../../utils/userUtility';
-
 import {
     VisitNotificationSettings
 } from './bridge'
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
+import { NOTIFICATIONS } from '../../constants/constants';
 
 export const startLoadingNotification = () =>{
     return {
@@ -38,7 +39,14 @@ export function getVisitNotificationSettings() {
         let userId = getUserInfo().serviceProviderId;
         dispatch(startLoadingNotification());
         return Get(API.getNotificationSettings + userId).then((resp) => {
-            dispatch(getVisitNotificationSettingsSuccess(resp.data))
+            let updatedPushNotification = getUserInfo().isEntityServiceProvider ? 
+            resp.data && resp.data.pushNotification.filter((notification) => !(caseInsensitiveComparer(notification.applicationModuleDescription, NOTIFICATIONS.pushNotification.videoConfrences) || 
+            caseInsensitiveComparer(notification.applicationModuleDescription, NOTIFICATIONS.pushNotification.conversations))) : resp.data.pushNotification;
+            let data = {
+               ...resp.data,
+               pushNotification: updatedPushNotification
+            }
+            dispatch(getVisitNotificationSettingsSuccess(data))
             dispatch(endLoadingNotification());
         }).catch((err) => {
             dispatch(endLoadingNotification());

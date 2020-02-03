@@ -8,22 +8,19 @@ function ServiceTypes(props) {
         const j = Object.values(serviceTypes);
         let image_url = getServiceTypeImage(serviceTypes.serviceTypeId);
         return (
-            <div className={'ServiceTypeList theme-primary ' + (serviceTypes.selected ? 'selected' : '')} key={catNum}
-                onClick={(e) => {
-                    props.handleServiceType(serviceTypes, e)
-                }}
-            >
+            <div className={'ServiceTypeList theme-primary ' + (serviceTypes.isChecked ? 'selected' : '')} key={catNum}>
                 <input
                     id={'ServiceType' + catNum}
-                    type='radio'
+                    type='checkbox'
                     className='ServiceTypeInput'
                     name='serviceType'
                     value={j}
-                    checked={serviceTypes.selected}
-                />
-                <label className='ServiceTypeLink' htmlFor={'ServiceType' + catNum} onClick={(e) => {
+                    checked={serviceTypes.isChecked}
+                    onChange={(e)=>{
                     props.handleServiceType(serviceTypes, e)
-                }}>
+                }}
+                />
+                <label className='ServiceTypeLink' htmlFor={'ServiceType' + catNum}>
                     <span className='ServiceTypeImg'>
                         <img alt='N' src={require(`../../../assets/ServiceTypes/${image_url}`)} />
                     </span>

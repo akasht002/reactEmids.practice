@@ -2,7 +2,7 @@ export const createScheduleModal = (data) => {
     return {
         planScheduleId: data.planScheduleId,
         name: data.name,
-        categoryId: data.categoryId,
+        serviceCategoryIds: data.serviceCategoryIds,
         startDate: data.startDate,
         endDate: data.endDate,
         startTime: data.startTime,

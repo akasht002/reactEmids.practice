@@ -120,7 +120,14 @@ const defaultState = {
                 day: 'monday'
             }
         }
-    }
+    },
+    serviceCategoryIds: [1,2],
+    serviceTypeIds: [1,2,3],
+    services: [],
+    setServiceTypeIds: jest.fn(),
+    setServiceCategoryId: jest.fn(),
+    checkServiceType: jest.fn(),
+    setselectedServices: jest.fn(),
 }
 
 store = mockStore(defaultState)
@@ -372,7 +379,16 @@ describe('ServiceRequestDetail', function () {
         mapDispatchToProps(dispatch).getServiceType({}, {});
         expect(dispatch.mock.calls[0][0]).toBeDefined();
 
-        mapDispatchToProps(dispatch).getPatientAddress({});
+        mapDispatchToProps(dispatch).setServiceTypeIds([]);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).checkServiceType([{serviceTypeId: 1, isChecked: true}], 1, true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setselectedServices([], true);
+        expect(dispatch.mock.calls[0][0]).toBeDefined();
+
+        mapDispatchToProps(dispatch).setServiceCategoryId([]);
         expect(dispatch.mock.calls[0][0]).toBeDefined();
 
         mapDispatchToProps(dispatch).getStates({});
@@ -451,7 +467,10 @@ describe('ServiceRequestDetail', function () {
                 individualSchedulesDetails: {},
                 isIndividualScheduleEdit: true,
                 isAssessmentEdit: true,
-                assessmentDetails: {}
+                assessmentDetails: {},
+                services: [],
+                serviceCategoryIds: [],
+                serviceTypeIds: []
             },
             patientProfileState: {
                 patientId: ''

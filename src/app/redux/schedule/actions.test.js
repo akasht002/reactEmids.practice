@@ -180,7 +180,59 @@ describe('actions', () => {
         expect(actions.isAssessmentEdit(data)).toEqual(expectedAction)
       })
   
+      it('should create an action to setselectedServices', () => {
+        let data = {}
+        const expectedAction = {
+          type: Schedule.selectedServices,
+          data
+        }
+        expect(actions.setselectedServices(data)).toEqual(expectedAction)
+      })
       
+      it('should create an action to setselectedServicesSuccess', () => {
+        let data = {}
+        const expectedAction = {
+          type: Schedule.selectedServices,
+          data
+        }
+        expect(actions.setselectedServicesSuccess(data)).toEqual(expectedAction)
+      })
+
+      it('should create an action to checkServiceType', () => {
+        let data = {}
+        const expectedAction = {
+          type: Schedule.getServiceTypeSuccess,
+          data
+        }
+        expect(actions.checkServiceType(data)).toEqual(expectedAction)
+      })
+
+      it('should create an action to setServiceTypeIds', () => {
+        let data = {}
+        const expectedAction = {
+          type: Schedule.setServiceTypeIds,
+          data
+        }
+        expect(actions.setServiceTypeIds(data)).toEqual(expectedAction)
+      })
+
+      it('should create an action to setServiceCategoryId', () => {
+        let data = {}
+        const expectedAction = {
+          type: Schedule.setServiceCategoryId,
+          data
+        }
+        expect(actions.setServiceCategoryId(data)).toEqual(expectedAction)
+      })
+
+      it('should create an action to selectOrClearAllServiceTypeSuccess', () => {
+        let data = {}
+        const expectedAction = {
+          type: Schedule.getServiceTypeSuccess,
+          data
+        }
+        expect(actions.selectOrClearAllServiceTypeSuccess(data)).toEqual(expectedAction)
+      })
 })
 
 

@@ -15,5 +15,8 @@ export const Schedule = {
     getIndividualSchedulesDetailsSuccess: 'getIndividualSchedulesDetailsSuccess/Schedule',
     isScheduleEdit: 'isScheduleEdit/Schedule',
     isAssessmentEdit:'isAssessmentEdit/Schedule',
-    clearServiceDetails: 'clearServiceDetails/Schedule'
+    clearServiceDetails: 'clearServiceDetails/Schedule',
+    selectedServices: 'selectedServices/Schedule',
+    setServiceTypeIds: 'setServiceTypeIds/Schedule',
+    setServiceCategoryId: 'setServiceCategoryId/Schedule'
 };

@@ -19,6 +19,10 @@ import { startLoading, endLoading } from '../loading/actions';
 import { API_ERROR_CODE, DEFAULT_PAGE_SIZE_ESP_LIST } from "../constants/constants";
 import { formatAssessmentData } from './modal/assessment'
 import { uniqBy } from 'lodash'
+import { SERVICE_CATEGORY } from '../../constants/constants';
+import { logError } from '../../utils/logError';
+import { forEach, uniq } from 'lodash';
+import { removeArrayElements, removeArrayObjects, removeDuplicates } from '../../utils/arrayUtility';
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -27,7 +31,15 @@ export const getServiceCategorySuccess = (data) => {
     }
 }
 
-export const getServiceTypeSuccess = (data) => {
+export const getServiceTypeSuccess = (data, serviceTypeIds) => {
+    if(serviceTypeIds && serviceTypeIds.length > 0) {
+        forEach(data, function (obj) {
+            obj.isChecked = serviceTypeIds.indexOf(obj.serviceTypeId) > -1
+        })
+    }
+    else {
+        forEach(data, function (obj) { obj.isChecked = false; });
+    }
     return {
         type: Schedule.getServiceTypeSuccess,
         data
@@ -146,6 +158,9 @@ export function getServiceCategory(id, selectedData, isEditable) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
+            let serviceCategoryIndex = resp.data && resp.data.findIndex(element => element.serviceCategoryId === SERVICE_CATEGORY.adl.id);
+            let serviceCategoryId = [resp.data[serviceCategoryIndex].serviceCategoryId]
+            dispatch(setServiceCategoryId(serviceCategoryId))
             dispatch(getServiceCategorySuccess(resp.data));
             let categoryId = id ? id : 1
             !isEditable && dispatch(getServiceType(categoryId, selectedData))
@@ -155,42 +170,59 @@ export function getServiceCategory(id, selectedData, isEditable) {
 }
 
 export function getServiceType(id, selectedData = []) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(getServiceTypeSuccess([]))
         let serviceCategoryId = id;
+        let {serviceTypeIds} = getState().scheduleState
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
-            let type = resp.data.filter((type) => {
+            let serviceTypes = resp.data.filter((type) => {
                 return type.serviceCategoryId === serviceCategoryId;
             });
-            data = type[0].serviceTypeTaskViewModel.map((type, index) => {
+            data = serviceTypes.length > 0 && serviceTypes[0].serviceTypeTaskViewModel.map((type, index) => {
                 return {
                     ...type,
+                    serviceCategoryId: serviceTypes[0].serviceCategoryId,
                     selected: selectedData.some((selectedType) => {
                         return selectedType.serviceTypeId === type.serviceTypeId
                     })
                 }
             });
-
-            dispatch(getServiceTypeSuccess(data))
+            dispatch(getServiceTypeSuccess(data, serviceTypeIds))
         }).catch((err) => {
+            logError(err)
         })
     }
 }
 
 export function selectOrClearAllServiceType(data, isSelectAll) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        let {services, serviceTypeIds} = getState().scheduleState
         let serviceCategoryId = data;
         return ServiceRequestGet(API.GetServiceCategoryTypeTask).then((resp) => {
             let data = []
-            let type = resp.data.filter((type) => {
+            let updatedServiceTypes = [...services]
+            let updatedServiceTypeids = [...serviceTypeIds] 
+            let serviceTypes = resp.data.filter((type) => {
                 return type.serviceCategoryId === serviceCategoryId
             });
 
-            data = type[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, selected: isSelectAll }))
+            data = serviceTypes[0].serviceTypeTaskViewModel.map(obj => ({ ...obj, serviceCategoryId: serviceTypes[0].serviceCategoryId, isChecked: isSelectAll }))
 
-            dispatch(getServiceTypeSuccess(data))
+            if(isSelectAll) {
+                let duplicateData =  [...services, ...data]
+                updatedServiceTypes = removeDuplicates(duplicateData)
+                updatedServiceTypeids = [...serviceTypeIds, ...data.map(obj => obj.serviceTypeId)]  
+            }
+            else {
+                updatedServiceTypeids = removeArrayElements(serviceTypeIds, data)
+                updatedServiceTypes = removeArrayObjects(services, data)
+            }
+            dispatch(selectOrClearAllServiceTypeSuccess(data, serviceTypeIds))
+            dispatch(setselectedServicesSuccess(updatedServiceTypes))
+            dispatch(setServiceTypeIds(uniq(updatedServiceTypeids)))
         }).catch((err) => {
+            logError(err)
         })
     }
 }
@@ -412,10 +444,16 @@ export const getAssessmentDetailsById = (id) => {
 }
 
 export function getIndividualSchedulesDetails(scheduleId) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading());
+        let {services, serviceTypeIds} = getState().scheduleState
         return ServiceRequestGet(API.getIndividualSchedulesDetails + scheduleId).then((resp) => {
+            let serviceTypes = resp.data && resp.data.serviceTypes
             dispatch(getIndividualSchedulesDetailsSuccess(resp.data));
+            let updatedServiceTypeids = [...serviceTypeIds, ...serviceTypes.map(obj => obj.serviceTypeId)] 
+            let updatedServices =  [...services, ...serviceTypes]
+            dispatch(setselectedServicesSuccess(updatedServices))
+            dispatch(setServiceTypeIds(updatedServiceTypeids))
             dispatch(isScheduleEdit(true));
             dispatch(push(Path.schedule));
             dispatch(endLoading());
@@ -425,4 +463,53 @@ export function getIndividualSchedulesDetails(scheduleId) {
     }
 };
 
+export const setselectedServices = (data,isChecked) => {
+    return (dispatch,getState) => {
+        let services = getState().scheduleState.services
+        let updatedServices  = null ;
+        if(isChecked){
+            updatedServices = [...services,data]
+        }          
+        else{
+            updatedServices = services.filter(item => item.serviceTypeId !== data.serviceTypeId);
+        }
+        dispatch(setselectedServicesSuccess(updatedServices))
+    } 
+}
 
+export const setselectedServicesSuccess = data =>{
+    return {
+        type:Schedule.selectedServices,
+        data
+    }
+}
+
+export const checkServiceType = (data, id, checked) => {
+    var foundIndex = data.findIndex(element => element.serviceTypeId === id);
+    data[foundIndex].isChecked = checked;
+      return {
+        type: Schedule.getServiceTypeSuccess,
+        data
+    }
+}
+
+export const setServiceTypeIds = data => {
+    return {
+        type: Schedule.setServiceTypeIds,
+        data
+    } 
+}
+
+export const setServiceCategoryId = data => {
+    return {
+        type: Schedule.setServiceCategoryId,
+        data
+    } 
+}
+
+export const selectOrClearAllServiceTypeSuccess = data => {
+    return {
+        type: Schedule.getServiceTypeSuccess,
+        data
+    } 
+}

@@ -100,9 +100,8 @@ export class AssessmentFeedback extends Component {
 
     onSubmit = () => {
         let data = {
-            serviceRequestVisitId: this.props.patientDetails.serviceRequestVisitId,
-            serviceRequestId: this.props.patientDetails.serviceRequestId,
-            serviceProviderId: this.props.patientDetails.serviceProviderId,
+            serviceRequestVisitId: this.props.SummaryDetails.servicePlanVisitId,
+            serviceProviderId: this.props.SummaryDetails.serviceProviderId,
             answers: this.selectedAnswers
         }
         this.props.saveAnswers(data);

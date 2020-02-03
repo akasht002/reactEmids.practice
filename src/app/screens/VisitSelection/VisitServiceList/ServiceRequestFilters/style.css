@@ -256,110 +256,15 @@ div.vMpca {
     z-index: 9999!important;
 }
 
-@media (max-width: 768px){
+/*IE_11_&_IE_10*/
 
-    .FilterWidget.true{
-        width: 100%;
+@media all and (-ms-high-contrast:none) {
+    .FilterMiddle .scrollarea-content {
+        display: block !important;
     }
 
-    div.visitListTop, div.visitListBottom .visitListContent {
-        padding: 10px 20px;
-    }
-
-    img.visitListImage{
-        top: 6px;
-        position: relative;
-    }
-}
-
-@media (max-width: 480px){
-
-    .FilterTop{
-        height: 50px;
-        padding: 15px;
-    }
-
-    .FilterBottom{
-        padding: 10px 15px;
-    }
-
-    .FilterMiddle{
-        max-height: calc(100% - 110px);
-    }
-
-    .FilterMiddleLeft span{
-        font-size: 14px;
-        padding: 10px 15px;
-    }
-
-    .FilterMiddleLeft{
-        width: 120px;
-    }
-
-    .FilterMiddleRight{
-        width: calc(100% - 120px);
-    }
-
-    .FilterMiddleRight .tab-content{
-        padding: 15px;
-    }
-
-    .form-group div.ServiceRequestSelect{
-        padding: 0 !important;
-    }
-
-    .tab-pane .form-group > label{
-        font-size: 12px;
-        margin: 0;
-    }
-
-    .Select--single>.Select-control .Select-value, .Select-placeholder{
-        font-size: 14px;
-    }
-
-    .CheckSet label{
-        font-size: 12px;
-    }
-
-    .tab-pane .AddressCardWidget .AddressPOS{
-        padding: 15px 15px 15px 35px;
-        height: auto;
-    }
-
-    .tab-pane .AddressCardWidget.form-radio .RadioBoxIcon{
-        left: 12px;
-    }
-
-    .CheckboxSet label {
-        font-size: 14px;
-    }
-
-    .CheckboxSet label:before {
-        height: 14px;
-        width: 14px;
-    }
-
-    .CheckboxSet input:checked~label:before {
-        background-size: 8px;
-    }
-
-    .visitListNameContainer{
-        display: flex;
-        display: -moz-flex;
-        flex-direction: column;
-        position: relative;
-        width: calc(100% - 60px);
-    }
-
-    div.visitListTop span {
-        padding: 0 8px;
-    }
-
-    div.ProfileHeaderRight span {
-        margin-left: 10px;
-    }
-
-    .ServiceCheckboxImage {
-        margin: 0 10px;
+    *::-ms-backdrop,
+    .memberPicInfoBlock {
+        display: block !important;
     }
 }
