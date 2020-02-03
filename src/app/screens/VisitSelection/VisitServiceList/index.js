@@ -95,30 +95,20 @@ export class VisitServiceList extends Component {
             searchKeyword: '',
         })
     }
-    componentDidMount() {
-        let data = {
-            pageNumber: this.state.activePage,
-            pageSize: this.state.pageSize
-        }
-        // if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
-            let filterData = {
-                startDate: DEFAULT_FROM_DATE,
-                endDate: DEFAULT_TO_DATE,
-                serviceStatus: this.props.status,
-                ServiceCategoryId: '',
-                serviceTypes: [],
-                ServiceAreas: {},
-                serviceProviderId: getUserInfo().serviceProviderId,
-                FromPage: this.state.activePage,
-                ToPage: SERVICE_REQUEST_PAGE_SIZE,
-            };
-            this.props.getFilter(filterData)
-            this.props.getFilterDataCount(filterData)
-        // }
-        // else {
-        //     this.props.getVisitServiceList(data);
-        //     this.props.getServiceRequestCount()
-        // }
+    componentDidMount() {        
+        let filterData = {
+            startDate: DEFAULT_FROM_DATE,
+            endDate: DEFAULT_TO_DATE,
+            serviceStatus: this.props.status,
+            ServiceCategoryId: '',
+            serviceTypes: [],
+            ServiceAreas: {},
+            serviceProviderId: getUserInfo().serviceProviderId,
+            FromPage: this.state.activePage,
+            ToPage: SERVICE_REQUEST_PAGE_SIZE,
+        };
+        this.props.getFilter(filterData)
+        this.props.getFilterDataCount(filterData)        
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
         this.props.getServiceArea();
