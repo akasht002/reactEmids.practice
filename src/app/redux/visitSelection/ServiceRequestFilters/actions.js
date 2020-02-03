@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
+import { Get, elasticSearchPost, elasticSearchGet, getUserInfo,ServiceRequestPost } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
 import { SERVICE_REQ_STATUS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../utils/dateUtility';
@@ -134,7 +134,7 @@ export function getServiceType(data) {
     }
 };
 
-export function ServiceRequestStatus() {
+export function ServiceRequestStatus() { 
     return (dispatch) => {
         elasticSearchGet(API.getServiceRequestStatus).then((resp) => {
          resp.data.forEach(obj => {
@@ -159,6 +159,69 @@ export function getServiceArea(data) {
 
     }
 };
+
+export const getServiceRequestListByFilter = data =>{
+    return (dispatch) => {
+        dispatch(startLoading());
+        let reqObj;
+        if (data.startDate === "" && data.endDate === "") {
+            reqObj = {
+                "Category": data.ServiceCategoryId,
+                "ServiceTypes": data.serviceTypes,
+                "Status": data.serviceStatus,
+                "FromPage": data.FromPage,
+                "ToPage": data.ToPage,
+                "ServiceAreas": data.ServiceAreas,
+                "serviceProviderId": data.serviceProviderId
+            }
+        } else {
+            reqObj = {
+                "Category": data.ServiceCategoryId,
+                "ServiceTypes": data.serviceTypes,
+                "Status": data.serviceStatus,
+                "FromPage": data.FromPage,
+                "ToPage": data.ToPage,
+                "FromDate": data.startDate,
+                "ToDate": data.endDate,
+                "ServiceAreas": data.ServiceAreas,
+                "serviceProviderId": data.serviceProviderId,
+                "offset": getTimeZoneOffset()
+            }
+        }
+
+        ServiceRequestPost(API.getServiceRequestLists, reqObj).then((resp) => {
+            dispatch(getVisitServiceListSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch((err) => {
+            dispatch(endLoading());
+        })
+
+    }
+}
+
+export function getServiceRequestListByFilterCount(data) {
+    return (dispatch) => {
+        let reqObj;
+        reqObj = {
+            "Category": data.ServiceCategoryId,
+            "ServiceTypes": data.serviceTypes,
+            "Status": data.serviceStatus,
+            "FromPage": data.FromPage,
+            "ToPage": data.ToPage,
+            "FromDate": data.startDate,
+            "ToDate": data.endDate,
+            "ServiceAreas": data.ServiceAreas,
+            "serviceProviderId": data.serviceProviderId,
+            "offset": getTimeZoneOffset()
+        }
+        ServiceRequestPost(API.getServiceRequestListCount, reqObj).then((resp) => {
+            dispatch(getFilterDataCountSuccess(resp.data))
+        }).catch((err) => {
+        })
+
+    }
+};
+
 
 export function getFilter(data) {
     return (dispatch) => {

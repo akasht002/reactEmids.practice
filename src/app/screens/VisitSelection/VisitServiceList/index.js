@@ -21,10 +21,11 @@ import {
     SERVICE_REQ_STATUS
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
+import { getFieldsNoSeperater } from '../../../utils/validations.js'
 import {
-    getServiceCategory, getServiceType, ServiceRequestStatus, getFilter, getServiceArea,
+    getServiceCategory, getServiceType, ServiceRequestStatus, getServiceRequestListByFilter, getServiceArea,
     clearServiceCategory, clearServiceType, clearServiceArea, clearServiceRequestStatus, checkAllServiceRequestStatus,
-    getFilterDataCount, formDirty, setDefaultFilteredStatus, getSearchDataCount,getSearchDataCountSuccess
+    getServiceRequestListByFilterCount, formDirty, setDefaultFilteredStatus, getSearchDataCount,getSearchDataCountSuccess
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage, getStatusTextBasedOnStatus } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
@@ -99,11 +100,11 @@ export class VisitServiceList extends Component {
             pageNumber: this.state.activePage,
             pageSize: this.state.pageSize
         }
-        if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
-            let data = {
+        // if (this.props.isDashboardFilteredStatus && this.props.status !== 'All') {
+            let filterData = {
                 startDate: DEFAULT_FROM_DATE,
                 endDate: DEFAULT_TO_DATE,
-                serviceStatus: [this.props.status],
+                serviceStatus: this.props.status,
                 ServiceCategoryId: '',
                 serviceTypes: [],
                 ServiceAreas: {},
@@ -111,13 +112,13 @@ export class VisitServiceList extends Component {
                 FromPage: this.state.activePage,
                 ToPage: SERVICE_REQUEST_PAGE_SIZE,
             };
-            this.props.getFilter(data)
-            this.props.getFilterDataCount(data)
-        }
-        else {
-            this.props.getVisitServiceList(data);
-            this.props.getServiceRequestCount()
-        }
+            this.props.getFilter(filterData)
+            this.props.getFilterDataCount(filterData)
+        // }
+        // else {
+        //     this.props.getVisitServiceList(data);
+        //     this.props.getServiceRequestCount()
+        // }
         this.props.getServiceCategory();
         this.props.ServiceRequestStatus()
         this.props.getServiceArea();
@@ -217,7 +218,7 @@ export class VisitServiceList extends Component {
         let status = []
         this.props.ServiceStatus.forEach(obj => {
           if (obj.isChecked) {
-            status.push(obj.keyValue)
+            status.push(obj.id)
           }
         });
         return status
@@ -316,7 +317,7 @@ export class VisitServiceList extends Component {
 
     handleChangeServiceCategory = (selectedOption) => {
         this.setState({
-            ServiceCategoryId: selectedOption.label,
+            ServiceCategoryId: selectedOption.value,
             selectedOption: selectedOption,
         });
         this.props.getServiceType(selectedOption)
@@ -326,7 +327,7 @@ export class VisitServiceList extends Component {
     handleserviceType = (item, e) => {
         let serviceType = this.state.serviceTypes
         if (e.target.checked) {
-            serviceType.push(item.serviceTypeDescription)
+            serviceType.push(item.serviceTypeId)
         }
         else {
             serviceType.splice(serviceType.findIndex(function (item, index) {
@@ -362,9 +363,9 @@ export class VisitServiceList extends Component {
     handleChangeserviceStatus = (item, e) => {
         let service = this.state.serviceStatus
         if (e.target.checked) {
-            service.push(item.keyValue)
+            service.push(item.id)
         } else {
-            let index = service.indexOf(item.keyValue);
+            let index = service.indexOf(item.id);
             if (index > -1) {
                 service.splice(index, 1);
             }
@@ -373,6 +374,8 @@ export class VisitServiceList extends Component {
         this.setState({
             serviceStatus: service,
         });
+        
+        console.log("Data",this.state.serviceStatus)
 
     }
 
@@ -499,7 +502,7 @@ export class VisitServiceList extends Component {
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? (
             this.props.visitServiceList.map(serviceList => {
-                let serviceTypeIds = serviceList.typeId && serviceList.typeId.split(",");
+                let serviceTypeIds = serviceList.serviceTypes && getFieldsNoSeperater(serviceList.serviceTypes,"type");
                 let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
                 let patientImage = '';
                 let patientLastName = '';
@@ -507,23 +510,23 @@ export class VisitServiceList extends Component {
                     patientImage = serviceList && serviceList.patientImage ? serviceList.patientImage : require('../../../assets/images/Blank_Profile_icon.png');
                     patientLastName = serviceList && serviceList.patientLastName;
                 } else {
-                    patientLastName = serviceList && serviceList.patientLastName.charAt(0);
+                    patientLastName = serviceList && serviceList.patientLastName;
                     patientImage = require('../../../assets/images/Blank_Profile_icon.png');
                 }
                 return (
                     <div className='ServiceRequestBoard' key={serviceList.serviceRequestId}>
                         <div className='card'>
                             <div className="BlockImageContainer" onClick={() =>
-                                this.handleClick(serviceList.serviceRequestId, serviceList.patientId)}>
+                                this.handleClick(serviceList.servicerequestId, serviceList.patientId)}>
                                 <img src={require(`../../../assets/ServiceTypes/${serviceImage}`)} className="ServiceImage" alt="categoryImage" />
                                 <div className='BlockImageDetails'>
                                     <div className='BlockImageDetailsName'>
-                                        <span className="default-444">{serviceList.type}</span>
+                                        <span className="default-444">{serviceList.serviceTypes && getFieldsNoSeperater(serviceList.serviceTypes,"type").join(", ")}</span>
                                     </div>
                                     <div className='BlockImageDetailsDate'>
-                                        {serviceList.recurring}
+                                        {serviceList.recurringPatternDescription}
                                         <span className='DetailsDateSeperator'>|</span>
-                                        Posted on <Moment format={DATE_FORMATS.monDD}>{serviceList.createDate}</Moment>                                      
+                                        Posted on <Moment format={DATE_FORMATS.monDD}>{serviceList.postedDate}</Moment>                                      
                                     </div>
                                 </div>
                             </div>
@@ -536,7 +539,7 @@ export class VisitServiceList extends Component {
                                 <img className="ProfileImage" src={patientImage} alt="" />
                                 <div className='BlockProfileDetails'>
                                     <div className='BlockProfileDetailsName'>
-                                        <span>{serviceList.patientFirstName} {patientLastName}</span>
+                                        <span>{serviceList.patientFirstname} {serviceList.patientLastname.charAt(0)}</span>
                                         {(serviceList.deceasedInd || !serviceList.isActive) && <span>{` (${getStatusTextBasedOnStatus(serviceList)})`}</span>}
                                     </div>
                                 </div>
@@ -686,7 +689,7 @@ export function mapDispatchToProps(dispatch) {
         getServiceCategory: () => dispatch(getServiceCategory()),
         ServiceRequestStatus: () => dispatch(ServiceRequestStatus()),
         getServiceType: (data) => dispatch(getServiceType(data)),
-        getFilter: (data) => dispatch(getFilter(data)),
+        getFilter: (data) => dispatch(getServiceRequestListByFilter(data)),
         getSort: (data) => dispatch(getSort(data)),
         getServiceArea: (data) => dispatch(getServiceArea(data)),
         clearServiceCategory: (data) => dispatch(clearServiceCategory(data)),
@@ -696,7 +699,7 @@ export function mapDispatchToProps(dispatch) {
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         getServiceRequestCount: () => dispatch(getServiceRequestCount()),
-        getFilterDataCount: (data) => dispatch(getFilterDataCount(data)),
+        getFilterDataCount: (data) => dispatch(getServiceRequestListByFilterCount(data)),
         formDirty: () => dispatch(formDirty()),
         formDirtyVisitList: () => dispatch(formDirtyVisitList()),
         checkAllServiceRequestStatus: (checked, data) => dispatch(checkAllServiceRequestStatus(checked, data)),

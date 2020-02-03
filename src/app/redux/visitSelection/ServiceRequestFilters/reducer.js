@@ -9,7 +9,7 @@ const defaultState = {
     ServiceAreaList: [],
     FilterDataCount: '',
     isDashboardFilteredStatus: false,
-    status: 'All',
+    status: [35,38,39,47,42],
     SearchDataCount: '',
 };
 
