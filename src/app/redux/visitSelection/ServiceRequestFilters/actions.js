@@ -160,36 +160,31 @@ export function getServiceArea(data) {
     }
 };
 
+export const formatRequestPayload = data => {
+    let reqObj = {
+        Category: data.ServiceCategoryId,
+        ServiceTypes: data.serviceTypes,
+        Status: data.serviceStatus,
+        FromPage: data.FromPage,
+        ToPage: data.ToPage,
+        ServiceAreas: data.ServiceAreas,
+        serviceProviderId: data.serviceProviderId,
+        offset: getTimeZoneOffset()
+    }
+    if (data.startDate === "" && data.endDate === "") {
+        return reqObj
+    } else {
+        reqObj.FromDate = data.startDate;
+        reqObj.ToDate = data.endDate;
+        return reqObj
+    }
+}
+
 export const getServiceRequestListByFilter = data =>{
     return (dispatch) => {
         dispatch(startLoading());
-        let reqObj;
-        if (data.startDate === "" && data.endDate === "") {
-            reqObj = {
-                "Category": data.ServiceCategoryId,
-                "ServiceTypes": data.serviceTypes,
-                "Status": data.serviceStatus,
-                "FromPage": data.FromPage,
-                "ToPage": data.ToPage,
-                "ServiceAreas": data.ServiceAreas,
-                "serviceProviderId": data.serviceProviderId
-            }
-        } else {
-            reqObj = {
-                "Category": data.ServiceCategoryId,
-                "ServiceTypes": data.serviceTypes,
-                "Status": data.serviceStatus,
-                "FromPage": data.FromPage,
-                "ToPage": data.ToPage,
-                "FromDate": data.startDate,
-                "ToDate": data.endDate,
-                "ServiceAreas": data.ServiceAreas,
-                "serviceProviderId": data.serviceProviderId,
-                "offset": getTimeZoneOffset()
-            }
-        }
-
-        ServiceRequestPost(API.getServiceRequestLists, reqObj).then((resp) => {
+        let payload = formatRequestPayload(data)
+        ServiceRequestPost(API.getServiceRequestLists, payload).then((resp) => {
             dispatch(getVisitServiceListSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {
@@ -201,20 +196,8 @@ export const getServiceRequestListByFilter = data =>{
 
 export function getServiceRequestListByFilterCount(data) {
     return (dispatch) => {
-        let reqObj;
-        reqObj = {
-            "Category": data.ServiceCategoryId,
-            "ServiceTypes": data.serviceTypes,
-            "Status": data.serviceStatus,
-            "FromPage": data.FromPage,
-            "ToPage": data.ToPage,
-            "FromDate": data.startDate,
-            "ToDate": data.endDate,
-            "ServiceAreas": data.ServiceAreas,
-            "serviceProviderId": data.serviceProviderId,
-            "offset": getTimeZoneOffset()
-        }
-        ServiceRequestPost(API.getServiceRequestListCount, reqObj).then((resp) => {
+        let payload = formatRequestPayload(data)
+        ServiceRequestPost(API.getServiceRequestListCount, payload).then((resp) => {
             dispatch(getFilterDataCountSuccess(resp.data))
         }).catch((err) => {
         })
