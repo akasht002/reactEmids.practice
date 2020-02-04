@@ -5,7 +5,8 @@ import _ from 'lodash'
 const genderID = [{ Female: 1 }, { Male: 2 }]
 
 export function checkEmail (email) {
-  return /^(([^<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    return  /^[^@\s]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/  
+    .test(
     email
   )
 }
@@ -73,7 +74,7 @@ export function checkFormatDate (value) {
 }
 
 export function formateStateDate (date) {
-  return date ? moment(date) : null
+  return date ? moment(date, DATE_FORMAT) : null
 }
 
 export function formateStateDateValue (date) {
@@ -308,7 +309,36 @@ export const getStatusTextBasedOnStatus = (props) => {
   if((props && props.deceasedInd)) {
     return PATIENT_STATUS.deceased
   }
+  else if((props && !props.isActive)) {
+    return PATIENT_STATUS.inActive
+  }
   else {
     return null
   }
+}
+
+export const calculateDistanceFromCoordinates =(lat1, lon1, lat2, lon2, unit) =>{
+  if ((lat1 === lat2) && (lon1 === lon2)) {
+      return 0;
+  }
+  else {
+      let radlat1 = Math.PI * lat1/180;
+      let radlat2 = Math.PI * lat2/180;
+      let theta = lon1-lon2;
+      let radtheta = Math.PI * theta/180;
+      let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+          dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515; //distance in miles
+      if (unit ==="K") { dist = dist * 1.609344 } //distanse in kilometers
+      if (unit ==="N") { dist = dist * 0.8684 } //distance in nautical miles
+      return dist;
+  }
+}
+
+export const nullCheckArray = (array,index) => {
+   return array && array[index] ? array[index] : 0;
 }

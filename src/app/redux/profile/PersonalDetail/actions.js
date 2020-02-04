@@ -188,8 +188,9 @@ export function updateStandByMode (data) {
        dispatch(getSpBusyInVisit())
       })
       .catch(err => {
-          dispatch(endLoading())    
-      })
+        logError(err)   
+      })      
+      dispatch(endLoading()) 
   }
 }
 

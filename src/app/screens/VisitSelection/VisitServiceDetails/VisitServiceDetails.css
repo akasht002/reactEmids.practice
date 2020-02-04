@@ -71,7 +71,7 @@
 
 .tab_view_list li a {
     text-decoration: none;
-    color: #444 !important;
+    color: #444;
     display: block;
     padding: 0px 30px;
     font-size: 16px;
@@ -79,8 +79,13 @@
 }
 
 .active-tabview {
-    color: #7a329f !important;
+    color: #1e3d5c !important;
     background: #f2ebf3;
+}
+
+.tab_view .tab_view_list li a
+{
+    color: #444444;
 }
 
 .tab_content_block {
@@ -333,7 +338,7 @@
 }
 
 .right-block-view .right_statusview {
-    position: absolute;
+    position: relative;
     right: 0;
     margin-right: 15px;
 }
@@ -463,10 +468,6 @@
     margin-top: 0 !important;
 }
 
-.right-customewidth .right-tablelist .table-result-block {
-    padding-left: 18px;
-}
-
 .full-block-requestplan .right-tablelist .table-result-block {
     padding-left: 18px;
 }
@@ -477,6 +478,13 @@
     margin-top: 60px;
     z-index: 10000;
 }
+
+.right-customewidth .right-tablelist .table-result-block .select-wrap-dahboard {
+    margin-left: 18px;
+    float: left;
+    position: relative;
+}
+
 
 /*1920-screen-*/
 @media (min-width: 1367px) {
@@ -497,12 +505,9 @@
         height: calc(100vh - 345px) !important;
     }
 
-    .right-customewidth .right-tablelist .table-result-block {
-        padding-left: 36px;
-    }
-
-    .full-block-requestplan .right-tablelist .table-result-block {
-        padding-left: 81px;
+    .right-customewidth .right-tablelist .table-result-block .select-wrap-dahboard
+    {
+        margin-left: 36px;
     }
 
 }
@@ -714,6 +719,17 @@
 .individual-spblock-full .ServiceCategoryContent .SPAvailContainer.Available .SPAvailContent label.SPAvailItems:hover {
     cursor: context-menu !important;
 }
+
+
+.questionnaire-model-pop .FeedbackQuestionWidget .FeedbackAnswerWidget .form-radio input {
+    cursor: context-menu;
+}
+
+.questionnaire-model-pop .FeedbackQuestionWidget {
+    Padding: 0 0px 15px;
+}
+
+
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
     .individual-spblock-full .sr-feature-pic img {

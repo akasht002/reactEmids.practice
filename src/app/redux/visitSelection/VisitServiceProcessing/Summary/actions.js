@@ -6,9 +6,12 @@ import { push } from '../../../navigation/actions';
 import { Path } from '../../../../routes';
 import { DEMO } from '../../../../constants/config';
 import { getUserInfo } from '../../../../services/http';
+import { getQuestionsListSuccess } from '../Assessment/actions';
+import { getQuestionsListSuccess as getFeedBackQuestion } from '../Feedback/actions'
 import { updateServiceRequestId } from '../Payments/actions';
 import { getDoubleDigitTime } from '../../../../utils/dateUtility'
 import { getUpdatedPerformTasksList } from '../PerformTasks/actions'
+import { isEntityUser } from '../../../../utils/userUtility';
 
 export const SummaryDetails = {
     getSummaryDetailsSuccess: 'get_summary_details_success/summarydetails',
@@ -84,7 +87,7 @@ export const formDirtySummaryDetails = () => {
 }
 
 export function getSummaryDetails(data) {
-    let getSummaryDetails = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getSummaryDetails
+    let getSummaryDetails = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getSummaryDetailsForEsp : API.getSummaryDetails
     return (dispatch) => {
         dispatch(startLoadingProcessing());
         ServiceRequestGet(getSummaryDetails + data).then((resp) => {
@@ -102,7 +105,7 @@ export function getSummaryDetails(data) {
 };
 
 export function getSummaryDetail(data) {
-    let getSummaryDetails = getUserInfo().isEntityServiceProvider ? API.getSummaryDetailsForEsp : API.getSummaryDetails
+    let getSummaryDetails = (getUserInfo().isEntityServiceProvider || isEntityUser()) ? API.getSummaryDetailsForEsp : API.getSummaryDetails
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestGet(getSummaryDetails + data).then((resp) => {
@@ -117,7 +120,7 @@ export function getSummaryDetail(data) {
 /* Added By Vimal on 24/12/2018 */
 export function updateVisitProcessingUpdateBilledDuration(data, visitId) {
     let calculate = (data / 1000) / 60
-    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let isEntityServiceProvider = (getUserInfo().isEntityServiceProvider || isEntityUser())
     let model = isEntityServiceProvider ? {
         servicePlanVisitId: visitId,
         billedDuration: calculate
@@ -246,8 +249,8 @@ export function onUpdateTime(data, visitId) {
     }
 }
 
-export function saveSummaryDetails(data) {
-    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+export function saveSummaryDetails(data) { 
+    let isEntityServiceProvider = (getUserInfo().isEntityServiceProvider || isEntityUser())
     let saveSummaryDetails = isEntityServiceProvider ? API.saveSummaryDetailsForEsp : `${API.saveSummaryDetails}${data.serviceRequestVisitId}`
     let model = isEntityServiceProvider ? {
         ...data,
@@ -256,7 +259,7 @@ export function saveSummaryDetails(data) {
     return (dispatch) => {
         dispatch(startLoading());
         ServiceRequestPut(saveSummaryDetails, model).then((resp) => {
-            if (getUserInfo().isEntityServiceProvider) {
+            if ((getUserInfo().isEntityServiceProvider || isEntityUser())) {
                 dispatch(push(Path.visitServiceDetails))
             } else {
                 dispatch(updateServiceRequestId(data.serviceRequestVisitId))
@@ -266,11 +269,13 @@ export function saveSummaryDetails(data) {
         }).catch((err) => {
             dispatch(endLoading());
         })
+        dispatch(getQuestionsListSuccess({}))
+        dispatch(getFeedBackQuestion({}))
     }
 };
 
 export function saveSignature(data) {
-    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let isEntityServiceProvider = (getUserInfo().isEntityServiceProvider || isEntityUser())
     let saveSignature = isEntityServiceProvider ? API.saveSignatureForEsp : API.saveSignature
     let model = isEntityServiceProvider ? {
         ...data,
@@ -287,7 +292,7 @@ export function saveSignature(data) {
 };
 
 export function getSavedSignature(data) {
-    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let isEntityServiceProvider = (getUserInfo().isEntityServiceProvider || isEntityUser())
     let getSavedSignature = isEntityServiceProvider ? API.getSavedSignatureForEsp : API.getSavedSignature
     return (dispatch) => {
         ServiceRequestGet(getSavedSignature + data).then((resp) => {

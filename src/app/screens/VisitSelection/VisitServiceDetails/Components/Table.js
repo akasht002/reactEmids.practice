@@ -113,7 +113,7 @@ export const Table = props => {
                                 <span className="service-typesview-plan">
                                     {renderServiceTypeImages(item.serviceTypes)}
                                     {item.serviceTypes.length > 3 && <div className="service-typesview-more tooltip theme-primary">3+
-                                        <div class="bottom">
+                                        <div className="bottom">
                                             <h3>Service Types</h3>
                                             <div className="inner-block-SRtypes">
                                                 {renderServiceTypesInToolTip(item.serviceTypes)}
@@ -136,16 +136,22 @@ export const Table = props => {
                             }
                             {!isEntity ?
                                 <td>
-                                    <div class="ScheduleRowButton"><button class="btn btn-outline-primary"
+                                    <div className="ScheduleRowButton"><button className="btn btn-outline-primary"
                                         onClick={() => props.navigateToparticularPageBasedonId(item)}
                                     >{renderStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}</button></div>
                                 </td>
                                 :
                                 <td>
-                                    <div class="ScheduleRowButton">
-                                        <span class={item.visitStatusId === VISIT_PROCESSING_STATUS.completed.id ? "btn btn-outline-primary" : "status-view-btn theme-primary"} onClick={() => props.navigateToparticularPageBasedonId(item)}>
-                                            {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
-                                        </span>
+                                    <div className="ScheduleRowButton">
+                                        {item.visitStatusId !== VISIT_PROCESSING_STATUS.scheduled.id ?
+                                            <button className="btn btn-outline-primary" onClick={() => props.navigateToparticularPageBasedonId(item)}>
+                                                {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
+                                            </button>
+                                            :
+                                            <span className="status-view-btn theme-primary">
+                                                {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
+                                            </span>
+                                        }
                                     </div>
                                 </td>
                             }

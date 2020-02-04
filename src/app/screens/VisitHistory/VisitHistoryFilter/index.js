@@ -259,7 +259,7 @@ export class VisitFilter extends Component {
                   <div className='form-group'>
                     <label>Select the Date range</label>
                   </div>
-                  <div className='col-md-12 mb-4 p-0'>
+                  <div className='form-group'>
                     <Calendar
                       id='dob'
                       label='Start Date'
@@ -281,7 +281,7 @@ export class VisitFilter extends Component {
                       }}
                     />
                   </div>
-                  <div className='col-md-12 mb-4 p-0'>
+                  <div className='form-group'>
                     <Calendar
                       id='dob1'
                       label='End Date'

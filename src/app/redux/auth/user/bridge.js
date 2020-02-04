@@ -5,5 +5,6 @@ export const USER = {
     setUserRoles: 'set_user_roles/user',
     menuClicked: 'menuClicked/user',
     setIsFormDirty: 'set_isFormDirty/user',
-    isSecureLogin: "isSecureLogin/user"
+    isSecureLogin: "isSecureLogin/user",
+    getThresholdRadiusSuccess: 'getThresholdRadiusSuccess/user'
 };

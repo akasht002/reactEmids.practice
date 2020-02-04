@@ -498,3 +498,25 @@ button.btn.CancelSignature {
 {
     max-width:300px;
 }
+
+.SummaryContentTable span.SummaryContentTableTitle.inside-radius-indicator:after,
+.SummaryContentTable span.SummaryContentTableTitle.outside-radius-indicator:after {
+    content: '';
+    position: absolute;
+    background-color: green;
+    border: 1px solid green;
+    background-repeat: no-repeat;
+    width: 12px;
+    height: 12px;
+    border-radius:50%;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    display: inline-block;
+    margin-top: 7px;
+    margin-left: 10px;
+}
+
+.SummaryContentTable span.SummaryContentTableTitle.outside-radius-indicator:after {
+    background-color: gray !important;
+    border: 1px solid gray !important;
+}

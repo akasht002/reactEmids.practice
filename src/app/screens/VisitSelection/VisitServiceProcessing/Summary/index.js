@@ -16,7 +16,9 @@ import { formatDateSingle } from '../../../../utils/dateUtility';
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import './style.css'
 import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
-import { DATE_FORMATS } from "../../../../constants/constants";
+import { DATE_FORMATS, ORG_SERVICE_PROVIDER_TYPE_ID } from "../../../../constants/constants";
+import { isEntityUser } from "../../../../utils/userUtility";
+import { setAddNewScheduledClicked } from "../../../../redux/visitSelection/VisitServiceDetails/actions"
 
 export class Summary extends Component {
 
@@ -138,6 +140,7 @@ export class Summary extends Component {
                 TaxRate: parseFloat(this.state.summaryDetails.taxAmount)
             }
             this.props.saveSummaryDetails(data);
+            this.props.setAddNewScheduledClicked(true)
         } else {
             this.setState({ isSignatureModalOpen: true })
         }
@@ -196,6 +199,8 @@ export class Summary extends Component {
 
     render() {
 
+        let isIndividual = !(getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID);
+        
         let modalContent = '';
 
         let validationContent = '';
@@ -311,7 +316,7 @@ export class Summary extends Component {
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName && this.props.patientDetails.patient.lastName}</i>
-                                                {this.props.patientDetails.patient && this.props.patientDetails.patient.deceasedInd &&
+                                                {this.props.patientDetails.patient && (this.props.patientDetails.patient.deceasedInd || !this.props.patientDetails.patient.isActive) &&
                                                     <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(this.props.patientDetails.patient)}</span>}
                                             </span>
                                             :
@@ -344,7 +349,7 @@ export class Summary extends Component {
                                 <div className="VisitSummaryWidget">
                                     <div className="LeftWidget">
                                         <div className="LeftContent">
-                                            <p className="SummaryContentTitle theme-primary">Service Visit Details</p>
+                                            <p className="SummaryContentTitle theme-primary">Service {isIndividual && 'Visit'} Details</p>
                                             <div className="row">
                                                 <div className="col-md-8">
                                                     <p className="CategoryName">
@@ -365,7 +370,7 @@ export class Summary extends Component {
                                                     <span className="bottomTaskPercentage">{completedTaskPercent}%</span>
                                                 </div>
                                             </div>
-                                            <p className="SummaryContentTitle theme-primary">Payment Details</p>
+                                            <p className="SummaryContentTitle theme-primary">{isIndividual ? 'Payment' : 'Visit'} Details</p>
 
                                             <div className="row CostTableWidget">
                                                 {!this.state.signatureImage ?
@@ -400,7 +405,7 @@ export class Summary extends Component {
                                                 </div>}
                                             </div>
 
-                                            {getUserInfo().isEntityServiceProvider ?
+                                            {(getUserInfo().isEntityServiceProvider || isEntityUser()) ?
                                                 ''
                                                 :
                                                 <div className="row EstimatedCostWidget theme-primary">
@@ -450,7 +455,7 @@ export class Summary extends Component {
                                 <div className='bottomButton'>
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
-                                        {getUserInfo().isEntityServiceProvider ?
+                                        {(getUserInfo().isEntityServiceProvider || isEntityUser()) ?
                                             <a className='btn btn-primary' onClick={this.onClickNext}>Done</a>
                                             :
                                             <a className='btn btn-primary' onClick={this.onClickNextBtn}>Proceed to Payment</a>
@@ -536,7 +541,8 @@ export function mapDispatchToProps(dispatch) {
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         calculationActualData: () => dispatch(calculationActualData()),
         updateVisitProcessingUpdateBilledDuration: (data) => dispatch(updateVisitProcessingUpdateBilledDuration(data)),
-        goBack: () => dispatch(goBack())
+        goBack: () => dispatch(goBack()),
+        setAddNewScheduledClicked: data => dispatch(setAddNewScheduledClicked(data))
     }
 };
 

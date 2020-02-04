@@ -53,7 +53,7 @@ export class MyConversation extends React.Component {
           </div>
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>
-            {this.props.isConversationLoading && <Preloader/>}
+            {this.props.isConversationLoading && !entityUser && <Preloader/>}
               {conversation_item}
             </ul>
           </div>

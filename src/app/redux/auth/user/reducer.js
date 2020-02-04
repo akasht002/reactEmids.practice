@@ -10,7 +10,8 @@ const defaultState = {
     roles: {},
     menuClicked: null,
     isFormDirty: false,
-    isSecureLogin: false
+    isSecureLogin: false,
+    thresholdRadius: 0
 };
 
 export default (state = defaultState, action) => {
@@ -48,6 +49,11 @@ export default (state = defaultState, action) => {
                 ...state,
                 isSecureLogin: action.data
             }
+        case USER.getThresholdRadiusSuccess:
+        return {
+            ...state,
+            thresholdRadius: action.data && action.data.value
+        };
         default:
             return state;
     }

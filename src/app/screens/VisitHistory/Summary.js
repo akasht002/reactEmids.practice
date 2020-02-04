@@ -8,7 +8,7 @@ import {
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { getFields, getLength, getStatus, getServiceTypeImage, isNull, getFieldsFirstValue } from "../../utils/validations";
+import { getFields, getLength, getStatus, getServiceTypeImage, isNull, getFieldsFirstValue, calculateDistanceFromCoordinates } from "../../utils/validations";
 import { ProfileModalPopup, AlertPopup, StarRating } from "../../components";
 import { getUserInfo } from "../../services/http";
 import {
@@ -20,7 +20,7 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
-import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS } from '../../constants/constants'
+import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS, ERROR_MESSAGE } from '../../constants/constants'
 import Moment from 'react-moment'
 import { Assessment } from "./assessment";
 import { caseInsensitiveComparer } from "../../utils/comparerUtility";
@@ -416,7 +416,9 @@ export class VistSummary extends React.Component {
     let feedbackContent = this.getFeedbackContent(this.props.VisitFeedback)
     let isAssessment = this.props.savedScheduleType === VISIT_TYPE.assessment;
     let isEntity = getUserInfo().isEntityServiceProvider || getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID;
-
+    let startPointToPOS = summaryDetail && ((summaryDetail.startLatitude === 0) && (summaryDetail.startLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.startLatitude, summaryDetail.startLongitude).toFixed(2)} (Miles)`
+    let stopPointToPOS = summaryDetail && ((summaryDetail.endLatitude === 0) && (summaryDetail.endLongitude === 0)) ? ERROR_MESSAGE.noLocationData : `${calculateDistanceFromCoordinates(summaryDetail.latitude, summaryDetail.longitude, summaryDetail.endLatitude, summaryDetail.endLongitude).toFixed(2)} (Miles)`
+    let radiusIndicator = (Number.parseFloat(this.props.thresholdRadius) >= Number.parseFloat(startPointToPOS)) ? 'inside-radius-indicator' : 'outside-radius-indicator'
     return (
       <React.Fragment>
         <form className="ServiceContent">
@@ -491,6 +493,18 @@ export class VistSummary extends React.Component {
                         </span>
                       </div>
                     </p>
+                    {isEntityUser() &&
+                    <React.Fragment>
+                      <p className="m-0">
+                        <span className={`SummaryContentTableTitle ${radiusIndicator}`}>Start Point to POS</span>
+                        <span>{startPointToPOS}</span>
+                      </p>
+                      <p className="m-0">
+                        <span className={`SummaryContentTableTitle ${radiusIndicator}`}>Stop Point to POS</span>
+                        <span>{stopPointToPOS}</span>
+                      </p>
+                    </React.Fragment>
+                    }
                   </div>
                 </div>
 
@@ -673,6 +687,7 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export function mapStateToProps(state) {
+  const {thresholdRadius} = state.authState.userState
   return {
     QuestionsList:
       state.visitSelectionState.VisitServiceProcessingState.FeedbackState
@@ -691,7 +706,8 @@ export function mapStateToProps(state) {
     entityDashboardActiveTab: state.dashboardState.individualsListState.activeTab,
     activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab,
     summaryDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceDetails,
-    isServiceProviderFeedbackTab: state.dashboardState.VisitServiceProviderState.isServiceProviderFeedbackTab
+    isServiceProviderFeedbackTab: state.dashboardState.VisitServiceProviderState.isServiceProviderFeedbackTab,
+    thresholdRadius 
   };
 }
 

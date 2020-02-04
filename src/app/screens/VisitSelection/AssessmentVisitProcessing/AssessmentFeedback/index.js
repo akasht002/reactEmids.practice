@@ -95,16 +95,13 @@ export class AssessmentFeedback extends Component {
 
     onClickConfirm = () => {
         this.selectedAnswers = [];
-        this.props.getSummaryDetails(this.props.patientDetails.serviceRequestVisitId);
-        this.props.getSavedSignature(this.props.patientDetails.serviceRequestVisitId);
         this.props.goToSummary()
     }
 
     onSubmit = () => {
         let data = {
-            serviceRequestVisitId: this.props.patientDetails.serviceRequestVisitId,
-            serviceRequestId: this.props.patientDetails.serviceRequestId,
-            serviceProviderId: this.props.patientDetails.serviceProviderId,
+            serviceRequestVisitId: this.props.SummaryDetails.servicePlanVisitId,
+            serviceProviderId: this.props.SummaryDetails.serviceProviderId,
             answers: this.selectedAnswers
         }
         this.props.saveAnswers(data);
