@@ -342,9 +342,6 @@ export class VisitServiceList extends Component {
         this.setState({
             serviceStatus: service,
         });
-        
-        console.log("Data",this.state.serviceStatus)
-
     }
 
     handleServiceArea = (item) => {
