@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { Get, elasticSearchPost, elasticSearchGet, getUserInfo } from '../../../services/http';
+import { Get, elasticSearchPost, elasticSearchGet, getUserInfo,ServiceRequestPost } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
 import { SERVICE_REQ_STATUS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../utils/dateUtility';
@@ -134,7 +134,7 @@ export function getServiceType(data) {
     }
 };
 
-export function ServiceRequestStatus() {
+export function ServiceRequestStatus() { 
     return (dispatch) => {
         elasticSearchGet(API.getServiceRequestStatus).then((resp) => {
          resp.data.forEach(obj => {
@@ -160,67 +160,47 @@ export function getServiceArea(data) {
     }
 };
 
-export function getFilter(data) {
-    return (dispatch) => {
-        dispatch(startLoading());
-        let reqObj;
-        if (data.startDate === "" && data.endDate === "") {
-            reqObj = {
-                "Category": data.ServiceCategoryId,
-                "ServiceTypes": data.serviceTypes,
-                "Status": data.serviceStatus,
-                "FromPage": data.FromPage,
-                "ToPage": data.ToPage,
-                "ServiceAreas": data.ServiceAreas,
-                "serviceProviderId": data.serviceProviderId
-            }
-        } else {
-            reqObj = {
-                "Category": data.ServiceCategoryId,
-                "ServiceTypes": data.serviceTypes,
-                "Status": data.serviceStatus,
-                "FromPage": data.FromPage,
-                "ToPage": data.ToPage,
-                "FromDate": data.startDate,
-                "ToDate": data.endDate,
-                "ServiceAreas": data.ServiceAreas,
-                "serviceProviderId": data.serviceProviderId,
-                "offset": getTimeZoneOffset()
-            }
-        }
-
-        elasticSearchPost(API.PostSearchServiceRequest, reqObj).then((resp) => {
-            dispatch(getVisitServiceListSuccess(resp.data))
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
-        })
-
+export const formatRequestPayload = data => {
+    let reqObj = {
+        Category: data.ServiceCategoryId,
+        ServiceTypes: data.serviceTypes,
+        Status: data.serviceStatus,
+        FromPage: data.FromPage,
+        ToPage: data.ToPage,
+        ServiceAreas: data.ServiceAreas,
+        serviceProviderId: data.serviceProviderId,
+        offset: getTimeZoneOffset(),
+        searchText :  data.searchKeyword
     }
-};
-
-export function getFilterDataCount(data) {
-    return (dispatch) => {
-        let reqObj;
-        reqObj = {
-            "Category": data.ServiceCategoryId,
-            "ServiceTypes": data.serviceTypes,
-            "Status": data.serviceStatus,
-            "FromPage": data.FromPage,
-            "ToPage": data.ToPage,
-            "FromDate": data.startDate,
-            "ToDate": data.endDate,
-            "ServiceAreas": data.ServiceAreas,
-            "serviceProviderId": data.serviceProviderId,
-            "offset": getTimeZoneOffset()
-        }
-        elasticSearchPost(API.getServiceRequestCountOfFilters, reqObj).then((resp) => {
-            dispatch(getFilterDataCountSuccess(resp.data))
-        }).catch((err) => {
-        })
-
+    if (data.startDate === "" && data.endDate === "") {
+        return reqObj
+    } else {
+        reqObj.FromDate = data.startDate;
+        reqObj.ToDate = data.endDate;
+        return reqObj
     }
-};
+}
+
+
+export const getServiceRequestListByFilter = (data) => async (dispatch)=>{
+    dispatch(startLoading());
+    let payload = formatRequestPayload(data)
+    try{
+        const resp = await ServiceRequestPost(API.getServiceRequestLists, payload);
+        dispatch(getVisitServiceListSuccess(resp.data));
+    }catch(error){}
+    dispatch(endLoading());
+}
+
+export const getServiceRequestListByFilterCount = (data) => async (dispatch)=>{
+    dispatch(startLoading());
+    let payload = formatRequestPayload(data)
+    try{
+        const resp = await ServiceRequestPost(API.getServiceRequestListCount, payload);
+        dispatch(getFilterDataCountSuccess(resp.data));
+    }catch(error){}    
+    dispatch(endLoading());
+}
 
 export const checkAllServiceRequestStatus = (checked, data) => {
     if (checked) {

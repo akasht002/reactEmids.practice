@@ -1,6 +1,7 @@
 import {
     ServiceRequestFiltersList
 } from './bridge'
+import { SERVICE_REQ_STATUS } from '../../../constants/constants';
 
 const defaultState = {
     ServiceCategory: [],
@@ -9,7 +10,7 @@ const defaultState = {
     ServiceAreaList: [],
     FilterDataCount: '',
     isDashboardFilteredStatus: false,
-    status: 'All',
+    status: SERVICE_REQ_STATUS.ALL,
     SearchDataCount: '',
 };
 
