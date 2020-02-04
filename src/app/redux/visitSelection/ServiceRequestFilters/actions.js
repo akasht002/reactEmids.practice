@@ -181,31 +181,30 @@ export const formatRequestPayload = data => {
     }
 }
 
-export const getServiceRequestListByFilter = data =>{
-    return (dispatch) => {
-        dispatch(startLoading());
-        let payload = formatRequestPayload(data)
-        ServiceRequestPost(API.getServiceRequestLists, payload).then((resp) => {
-            dispatch(getVisitServiceListSuccess(resp.data))
-            dispatch(endLoading());
-        }).catch((err) => {
-            dispatch(endLoading());
-        })
 
+export const getServiceRequestListByFilter = (data) => async (dispatch)=>{
+    dispatch(startLoading());
+    let payload = formatRequestPayload(data)
+    try{
+        const resp = await ServiceRequestPost(API.getServiceRequestLists, payload);
+        dispatch(getVisitServiceListSuccess(resp.data));
+        dispatch(endLoading());
+    }catch(error){
+        dispatch(endLoading());
     }
 }
 
-export function getServiceRequestListByFilterCount(data) {
-    return (dispatch) => {
-        let payload = formatRequestPayload(data)
-        ServiceRequestPost(API.getServiceRequestListCount, payload).then((resp) => {
-            dispatch(getFilterDataCountSuccess(resp.data))
-        }).catch((err) => {
-        })
-
+export const getServiceRequestListByFilterCount = (data) => async (dispatch)=>{
+    dispatch(startLoading());
+    let payload = formatRequestPayload(data)
+    try{
+        const resp = await ServiceRequestPost(API.getServiceRequestListCount, payload);
+        dispatch(getFilterDataCountSuccess(resp.data));
+        dispatch(endLoading());
+    }catch(error){
+        dispatch(endLoading());
     }
-};
-
+}
 
 export function getFilter(data) {
     return (dispatch) => {
