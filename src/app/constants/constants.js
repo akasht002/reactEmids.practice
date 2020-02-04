@@ -72,7 +72,8 @@ export const USERTYPES = {
     DESIGNATED_SERVICE_PROVIDER: 2,
     ENTITY_USER: 'EU',
     PATIENT_AND_GUARDIAN: "IG",
-    CARETEAM: 'CT'
+    CARETEAM: 'CT',
+    ENTITY: 'E'
 };
 
 export const ImageFormats = {
