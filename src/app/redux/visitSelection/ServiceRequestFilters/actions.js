@@ -169,7 +169,8 @@ export const formatRequestPayload = data => {
         ToPage: data.ToPage,
         ServiceAreas: data.ServiceAreas,
         serviceProviderId: data.serviceProviderId,
-        offset: getTimeZoneOffset()
+        offset: getTimeZoneOffset(),
+        searchText :  data.searchKeyword
     }
     if (data.startDate === "" && data.endDate === "") {
         return reqObj

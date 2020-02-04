@@ -96,17 +96,7 @@ export class VisitServiceList extends Component {
         })
     }
     componentDidMount() {        
-        let filterData = {
-            startDate: DEFAULT_FROM_DATE,
-            endDate: DEFAULT_TO_DATE,
-            serviceStatus: this.props.status,
-            ServiceCategoryId: '',
-            serviceTypes: [],
-            ServiceAreas: {},
-            serviceProviderId: getUserInfo().serviceProviderId,
-            FromPage: this.state.activePage,
-            ToPage: SERVICE_REQUEST_PAGE_SIZE,
-        };
+        let filterData = this.getFilterData(true)
         this.props.getFilter(filterData)
         this.props.getFilterDataCount(filterData)        
         this.props.getServiceCategory();
@@ -215,19 +205,7 @@ export class VisitServiceList extends Component {
       }
 
     applyFilter = () => {
-        let status = this.getStatus();
-        let serviceProviderId = getUserInfo().serviceProviderId;
-        let data = {
-            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
-            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-            serviceStatus: status,
-            ServiceCategoryId: this.state.ServiceCategoryId,
-            serviceTypes: uniqElementOfArray(this.state.serviceTypes),
-            ServiceAreas: this.state.ServiceAreas,
-            serviceProviderId: serviceProviderId,
-            FromPage: PAGE_NO,
-            ToPage: SERVICE_REQUEST_PAGE_SIZE,
-        };
+        let data = this.getFilterData();
         this.props.getFilter(data)
         this.props.getFilterDataCount(data)
         this.setState({
@@ -444,16 +422,27 @@ export class VisitServiceList extends Component {
         })
     }
 
+    getFilterData = (isdefault=false)=>{
+        return {
+            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
+            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
+            serviceStatus: !isdefault ? this.props.status : this.getStatus(),
+            ServiceCategoryId: !isdefault ? '' :this.state.ServiceCategoryId,
+            serviceTypes: !isdefault ? [] :uniqElementOfArray(this.state.serviceTypes),
+            ServiceAreas: !isdefault ? {}:this.state.ServiceAreas,
+            serviceProviderId: getUserInfo().serviceProviderId,
+            FromPage: !isdefault ? PAGE_NO: this.state.activePage,
+            ToPage: SERVICE_REQUEST_PAGE_SIZE,
+            searchKeyword:this.state.searchKeyword
+        }
+    }
+
     handleSearchData = (e) => {
         e.preventDefault();
-        this.props.formDirtyVisitList()
-        let data = {
-            searchKeyword: this.state.searchKeyword,
-            pageNumber: DEFAULT_PAGE_NUMBER,
-            pageSize: this.state.pageSize
-        }
-        this.props.getSearchDataCount(data)
-        this.props.keywordSearchServiceRequest(data)
+        this.props.formDirtyVisitList()        
+        let data = this.getFilterData();
+        this.props.getFilter(data)
+        this.props.getFilterDataCount(data)
         this.applyReset();
         this.props.setPageNumber(1)
     }
