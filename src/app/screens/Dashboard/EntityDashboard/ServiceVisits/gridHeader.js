@@ -1,9 +1,13 @@
-export let allServiceVisits = {
+const commonFieldName = {
     servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     patientFullName: 'Individuals',
     visitStatus: 'Status',
     schedule: 'Schedule',
+}
+
+export let allServiceVisits = {
+    ...commonFieldName,
     task: 'Task',
     providerFullName: 'Entity Provider',
     icon: 'Actions',
@@ -11,22 +15,14 @@ export let allServiceVisits = {
 }
 
 export let cancelledServiceVisits = {
-    servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
-    patientFullName: 'Individuals',
-    visitStatus: 'Status',
-    schedule: 'Schedule',
+    ...commonFieldName,
     providerFullName: 'Entity Provider',
     icon: 'Actions',
     className: 'cancelled-serviceVisits-tableblock'
 }
 
 export let lowTaskServiceVisits = {
-    servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
-    patientFullName: 'Individuals',
-    visitStatus: 'Status',
-    schedule: 'Schedule',
+    ...commonFieldName,
     task: 'Task',
     providerFullName: 'Entity Provider',
     icon: 'Actions',
@@ -34,11 +30,7 @@ export let lowTaskServiceVisits = {
 }
 
 export let overDueServiceVisits = {
-    servicePlanVisitNumber: 'SV ID',
-    serviceCategoryDescription: 'Service Category',
-    patientFullName: 'Individuals',
-    visitStatus: 'Status',
-    schedule: 'Schedule',
+    ...commonFieldName,
     providerFullName: 'Entity Provider',
     icon: 'Actions',
     className: 'overdue-serviceVisits-tableblock'
