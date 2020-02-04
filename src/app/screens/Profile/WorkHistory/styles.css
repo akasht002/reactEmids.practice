@@ -29,3 +29,14 @@
     color: #444444;
 }
 
+span.char-limit-block
+{
+    position: absolute;
+    text-align: right;
+    color: #8c8c8c;
+    display: block;
+    font-size: 14px;
+    right: 16px;
+    margin-top: -12px;
+}
+

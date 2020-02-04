@@ -1190,6 +1190,17 @@ div.CertificationModal{
     margin-left: 2px;
 }
 
+span.char-limit-block
+{
+    position: absolute;
+    text-align: right;
+    color: #8c8c8c;
+    display: block;
+    font-size: 14px;
+    right: 16px;
+    margin-top: -12px;
+}
+
 
 /*ui-responsive-issue-for-tab*/
 @media only screen and (max-width: 1024px) {

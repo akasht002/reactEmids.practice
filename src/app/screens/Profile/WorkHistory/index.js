@@ -462,6 +462,7 @@ export class WorkHistory extends Component {
                             disabledSaveBtn: false
                         })}
                     />
+                    <span className="char-limit-block">500 Character max</span>
                 </div>
             </div>
         </form>

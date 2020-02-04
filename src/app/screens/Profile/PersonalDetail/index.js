@@ -869,6 +869,7 @@ export class PersonalDetail extends React.PureComponent {
               }
             }}
           />
+          <span className="char-limit-block">500 Character max</span>
           <small className="text-danger d-block OnboardingAlert">
             {this.state.descriptionInvaild && 'Please enter valid Description'}
           </small>

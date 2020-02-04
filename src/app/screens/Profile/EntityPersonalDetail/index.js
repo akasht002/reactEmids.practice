@@ -547,6 +547,9 @@ export class EntityPersonalDetail extends React.PureComponent {
               })
             }}
           />
+          <span className="char-limit-block">500 Character max</span>
+           
+
         </div>
         <div className='hrLine' />
         <div className='col-md-12 mb-2'>

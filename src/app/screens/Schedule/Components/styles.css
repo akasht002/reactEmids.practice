@@ -1799,6 +1799,17 @@ ul.show-more-assignSP li {
    padding-right: 5px;
 }
 
+.ServiceTypesWidget.PostSR .feedbackForm span.char-limit-block
+{
+    position: absolute;
+    text-align: right;
+    color: #8c8c8c;
+    display: block;
+    font-size: 14px;
+    right: 0px;
+    margin-top: -12px;
+}
+
 /*IE-Edge*/
 
 @supports (-ms-ime-align: auto) {
