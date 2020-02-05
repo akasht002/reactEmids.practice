@@ -14,7 +14,6 @@ export const AdditionalInformation = props => {
                     value={props.additionalDescription}
                     textChange={props.handleAdditionInfo}
                 />
-                <span className="char-limit-block">500 Character max</span>
             </div>
             <div className='feedbackDesc default-222'>Disclaimer: Please note that this information will be available to Service Providers prior to hiring.</div>
         </Fragment>

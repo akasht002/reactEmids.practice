@@ -630,7 +630,6 @@ export class Organization extends React.PureComponent {
               }
             }}
           />
-          <span className="char-limit-block">500 Character max</span>
         </div>
 
         <div className='hrLine' />
