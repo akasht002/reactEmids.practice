@@ -423,12 +423,12 @@ export class VisitServiceList extends Component {
         return {
             startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
             endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-            serviceStatus: !isdefault ? this.props.status : this.getStatus(),
-            ServiceCategoryId: !isdefault ? '' :this.state.ServiceCategoryId,
-            serviceTypes: !isdefault ? [] :uniqElementOfArray(this.state.serviceTypes),
-            ServiceAreas: !isdefault ? {}:this.state.ServiceAreas,
+            serviceStatus: isdefault ? this.props.status : this.getStatus(),
+            ServiceCategoryId: isdefault ? '' :this.state.ServiceCategoryId,
+            serviceTypes: isdefault ? [] :uniqElementOfArray(this.state.serviceTypes),
+            ServiceAreas: isdefault ? {}:this.state.ServiceAreas,
             serviceProviderId: getUserInfo().serviceProviderId,
-            FromPage: !isdefault ? PAGE_NO: this.state.activePage,
+            FromPage: isdefault ? PAGE_NO: this.state.activePage,
             ToPage: SERVICE_REQUEST_PAGE_SIZE,
             searchKeyword:this.state.searchKeyword
         }
