@@ -215,5 +215,7 @@ export const API = {
     getAttorneyContactDetails: 'patient/attorney/',
     getSelectedServiceRequestAssessmentQuestionnaire:'ServiceRequestAssessment/Answers/',
     getThresholdRadius: 'Common/LookupConfig/ThresholdRadius',
-    getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/'
+    getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/',
+    getServiceRequestLists:'Search/serviceRequestList',
+    getServiceRequestListCount:'servicerequest/serviceprovider/serviceRequestListCount'
 }

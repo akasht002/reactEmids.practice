@@ -136,7 +136,7 @@ span.btn-hired, span.btn-hired:hover, .BlockProfileContainer .BlockProfileDetail
 .BlockProfileContainer .ProfileImage,
 .avatarImage,
 .active-listblock,
-.schedule-listblock:hover {
+.schedule-listblock:hover, .entity-date-filter .CTHeaderFilterToday:focus  {
     background-color: #e0f1fb !important;
 }
 

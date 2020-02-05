@@ -82,7 +82,8 @@ export function getServiceRequestTableList(data) {
             return {
               ...res,
               patientFullName: getFullName(getValue(res.firstName), getValue(res.lastName)),
-              serviceType: concatCommaWithSpace(res.serviceType)
+              serviceType: concatCommaWithSpace(res.serviceType),
+              serviceCategory: res.serviceCategory && concatCommaWithSpace(res.serviceCategory)
             }
           })
           dispatch(getServiceRequestTableListSuccess(data))
