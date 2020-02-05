@@ -10,7 +10,9 @@ const defaultState = {
         emailId: '',
         fullName: '',
         mobileNumber: '',
-        passcode: ''
+        passcode: '',
+        lastName: '',
+        firstName: ''
     },
 };
 
@@ -28,7 +30,9 @@ const verifyUserIDState = (state = defaultState, action) => {
                     emailId: action.data.serviceProviderEmailId,
                     fullName: action.data.firstName + ' ' + action.data.lastName,
                     mobileNumber: action.data.mobileNumber,
-                    passcode: action.data.tempPassword
+                    passcode: action.data.tempPassword,
+                    lastName: action.data.lastName,
+                    firstName: action.data.firstName
                 }
             };
 

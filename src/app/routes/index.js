@@ -112,8 +112,8 @@ export class AppStackRoot extends Component {
       // <ConnectedRouter history={this.props.history}>
       <Router history={this.props.history}>
         <Security
-          issuer='https://dev-375875.okta.com/oauth2/default'
-          client_id='0oa1n6z5zsenemyLe357'
+          issuer='https://navvis.oktapreview.com/oauth2/default'
+          client_id='0oapkgs7l7D0elBoS0h7'
           redirect_uri={window.location.origin + '/implicit/callback'}
           pkce={false}>
           <Switch>
