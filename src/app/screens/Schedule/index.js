@@ -338,6 +338,7 @@ export class Schedule extends Component {
         this.props.setselectedServices(data, e.target.checked)
         this.props.checkServiceType(this.props.serviceTypeList, data.serviceTypeId, e.target.checked)
         this.props.setServiceTypeIds(serviceTypeIds)
+        this.serviceTypes = this.props.services
         this.setState({
             serviceTypeId: this.serviceTypes,
             serviceTypeSelected: false
