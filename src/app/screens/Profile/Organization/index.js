@@ -620,9 +620,10 @@ export class Organization extends React.PureComponent {
             placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
+            maxlength={'2000'}
             value={this.state.description}
             textChange={e => {
-              if (getLength(e.target.value) <= 500) {
+              if (getLength(e.target.value) <= 2000) {
                 this.setState({
                   description: e.target.value,
                   disabledSaveBtn: false

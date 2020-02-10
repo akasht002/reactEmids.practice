@@ -859,7 +859,7 @@ export class PersonalDetail extends React.PureComponent {
             className='form-control'
             rows='5'
             value={this.state.description}
-            maxlength={'500'}
+            maxlength={'2000'}
             textChange={e => {
               this.setState({ description: e.target.value, disabledSaveBtn: false, descriptionInvaild: false })
             }}

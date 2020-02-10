@@ -27,6 +27,7 @@ import { caseInsensitiveComparer } from "../../utils/comparerUtility";
 import { setServiceProviderFeedbackTab } from "../../redux/dashboard/EntityDashboard/ServiceProvider/actions";
 import { getFullName } from "../../utils/stringHelper";
 import { isEntityUser } from "../../utils/userUtility";
+import { CustomTextArea } from "../../components/Base";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -301,17 +302,16 @@ export class VistSummary extends React.Component {
                         {questionList.answers.map((answer, i) => {
                           return (
                             <div key={answer.id} className="feedbackForm">
-                              <textarea
-                                id={answer.id}
-                                rows={4}
-                                className="form-control"
-                                value={this.state.textareaValue}
-                                onChange={e =>
-                                  this.handleTextarea(
+                              <CustomTextArea
+                                  id={answer.id}
+                                  rows={4}
+                                  className='form-control'
+                                  value={this.state.textareaValue}
+                                  textChange={(e) => this.handleTextarea(
                                     e.target.value,
                                     questionList.feedbackQuestionnaireId
-                                  )
-                                }
+                                  )}
+                                  maxlength={256}
                               />
                             </div>
                           );
