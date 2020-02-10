@@ -305,7 +305,6 @@ export class VistSummary extends React.Component {
                               <CustomTextArea
                                   id={answer.id}
                                   rows={4}
-                                  className='form-control'
                                   value={this.state.textareaValue}
                                   textChange={(e) => this.handleTextarea(
                                     e.target.value,

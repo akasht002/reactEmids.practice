@@ -26,6 +26,7 @@ import { calculateRating } from '../../../utils/calculation'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { SETTING } from '../../../constants/config'
 import { ImageInstruction } from '../Components/ImageInstruction'
+import { CustomTextArea } from '../../../components/Base';
 export class Organization extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -614,11 +615,9 @@ export class Organization extends React.PureComponent {
           </div>
         </div>
         <div className='col-md-12 mb-2'>
-          <TextArea
+          <CustomTextArea
             name='Description'
-            // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
             placeholder='Tell us about yourself'
-            className='form-control'
             rows='5'
             maxlength={'2000'}
             value={this.state.description}

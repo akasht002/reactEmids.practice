@@ -5,7 +5,6 @@ import _ from 'lodash'
 import './index.css'
 import {
   Input,
-  TextArea,
   SelectBox,
   ProfileModalPopup,
   ModalPopup,
@@ -22,6 +21,7 @@ import { SETTING } from '../../../constants/config'
 import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatPhoneNumber } from '../../../utils/formatName'
 import ImageModal from '../PersonalDetail/ImageModal';
+import { CustomTextArea } from '../../../components/Base';
 
 export class EntityPersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -532,11 +532,9 @@ export class EntityPersonalDetail extends React.PureComponent {
         </div>
 
         <div className='col-md-12 mb-2'>
-          <TextArea
+          <CustomTextArea
             name='Description'
-            // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
             placeholder='Tell us about yourself'
-            className='form-control'
             rows='5'
             value={this.state.description}
             maxlength={'2000'}

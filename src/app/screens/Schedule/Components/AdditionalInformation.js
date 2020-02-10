@@ -9,7 +9,7 @@ export const AdditionalInformation = props => {
                 <CustomTextArea rows={4}
                     placeholder='Write your description'
                     required={false}
-                    className='form-control'
+                    className={props.className || 'form-control'}
                     maxlength={1000}
                     value={props.additionalDescription}
                     textChange={props.handleAdditionInfo}

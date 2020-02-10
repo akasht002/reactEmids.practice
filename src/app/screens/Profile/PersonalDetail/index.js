@@ -25,6 +25,7 @@ import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 import { formatContactNumber, formatContactNumberValue } from '../../../utils/validations'
 import { emptyString } from '../../../utils/arrayUtility'
 import { ImageInstruction } from '../Components/ImageInstruction'
+import { CustomTextArea } from '../../../components/Base';
 
 export class PersonalDetail extends React.PureComponent {
   constructor(props) {
@@ -852,9 +853,8 @@ export class PersonalDetail extends React.PureComponent {
         </div>
 
         <div className='col-md-12 mb-2'>
-          <TextArea
+          <CustomTextArea
             name='Description'
-            // placeholder='I am a 34 year enthusiast who is ready to serve the people in need. I have a total of 7 years of experience in providing home care to the patients. I also help in transportation, generally on the weekends. I hope I will be a great help to you.'
             placeholder='Tell us about yourself'
             className='form-control'
             rows='5'
