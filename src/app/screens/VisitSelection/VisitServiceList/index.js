@@ -50,8 +50,8 @@ export class VisitServiceList extends Component {
             serviceRequestId: '',
             isOpen: false,
             filterOpen: false,
-            startDate: '',
-            endDate: '',
+            startDate: DEFAULT_FROM_DATE,
+            endDate: DEFAULT_TO_DATE,
             serviceStatus: [],
             isValid: true,
             selectedOption: null,
@@ -420,18 +420,29 @@ export class VisitServiceList extends Component {
     }
 
     getFilterData = (isdefault=false)=>{
-        return {
-            startDate: this.state.startDate === '' ? DEFAULT_FROM_DATE : this.state.startDate,
-            endDate: this.state.endDate === '' ? DEFAULT_TO_DATE : this.state.endDate,
-            serviceStatus: isdefault ? this.props.status : this.getStatus(),
-            ServiceCategoryId: isdefault ? '' :this.state.ServiceCategoryId,
-            serviceTypes: isdefault ? [] :uniqElementOfArray(this.state.serviceTypes),
-            ServiceAreas: isdefault ? {}:this.state.ServiceAreas,
+        let commonData = {
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
             serviceProviderId: getUserInfo().serviceProviderId,
-            FromPage: isdefault ? PAGE_NO: this.state.activePage,
             ToPage: SERVICE_REQUEST_PAGE_SIZE,
-            searchKeyword:this.state.searchKeyword
+            searchKeyword:this.state.searchKeyword,
+            FromPage:  this.state.activePage
         }
+        let statusData ;
+        isdefault ? 
+            statusData = { 
+                    serviceStatus:  this.props.status,
+                    ServiceCategoryId: '',
+                    serviceTypes: [],
+                    ServiceAreas:  {}
+                }
+            :statusData = { 
+                serviceStatus:  this.getStatus(),
+                ServiceCategoryId: this.state.ServiceCategoryId,
+                serviceTypes: uniqElementOfArray(this.state.serviceTypes),
+                ServiceAreas: this.state.ServiceAreas
+            }
+        return {...commonData,...statusData}
     }
 
     handleSearchData = (e) => {
