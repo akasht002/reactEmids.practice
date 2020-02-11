@@ -8,6 +8,7 @@ import { setMenuClicked } from '../auth/user/actions';
 import { onLogout } from '../auth/logout/actions';
 import { goBack } from '../navigation/actions';
 import { logError } from '../../utils/logError';
+import { isEntityUser } from '../../utils/userUtility';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
@@ -29,6 +30,10 @@ export const TeleHealth = {
     clearInitiator: 'clearInitiator/telehealth',
     createDataStore: 'createDataStore/telehealth'
 };
+
+const getUserType = () => {
+  return isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER
+}
 
 export const setInvitedRoomId = data =>{
     return{
@@ -127,10 +132,7 @@ export const saveContextData = data => {
 export function getLinkedParticipantsByPatients(data) {
     return (dispatch, getState) => {
         let searchText = data ? data : null;
-        return AsyncGet(API.getParticipantsByContext +
-            '/0/' + getUserInfo().coreoHomeUserId +
-            '/' + getState().telehealthState.contextId +
-            '/S/' + searchText
+        return AsyncGet(`${API.getParticipantsByContext}/0/${getUserInfo().coreoHomeUserId}/${getState().telehealthState.contextId}/${getUserType()}/${searchText}`
         ).then((resp) => {
             dispatch(getLinkedParticipantsByPatientsSuccess(resp.data));
         }).catch((err) => {
@@ -210,9 +212,7 @@ export function acceptVideoConference() {
         const roomNumber = getState().telehealthState.roomId;
         const telehealthState = getState().telehealthState;
         dispatch(startLoading());
-        return AsyncPutWithUrl(API.joinVideoConference 
-            + userInfo.coreoHomeUserId + '/S/'
-            + roomNumber).then((resp) => {
+        return AsyncPutWithUrl(`${API.joinVideoConference}${userInfo.coreoHomeUserId}/${getUserType()}/${roomNumber}`).then((resp) => {
             dispatch(clearInvitaion())
             if (telehealthState.isNewRequestCame) {
                 dispatch(newRequestCame(false))
@@ -233,9 +233,7 @@ export function leaveVideoConference(checkRoute) {
         const userInfo = getUserInfo();
         let state = getState();
         dispatch(startLoading());
-        return AsyncPutWithUrl(API.leaveVideoConference 
-            + userInfo.coreoHomeUserId + '/S/'
-            + state.telehealthState.roomId).then((resp) => {
+        return AsyncPutWithUrl(`${API.leaveVideoConference}${userInfo.coreoHomeUserId}/${getUserType()}/${state.telehealthState.roomId}`).then((resp) => {
                 if (state.telehealthState.isNewRequestCame) {
                     dispatch(setRoomId(state.telehealthState.invitedRoomId))
                     dispatch(acceptVideoConference())
@@ -264,9 +262,7 @@ export function GetParticipantByConferenceId() {
     return (dispatch, getState) => {
         const userInfo = getUserInfo();
         let state = getState();
-        return AsyncGet(API.getParticipantByConferenceId
-            + userInfo.coreoHomeUserId + '/S/'
-            + state.telehealthState.roomId).then((resp) => {
+        return AsyncGet(`${API.getParticipantByConferenceId}${userInfo.coreoHomeUserId}/${getUserType()}/${state.telehealthState.roomId}`).then((resp) => {
                 var data = resp.data && resp.data.filter((participant) => {
                     return userInfo.coreoHomeUserId !== participant.userId;
                 }).map((participant) => {
@@ -288,11 +284,7 @@ export function GetAllParticipants(data) {
         let searchText = data ? data : null;
         let roomId = state.telehealthState.roomId ? state.telehealthState.roomId : 0;
         let contextId = state.telehealthState.contextId ? state.telehealthState.contextId : 0;
-        return AsyncGet(API.getAllParticipants
-            + userInfo.coreoHomeUserId + '/S/'
-            + contextId + '/'
-            + roomId + '/'
-            + searchText).then((resp) => {
+        return AsyncGet(`${API.getAllParticipants}${userInfo.coreoHomeUserId}/${getUserType()}/${contextId}/${roomId}/${searchText}`).then((resp) => {
                 dispatch(onGetAllParticipantsSuccess(resp.data));
             }).catch((err) => {
             })

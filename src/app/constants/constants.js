@@ -72,7 +72,8 @@ export const USERTYPES = {
     DESIGNATED_SERVICE_PROVIDER: 2,
     ENTITY_USER: 'EU',
     PATIENT_AND_GUARDIAN: "IG",
-    CARETEAM: 'CT'
+    CARETEAM: 'CT',
+    ENTITY: 'E'
 };
 
 export const ImageFormats = {
@@ -195,7 +196,8 @@ export const SERVICE_REQ_STATUS = {
     CANCELLED: 47,
     NOT_INTERESTED: 58,
     PENDING_APPROVAL: 106,
-    DECLINED: 107
+    DECLINED: 107,
+    ALL:[35,38,39,47,42]
 }
 
 export const ERROR_MSG = {

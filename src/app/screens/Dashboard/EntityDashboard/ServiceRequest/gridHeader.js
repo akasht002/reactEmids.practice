@@ -1,29 +1,22 @@
-export let allServiceRequests = {
+const commonFieldName = {
     serviceRequestId: 'SR ID',
-    serviceCategoryDescription: 'Service Category',
+    serviceCategory: 'Service Category',
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
     status: 'Status',
-    icon: 'Actions',
+    icon: 'Actions'
+}
+export let allServiceRequests = {
+    ...commonFieldName,
     className: 'all-serviceRequests-tableblock'
 }
 
 export let cancelledServiceRequests = {
-    serviceRequestId: 'SR ID',
-    serviceCategoryDescription: 'Service Category',
-    serviceType: 'Service Type',
-    patientFullName: 'Individuals',
-    status: 'Status',
-    icon: 'Actions',
+    ...commonFieldName,
     className: 'cancelled-serviceRequests-tableblock'
 }
 
 export let openServiceRequests = {
-    serviceRequestId: 'SR ID',
-    serviceCategoryDescription: 'Service Category',
-    serviceType: 'Service Type',
-    patientFullName: 'Individuals',
-    status: 'Status',
-    icon: 'Actions',
+    ...commonFieldName,
     className: 'open-serviceRequests-tableblock'
 }

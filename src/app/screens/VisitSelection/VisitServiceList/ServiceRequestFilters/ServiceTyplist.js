@@ -11,8 +11,8 @@ function ServiceTypeList(props){
                     name={"ServiceList"} 
                     id={"ServiceList"+catNum} 
                     type="checkbox"
-                   value={props.serviceType}
-                   checked={item.isChecked}
+                    value={props.serviceType}
+                    checked={item.isChecked}
                     onChange={(e)=>{
                         item.isChecked = e.target.checked;
                         props.handleserviceType(item,e)}

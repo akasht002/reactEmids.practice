@@ -57,3 +57,64 @@ describe('actions', () => {
         expect(actions.clearServiceArea(data)).toEqual(expectedAction)
     })
 });
+
+
+describe('async actions', () => {
+    afterEach(() => {
+      fetchMock.restore()
+    })   
+
+    it('Call getServiceRequestListByFilterCount fn', () => {
+        fetchMock.get(API.getServiceRequestListCount, {
+            body: { data: {} },
+            headers: { 'content-type': 'application/json' },
+            response: { data: {} }
+        })
+
+        const store = mockStore({})
+        let data = { 
+            Category: 1,
+            ServiceTypes: {},
+            Status: [],
+            FromPage: '',
+            ToPage: '',
+            ServiceAreas: {},
+            serviceProviderId: 1,
+            offset: 0,
+            searchText :  '' 
+        }
+
+        return store.dispatch(actions.getServiceRequestListByFilterCount(data)).then((response) => {
+            store.dispatch(actions.getFilterDataCountSuccess())
+            expect(store.getActions()).toBeDefined()
+        }).catch(err => {
+        })
+    });
+
+    it('Call getServiceRequestListByFilter fn', () => {
+        fetchMock.get(API.getServiceRequestLists, {
+            body: { data: {} },
+            headers: { 'content-type': 'application/json' },
+            response: { data: {} }
+        })
+
+        const store = mockStore({})
+        let data = { 
+            Category: 1,
+            ServiceTypes: {},
+            Status: [],
+            FromPage: '',
+            ToPage: '',
+            ServiceAreas: {},
+            serviceProviderId: 1,
+            offset: 0,
+            searchText :  '' 
+        }
+
+        return store.dispatch(actions.getServiceRequestListByFilter(data)).then((response) => {
+            store.dispatch(actions.getVisitServiceListSuccess())
+            expect(store.getActions()).toBeDefined()
+        }).catch(err => {
+        })
+    });
+});

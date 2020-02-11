@@ -20,7 +20,7 @@ import ModalTemplate from '../Modals/Modal';
 import '../styles.css';
 import './index.css';
 import { USERTYPES } from '../../../constants/constants';
-import { isEntityServiceProvider } from '../../../utils/userUtility';
+import { isEntityServiceProvider, isEntityUser } from '../../../utils/userUtility';
 import {Preloader} from '../../../components';
 
 export class ConversationSummary extends Component {
@@ -69,7 +69,7 @@ export class ConversationSummary extends Component {
             participants: this.state.participants.toString(),
             createdBy: userId,
             title: this.state.converationTitle,
-            createdByType: USERTYPES.SERVICE_PROVIDER,
+            createdByType: isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER,
         }
         this.props.createNewConversation(data);
     };

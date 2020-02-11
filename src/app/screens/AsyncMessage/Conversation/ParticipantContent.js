@@ -193,7 +193,7 @@ export class ParticipantContent extends Component {
         let userId = this.props.loggedInUser.coreoHomeUserId;
         if (this.props.existingParticipants && this.props.existingParticipants.length > 0) {
              this.props.existingParticipants.map((participant, index) => {
-                if (userId !== participant.userId) {
+                if ((userId !== participant.userId) && !(participant.participantType === USERTYPES.ENTITY)) {
                     participant.userId.toString() === this.state.selectedProfile ? profileOptionClass = "Open" : profileOptionClass = "";
                     existingParticipants.push(
                         <li key={index} className="list-group-item participants">
@@ -254,7 +254,7 @@ export class ParticipantContent extends Component {
                 return '';
             });
             this.props.existingParticipants.map((participant, index) => {
-                if (userId === participant.userId) {
+                if ((userId === participant.userId) || (participant.participantType === USERTYPES.ENTITY)) {
                     loggedInUser.push(
                         <li className="list-group-item d-flex participants myChat">
                             <table className="table">
