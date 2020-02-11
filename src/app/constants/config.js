@@ -22,6 +22,10 @@ export const PUBLIC_KEY =
 
 export const STRIPE_KEY = "pk_test_n70bkOns9PqUMG4go5E77356"
 
+export const OKTA_ISSUER = 'https://navvis.oktapreview.com/oauth2/default';
+
+export const OKTA_CLIENTID = '0oapkgs7l7D0elBoS0h7';
+
 export const TeleHealthSettings = {
     maxVideoCallHourInMs: 7200000,
     sessionInactiveInMs: 1800000

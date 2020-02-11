@@ -74,10 +74,6 @@ export function setPassword(data) {
 
 export function setPasswordIndividual(data) {
     return (dispatch) => {
-        // let body = {
-        //     userName: data.username,
-        //     password: encryptPassword(data.password)
-        // };
         dispatch(startLoading());
         return Post(API.setPassword, data).then((resp) => {
             dispatch(onboardSucess());

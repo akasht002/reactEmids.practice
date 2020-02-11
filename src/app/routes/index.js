@@ -40,6 +40,7 @@ import {
   OktaCallBack
 } from '../screens';
 import PrivateRoute from './privateRouter';
+import { OKTA_CLIENTID, OKTA_ISSUER } from '../constants/config';
 
 export function Loading({ error }) {
   if (error) {
@@ -109,11 +110,10 @@ export class AppStackRoot extends Component {
 
   render() {
     return (
-      // <ConnectedRouter history={this.props.history}>
       <Router history={this.props.history}>
         <Security
-          issuer='https://navvis.oktapreview.com/oauth2/default'
-          client_id='0oapkgs7l7D0elBoS0h7'
+          issuer= {OKTA_ISSUER}
+          client_id= {OKTA_CLIENTID}
           redirect_uri={window.location.origin + '/implicit/callback'}
           pkce={false}>
           <Switch>
@@ -162,7 +162,6 @@ export class AppStackRoot extends Component {
           </Switch>
         </Security>
       </Router>
-      // </ConnectedRouter>
     );
   }
 };
