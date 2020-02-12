@@ -217,6 +217,6 @@ export const API = {
     getSelectedServiceRequestAssessmentQuestionnaire:'ServiceRequestAssessment/Answers/',
     getThresholdRadius: 'Common/LookupConfig/ThresholdRadius',
     getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/',
-    getServiceRequestLists:'Search/serviceRequestList',
-    getServiceRequestListCount:'servicerequest/serviceprovider/serviceRequestListCount'
+    getServiceRequestLists:'viewrequest/servicerequestlist',
+    getServiceRequestListCount:'viewrequest/servicerequestlistcount'
 }
