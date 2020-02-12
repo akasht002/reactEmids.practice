@@ -1,3 +1,14 @@
 .style {
     resize: 'none'
 }
+
+span.char-limit-block
+{
+    position: absolute;
+    text-align: right;
+    color: #8c8c8c;
+    display: block;
+    font-size: 14px;
+    right: 0px;
+    margin-top: 5px
+}

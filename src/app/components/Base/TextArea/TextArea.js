@@ -15,6 +15,7 @@ class TextArea extends React.Component {
                 onChange={this.props.textChange}
                 value={this.props.value}
             />
+            <span className="char-limit-block">{`${this.props.maxlength} Character max`}</span>
         </div>
         );
     }

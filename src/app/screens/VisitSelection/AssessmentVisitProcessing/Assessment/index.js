@@ -22,6 +22,7 @@ import { QUESTION_TYPE,SERVICE_STATES,DATE_FORMATS } from '../../../../constants
 import { convertTime24to12,getFullName } from '../../../../utils/stringHelper';
 import { Footer } from './Components/Footer'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
+import { CustomTextArea } from "../../../../components/Base";
 export class Assessment extends Component {
 
     constructor(props) {
@@ -338,13 +339,13 @@ export class Assessment extends Component {
                                                                 {questionList.answers.map((answer, i) => {
                                                                     return (
                                                                         <div key={answer.id} className="feedbackForm">
-                                                                            <textarea
+                                                                            <CustomTextArea
                                                                                 id={answer.id}
                                                                                 rows={4}
                                                                                 className='form-control'
-                                                                                value={this.state.textareaValue }
-                                                                                onChange={(e) => this.handleTextarea(e, questionList.assessmentQuestionnaireId)}
-                                                                                maxLength={1000}
+                                                                                value={this.state.textareaValue}
+                                                                                textChange={(e) => this.handleTextarea(e, questionList.assessmentQuestionnaireId)}
+                                                                                maxlength={500}
                                                                                 disabled={this.props.requestDetails.visitStatusId === 43}
                                                                             />
                                                                         </div>

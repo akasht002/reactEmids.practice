@@ -17,6 +17,7 @@ import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSel
 import './style.css'
 import { isNull } from '../../../../utils/validations'
 import { QUESTION_TYPE } from '../../../../constants/constants'
+import { CustomTextArea } from "../../../../components/Base";
 export class AssessmentFeedback extends Component {
 
     constructor(props) {
@@ -234,13 +235,13 @@ export class AssessmentFeedback extends Component {
                                                                 {questionList.answers.map((answer, i) => {
                                                                     return (
                                                                         <div key={answer.id} className="feedbackForm">
-                                                                            <textarea
+                                                                            <CustomTextArea
                                                                                 id={answer.id}
                                                                                 rows={4}
                                                                                 className='form-control'
                                                                                 value={this.state.textareaValue}
-                                                                                onChange={(e) => this.handleTextarea(e, questionList.feedbackQuestionnaireId)}
-                                                                                maxLength={1000}
+                                                                                textChange={(e) => this.handleTextarea(e, questionList.feedbackQuestionnaireId)}
+                                                                                maxlength={256}
                                                                             />
                                                                         </div>
                                                                     )
