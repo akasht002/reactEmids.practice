@@ -6,5 +6,6 @@ export const USER = {
     menuClicked: 'menuClicked/user',
     setIsFormDirty: 'set_isFormDirty/user',
     isSecureLogin: "isSecureLogin/user",
-    getThresholdRadiusSuccess: 'getThresholdRadiusSuccess/user'
+    getThresholdRadiusSuccess: 'getThresholdRadiusSuccess/user',
+    getsessionTimeOutSuccess: 'getsessionTimeOutSuccess/user'
 };

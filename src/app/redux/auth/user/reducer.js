@@ -11,7 +11,8 @@ const defaultState = {
     menuClicked: null,
     isFormDirty: false,
     isSecureLogin: false,
-    thresholdRadius: 0
+    thresholdRadius: 0,
+    sessionTime: 0
 };
 
 export default (state = defaultState, action) => {
@@ -53,6 +54,11 @@ export default (state = defaultState, action) => {
         return {
             ...state,
             thresholdRadius: action.data && action.data.value
+        };
+        case USER.getsessionTimeOutSuccess:
+        return {
+            ...state,
+            sessionTime: action.data && action.data
         };
         default:
             return state;

@@ -10,6 +10,8 @@ import { objectCreationRoles } from '../../../utils/roleUtility';
 import { startLoading, endLoading } from '../../loading/actions';
 import { USER } from './bridge'
 import { logError } from '../../../utils/logError';
+import Axios from '../../../../../node_modules/axios';
+import moment from 'moment'
 
 export const setUserRoles = (data) => {
     return {
@@ -34,6 +36,13 @@ export const clearData = () => {
 export function isSecureLogin(data) {
     return {
         type: USER.isSecureLogin,
+        data
+    }
+}
+
+export function getsessionTimeOutSuccess(data) {
+    return {
+        type: USER.getsessionTimeOutSuccess,
         data
     }
 }
@@ -154,12 +163,28 @@ export function setIsFormDirty(isDirty) {
 
 export const getThresholdRadius = () => async (dispatch) => {
     try {
-        const resp = await ThirdPartyGet(API.getThresholdRadius)          
+        const resp = await ThirdPartyGet(API.getThresholdRadius)
         dispatch(getThresholdRadiusSuccess(resp.data[0]));
     } catch (error) {
         logError(error)
     }
 };
+
+export const getCurrentSession = () => async (dispatch) => {
+    try {
+        const resp = await Axios.get('https://navvis.oktapreview.com/api/v1/sessions/me', {withCredentials: true})
+        console.log('object', resp)
+        if (resp && resp.data.expiresAt) {
+            const momentUtcNow = moment.utc();
+            const momentUtcExp = moment.utc(resp.data.expiresAt);
+            const diff = momentUtcExp.diff(momentUtcNow, 'seconds') - 60;
+            dispatch(getsessionTimeOutSuccess(diff))
+        }
+    }
+    catch (error) {
+        logError(error)
+    }
+}
 
 export const getThresholdRadiusSuccess = (data) => {
     return {

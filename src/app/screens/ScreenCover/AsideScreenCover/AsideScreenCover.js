@@ -30,6 +30,7 @@ import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/a
 import './style.css'
 import { EntityUserMenuData } from '../../../data/EntityUserMenuData';
 import { withAuth } from "@okta/okta-react";
+import {getCurrentSession} from '../../../redux/auth/user/actions'
 
 export class AsideScreenCover extends React.Component {
     constructor(props) {
@@ -57,6 +58,7 @@ export class AsideScreenCover extends React.Component {
         authorizePermission(SCREENS.ASYNC_MESSAGE);
         this.props.getDashboardMessageCount();
         this.props.getProfilePercentage();
+        this.props.getCurrentSession();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -378,7 +380,8 @@ export function mapDispatchToProps(dispatch) {
         setIsFormDirty: (data) => dispatch(setIsFormDirty(data)),
         createVideoConference: (data) => dispatch(createVideoConference(data)),
         createDataStore: data => dispatch(createDataStore(data)),
-        getProfilePercentage: () => dispatch(getProfilePercentage())
+        getProfilePercentage: () => dispatch(getProfilePercentage()),
+        getCurrentSession: () => dispatch(getCurrentSession())
     }
 };
 
