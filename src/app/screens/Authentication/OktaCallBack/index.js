@@ -4,10 +4,12 @@ import {connect} from 'react-redux'
 import {userFound} from 'redux-oidc'
 import { onLoginSuccess, onLoginFail } from '../../../redux/auth/login/actions';
 import { isSecureLogin } from '../../../redux/auth/user/actions';
+import { loadData } from '../../../utils/storage';
+import { OKTA } from '../../../constants/constants';
 class OktaCallBack extends React.PureComponent {
     componentDidMount(){
         this.props.isSecureLogin(true)
-        let localStorageData = JSON.parse(localStorage.getItem("okta-token-storage"));
+        let localStorageData = loadData(OKTA.tokenStorage);
         if(localStorageData){
             const {idToken, accessToken} = localStorageData
             let loginResponse = {

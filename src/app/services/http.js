@@ -11,6 +11,9 @@ export const thirdPartyURL = process.env.REACT_APP_TP_URL;
 export const asyncURL = process.env.REACT_APP_MSG_URL;
 export const careTeamURL = process.env.REACT_APP_CARETEAM_URL;
 export const patientURL = process.env.REACT_APP_PATIENT_URL;
+export const oktaURL = process.env.REACT_APP_OKTA_URL;
+export const oktaIssuer = process.env.REACT_APP_OKTA_ISSUER;
+export const oktaClientId = process.env.REACT_APP_OKTA_CLIENTID
 
 export const AuthLogin = (url, data) => {
     var bodyFormData = new FormData()
@@ -286,3 +289,11 @@ export const CareTeamGet = (url) => {
         handleError(error);
     })
 }
+
+export const OktaGet = (url) => {
+    return axios.get(oktaURL + url, {withCredentials: true}).then((resp) => {
+        return resp;
+    }).catch((error) => {
+        handleError(error);
+    })
+};

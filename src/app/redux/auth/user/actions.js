@@ -1,16 +1,15 @@
 import { API } from '../../../services/api';
-import { Get, CareTeamGet, ThirdPartyGet } from '../../../services/http';
+import { Get, CareTeamGet, ThirdPartyGet, OktaGet } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
-import { USER_LOCALSTORAGE, ENTITY_USER } from '../../../constants/constants';
+import { USER_LOCALSTORAGE, ENTITY_USER, LOCALSTORAGE_KEYS } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 import { objectCreationRoles } from '../../../utils/roleUtility';
 import { startLoading, endLoading } from '../../loading/actions';
 import { USER } from './bridge'
 import { logError } from '../../../utils/logError';
-import Axios from '../../../../../node_modules/axios';
 import moment from 'moment'
 
 export const setUserRoles = (data) => {
@@ -88,14 +87,14 @@ export function setServiceProviderDetails(emailID, autoLogoutTime) {
                     userInfo: resp.data,
                     autoLogoutTime: autoLogoutTime
                 };
-                localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
-                localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
+                save(LOCALSTORAGE_KEYS.serviceProviderID, resp.data.serviceProviderId);
+                save(LOCALSTORAGE_KEYS.serviceProviderTypeID, resp.data.serviceProviderTypeId);
                 save(USER_LOCALSTORAGE, userData);
                 dispatch(setUserSuccess(userData))
                 dispatch(getUserRoles(userData))
             })
             .catch(err => {
-                console.log(err);
+                logError(err)
             })
     }
 }
@@ -172,7 +171,7 @@ export const getThresholdRadius = () => async (dispatch) => {
 
 export const getCurrentSession = () => async (dispatch) => {
     try {
-        const resp = await Axios.get('https://navvis.oktapreview.com/api/v1/sessions/me', {withCredentials: true})
+        const resp = await OktaGet(API.oktaSession);
         if (resp && resp.data.expiresAt) {
             const momentUtcNow = moment.utc();
             const momentUtcExp = moment.utc(resp.data.expiresAt);

@@ -218,5 +218,6 @@ export const API = {
     getThresholdRadius: 'Common/LookupConfig/ThresholdRadius',
     getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/',
     getServiceRequestLists:'viewrequest/servicerequestlist',
-    getServiceRequestListCount:'viewrequest/servicerequestlistcount'
+    getServiceRequestListCount:'viewrequest/servicerequestlistcount',
+    oktaSession : 'v1/sessions/me'
 }

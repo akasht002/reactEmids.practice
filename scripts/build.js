@@ -35,6 +35,9 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://chqa-vp-ui.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://chqa-ct-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://chqa-gen-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_OKTA_URL = 'https://navvis.oktapreview.com/api/';
+  process.env.REACT_APP_OKTA_ISSUER = 'https://navvis.oktapreview.com/oauth2/default';
+  process.env.REACT_APP_OKTA_CLIENTID = '0oapkgs7l7D0elBoS0h7'
 } else if (argv.includes('--dev')) {
   process.env.REACT_APP_API_URL = 'https://chdevdemo-sp-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_AUTH_URL = 'https://chdevdemo-oauth-api.coreoflowsandbox.com/';
@@ -79,6 +82,9 @@ if (argv.includes('--qa')) {
   process.env.REACT_APP_SIGNALR_URL = 'https://PFTest-tp-api.coreoflowsandbox.com/signalr';
   process.env.REACT_APP_CARETEAM_URL = 'https://PFTest-ct-api.coreoflowsandbox.com/api/';
   process.env.REACT_APP_PATIENT_URL = 'https://PFTest-gen-api.coreoflowsandbox.com/api/';
+  process.env.REACT_APP_OKTA_URL = 'https://navvis.oktapreview.com/api/';
+  process.env.REACT_APP_OKTA_ISSUER = 'https://navvis.oktapreview.com/oauth2/default';
+  process.env.REACT_APP_OKTA_CLIENTID = '0oapkgs7l7D0elBoS0h7'
 } else if (argv.includes('--uat')) {
   process.env.REACT_APP_API_URL = 'https://uat-sp-api.coreodevserver.com/api/';
   process.env.REACT_APP_AUTH_URL = 'https://uat-oauth-api.coreodevserver.com/';

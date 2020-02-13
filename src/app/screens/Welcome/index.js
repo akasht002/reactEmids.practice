@@ -37,10 +37,9 @@ export class Welcome extends Component {
         this.interval = setInterval(() => {
             this.nextSlide();
         }, SLIDER_TIME);
-        this.checkAuthentication = this.checkAuthentication.bind(this)
     };
 
-    async checkAuthentication() {
+     checkAuthentication = async() => {
         const authenticated = await this.props.auth.isAuthenticated();
         if (authenticated !== this.state.authenticated) {
           this.setState({ authenticated });

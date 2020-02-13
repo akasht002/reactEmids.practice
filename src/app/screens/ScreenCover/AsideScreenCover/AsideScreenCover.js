@@ -188,7 +188,6 @@ export class AsideScreenCover extends React.Component {
     }
 
     render() {
-        console.log('this.props', this.props)
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
         if (isEntityServiceProvider()) {
