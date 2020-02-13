@@ -1,15 +1,16 @@
 import { API } from '../../../services/api';
-import { Get, CareTeamGet, ThirdPartyGet } from '../../../services/http';
+import { Get, CareTeamGet, ThirdPartyGet, OktaGet } from '../../../services/http';
 import { push } from '../../navigation/actions';
 import { save } from '../../../utils/storage';
 import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
-import { USER_LOCALSTORAGE, ENTITY_USER } from '../../../constants/constants';
+import { USER_LOCALSTORAGE, ENTITY_USER, LOCALSTORAGE_KEYS } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
-import {objectCreationRoles} from '../../../utils/roleUtility';
-import {startLoading, endLoading} from '../../loading/actions';
-import {USER} from './bridge'
+import { objectCreationRoles } from '../../../utils/roleUtility';
+import { startLoading, endLoading } from '../../loading/actions';
+import { USER } from './bridge'
 import { logError } from '../../../utils/logError';
+import moment from 'moment'
 
 export const setUserRoles = (data) => {
     return {
@@ -31,7 +32,21 @@ export const clearData = () => {
     }
 }
 
-export function onSetUserSuccess(data){
+export function isSecureLogin(data) {
+    return {
+        type: USER.isSecureLogin,
+        data
+    }
+}
+
+export function getsessionTimeOutSuccess(data) {
+    return {
+        type: USER.getsessionTimeOutSuccess,
+        data
+    }
+}
+
+export function onSetUserSuccess(data) {
     return (dispatch, getState) => {
         let userData = {
             ...getState().oidc.user
@@ -48,7 +63,7 @@ export const deleteUserSuccess = (userData) => {
     }
 }
 
-export function onLogout(){
+export function onLogout() {
     return (dispatch, getState) => {
         userManager.removeUser();
         dispatch(remove(USER_LOCALSTORAGE, onClear));
@@ -56,32 +71,32 @@ export function onLogout(){
     }
 }
 
-export function onClear(){
+export function onClear() {
     return (dispatch, getState) => {
         dispatch(deleteUserSuccess(null));
         dispatch(push(Path.root));
     }
 }
 
-export function setServiceProviderDetails(emailID, autoLogoutTime){ 
-    return (dispatch, getState) => {           
-        Get(API.getServiceProviderID + emailID )
-          .then(resp => {
-            let userData = {
-                ...getState().oidc.user,
-                userInfo: resp.data,
-                autoLogoutTime: autoLogoutTime
-            };
-            localStorage.setItem('serviceProviderID', resp.data.serviceProviderId);
-            localStorage.setItem('serviceProviderTypeID', resp.data.serviceProviderTypeId);
-            save(USER_LOCALSTORAGE, userData);
-            dispatch(setUserSuccess(userData))
-            dispatch(getUserRoles(userData))
-          })
-          .catch(err => {
-            console.log(err);
-          })
-      }
+export function setServiceProviderDetails(emailID, autoLogoutTime) {
+    return (dispatch, getState) => {
+        Get(API.getUserIdForCT)
+            .then(resp => {
+                let userData = {
+                    ...getState().oidc.user,
+                    userInfo: resp.data,
+                    autoLogoutTime: autoLogoutTime
+                };
+                save(LOCALSTORAGE_KEYS.serviceProviderID, resp.data.serviceProviderId);
+                save(LOCALSTORAGE_KEYS.serviceProviderTypeID, resp.data.serviceProviderTypeId);
+                save(USER_LOCALSTORAGE, userData);
+                dispatch(setUserSuccess(userData))
+                dispatch(getUserRoles(userData))
+            })
+            .catch(err => {
+                logError(err)
+            })
+    }
 }
 
 export function getUserRoles(userData) {
@@ -103,9 +118,9 @@ export function getUserRoles(userData) {
             }
             dispatch(endLoading());
         })
-        .catch((error) => {
-            dispatch(endLoading());
-        });
+            .catch((error) => {
+                dispatch(endLoading());
+            });
     }
 }
 
@@ -114,7 +129,7 @@ export function getUserInactiveTimeout(emailID) {
         return Get(API.getTimeoutMilliseconds).then((response) => {
             dispatch(setServiceProviderDetails(emailID, parseInt(response.data[0].name, 10)));
         })
-        .catch((error) => { });
+            .catch((error) => { });
     }
 }
 
@@ -131,15 +146,15 @@ export const checkUserData = () => {
     }
 }
 
-export function setMenuClicked(data){
-    return{
+export function setMenuClicked(data) {
+    return {
         type: USER.menuClicked,
         data
     }
 };
 
-export function setIsFormDirty(isDirty){
-    return{
+export function setIsFormDirty(isDirty) {
+    return {
         type: USER.setIsFormDirty,
         data: isDirty
     }
@@ -147,12 +162,27 @@ export function setIsFormDirty(isDirty){
 
 export const getThresholdRadius = () => async (dispatch) => {
     try {
-        const resp = await ThirdPartyGet(API.getThresholdRadius)          
+        const resp = await ThirdPartyGet(API.getThresholdRadius)
         dispatch(getThresholdRadiusSuccess(resp.data[0]));
     } catch (error) {
         logError(error)
     }
 };
+
+export const getCurrentSession = () => async (dispatch) => {
+    try {
+        const resp = await OktaGet(API.oktaSession);
+        if (resp && resp.data.expiresAt) {
+            const momentUtcNow = moment.utc();
+            const momentUtcExp = moment.utc(resp.data.expiresAt);
+            const diff = momentUtcExp.diff(momentUtcNow, 'seconds') * 1000;
+            dispatch(getsessionTimeOutSuccess(diff))
+        }
+    }
+    catch (error) {
+        logError(error)
+    }
+}
 
 export const getThresholdRadiusSuccess = (data) => {
     return {

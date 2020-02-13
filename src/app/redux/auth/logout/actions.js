@@ -31,13 +31,13 @@ export const logoutSuccess = (userData) => {
     }
 }
 
-export function onLogout(){
+export function onLogout(onSuccess){
     return (dispatch) => {
         let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
         if (localStorageData && localStorageData.data && localStorageData.data.access_token) {
-            userManager.removeUser();
             dispatch(remove(USER_LOCALSTORAGE, onClear));
-            userManager.signoutRedirect();
+            userManager.removeUser();
+            onSuccess ? onSuccess() : userManager.signoutRedirect();
         } else {
             dispatch(push(Path.root))
         }

@@ -211,11 +211,13 @@ export const API = {
     getPatientVitals: 'patient/get-patient-coreo-association/',
     getPlanVisitFeedBack: 'feedback/patient/feedbackdetails/',
     getPaymentAvailability: 'Common/LookupConfig/PaymentAvailability',
+    getUserIdForCT: 'ServiceProviderOnBoarding/',
     getEmergencyContactDetails: 'patient/emergencycontact/',
     getAttorneyContactDetails: 'patient/attorney/',
     getSelectedServiceRequestAssessmentQuestionnaire:'ServiceRequestAssessment/Answers/',
     getThresholdRadius: 'Common/LookupConfig/ThresholdRadius',
     getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/',
-    getServiceRequestLists:'Search/serviceRequestList',
-    getServiceRequestListCount:'servicerequest/serviceprovider/serviceRequestListCount'
+    getServiceRequestLists:'viewrequest/servicerequestlist',
+    getServiceRequestListCount:'viewrequest/servicerequestlistcount',
+    oktaSession : 'v1/sessions/me'
 }

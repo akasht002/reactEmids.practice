@@ -35,7 +35,7 @@ ScreenCover.propTypes = {
 
 export function mapStateToProps(state) {
     return {
-        timeForInactivity: state.authState.userState.userData && state.authState.userState.userData.autoLogoutTime,
+        timeForInactivity: state.authState.userState && state.authState.userState.sessionTime,
         accessToken: state.oidc.user && state.oidc.user.access_token
     }
 }

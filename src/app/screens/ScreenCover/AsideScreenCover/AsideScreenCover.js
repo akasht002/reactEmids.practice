@@ -29,6 +29,8 @@ import {isIEBrowser, isMobileBrowser} from '../../../utils/browserUtility'
 import { getProfilePercentage } from '../../../redux/profile/ProgressIndicator/actions';
 import './style.css'
 import { EntityUserMenuData } from '../../../data/EntityUserMenuData';
+import { withAuth } from "@okta/okta-react";
+import {getCurrentSession} from '../../../redux/auth/user/actions'
 
 export class AsideScreenCover extends React.Component {
     constructor(props) {
@@ -56,6 +58,7 @@ export class AsideScreenCover extends React.Component {
         authorizePermission(SCREENS.ASYNC_MESSAGE);
         this.props.getDashboardMessageCount();
         this.props.getProfilePercentage();
+        this.props.getCurrentSession();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -104,6 +107,10 @@ export class AsideScreenCover extends React.Component {
         this.props.onClickOk();
     }
 
+    onSuccess = () => {
+        this.props.auth.logout()
+    }
+
     navigateProfileHeader = (link) => {
         this.props.setIsFormDirty(false);
         switch (link) {
@@ -120,7 +127,7 @@ export class AsideScreenCover extends React.Component {
                 this.checkVideoCompatibility(link, false, null)
                 break;
             case 'logout':
-                this.props.onLogout();
+                this.props.onLogout(this.props.isSecureLogin ? this.onSuccess :null);
                 break;
             case 'aboutUs':
                 this.setState({ selectedLink: link })
@@ -363,7 +370,7 @@ export function mapDispatchToProps(dispatch) {
         getPersonalDetail: () => dispatch(action.getPersonalDetail()),
         navigateProfileHeader: (link) => dispatch(push(link)),
         canServiceProviderCreateMessage: () => dispatch(CanServiceProviderCreateMessage()),
-        onLogout: () => dispatch(onLogout()),
+        onLogout: (onSuccess) => dispatch(onLogout(onSuccess)),
         clearRoom: () => dispatch(clearRoom()),
         joinVideoConference: () => dispatch(joinVideoConference()),
         rejectConference: () => dispatch(rejectConference()),
@@ -372,7 +379,8 @@ export function mapDispatchToProps(dispatch) {
         setIsFormDirty: (data) => dispatch(setIsFormDirty(data)),
         createVideoConference: (data) => dispatch(createVideoConference(data)),
         createDataStore: data => dispatch(createDataStore(data)),
-        getProfilePercentage: () => dispatch(getProfilePercentage())
+        getProfilePercentage: () => dispatch(getProfilePercentage()),
+        getCurrentSession: () => dispatch(getCurrentSession())
     }
 };
 
@@ -394,10 +402,10 @@ export function mapStateToProps(state) {
         telehealthToken: state.telehealthState.token,
         buildVersion: state.aboutUsState.buildVersion,
         isFormDirty: state.authState.userState.isFormDirty,
-        createData: state.telehealthState.createData
+        createData: state.telehealthState.createData,
+        isSecureLogin: state.authState.userState.isSecureLogin
     };
 };
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover)
-)
+export default withAuth(withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(AsideScreenCover))) 

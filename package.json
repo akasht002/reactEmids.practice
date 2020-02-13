@@ -174,6 +174,7 @@
     }
   },
   "devDependencies": {
+    "@okta/okta-react": "^1.2.3",
     "jest-cli": "^23.5.0",
     "react-ellipsis-text": "^1.1.0"
   }

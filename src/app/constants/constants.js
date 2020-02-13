@@ -599,3 +599,12 @@ export const PATIENT_STATUS = {
 export const ERROR_MESSAGE = {
     noLocationData: 'No Location Data'
 }
+
+export const LOCALSTORAGE_KEYS = {
+    serviceProviderID: 'serviceProviderID',
+    serviceProviderTypeID: 'serviceProviderTypeID'
+}
+
+export const OKTA = {
+    tokenStorage : 'okta-token-storage'
+}
