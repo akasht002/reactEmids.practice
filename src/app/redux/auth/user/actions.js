@@ -173,11 +173,10 @@ export const getThresholdRadius = () => async (dispatch) => {
 export const getCurrentSession = () => async (dispatch) => {
     try {
         const resp = await Axios.get('https://navvis.oktapreview.com/api/v1/sessions/me', {withCredentials: true})
-        console.log('object', resp)
         if (resp && resp.data.expiresAt) {
             const momentUtcNow = moment.utc();
             const momentUtcExp = moment.utc(resp.data.expiresAt);
-            const diff = momentUtcExp.diff(momentUtcNow, 'seconds') - 60;
+            const diff = momentUtcExp.diff(momentUtcNow, 'seconds') * 1000;
             dispatch(getsessionTimeOutSuccess(diff))
         }
     }

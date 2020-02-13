@@ -12,7 +12,7 @@ const defaultState = {
     isFormDirty: false,
     isSecureLogin: false,
     thresholdRadius: 0,
-    sessionTime: 0
+    sessionTime: 1198000
 };
 
 export default (state = defaultState, action) => {
