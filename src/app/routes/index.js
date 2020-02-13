@@ -40,7 +40,7 @@ import {
   OktaCallBack
 } from '../screens';
 import PrivateRoute from './privateRouter';
-import { OKTA_CLIENTID, OKTA_ISSUER } from '../constants/config';
+import { oktaIssuer, oktaClientId } from '../services/http';
 
 export function Loading({ error }) {
   if (error) {
@@ -112,8 +112,8 @@ export class AppStackRoot extends Component {
     return (
       <Router history={this.props.history}>
         <Security
-          issuer= {OKTA_ISSUER}
-          client_id= {OKTA_CLIENTID}
+          issuer= {oktaIssuer}
+          client_id= {oktaClientId}
           redirect_uri={window.location.origin + '/implicit/callback'}
           pkce={false}>
           <Switch>
