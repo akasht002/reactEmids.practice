@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { TabContent } from 'reactstrap'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover';
-import { Scrollbars, ProfileModalPopup, Calendar, CoreoTimePicker, ModalPopup, AlertPopup, Preloader } from '../../../components';
+import { Scrollbars, TextArea, ProfileModalPopup, Calendar, CoreoTimePicker, ModalPopup, AlertPopup, Preloader } from '../../../components';
 import {
   getServiceRequestList,
   getVisitServiceDetails,
@@ -94,6 +94,7 @@ import { saveContextData, createDataStore } from '../../../redux/telehealth/acti
 import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 import { USER_TYPE } from '../../../constants/constants'
+
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -848,6 +849,17 @@ let datas =  data.map((el)=> {
                   <h5>{this.state.selectedDuration} Hour(s)</h5>
                 </div>
               </div>
+             
+              <div className="full-block">
+              <h2 class="ServicesTitle theme-primary mb-3">Additional Information</h2>
+              <textarea  
+              className={'form-control mb-4'}
+              rows={5}
+              placeholder='Write your description'
+              maxLength={500}
+              />
+              </div>
+             
               <div className="top-search-blocksp">
                 <h2 class="ServicesTitle theme-primary">Assign Service Provider</h2>
                 <div className="search-block_SP">
