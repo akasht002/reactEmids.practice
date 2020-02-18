@@ -1190,7 +1190,6 @@ div.CertificationModal{
     margin-left: 2px;
 }
 
-
 /*ui-responsive-issue-for-tab*/
 @media only screen and (max-width: 1024px) {
     .BlackoutModal .MonthlyPicker .react-datepicker-popper {

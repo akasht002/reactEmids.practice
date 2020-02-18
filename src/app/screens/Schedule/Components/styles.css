@@ -793,6 +793,8 @@ fieldset .form-radio {
   padding-top: 0px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
+  margin-bottom: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 .bottom-blockbtn .ml-auto .btn {
@@ -1798,6 +1800,7 @@ ul.show-more-assignSP li {
 {
    padding-right: 5px;
 }
+
 
 /*IE-Edge*/
 

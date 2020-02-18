@@ -1,15 +1,17 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { Link,withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ScreenCover } from '../../../components'
 import { onLogin } from '../../../redux/auth/login/actions';
+import { Path } from "../../../routes";
+import {withAuth} from '@okta/okta-react'
 import './styles.css';
 import '../styles.css';
 
 export class OnboardSuccess extends React.Component {
 
     onLoginPress = () => {
-        this.props.onLogin();
+        this.props.auth.login(Path.oktaCallBack)
     }
 
     render() {
@@ -53,4 +55,4 @@ export function mapStateToProps(state) {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OnboardSuccess));
+export default withAuth(connect(mapStateToProps, mapDispatchToProps)(OnboardSuccess));

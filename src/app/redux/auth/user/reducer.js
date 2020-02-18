@@ -1,4 +1,4 @@
-import {USER} from './bridge'
+import { USER } from './bridge'
 
 const defaultState = {
     userData: {},
@@ -10,7 +10,9 @@ const defaultState = {
     roles: {},
     menuClicked: null,
     isFormDirty: false,
-    thresholdRadius: 0
+    isSecureLogin: false,
+    thresholdRadius: 0,
+    sessionTime: 1198000
 };
 
 export default (state = defaultState, action) => {
@@ -43,10 +45,20 @@ export default (state = defaultState, action) => {
                 ...state,
                 isFormDirty: action.data
             }
+        case USER.isSecureLogin:
+            return {
+                ...state,
+                isSecureLogin: action.data
+            }
         case USER.getThresholdRadiusSuccess:
         return {
             ...state,
             thresholdRadius: action.data && action.data.value
+        };
+        case USER.getsessionTimeOutSuccess:
+        return {
+            ...state,
+            sessionTime: action.data && action.data
         };
         default:
             return state;

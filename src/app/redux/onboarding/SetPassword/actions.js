@@ -1,12 +1,12 @@
-import {API} from '../../../services/api';
-import {Post} from '../../../services/http';
-import {startLoading, endLoading} from '../../loading/actions';
-import {clearState as verifyContactClear} from '../VerifyUserID/actions';
+import { API } from '../../../services/api';
+import { Post } from '../../../services/http';
+import { startLoading, endLoading } from '../../loading/actions';
+import { clearState as verifyContactClear } from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
-import {Path} from '../../../routes';
-import {encryptPassword} from '../../../utils/encryptPassword';
+import { Path } from '../../../routes';
+import { encryptPassword } from '../../../utils/encryptPassword';
 import { USERTYPES } from '../../../constants/constants';
-import {SetPassword} from './bridge';
+import { SetPassword } from './bridge';
 
 export const cancelClick = () => {
     return {
@@ -55,23 +55,27 @@ export const onSetUserIdCompletion = (data) => {
 
 export function setPassword(data) {
     return (dispatch, getState) => {
+        let userDetails = getState().onboardingState.verifyUserIDState.serviceProviderDetails
+        let payload = {
+            "firstName": userDetails.firstName,
+            "lastName": userDetails.lastName,
+            "userName": userDetails.emailId,
+            "password": data.password,
+        }
+
         let userType = getState().onboardingState.setPasswordState.serviceProviderDetails.userType;
         if (userType === USERTYPES.ENTITY_USER) {
             dispatch(setPasswordEntity(data))
         } else {
-            dispatch(setPasswordIndividual(data))
+            dispatch(setPasswordIndividual(payload))
         }
     }
 };
 
 export function setPasswordIndividual(data) {
     return (dispatch) => {
-        let body = {
-            userName: data.username,
-            password: encryptPassword(data.password)
-        };
         dispatch(startLoading());
-        return Post(API.setPassword, body).then((resp) => {
+        return Post(API.setPassword, data).then((resp) => {
             dispatch(onboardSucess());
             dispatch(endLoading());
         }).catch((err) => {
@@ -109,18 +113,17 @@ export function onboardSucess() {
 };
 
 
-export function passwordSetSuccess(){
-    return{
+export function passwordSetSuccess() {
+    return {
         type: SetPassword.serviceProviderOnboardSucess
     }
 };
 
 
-export function onCancelClick(){
+export function onCancelClick() {
     return (dispatch) => {
         dispatch(cancelClick());
         dispatch(verifyContactClear());
         dispatch(push(Path.root));
     }
 }
-    

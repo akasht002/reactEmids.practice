@@ -2,7 +2,7 @@
 export const AUTH_CONFIG_IMPLICIT = {
     clientId : "js",
     authority :  process.env.REACT_APP_AUTH_URL,
-    redirectUri : process.env.REACT_APP_UI_URL + "loginCallBack/#",
+    redirectUri : process.env.REACT_APP_UI_URL + "loginCallBack",
     reponseType : "id_token token",
     scope : "openid profile api1",
     postLogoutRedirectUri : process.env.REACT_APP_UI_URL,
@@ -21,6 +21,10 @@ export const PUBLIC_KEY =
       '-----END PUBLIC KEY-----';
 
 export const STRIPE_KEY = "pk_test_n70bkOns9PqUMG4go5E77356"
+
+export const OKTA_ISSUER = 'https://navvis.oktapreview.com/oauth2/default';
+
+export const OKTA_CLIENTID = '0oapkgs7l7D0elBoS0h7';
 
 export const TeleHealthSettings = {
     maxVideoCallHourInMs: 7200000,
