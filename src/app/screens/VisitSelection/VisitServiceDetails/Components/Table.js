@@ -95,6 +95,8 @@ export const Table = props => {
                             <th></th>}
                         {isEntity &&
                             <th></th>}
+                        {isEntity &&
+                            <th></th>}
                         {!isEntity && <th></th>}
                     </tr>
                 </thead>
@@ -134,6 +136,14 @@ export const Table = props => {
                                     />
                                 </td>
                             }
+                            <td>
+                            {item.additionalInformation === null ? 
+                            <span></span> :
+                            <div className="theme-primary">
+                              <img src={require(`../../../../assets/images/icons/Note_edit.png`)} className="note-block" alt="noteEdit" title={item.additionalInformation}/>
+                            </div>
+                            }        
+                            </td>        
                             {!isEntity ?
                                 <td>
                                     <div className="ScheduleRowButton"><button className="btn btn-outline-primary"

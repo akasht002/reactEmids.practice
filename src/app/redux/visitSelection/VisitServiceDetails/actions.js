@@ -704,7 +704,8 @@ export function updateServiceVisit(data) {
     visitDate: data.visitDate,
     startTime: data.startTime,
     duration: data.duration,
-    endTime: data.endTime
+    endTime: data.endTime,
+    additionalInformation: data.additionalInformation
   }
   return dispatch => {
     ServiceRequestPut(API.updateServiceVisit, model)
