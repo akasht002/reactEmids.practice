@@ -2,7 +2,7 @@
 import {  push } from '../../navigation/actions';
 import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
-import { USER_LOCALSTORAGE } from '../../../constants/constants';
+import { USER_LOCALSTORAGE, REFRESH_TOKEN } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 import {LOGOUT} from './bridge'
 
@@ -36,6 +36,7 @@ export function onLogout(onSuccess){
         let localStorageData = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE));
         if (localStorageData && localStorageData.data && localStorageData.data.access_token) {
             dispatch(remove(USER_LOCALSTORAGE, onClear));
+            dispatch(remove(REFRESH_TOKEN, onClear));
             userManager.removeUser();
             onSuccess ? onSuccess() : userManager.signoutRedirect();
         } else {
