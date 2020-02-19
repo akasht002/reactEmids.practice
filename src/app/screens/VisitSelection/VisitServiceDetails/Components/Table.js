@@ -135,6 +135,7 @@ export const Table = props => {
                                 </td>
                             }
                             {!isEntity ?
+                                !props.canProcessVisit ? <td></td> :
                                 <td>
                                     <div className="ScheduleRowButton"><button className="btn btn-outline-primary"
                                         onClick={() => props.navigateToparticularPageBasedonId(item)}

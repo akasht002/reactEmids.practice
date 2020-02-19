@@ -1008,6 +1008,7 @@ let datas =  data.map((el)=> {
                   planScheduleId={this.props.planScheduleId}
                   highlightVisit={this.highlightVisit}
                   visitServiceDetails={this.props.VisitServiceDetails}
+                  canProcessVisit={this.props.canProcessVisit}
                 />
                 <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
@@ -1183,6 +1184,7 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
+  const { canProcessVisit } = state.authState.userState.userData.userInfo
   return {
     isScheduleLoading:VisitServiceDetailsState.isScheduleLoading,
     isServiceRequestListLoading:VisitServiceDetailsState.isServiceRequestListLoading,
@@ -1214,7 +1216,8 @@ export function mapStateToProps(state) {
     isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup,
     planId: VisitServiceDetailsState.planId,
     questionAnswerList:VisitServiceDetailsState.questionAnswerList,
-    isAnyEngagedServiceRequestSuccess: VisitServiceDetailsState.isAnyEngagedServiceRequestSuccess
+    isAnyEngagedServiceRequestSuccess: VisitServiceDetailsState.isAnyEngagedServiceRequestSuccess,
+    canProcessVisit
   }
 }
 

@@ -118,19 +118,20 @@ export class QuickMenu extends Component {
         <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {getEntityProcessingStatus(data)} 
       </Item>
 
-    if(isEntityServiceProvider()) {
-        options = conversations.deceasedInd ? [visitProcessingOption] : [
-          visitProcessingOption,
-          <Item className='ListItem CTDashboard' key='item-1'
+    let phoneCallOption = 
+        <Item className='ListItem CTDashboard' key='item-1'
           onClick={(e) => { this.handlePhoneNumber(conversations) }}>
             <i className='iconPhone' /> Phone Call
-          </Item>
+        </Item>
+
+    if(isEntityServiceProvider()) {
+        options = !this.props.canProcessVisit ? [phoneCallOption] :
+         conversations.deceasedInd ? [visitProcessingOption] : [
+          visitProcessingOption,
+          phoneCallOption
         ];
       } else {
-        const commonOptions = [<Item className='ListItem CTDashboard' key='item-1'
-        onClick={(e) => { this.handlePhoneNumber(conversations) }}>
-          <i className='iconPhone' /> Phone Call
-        </Item>,
+        const commonOptions = [phoneCallOption,
         <Item className='ListItem CTDashboard' key='item-2'
           onClick={(e) => { this.onClickConversation(conversations) }}>
           <i className='iconConversation' /> Conversation
@@ -227,8 +228,10 @@ export function mapDispatchToProps(dispatch) {
 };
 
 export function mapStateToProps(state) {
+    const { canProcessVisit } = state.authState.userState.userData.userInfo
     return {
-        isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit, 
+        isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
+        canProcessVisit  
     }
 };
 
