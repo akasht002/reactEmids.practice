@@ -1,6 +1,13 @@
 import axios from 'axios'
 import { store } from '../redux/store'
 import {getTimeZoneOffset} from '../utils/dateUtility';
+import { Auth } from '@okta/okta-react';
+import {loadData} from '../utils/storage'
+import { isEmpty } from '../utils/validations'
+import { createBrowserHistory } from 'history'
+import { REFRESH_TOKEN } from '../constants/constants';
+
+const history = createBrowserHistory();
 
 export const baseURL = process.env.REACT_APP_API_URL
 export const authURL = process.env.REACT_APP_AUTH_URL
@@ -14,6 +21,54 @@ export const patientURL = process.env.REACT_APP_PATIENT_URL;
 export const oktaURL = process.env.REACT_APP_OKTA_URL;
 export const oktaIssuer = process.env.REACT_APP_OKTA_ISSUER;
 export const oktaClientId = process.env.REACT_APP_OKTA_CLIENTID
+
+const auth = new Auth({
+    history,
+    issuer: oktaIssuer,
+    clientId: oktaClientId,
+    redirectUri: window.location.origin + '/implicit/callback',
+  });
+
+axios.interceptors.request.use(    
+    config => {
+        let loc = auth.getAccessToken();
+        let newToken;
+        loc.then((res) => {
+            newToken = loadData(res)
+        })
+        const token = newToken
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+            config.headers['offset'] = getTimeZoneOffset()
+        }
+        config.headers['Content-Type'] = 'application/json';
+        return config;
+
+    },
+    error => {
+        Promise.reject(error)
+    });
+
+
+axios.interceptors.response.use((response) => {
+    return response
+    }, function (error) {
+        const originalRequest = error.config;
+        if (error.response.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            let loc = auth.getAccessToken();
+            loc.then((res) => {
+                if (res) {
+                    localStorage.setItem(REFRESH_TOKEN, res);
+                    getHeader(false)
+                    return axios(originalRequest);
+                }
+
+            })
+        }
+        return Promise.reject(error);
+     });
+
 
 export const AuthLogin = (url, data) => {
     var bodyFormData = new FormData()
@@ -216,7 +271,7 @@ export const elasticSearchPost = (url, data) => {
 }
 export const getHeader = () => {
     let userState = store.getState().authState.userState;
-    let token = userState && userState.userData && userState.userData.access_token;
+    let token = isEmpty(localStorage.getItem(REFRESH_TOKEN)) ? userState && userState.userData && userState.userData.access_token : localStorage.getItem(REFRESH_TOKEN)
     let authHeader = token ? {
         Authorization: 'Bearer ' + token,
         offset: getTimeZoneOffset(),
