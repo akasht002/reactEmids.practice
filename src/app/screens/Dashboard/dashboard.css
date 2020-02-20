@@ -919,6 +919,25 @@ div.ProfileSearchContainer,
 }
 
 
+.bottomProfile div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent
+{
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.bottomProfile div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileSkillServices
+{
+    width: 53%;
+    max-width: initial;
+}
+
+.bottomProfile div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileApplicationNumbers.Avatar
+{
+    width: 35%;
+    justify-content: flex-end;
+}
 
 @media (min-width: 1367px) {
     .SPContentWidget .ProfileContainer.topProfile {
@@ -980,6 +999,16 @@ div.ProfileSearchContainer,
 
     div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent:first-child {
         margin-top: 0;
+    }
+
+    .bottomProfile div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileSkillServices {
+        width: 58%;
+        max-width: initial;
+    }
+
+    .bottomProfile div.bottomPalette .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileApplicationNumbers.Avatar {
+        width: 30%;
+        justify-content: flex-end;
     }
 
 }
@@ -1349,13 +1378,13 @@ div.ProfileSearchContainer,
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 55%;
+    width: 54%;
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
     cursor: pointer;
     padding-right: 12px;
-    padding-left: 23px
+    padding-left: 12px;
 }
 
 .DashboardViewFirst .ServicesCalendarWidget:hover span {
@@ -1373,15 +1402,15 @@ div.ProfileSearchContainer,
 }
 
 .profile-card-viewblock {
-    width: 25%;
+    width: 30%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content:flex-end;
     align-items: center;
 }
 
 .topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime {
-    width: 20%;
+    width: 16%;
     min-width: auto;
     cursor: pointer;
     text-align: center;
@@ -1461,4 +1490,24 @@ div.ProfileSearchContainer,
 
 .topProfile .ProfileCardBody .topPalette {
     margin-top: 0;
+}
+
+
+@media (min-width: 1920px)
+{
+.topProfile .ProfileServicesVisitList .ProfileServicesVisitContent .ProfileViewTime
+{
+    width:12%;
+}
+
+.DashboardViewFirst
+{
+    width: 66%;
+    padding-left: 20px;
+}
+
+.profile-card-viewblock
+{
+    width: 22%;
+}
 }
