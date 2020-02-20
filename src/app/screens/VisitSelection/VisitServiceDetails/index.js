@@ -861,7 +861,7 @@ handleTextarea = (e) => {
               </div>
              
               <div className="full-block">
-              <h2 class="ServicesTitle theme-primary mb-3">Additional Notes</h2>
+              <h2 class="ServicesTitle theme-primary mb-3">Assign one or more Caregivers</h2>
               <CustomTextArea
                 rows={4}
                 className='form-control'
