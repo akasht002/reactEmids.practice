@@ -126,7 +126,7 @@ export const API = {
     getPatientPersonalDetail: 'Patient/',
     getPatientImage: 'Patient/Image/',
     getPatientAddress: 'Patient/',
-    getPatientConnections: 'ManageConnections/',
+    getPatientConnections: 'ManageConnections/GetPatientConnectionDetails/',
     getPatientLanguages: 'PatientLanguage/',
     getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
     getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/',
