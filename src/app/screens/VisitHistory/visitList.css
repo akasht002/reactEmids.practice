@@ -126,11 +126,10 @@ div.full-block {
     margin-bottom: 0px;
 }
 
-.summary-view-right
-{
-position: relative;
-top:initial;
-margin-top: 0;
+.summary-view-right {
+    position: relative;
+    top: initial;
+    margin-top: 0;
 }
 
 .rating-block
@@ -155,11 +154,10 @@ margin-top: 0;
 }
 
 .rating-span-title span {
-display: table-cell;
-width: 50%;
-vertical-align: middle;
+    display: table-cell;
+    width: 50%;
+    vertical-align: middle;
 }
-
 .rating-span-title span .visitUserPic-block {
     width: auto;
     position: absolute;
@@ -174,8 +172,6 @@ vertical-align: middle;
     width: auto;
     margin: 0;
 }
-
-/*********************************************************************************************************************/
 
 .text__c-txt___14ptu, div.SelectDropDown{
     height: 100%;
@@ -226,11 +222,11 @@ li.ListItem.disabled{
     padding: 15px;
 }
 
-.right-uservisit-view .visitUserName
-{
-font-size:16px;
-color: #444444;
+.right-uservisit-view .visitUserName {
+    font-size: 16px;
+    color: #444444;
 }
+
 .right-uservisit-view .visitUserPic
 {
     margin-right: 8px;
@@ -246,11 +242,10 @@ color: #444444;
     margin-bottom: 0px;
 }
 
-.summary-view-right
-{
-position: relative;
-top:initial;
-margin-top: 0;
+.summary-view-right {
+    position: relative;
+    top: initial;
+    margin-top: 0;
 }
 
 .rating-block
@@ -270,14 +265,14 @@ margin-top: 0;
     align-items: center;
 }
 
-.rating-block .rating-span-title > p{
+.rating-block .rating-span-title>p {
     margin: 0;
 }
 
 .rating-span-title span {
-display: table-cell;
-width: 50%;
-vertical-align: middle;
+    display: table-cell;
+    width: 50%;
+    vertical-align: middle;
 }
 
 .rating-span-title span .visitUserPic-block {
@@ -402,12 +397,6 @@ vertical-align: middle;
     transform: rotate(180deg);
 }
 
-/* .visitListContent .visitListImageContainer
-{
-    width: 7%;
-} */
-
-
 .visitListImageContainer{
     margin-right: 15px;
 }
@@ -446,10 +435,10 @@ vertical-align: middle;
     white-space: nowrap;
 }
 
-.visitListContent .right-uservisit-view .visitUserPic, .visitListContent .right-uservisit-view .visitUserName
-{
-display: table-cell;
-vertical-align: middle;
+.visitListContent .right-uservisit-view .visitUserPic,
+.visitListContent .right-uservisit-view .visitUserName {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .visitListContent .right-uservisit-view .visitUserName
