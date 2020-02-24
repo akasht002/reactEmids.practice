@@ -415,15 +415,8 @@ export function getGuardianDetails(patientIds, modifiedList,disableShowMore) {
   return (dispatch, getState) => {
     return ServiceRequestPost(API.getGuardianDetails, patientIds)
       .then(resp => {
-        console.log('resp ', resp.data)
         let guardianInfoList = resp.data
-        // const mergeById = (modifiedList, guardianInfoList) =>
-        //     modifiedList.map(itm => ({
-        //         ...guardianInfoList.find((item) => (item.id === itm.id) && item),
-        //         ...itm
-        //     }));
-            console.log('updatedList',mergeArrayBasedOnId(modifiedList, guardianInfoList))
-        dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
+        dispatch(getPatientVisitDetailSuccess(mergeArrayBasedOnId(modifiedList, guardianInfoList),disableShowMore))
       })
       .catch(err => {
         logError(err)
