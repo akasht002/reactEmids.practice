@@ -40,6 +40,7 @@ import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../c
 import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
 import { logError } from '../../../utils/logError';
 import { setServiceProviderFeedbackTab } from '../EntityDashboard/ServiceProvider/actions';
+import { unique, mergeArrayBasedOnId } from '../../../utils/arrayUtility'
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -150,8 +151,9 @@ export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
       .then(resp => {
         let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];       
         let modifiedList = [...serviceVists,...resp.data];
-        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;          
-        dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
+        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;     
+        let patientIds = unique(resp.data, 'patientId')   
+        dispatch(getGuardianDetails(patientIds, modifiedList, disableShowMore))  
         dispatch(setServiceVisitLoader(false))
       })
       .catch(err => {
@@ -406,5 +408,25 @@ export function goToAssessmentVisitProcessing(data){
       break; 
       default:
      }
+  }
+}
+
+export function getGuardianDetails(patientIds, modifiedList,disableShowMore) {
+  return (dispatch, getState) => {
+    return ServiceRequestPost(API.getGuardianDetails, patientIds)
+      .then(resp => {
+        console.log('resp ', resp.data)
+        let guardianInfoList = resp.data
+        // const mergeById = (modifiedList, guardianInfoList) =>
+        //     modifiedList.map(itm => ({
+        //         ...guardianInfoList.find((item) => (item.id === itm.id) && item),
+        //         ...itm
+        //     }));
+            console.log('updatedList',mergeArrayBasedOnId(modifiedList, guardianInfoList))
+        dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
+      })
+      .catch(err => {
+        logError(err)
+      })
   }
 }
