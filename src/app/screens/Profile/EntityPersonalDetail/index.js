@@ -535,6 +535,7 @@ export class EntityPersonalDetail extends React.PureComponent {
           <CustomTextArea
             name='Description'
             placeholder='Tell us about yourself'
+            className='form-control'
             rows='5'
             value={this.state.description}
             maxlength={'2000'}

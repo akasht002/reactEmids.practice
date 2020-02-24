@@ -618,6 +618,7 @@ export class Organization extends React.PureComponent {
           <CustomTextArea
             name='Description'
             placeholder='Tell us about yourself'
+            className='form-control'
             rows='5'
             maxlength={'2000'}
             value={this.state.description}
