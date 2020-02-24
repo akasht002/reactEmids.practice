@@ -233,7 +233,7 @@ table.individuals-tableblock.theme-primary tbody tr:hover {
     border-left: 3px solid #1e3d5c;
 }
 
-.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle {
+.dashboard-view-first .ProfileServices .ServicesCalendarWidget .ServicesTitle {
     color: #444 !important;
 }
 

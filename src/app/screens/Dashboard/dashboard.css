@@ -1373,7 +1373,7 @@ div.ProfileSearchContainer,
     align-items: center;
 }
 
-.DashboardViewFirst {
+.dashboard-view-first {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -1387,15 +1387,15 @@ div.ProfileSearchContainer,
     padding-left: 12px;
 }
 
-.DashboardViewFirst .ServicesCalendarWidget:hover span {
+.dashboard-view-first .ServicesCalendarWidget:hover span {
     color: #444444;
 }
 
-.DashboardViewFirst .ServicesTitle {
+.dashboard-view-first .ServicesTitle {
     margin-bottom: 0px;
 }
 
-.DashboardViewFirst .ProfileServices {
+.dashboard-view-first .ProfileServices {
     max-width: 100%;
     width: 100%;
     margin-right: 0px;
@@ -1423,11 +1423,11 @@ div.ProfileSearchContainer,
     margin-left: 10px;
 }
 
-.DashboardViewFirst .ProfileServices {
+.dashboard-view-first .ProfileServices {
     margin-right: 0px;
 }
 
-.DashboardViewFirst .ProfileServices .ServicesCalendarWidget .ServicesTitle {
+.dashboard-view-first .ProfileServices .ServicesCalendarWidget .ServicesTitle {
     margin-bottom: 0px;
 }
 
@@ -1500,7 +1500,7 @@ div.ProfileSearchContainer,
     width:12%;
 }
 
-.DashboardViewFirst
+.dashboard-view-first
 {
     width: 66%;
     padding-left: 20px;

@@ -20,7 +20,7 @@ export const calenderDetails = (props,conversations,options,index) => {
        {getHHMinSession(conversations.visitStartTime)}                 
        </span>
      </div>
-     <div className="DashboardViewFirst">
+     <div className="dashboard-view-first">
      <div
        className='ProfileServices'              
      >
