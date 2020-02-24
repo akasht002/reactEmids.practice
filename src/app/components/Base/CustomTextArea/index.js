@@ -13,7 +13,7 @@ class CustomTextArea extends React.Component {
                 id={this.props.name}
                 required={this.props.required}
                 placeholder={this.props.placeholder}
-                className={this.props.className}
+                className={this.props.className || 'form-control'}
                 rows={this.props.rows}
                 maxLength={this.props.maxlength}
                 onChange={this.props.textChange}

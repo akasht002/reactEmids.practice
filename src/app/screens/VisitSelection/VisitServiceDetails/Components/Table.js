@@ -93,11 +93,12 @@ export const Table = props => {
                             return <th>{item.label}</th>
                         })}
                         {isEntity &&
-                            <th></th>}
-                        {isEntity &&
-                            <th></th>}
-                        {isEntity &&
-                            <th></th>}
+                            <Fragment>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            </Fragment>
+                            }
                         {!isEntity && <th></th>}
                     </tr>
                 </thead>

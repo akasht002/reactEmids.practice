@@ -864,7 +864,6 @@ handleTextarea = (e) => {
               <h2 class="ServicesTitle theme-primary mb-3">Assign one or more Caregivers</h2>
               <CustomTextArea
                 rows={4}
-                className='form-control'
                 placeholder='Write your description'
                 value={this.state.textareaValue}
                 textChange={this.handleTextarea}
