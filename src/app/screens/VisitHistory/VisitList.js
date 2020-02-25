@@ -28,7 +28,7 @@ export const VisitList = props => {
               <div className='visitListBottom'>
                 <div className='visitListContent'>
                   <div className="row full-block">
-                    <div className="col-md-10 col-sm-10 col-xs-12 d-flex p-0">
+                    <div className="col-lg-10 col-sm-10 d-flex p-0">
                       <div className='visitListImageContainer'>
                         <img
                           alt={'NO_IMAGE'}
@@ -49,7 +49,7 @@ export const VisitList = props => {
                         />
                       </div>
                     </div>
-                    <div className="col-md-2 col-sm-2 col-xs-12 d-flex padding-less align-items-center justify-content-end p-0">
+                    <div className="col-lg-2 col-sm-2 d-flex padding-less align-items-center justify-content-end p-0">
                       <div className="visitUserPic-block right-uservisit-view" onClick={() => props.handelPatientProfile(vistList.patientId)}>
                         <div className="visitUserPic">
                           <div class="avatarContainer">

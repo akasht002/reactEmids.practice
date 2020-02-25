@@ -561,6 +561,7 @@
     height: auto;
     display: block;
     margin: 0 auto;
+    opacity: 50%;
 }
 
 .update-height-content {
