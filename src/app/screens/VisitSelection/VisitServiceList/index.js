@@ -481,8 +481,9 @@ export class VisitServiceList extends Component {
             this.props.getFilterDataCount(data)
         }
         else {
-            this.props.getVisitServiceList(data);
-            this.props.getServiceRequestCount()
+            let filterData = this.getFilterData(true);
+            this.props.getFilter(filterData);
+            this.props.getFilterDataCount(filterData);  
         }
     }
 
@@ -526,7 +527,7 @@ export class VisitServiceList extends Component {
                                 <img className="ProfileImage" src={patientImage} alt="" />
                                 <div className='BlockProfileDetails'>
                                     <div className='BlockProfileDetailsName'>
-                                        <span>{serviceList.patientFirstname} {serviceList.patientLastname.charAt(0)}</span>
+                                        <span>{serviceList.patientFirstname} {serviceList && serviceList.patientLastname && serviceList.patientLastname.charAt(0)}</span>
                                         {(serviceList.deceasedInd || !serviceList.isActive) && <span>{` (${getStatusTextBasedOnStatus(serviceList)})`}</span>}
                                     </div>
                                 </div>
