@@ -411,15 +411,13 @@ export function goToAssessmentVisitProcessing(data){
   }
 }
 
-export function getGuardianDetails(patientIds, modifiedList,disableShowMore) {
-  return (dispatch, getState) => {
-    return ServiceRequestPost(API.getGuardianDetails, patientIds)
-      .then(resp => {
+export const getGuardianDetails = (patientIds, modifiedList,disableShowMore) => async (dispatch, getState) => {
+      try {
+        let resp = ServiceRequestPost(API.getGuardianDetails, patientIds)
         let guardianInfoList = resp.data
         dispatch(getPatientVisitDetailSuccess(mergeArrayBasedOnId(modifiedList, guardianInfoList),disableShowMore))
-      })
-      .catch(err => {
+      }
+      catch(err) {
         logError(err)
-      })
-  }
+      }
 }
