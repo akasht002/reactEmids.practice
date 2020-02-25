@@ -624,11 +624,11 @@ div.SelectDropDown:after {
 }
 
 .ProfileApplicationNumbers.Avatar span {
-    width: 100%;
     font-size: 14px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    width: 115px;
 }
 
 .ProfileApplicationNumbers .ProfileApplicationWidget {

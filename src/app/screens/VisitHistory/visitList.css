@@ -92,9 +92,6 @@ div.full-block {
     width: 40px;
 }
 
-.visitListImageContainer{
-    margin-right: 15px;
-}
 
 .visitListTask{
     display: flex;
@@ -129,11 +126,10 @@ div.full-block {
     margin-bottom: 0px;
 }
 
-.summary-view-right
-{
-position: relative;
-top:initial;
-margin-top: 0;
+.summary-view-right {
+    position: relative;
+    top: initial;
+    margin-top: 0;
 }
 
 .rating-block
@@ -158,11 +154,10 @@ margin-top: 0;
 }
 
 .rating-span-title span {
-display: table-cell;
-width: 50%;
-vertical-align: middle;
+    display: table-cell;
+    width: 50%;
+    vertical-align: middle;
 }
-
 .rating-span-title span .visitUserPic-block {
     width: auto;
     position: absolute;
@@ -177,8 +172,6 @@ vertical-align: middle;
     width: auto;
     margin: 0;
 }
-
-/*********************************************************************************************************************/
 
 .text__c-txt___14ptu, div.SelectDropDown{
     height: 100%;
@@ -229,11 +222,11 @@ li.ListItem.disabled{
     padding: 15px;
 }
 
-.right-uservisit-view .visitUserName
-{
-font-size:16px;
-color: #444444;
+.right-uservisit-view .visitUserName {
+    font-size: 16px;
+    color: #444444;
 }
+
 .right-uservisit-view .visitUserPic
 {
     margin-right: 8px;
@@ -249,11 +242,10 @@ color: #444444;
     margin-bottom: 0px;
 }
 
-.summary-view-right
-{
-position: relative;
-top:initial;
-margin-top: 0;
+.summary-view-right {
+    position: relative;
+    top: initial;
+    margin-top: 0;
 }
 
 .rating-block
@@ -273,14 +265,14 @@ margin-top: 0;
     align-items: center;
 }
 
-.rating-block .rating-span-title > p{
+.rating-block .rating-span-title>p {
     margin: 0;
 }
 
 .rating-span-title span {
-display: table-cell;
-width: 50%;
-vertical-align: middle;
+    display: table-cell;
+    width: 50%;
+    vertical-align: middle;
 }
 
 .rating-span-title span .visitUserPic-block {
@@ -405,36 +397,24 @@ vertical-align: middle;
     transform: rotate(180deg);
 }
 
-/*Responsive-for-mobile-devices*/
-@media only screen and (max-width: 767px) {
-    div.visitListBottom .visitListContent, div.visitListTop {
-        padding: 10px 10px;
-    }
-    .full-block .visitListNameContainer
-    {
-        width: 100%;
-        display: block;
-        font-size: 14px;
-    }
-
-    .right-uservisit-view .visitUserName {
-        font-size: 13px;
-        color: #444;
-    }
-    .right-uservisit-view .visitUserPic {
-        margin-right: 7px;
-    }
-    .visitUserName
-    {
-        margin-left: 20px;
-    }
-    .visitListNameContainer .visitListTask
-    {
-     font-size:13px;
-    }
+.visitListImageContainer{
+    margin-right: 15px;
 }
-/*-/End-Responsive-for-mobile-devices*/
-/*********************************************************************************************************************/
+
+.visitListContent .visitListNameContainer
+{
+    width: 93%;
+}
+
+.visitListContent .visitListNameContainer .visitListType
+{
+    position: relative;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-align:left;
+}
 
 
 .visitListContent .right-uservisit-view
@@ -455,10 +435,10 @@ vertical-align: middle;
     white-space: nowrap;
 }
 
-.visitListContent .right-uservisit-view .visitUserPic, .visitListContent .right-uservisit-view .visitUserName
-{
-display: table-cell;
-vertical-align: middle;
+.visitListContent .right-uservisit-view .visitUserPic,
+.visitListContent .right-uservisit-view .visitUserName {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .visitListContent .right-uservisit-view .visitUserName
@@ -468,7 +448,7 @@ vertical-align: middle;
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
-    width: 135px; 
+    width: 160px; 
 }
 
 .visitListContainerLeft .visitListContent .visitListNameContainer
