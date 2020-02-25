@@ -1047,7 +1047,7 @@ export class Schedule extends Component {
                                     </ul>}
                             </div>
                             <div className="ServiceTypesWidget PostSR">
-                                <h2 className='ServicesTitle theme-primary'>Additional Information</h2>
+                                <h2 className='ServicesTitle theme-primary'>Assign one or more Caregivers</h2>
                                 <AdditionalInformation
                                     handleAdditionInfo={this.handleAdditionInfo}
                                     additionalDescription={this.state.additionalDescription}
