@@ -413,7 +413,7 @@ export function goToAssessmentVisitProcessing(data){
 
 export const getGuardianDetails = (patientIds, modifiedList,disableShowMore) => async (dispatch, getState) => {
       try {
-        let resp = ServiceRequestPost(API.getGuardianDetails, patientIds)
+        let resp = await ServiceRequestPost(API.getGuardianDetails, patientIds)
         let guardianInfoList = resp.data
         dispatch(getPatientVisitDetailSuccess(mergeArrayBasedOnId(modifiedList, guardianInfoList),disableShowMore))
       }
