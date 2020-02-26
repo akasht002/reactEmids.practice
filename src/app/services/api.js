@@ -126,7 +126,7 @@ export const API = {
     getPatientPersonalDetail: 'Patient/',
     getPatientImage: 'Patient/Image/',
     getPatientAddress: 'Patient/',
-    getPatientConnections: 'ManageConnections/',
+    getPatientConnections: 'ManageConnections/GetPatientConnectionDetails/',
     getPatientLanguages: 'PatientLanguage/',
     getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
     getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/',
@@ -219,5 +219,6 @@ export const API = {
     getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/',
     getServiceRequestLists:'viewrequest/servicerequestlist',
     getServiceRequestListCount:'viewrequest/servicerequestlistcount',
-    oktaSession : 'v1/sessions/me'
+    oktaSession : 'v1/sessions/me',
+    getGuardianDetails: 'visitprocessing/guardianDetails'
 }

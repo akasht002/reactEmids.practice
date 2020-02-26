@@ -90,3 +90,9 @@ export const removeArrayObjects = (orignalArray, removalArray) => {
 export const unique = (array,key) => {
     return _.chain(array).map(key).uniq().value()
   }
+
+export const mergeArrayBasedOnId = (array1, guardianInfoList) =>
+    array1.map(item1 => ({
+        ...guardianInfoList.find((item2) => (item2.id === item1.id) && item2),
+        ...item1
+    }));
