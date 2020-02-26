@@ -130,9 +130,9 @@ export const ScheduleType = props => {
                                         Please select End Time
                             </span>}
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4 pr-0">
                                 <div className="form-group">
-                                    <h4>Duration</h4>
+                                    <h4>Duration (HH:MM)</h4>
                                     <ThemeProvider>
                                         <SelectField>
                                             <Select
@@ -423,10 +423,10 @@ export const ScheduleType = props => {
                                         Please select End Time
                         </span>}
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4 pr-0">
 
                                 <div className="form-group">
-                                    <h4>Duration</h4>
+                                    <h4>Duration (HH:MM)</h4>
                                     <ThemeProvider>
                                         <SelectField>
                                             <Select
