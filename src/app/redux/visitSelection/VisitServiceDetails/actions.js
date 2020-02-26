@@ -697,17 +697,8 @@ export function updateHireStatusForServiceRequest(data) {
 }
 
 export function updateServiceVisit(data) {
-  let model = {
-    serviceProviderId: data.serviceProviderId,
-    servicePlanVisitId: data.servicePlanVisitId,
-    planScheduleId: data.planScheduleId,
-    visitDate: data.visitDate,
-    startTime: data.startTime,
-    duration: data.duration,
-    endTime: data.endTime
-  }
   return dispatch => {
-    ServiceRequestPut(API.updateServiceVisit, model)
+    ServiceRequestPut(API.updateServiceVisit, data)
       .then(resp => {
         dispatch(endLoading())
       })

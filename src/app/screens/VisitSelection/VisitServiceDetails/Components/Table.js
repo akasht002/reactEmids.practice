@@ -83,6 +83,7 @@ export const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentMod
 export const Table = props => {
     let isEntity = isEntityUser()
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let editNoteImage = require(`../../../../assets/images/icons/Note_edit.png`)
     return (
         <Fragment>
             <table className="table-responsive plan-tableview theme-primary" cellpadding="6" cellspacing="6">
@@ -92,9 +93,12 @@ export const Table = props => {
                             return <th>{item.label}</th>
                         })}
                         {isEntity &&
-                            <th></th>}
-                        {isEntity &&
-                            <th></th>}
+                            <Fragment>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            </Fragment>
+                            }
                         {!isEntity && <th></th>}
                     </tr>
                 </thead>
@@ -134,6 +138,14 @@ export const Table = props => {
                                     />
                                 </td>
                             }
+                            <td>
+                            {item.additionalInformation === null ? 
+                            <span></span> :
+                            <div className="theme-primary">
+                              <img src={editNoteImage} className="note-block" alt="noteEdit" title={item.additionalInformation}/>
+                            </div>
+                            }        
+                            </td>        
                             {!isEntity ?
                                 <td>
                                     <div className="ScheduleRowButton"><button className="btn btn-outline-primary"
