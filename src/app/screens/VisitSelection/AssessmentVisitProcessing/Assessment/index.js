@@ -243,8 +243,8 @@ export class Assessment extends Component {
                                     <div className='requestNameContent'>
                                         <span>
                                             <i className='requestName'>
-                                                <Moment format={DATE_FORMATS.visitFormat}>{this.props.patientDetails.visitDate}</Moment>, 
-                                                {this.props.patientDetails.slotDescription}
+                                                <Moment format={DATE_FORMATS.visitFormat}>{this.props.patientDetails.visitDate}</Moment>
+                                                {this.props.patientDetails.slotDescription && `,`}{this.props.patientDetails.slotDescription}
                                             </i>
                                             {this.props.patientDetails.serviceRequestVisitNumber}
                                         </span>
