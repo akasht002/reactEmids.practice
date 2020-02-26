@@ -7,6 +7,7 @@ import { ImageInstruction } from '../Components/ImageInstruction'
 export const Details = props => {
   return (
     <div className='col-md-12 card CardWidget SPDetails'>
+     <div className="block-height-rating">
       <ProfileImage
         src={
           props.image
@@ -24,6 +25,7 @@ export const Details = props => {
           <i className={"Icon iconFilledStar"}/>
           {props.personalDetail && props.personalDetail.rating}
       </span>
+      </div>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>
           <div className={'p-0'}>
