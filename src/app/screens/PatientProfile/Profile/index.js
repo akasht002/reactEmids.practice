@@ -14,6 +14,7 @@ import { Path } from '../../../routes';
 import {clearState} from '../../../redux/patientProfile/actions';
 import { USERTYPES} from '../../../constants/constants';
 import EmergencyAttorneyContact from '../EmergencyAttorneyContact';
+import { MyConnections } from '../MyConnections';
 
 export class Profile extends Component {
 
@@ -65,7 +66,7 @@ export class Profile extends Component {
                   <PointService />
                   <Languages />
                 </div>}
-                {/* <MyConnections /> */}
+                <MyConnections />
               </div>
             </div>
           </div>

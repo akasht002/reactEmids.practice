@@ -40,6 +40,7 @@ import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../c
 import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
 import { logError } from '../../../utils/logError';
 import { setServiceProviderFeedbackTab } from '../EntityDashboard/ServiceProvider/actions';
+import { unique, mergeArrayBasedOnId } from '../../../utils/arrayUtility'
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -150,8 +151,9 @@ export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
       .then(resp => {
         let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];       
         let modifiedList = [...serviceVists,...resp.data];
-        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;          
-        dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
+        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;     
+        let patientIds = unique(resp.data, 'patientId')   
+        dispatch(getGuardianDetails(patientIds, modifiedList, disableShowMore))  
         dispatch(setServiceVisitLoader(false))
       })
       .catch(err => {
@@ -407,4 +409,15 @@ export function goToAssessmentVisitProcessing(data){
       default:
      }
   }
+}
+
+export const getGuardianDetails = (patientIds, modifiedList,disableShowMore) => async (dispatch, getState) => {
+      try {
+        let resp = ServiceRequestPost(API.getGuardianDetails, patientIds)
+        let guardianInfoList = resp.data
+        dispatch(getPatientVisitDetailSuccess(mergeArrayBasedOnId(modifiedList, guardianInfoList),disableShowMore))
+      }
+      catch(err) {
+        logError(err)
+      }
 }
