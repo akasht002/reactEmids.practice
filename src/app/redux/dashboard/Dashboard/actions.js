@@ -17,7 +17,9 @@ import {
 import {
   DashboardConversationPagination,
   USERTYPES,
-  VISIT_TYPE
+  VISIT_TYPE,
+  DEFAULT_PAGE_NUMBER,
+  THOUSAND_PAGE_SIZE
 } from '../../../constants/constants'
 import { getUnreadMessageCounts } from '../../asyncMessages/actions'
 import { getUserInfo } from '../../../services/http'
@@ -125,21 +127,21 @@ export const setServiceVisitDate = data => {
 
 export function getEntityServiceProviderListSearch (data) {
   return (dispatch, getState) => {
-    dispatch(setServiceVisitLoader(true))
-    return Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
-      .then(resp => {
-        const filtered = _.filter(resp.data, function (o) {
+    let url = `${getUserInfo().serviceProviderId}/${DEFAULT_PAGE_NUMBER}/${THOUSAND_PAGE_SIZE}?searchtext=${data}`
+    Get(`${API.searchESP}` + url)
+        .then(resp => {
+                    const filtered = _.filter(resp.data, function (o) {
           return (
             o.firstName.toLowerCase().indexOf(data.toLowerCase())  > -1
           )
         })
         dispatch(getEntityServiceProviderListSuccess(filtered))
         dispatch(setServiceVisitLoader(false))
-      })
-      .catch(err => {
-        dispatch(setServiceVisitLoader(false))
-      })
-  }
+        })
+        .catch(err => {
+            dispatch(endLoading())
+        })
+}
 }
 
 export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
