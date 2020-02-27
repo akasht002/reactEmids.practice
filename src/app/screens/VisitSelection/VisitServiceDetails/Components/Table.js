@@ -144,7 +144,8 @@ export const Table = props => {
                                 :
                                 <td>
                                     <div className="ScheduleRowButton">
-                                        {item.visitStatusId !== VISIT_PROCESSING_STATUS.scheduled.id ?
+                                        {console.log('visit status ',[VISIT_PROCESSING_STATUS.scheduled.id].indexOf(item.visitStatusId))}
+                                        {[VISIT_PROCESSING_STATUS.scheduled.id, VISIT_PROCESSING_STATUS.entityProcess.id].indexOf(item.visitStatusId) === -1 ?
                                             <button className="btn btn-outline-primary" onClick={() => props.navigateToparticularPageBasedonId(item)}>
                                                 {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
                                             </button>
