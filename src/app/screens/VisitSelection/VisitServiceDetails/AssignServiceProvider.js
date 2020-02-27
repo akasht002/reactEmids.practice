@@ -21,7 +21,7 @@ export class AssignServiceProvider extends Component {
   }
 
   componentDidMount() {
-    this.props.getEntityServiceProviderListSearch()
+    this.props.getEntityServiceProviderListSearch('')
   }
 
   onchangeSearchServiceProvider = e => {
