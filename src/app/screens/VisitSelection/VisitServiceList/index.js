@@ -486,8 +486,9 @@ export class VisitServiceList extends Component {
             this.props.getFilterDataCount(data)
         }
         else {
-            this.props.getVisitServiceList(data);
-            this.props.getServiceRequestCount()
+            let filterData = this.getFilterData(true);
+            this.props.getFilter(filterData);
+            this.props.getFilterDataCount(filterData);  
         }
     }
 
