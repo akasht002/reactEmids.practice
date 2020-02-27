@@ -75,6 +75,8 @@ export const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentMod
             return getEntityProcessingStatus(data)
         case VISIT_PROCESSING_STATUS.cancelled.id:
             return VISIT_PROCESSING_STATUS.cancelled.title
+        case VISIT_PROCESSING_STATUS.entityProcess.id:
+            return VISIT_PROCESSING_STATUS.entityProcess.keyValue        
         default:
             return null
     }
@@ -144,7 +146,6 @@ export const Table = props => {
                                 :
                                 <td>
                                     <div className="ScheduleRowButton">
-                                        {console.log('visit status ',[VISIT_PROCESSING_STATUS.scheduled.id].indexOf(item.visitStatusId))}
                                         {[VISIT_PROCESSING_STATUS.scheduled.id, VISIT_PROCESSING_STATUS.entityProcess.id].indexOf(item.visitStatusId) === -1 ?
                                             <button className="btn btn-outline-primary" onClick={() => props.navigateToparticularPageBasedonId(item)}>
                                                 {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
