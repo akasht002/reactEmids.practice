@@ -1,5 +1,5 @@
 const commonFieldName = {
-    serviceRequestId: 'SR ID',
+    serviceRequestNumber: 'SR ID',
     serviceCategory: 'Service Category',
     serviceType: 'Service Type',
     patientFullName: 'Individuals',
