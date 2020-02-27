@@ -182,6 +182,7 @@ export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_TIME = 200
 export const PAGE_RANGE = 5;
+export const THOUSAND_PAGE_SIZE = 1000;
 
 export const SERVICE_REQ_STATUS = {
     OPEN: 35,
