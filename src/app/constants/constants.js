@@ -610,3 +610,9 @@ export const OKTA = {
 }
 
 export const REFRESH_TOKEN = "refreshToken";
+
+export const NEW_SERVICE_REQUEST_STATUS = {
+    All : [35,38,39,47,42],
+    Open : [35],
+    Engaged : [38]
+}

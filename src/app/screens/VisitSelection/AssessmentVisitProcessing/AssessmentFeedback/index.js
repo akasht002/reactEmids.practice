@@ -214,7 +214,7 @@ export class AssessmentFeedback extends Component {
                                                                                     answer.checked = e.target.checked;
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
-                                                                                checked={answer.checked}
+                                                                                checked={answer.checked ? answer.checked : false}
                                                                                 disabled={this.props.VisitFeedback.length}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
