@@ -212,9 +212,11 @@
 }
 
 .status_view_arrow {
-    justify-content: left;
+    justify-content:flex-end;
     vertical-align: middle;
     width: 30%;
+    align-items: center;
+    display: flex;
 }
 
 .posted_dateview {
@@ -268,11 +270,11 @@
     opacity: .5;
     content: "";
     position: absolute;
-    right: 12px;
+    right: 10px;
     width: 12px;
     height: 20px;
     margin-top: 7px;
-    top: 30px;
+    top: 28px;
     background-image: url('../../../assets/images/Caret.svg');
     background-position: 50%;
     background-size: 100%;
@@ -423,7 +425,7 @@
 }
 
 .left-listblock {
-    max-height: calc(100vh - 210px);
+    max-height: calc(100vh - 200px);
     background: #fff;
     overflow-y: auto;
     overflow-x: hidden;
@@ -561,6 +563,7 @@
     height: auto;
     display: block;
     margin: 0 auto;
+    opacity: 50%;
 }
 
 .update-height-content {

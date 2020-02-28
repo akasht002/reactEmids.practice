@@ -342,3 +342,7 @@ export const calculateDistanceFromCoordinates =(lat1, lon1, lat2, lon2, unit) =>
 export const nullCheckArray = (array,index) => {
    return array && array[index] ? array[index] : 0;
 }
+
+export const isEmpty = (val) => {
+  return (val === undefined || val == null || val.length <= 0) ? true : false;
+}

@@ -117,21 +117,22 @@ export class QuickMenu extends Component {
         onClick={(e) => this.onClickServiceVisitAction(conversations)}>
         <i className={conversations.visitStatusId ? list.iconImage: list.iconImage} /> {getEntityProcessingStatus(data)} 
       </Item>
+    let patientDetails = {firstName: conversations.patientFirstName, lastName: conversations.patientLastName, phoneNumber: conversations.phoneNumber}
 
-    let phoneCallOption = 
-        <Item className='ListItem CTDashboard' key='item-1'
-          onClick={(e) => { this.handlePhoneNumber(conversations) }}>
-            <i className='iconPhone' /> Phone Call
-        </Item>
+    let updatedGuardians = [patientDetails, ...conversations.guardians]
+
+    let guardianPhoneNumbers = updatedGuardians.map((guardian, index) => 
+          <Item className='ListItem CTDashboard' key={`item-${guardian.firstName}`} onClick={(e) => { this.handlePhoneNumber(guardian) }}>
+          <i className='iconPhone' />{`${guardian.firstName} ${guardian.lastName}`}</Item>)
 
     if(isEntityServiceProvider()) {
-        options = !this.props.canProcessVisit ? [phoneCallOption] :
-         conversations.deceasedInd ? [visitProcessingOption] : [
+        options = conversations.deceasedInd ? [visitProcessingOption] : [
           visitProcessingOption,
-          phoneCallOption
+          ...guardianPhoneNumbers  
         ];
       } else {
-        const commonOptions = [phoneCallOption,
+        const commonOptions = [
+        ...guardianPhoneNumbers,  
         <Item className='ListItem CTDashboard' key='item-2'
           onClick={(e) => { this.onClickConversation(conversations) }}>
           <i className='iconConversation' /> Conversation
@@ -143,7 +144,7 @@ export class QuickMenu extends Component {
 
         !(getUserInfo().serviceProviderTypeId === ORG_SERVICE_PROVIDER_TYPE_ID) ? 
         options = conversations.deceasedInd ? [visitProcessingOption] : [ 
-          visitProcessingOption,   
+          visitProcessingOption, 
           ...commonOptions,    
         ]
         :

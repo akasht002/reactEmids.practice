@@ -611,18 +611,25 @@ span.no-recoord-table {
 }
 
 .all-individuals-tableblock th:nth-child(5),
-.all-individuals-tableblock td:nth-child(5) {
+.all-individuals-tableblock td:nth-child(5),
+.all-individuals-tableblock th:nth-child(7),
+.all-individuals-tableblock td:nth-child(7)  {
     width: 10%;
 }
 
 .all-individuals-tableblock th:nth-child(2),
 .all-individuals-tableblock td:nth-child(2),
 .all-individuals-tableblock th:nth-child(6),
-.all-individuals-tableblock td:nth-child(6),
-.all-individuals-tableblock th:nth-child(7),
-.all-individuals-tableblock td:nth-child(7) {
+.all-individuals-tableblock td:nth-child(6)
+{
     width: 14%;
 }
+
+.all-individuals-tableblock th:nth-child(8),
+.all-individuals-tableblock td:nth-child(8)  {
+    width: 10%;
+}
+
 
 /*grid-alignment-indvidulas-2nd-tab*/
 .feedback-individuals-tableblock th:nth-child(1),

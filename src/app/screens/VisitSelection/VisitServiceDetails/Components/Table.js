@@ -85,6 +85,7 @@ export const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentMod
 export const Table = props => {
     let isEntity = isEntityUser()
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let editNoteImage = require(`../../../../assets/images/icons/Note_edit.png`)
     return (
         <Fragment>
             <table className="table-responsive plan-tableview theme-primary" cellpadding="6" cellspacing="6">
@@ -94,9 +95,12 @@ export const Table = props => {
                             return <th>{item.label}</th>
                         })}
                         {isEntity &&
-                            <th></th>}
-                        {isEntity &&
-                            <th></th>}
+                            <Fragment>
+                            <th></th>
+                            <th></th>
+                            </Fragment>
+                            }
+                        {(isEntity || isEntityServiceProvider) && <th></th>}  
                         {!isEntity && <th></th>}
                     </tr>
                 </thead>
@@ -136,6 +140,16 @@ export const Table = props => {
                                     />
                                 </td>
                             }
+                            {(isEntity || isEntityServiceProvider) &&
+                                <td>
+                                    {((item.additionalInformation === '') || (item.additionalInformation === null)) ? 
+                                    <span></span> :
+                                    <div className="theme-primary">
+                                    <img src={editNoteImage} className="note-block" alt="noteEdit" title={item.additionalInformation}/>
+                                    </div>
+                                    }        
+                                </td> 
+                            }       
                             {!isEntity ?
                                 !props.canProcessVisit ? <td></td> :
                                 <td>
@@ -177,7 +191,7 @@ export const Table = props => {
                         pageSizeChange={props.rowPageChange}
                         pageSizeOption={PAGE_SIZE_OPTIONS}
                     />
-                    <span className="page-result">Total {props.totalResult} results</span>
+                    <span className="page-result">Total {props.totalResult} Results</span>
                 </div>
             }
         </Fragment>

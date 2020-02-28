@@ -98,17 +98,30 @@ span.title-view {
 }
 
 .plan-tableview th:nth-child(4),
-.plan-tableview th:nth-child(5),
-.plan-tableview td:nth-child(4),
-.plan-tableview td:nth-child(5),
+.plan-tableview td:nth-child(4)
+{
+    width: 20%;
+}
+
+ .plan-tableview th:nth-child(5),
+.plan-tableview td:nth-child(5)
+{
+    width: 15%;
+} 
+
+.plan-tableview th:nth-child(8),
+.plan-tableview td:nth-child(8) {
+    width: 10%;
+} 
+
 .plan-tableview th:nth-child(6),
 .plan-tableview td:nth-child(6) {
-    width: 20%;
+    width: 10%;
 }
 
 .plan-tableview th:nth-child(7),
 .plan-tableview td:nth-child(7) {
-    width: 7%;
+    width: 10%;
 }
 
 .plan-tableview td:nth-child(1) time {
@@ -297,12 +310,11 @@ span.title-view {
     float: none;
     margin: 0 auto;
     display: block;
-    padding: 5px 0px !important;
+    padding: 5px 5px !important;
     font-size: 14px !important;
     height: 30px;
     white-space: pre;
     line-height: 18px;
-    width: 100%;
 }
 
 .right-customewidth .right-tablelist .CoreoPagination {
@@ -512,4 +524,13 @@ span.title-view {
     cursor: context-menu !important;
     pointer-events: none;
     z-index: 10000;
+}
+
+.note-block
+{
+    display: block;
+    width: 16px;
+    max-width: 100%;
+    margin: 0 auto;
+    
 }

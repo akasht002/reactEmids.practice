@@ -612,3 +612,5 @@ export const LOCALSTORAGE_KEYS = {
 export const OKTA = {
     tokenStorage : 'okta-token-storage'
 }
+
+export const REFRESH_TOKEN = "refreshToken";
