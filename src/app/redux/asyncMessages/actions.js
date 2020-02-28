@@ -280,7 +280,7 @@ export function onCreateNewConversation(data) {
         dispatch(startLoading());
         return AsyncPost(API.createNewConversation, asyncData)
             .then(resp => {
-                dispatch(setNewConversationSuccess(resp.data.conversationId));
+                dispatch(setNewConversationSuccess(resp.data));
                 dispatch(setCurrentOpenConversation(resp.data));
                 dispatch(endLoading());
             })
