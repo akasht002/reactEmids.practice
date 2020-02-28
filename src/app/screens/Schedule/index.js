@@ -305,6 +305,7 @@ export class Schedule extends Component {
             this.handleServiceCategory(SERVICE_CATEGORY.adl.id, true)
             this.props.clearServiceDetails()
         }
+        this.espId = ''
     }
 
     handelTypeChange = () => {
@@ -346,13 +347,9 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    selectAllTypes = (isSelectAll) => {
-        this.props.selectOrClearAllServiceType(this.categoryId, isSelectAll)
-        if (isSelectAll) {
-            this.serviceTypes = this.props.services;
-        } else {
-            this.serviceTypes = [];
-        }
+    selectAllTypes = async (isSelectAll) => {
+        await this.props.selectOrClearAllServiceType(this.categoryId, isSelectAll)
+        this.serviceTypes = this.props.services;
         this.isDataEntered = true;
     }
 
@@ -1047,7 +1044,7 @@ export class Schedule extends Component {
                                     </ul>}
                             </div>
                             <div className="ServiceTypesWidget PostSR">
-                                <h2 className='ServicesTitle theme-primary'>Additional Information</h2>
+                                <h2 className='ServicesTitle theme-primary'>Assign one or more Caregivers</h2>
                                 <AdditionalInformation
                                     handleAdditionInfo={this.handleAdditionInfo}
                                     additionalDescription={this.state.additionalDescription}

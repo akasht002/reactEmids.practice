@@ -896,6 +896,18 @@ body {
     top: 40px;
 }
 
+.topProfile .topPalette .ProfileMonthList div.Select-menu-outer .Select-option.is-focused {
+    background-color: transparent !important;
+}
+
+.topProfile .topPalette .ProfileMonthList div.Select-menu-outer .is-selected.is-focused {
+    background: #e0f1fb !important;
+}
+
+.topProfile .topPalette .ProfileMonthList div.Select-menu-outer .Select-option:hover {
+    background-color: #e0f1fb !important;
+}
+
 .count-topred {
     position: absolute;
     width: 21px;

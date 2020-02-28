@@ -143,7 +143,7 @@ export class AssessmentFeedback extends Component {
                                 <span onClick={() => this.props.goBack()} test-goBack='test-goBack' className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>, {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.props.patientDetails.visitDate}</Moment>{this.props.patientDetails.slot && `,`} {this.props.patientDetails.slot}</i>{this.props.patientDetails.serviceRequestVisitNumber}</span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patient.patientId)}>
                                         {this.props.patientDetails.patient ?
@@ -214,7 +214,7 @@ export class AssessmentFeedback extends Component {
                                                                                     answer.checked = e.target.checked;
                                                                                     this.handleSelected(answer.answerName, questionList.feedbackQuestionnaireId)
                                                                                 }}
-                                                                                checked={answer.checked}
+                                                                                checked={answer.checked ? answer.checked : false}
                                                                                 disabled={this.props.VisitFeedback.length}
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>

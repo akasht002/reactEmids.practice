@@ -5,6 +5,7 @@ import PointService from '../../../PatientProfile/PointService';
 import Languages from '../../../PatientProfile/Languages';
 import ClinicalCondition from '../../../PatientProfile/ClinicalCondition';
 import EmergencyAttorneyContact from '../../../PatientProfile/EmergencyAttorneyContact';
+import MyConnections from '../../../PatientProfile/MyConnections';
 
 export const PatientProfileTab = props => {
     return (
@@ -21,6 +22,7 @@ export const PatientProfileTab = props => {
             <ClinicalCondition />
             <PointService />
             <Languages />
+            <MyConnections />
             </div>
             </TabPane>
         </Fragment>

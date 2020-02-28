@@ -75,6 +75,7 @@ export const PlanTab = props => {
                                     navigateToparticularPageBasedonId={props.navigateToparticularPageBasedonId}
                                     servicePlanVisitId={props.servicePlanVisitId}
                                     highlightVisit={props.highlightVisit}
+                                    canProcessVisit={props.canProcessVisit}
                                 />
                                 {props.visitList.length !== 0 &&
                                     <CoreoPagination

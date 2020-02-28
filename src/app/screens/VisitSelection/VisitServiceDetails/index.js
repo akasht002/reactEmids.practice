@@ -94,6 +94,8 @@ import { saveContextData, createDataStore } from '../../../redux/telehealth/acti
 import { serviceRequestDetailsTab } from '../../../redux/constants/constants';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 import { USER_TYPE } from '../../../constants/constants'
+import { CustomTextArea } from '../../../components/Base';
+
 export class VisitServiceDetails extends Component {
   constructor(props) {
     super(props);
@@ -126,7 +128,8 @@ export class VisitServiceDetails extends Component {
       conversationsModal: false,
       conversationErrMsg: '',
       selectedDuration: null,
-      isQuestionareModalOpen:false
+      isQuestionareModalOpen:false,
+      textareaValue: ''
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -175,7 +178,8 @@ export class VisitServiceDetails extends Component {
         startDateEdit: this.props.serviceVisitDetails.visitDate,
         startTime: moment(this.props.serviceVisitDetails.startTime, DATE_FORMATS.timeh_mm_a),
         endTime: moment(this.props.serviceVisitDetails.endTime, DATE_FORMATS.timeh_mm_a),
-        selectedDuration: this.props.serviceVisitDetails.duration
+        selectedDuration: this.props.serviceVisitDetails.duration,
+        textareaValue: this.props.serviceVisitDetails.additionalInformation
       })
       this.props.editIndividualEditPopup(false)
     }
@@ -280,11 +284,14 @@ export class VisitServiceDetails extends Component {
     await this.props.getServiceRequestList(this.props.patientId);
   }
 
-  engage = () => {
+  engage = async() => {
     let model = {
       serviceRequestId: this.state.serviceRequestId,
     }
-    this.props.updateHireStatusForServiceRequest(model)
+    await this.props.updateHireStatusForServiceRequest(model)
+    await this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+    await this.props.getServiceRequestList(this.props.patientId);
+    await this.setState({isEngageAlertPopupOpen: false})
   }
 
   addSchedule = () => {
@@ -688,7 +695,8 @@ export class VisitServiceDetails extends Component {
       visitDate: this.state.startDateEdit,
       startTime: this.formatedStartTime ? this.formatedStartTime : getHHMMformat(this.state.startTime),
       endTime: this.formatedEndTime ? this.formatedEndTime : getHHMMformat(this.state.endTime),
-      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime)
+      duration: getUtcTimeDiffInHHMMformat(this.state.startTime, this.state.endTime),
+      additionalInformation: this.state.textareaValue
     }
     if (!saveVisitEdit) {
       await this.props.updateServiceVisit(model)
@@ -791,6 +799,12 @@ let datas =  data.map((el)=> {
   return datas
 }
 
+handleTextarea = (e) => {
+  this.setState({
+    textareaValue: e.target.value
+  })
+}
+
   render() {
     let srQuestionareDetaisModalContent= <Questions questionsLists={this.formatJSON(this.props.questionAnswerList)}/>;
     
@@ -848,7 +862,19 @@ let datas =  data.map((el)=> {
                   <h5>{this.state.selectedDuration} Hour(s)</h5>
                 </div>
               </div>
-              <div className="top-search-blocksp">
+             
+              <div className="full-block">
+              <h2 class="ServicesTitle theme-primary mb-3">Assign one or more Caregivers</h2>
+              <CustomTextArea
+                rows={4}
+                placeholder='Write your description'
+                value={this.state.textareaValue}
+                textChange={this.handleTextarea}
+                maxlength={500}
+              />
+              </div>
+             
+              <div className="top-search-blocksp mt-3">
                 <h2 class="ServicesTitle theme-primary">Assign Service Provider</h2>
                 <div className="search-block_SP">
                   <Search
@@ -1008,6 +1034,7 @@ let datas =  data.map((el)=> {
                   planScheduleId={this.props.planScheduleId}
                   highlightVisit={this.highlightVisit}
                   visitServiceDetails={this.props.VisitServiceDetails}
+                  canProcessVisit={this.props.canProcessVisit}
                 />
                 <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
@@ -1183,6 +1210,7 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
+  const { canProcessVisit } = state.authState.userState.userData.userInfo
   return {
     isScheduleLoading:VisitServiceDetailsState.isScheduleLoading,
     isServiceRequestListLoading:VisitServiceDetailsState.isServiceRequestListLoading,
@@ -1214,7 +1242,8 @@ export function mapStateToProps(state) {
     isEditIndividualEditPopup: VisitServiceDetailsState.editIndividualEditPopup,
     planId: VisitServiceDetailsState.planId,
     questionAnswerList:VisitServiceDetailsState.questionAnswerList,
-    isAnyEngagedServiceRequestSuccess: VisitServiceDetailsState.isAnyEngagedServiceRequestSuccess
+    isAnyEngagedServiceRequestSuccess: VisitServiceDetailsState.isAnyEngagedServiceRequestSuccess,
+    canProcessVisit
   }
 }
 

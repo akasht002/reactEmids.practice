@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {
     getManageConnection
 } from '../../../redux/patientProfile/actions'
 import { USERTYPES } from '../../../constants/constants';
+import { formatContactNumberValue } from '../../../utils/validations';
 
-export class MyConnections extends React.Component {
+export class MyConnections extends React.PureComponent {
 
     componentDidMount() {
         this.props.getManageConnection();
@@ -32,6 +33,7 @@ export class MyConnections extends React.Component {
                       {sp.firstName} {sp.lastName}
                     </span>
                     <span className='GuardianRelation'>{sp.name}</span>
+                    <span className='GuardianRelation'>{formatContactNumberValue(sp.contactNumber)}</span>
                   </span>
                 </div>
               </li>
@@ -41,25 +43,13 @@ export class MyConnections extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <Fragment>
                 <div className='col-md-12 card CardWidget SPLanguages'>
-                    <div className='SPCardTitle d-flex'>
-                        <h4 className='theme-primary'>My Connections</h4>
+                    <div className='SPCardTitle d-flex pb-0'>
+                        <h4 className='theme-primary'>Guardians</h4>
                     </div>
-                    <div className="SPAddGuardianContainer width100">
                         <div className='MyConnectionsContent'>
                             <div className='ConnectionsWidget'>
-                                <p className='ConnectionContentHeader'>Individuals</p>
-                                <ul className='GuardianList'>
-                                    {this.renderConnections(this.props.manageConnection && this.props.manageConnection.filter((item) => {
-                                        return item.userType === USERTYPES.PATIENT
-                                    }))}
-                                </ul>
-                            </div>
-                        </div>
-                        <div className='MyConnectionsContent'>
-                            <div className='ConnectionsWidget'>
-                                <p className='ConnectionContentHeader'>Guardians</p>
                                 <ul className='GuardianList'>
                                     {this.renderConnections(this.props.manageConnection && this.props.manageConnection.filter((item) => {
                                         return item.userType === USERTYPES.GUARDIAN
@@ -68,19 +58,19 @@ export class MyConnections extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
-            </React.Fragment>
+            </Fragment>
         )
     }
 }
 
-export const mapDispatchToProps = dispatch => {
+export function mapDispatchToProps(dispatch) {
     return {
         getManageConnection: () => dispatch(getManageConnection())
     }
 }
 
-export const mapStateToProps = state => {
+
+export function mapStateToProps(state) {
     return {
         manageConnection: state.patientProfileState.myConnectionList
     }
@@ -89,6 +79,8 @@ export const mapStateToProps = state => {
 export default withRouter(
     connect(mapStateToProps, mapDispatchToProps)(MyConnections)
 )
+
+
 
 
 

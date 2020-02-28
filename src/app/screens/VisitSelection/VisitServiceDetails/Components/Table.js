@@ -75,6 +75,8 @@ export const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentMod
             return getEntityProcessingStatus(data)
         case VISIT_PROCESSING_STATUS.cancelled.id:
             return VISIT_PROCESSING_STATUS.cancelled.title
+        case VISIT_PROCESSING_STATUS.entityProcess.id:
+            return VISIT_PROCESSING_STATUS.entityProcess.keyValue        
         default:
             return null
     }
@@ -83,6 +85,7 @@ export const renderEntityStatusBasedOnVisitStatus = (visitStatusId, isPaymentMod
 export const Table = props => {
     let isEntity = isEntityUser()
     let isEntityServiceProvider = getUserInfo().isEntityServiceProvider
+    let editNoteImage = require(`../../../../assets/images/icons/Note_edit.png`)
     return (
         <Fragment>
             <table className="table-responsive plan-tableview theme-primary" cellpadding="6" cellspacing="6">
@@ -92,9 +95,12 @@ export const Table = props => {
                             return <th>{item.label}</th>
                         })}
                         {isEntity &&
-                            <th></th>}
-                        {isEntity &&
-                            <th></th>}
+                            <Fragment>
+                            <th></th>
+                            <th></th>
+                            </Fragment>
+                            }
+                        {(isEntity || isEntityServiceProvider) && <th></th>}  
                         {!isEntity && <th></th>}
                     </tr>
                 </thead>
@@ -103,8 +109,8 @@ export const Table = props => {
                         let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : convert24To12Hrs(item.visitStartTime)
                         let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         let isIndividualServiceProvider = !((item.visitStatusId === VISIT_STATUS.startVisit.id) && isEntity && isEntityServiceProvider)
-                        let isStartVisit = (item.visitStatusId === VISIT_STATUS.startVisit.id) && !(isEntity || isEntityServiceProvider)
-                        let activeRowClass = (props.servicePlanVisitId === item.servicePlanVisitId) ? 'active-row-view' : ''
+                        let isStartVisit =  (item.visitStatusId === VISIT_STATUS.startVisit.id) && !(isEntity || isEntityServiceProvider)
+                        let activeRowClass = (isEntity || isEntityServiceProvider) && (props.servicePlanVisitId === item.servicePlanVisitId) ? 'active-row-view' : ''
                         return <tr className={activeRowClass} onClick={() => props.highlightVisit(item)}>
                             <td><Moment format={DATE_FORMATS.monDD}>{item.visitDate}</Moment> </td>
                             <td>{isIndividualServiceProvider && startTime}</td>
@@ -134,7 +140,18 @@ export const Table = props => {
                                     />
                                 </td>
                             }
+                            {(isEntity || isEntityServiceProvider) &&
+                                <td>
+                                    {((item.additionalInformation === '') || (item.additionalInformation === null)) ? 
+                                    <span></span> :
+                                    <div className="theme-primary">
+                                    <img src={editNoteImage} className="note-block" alt="noteEdit" title={item.additionalInformation}/>
+                                    </div>
+                                    }        
+                                </td> 
+                            }       
                             {!isEntity ?
+                                !props.canProcessVisit ? <td></td> :
                                 <td>
                                     <div className="ScheduleRowButton"><button className="btn btn-outline-primary"
                                         onClick={() => props.navigateToparticularPageBasedonId(item)}
@@ -143,7 +160,7 @@ export const Table = props => {
                                 :
                                 <td>
                                     <div className="ScheduleRowButton">
-                                        {item.visitStatusId !== VISIT_PROCESSING_STATUS.scheduled.id ?
+                                        {[VISIT_PROCESSING_STATUS.scheduled.id, VISIT_PROCESSING_STATUS.entityProcess.id].indexOf(item.visitStatusId) === -1 ?
                                             <button className="btn btn-outline-primary" onClick={() => props.navigateToparticularPageBasedonId(item)}>
                                                 {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
                                             </button>
@@ -174,7 +191,7 @@ export const Table = props => {
                         pageSizeChange={props.rowPageChange}
                         pageSizeOption={PAGE_SIZE_OPTIONS}
                     />
-                    <span className="page-result">Total {props.totalResult} results</span>
+                    <span className="page-result">Total {props.totalResult} Results</span>
                 </div>
             }
         </Fragment>

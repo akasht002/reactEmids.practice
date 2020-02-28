@@ -525,6 +525,7 @@ export class PersonalDetail extends React.PureComponent {
   renderDetails = () => {
     return (
       <div className='col-md-12 card CardWidget SPDetails'>
+         <div className="block-height-rating">
         <ProfileImage
           src={
             this.state.imageProfile
@@ -542,6 +543,7 @@ export class PersonalDetail extends React.PureComponent {
           <i class="Icon iconFilledStar"></i>
           {this.props.personalDetail && Math.round(this.props.personalDetail.rating * 10) / 10}
         </span>
+        </div>
         <div className={'SPDetailsContainer SPNameWidget'}>
           <div className={'d-flex'}>
             <div className={'col-md-7 p-0'}>

@@ -17,7 +17,9 @@ import {
 import {
   DashboardConversationPagination,
   USERTYPES,
-  VISIT_TYPE
+  VISIT_TYPE,
+  DEFAULT_PAGE_NUMBER,
+  THOUSAND_PAGE_SIZE
 } from '../../../constants/constants'
 import { getUnreadMessageCounts } from '../../asyncMessages/actions'
 import { getUserInfo } from '../../../services/http'
@@ -40,6 +42,7 @@ import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../c
 import { dispatchToAssessmentProcessing,getServiceRequestVisitDeatilsSuccess } from '../../visitSelection/VisitServiceProcessing/Assessment/actions'
 import { logError } from '../../../utils/logError';
 import { setServiceProviderFeedbackTab } from '../EntityDashboard/ServiceProvider/actions';
+import { unique, mergeArrayBasedOnId } from '../../../utils/arrayUtility'
 
 export const getServiceStatusSuccess = data => {
   return {
@@ -124,21 +127,21 @@ export const setServiceVisitDate = data => {
 
 export function getEntityServiceProviderListSearch (data) {
   return (dispatch, getState) => {
-    dispatch(setServiceVisitLoader(true))
-    return Get(API.getEntityServiceProviderList + getUserInfo().serviceProviderId)
-      .then(resp => {
-        const filtered = _.filter(resp.data, function (o) {
+    let url = `${getUserInfo().serviceProviderId}/${DEFAULT_PAGE_NUMBER}/${THOUSAND_PAGE_SIZE}?searchtext=${data}`
+    Get(`${API.searchESP}` + url)
+        .then(resp => {
+                    const filtered = _.filter(resp.data, function (o) {
           return (
             o.firstName.toLowerCase().indexOf(data.toLowerCase())  > -1
           )
         })
         dispatch(getEntityServiceProviderListSuccess(filtered))
         dispatch(setServiceVisitLoader(false))
-      })
-      .catch(err => {
-        dispatch(setServiceVisitLoader(false))
-      })
-  }
+        })
+        .catch(err => {
+            dispatch(endLoading())
+        })
+}
 }
 
 export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
@@ -150,8 +153,9 @@ export function getServiceProviderVists (data,pageNumber = 1,flag = false) {
       .then(resp => {
         let serviceVists =  flag ? getState().dashboardState.dashboardState.serviceVist :[];       
         let modifiedList = [...serviceVists,...resp.data];
-        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;          
-        dispatch(getPatientVisitDetailSuccess(modifiedList,disableShowMore))
+        let disableShowMore  = resp.data.length !== Pagination.pageSize ? true : false;     
+        let patientIds = unique(resp.data, 'patientId')   
+        dispatch(getGuardianDetails(patientIds, modifiedList, disableShowMore))  
         dispatch(setServiceVisitLoader(false))
       })
       .catch(err => {
@@ -407,4 +411,15 @@ export function goToAssessmentVisitProcessing(data){
       default:
      }
   }
+}
+
+export const getGuardianDetails = (patientIds, modifiedList,disableShowMore) => async (dispatch, getState) => {
+      try {
+        let resp = await ServiceRequestPost(API.getGuardianDetails, patientIds)
+        let guardianInfoList = resp.data
+        dispatch(getPatientVisitDetailSuccess(mergeArrayBasedOnId(modifiedList, guardianInfoList),disableShowMore))
+      }
+      catch(err) {
+        logError(err)
+      }
 }

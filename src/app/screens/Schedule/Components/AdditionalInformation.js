@@ -10,7 +10,7 @@ export const AdditionalInformation = props => {
                     placeholder='Write your description'
                     required={false}
                     className={props.className || 'form-control'}
-                    maxlength={1000}
+                    maxlength={500}
                     value={props.additionalDescription}
                     textChange={props.handleAdditionInfo}
                 />
