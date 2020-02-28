@@ -6,6 +6,7 @@ import { SCREENS, PERMISSIONS } from '../../../constants/constants';
 export const Details = props => {
   return (
     <div className='col-md-12 card CardWidget SPDetails'>
+      <div className="block-height-rating">
       <ProfileImage
         src={
           props.image
@@ -23,6 +24,7 @@ export const Details = props => {
         <i class="Icon iconFilledStar"></i>
         {props.personalDetail && Math.round(props.personalDetail.rating * 10)/10}
       </span>
+      </div>
       <div className={'SPDetailsContainer SPNameWidget'}>
         <div className={'d-flex'}>
           <div className={'col-md-7 p-0'}>

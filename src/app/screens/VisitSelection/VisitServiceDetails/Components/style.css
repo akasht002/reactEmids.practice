@@ -121,7 +121,7 @@ span.title-view {
 
 .plan-tableview th:nth-child(7),
 .plan-tableview td:nth-child(7) {
-    width: 7%;
+    width: 10%;
 }
 
 .plan-tableview td:nth-child(1) time {

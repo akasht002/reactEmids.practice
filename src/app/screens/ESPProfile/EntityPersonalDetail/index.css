@@ -37,19 +37,25 @@
 div.Select--single > .Select-control .Select-value, div.Select-placeholder, span.Select-value-label {
     padding: 0;
 }
-/*rating-block-dektop-view-&-responsiveview*/
+
+.block-height-rating {
+    max-height: 280px;
+    min-height: 280px;
+}
+
 .rating-blockcustome
 {
-    min-width: 100px;
+    width: 100px;
     height: 33px;
-    position: absolute;
+    position: relative;
     margin: 0 auto;
     text-align: center;
-    bottom: 40px;
+    bottom: 20px;
     margin-bottom: auto;
     margin-top: 10px;
     margin: 0 auto;
-    left: 71px;
+    left:0;
+    right:0;
     display: block;
     border-radius: 5px;
     -moz-border-radius:5px;
@@ -60,34 +66,15 @@ div.Select--single > .Select-control .Select-value, div.Select-placeholder, span
     line-height: 33px;
 }
 
-.rating-blockcustome span
-{
-display: inline-block;
-}
-
-@media only screen and (max-width: 480px) {
-.rating-blockcustome
-{
-    min-width:100%;
-    width: 100%;
-    height: auto;
-    position: relative;
-    margin: 0 auto;
-    text-align: center;
-    bottom:auto;
-    margin: 0 auto;
-    left:0;
-    display: block;
-}
+.rating-blockcustome span {
+    display: inline-block;
 }
 
 /*UI_fixes_for_placeholder*/
-.LanguagesModal .Select-control .Select-placeholder
-{
-padding-left:20px;
+.LanguagesModal .Select-control .Select-placeholder {
+    padding-left: 20px;
 }
 
-.LanguagesModal .SelectWithFlag .Select-control .Select-input
-{
-margin-left: 0px;
+.LanguagesModal .SelectWithFlag .Select-control .Select-input {
+    margin-left: 0px;
 }

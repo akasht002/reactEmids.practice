@@ -1551,7 +1551,7 @@ span.ProfileIconSearch .search-block_SP {
 }
 
 .full-block-scheduleDate .react-datepicker--time-only {
-  right: -100px;
+  left: 24px;
 }
 
 .top-search-blocksp {
