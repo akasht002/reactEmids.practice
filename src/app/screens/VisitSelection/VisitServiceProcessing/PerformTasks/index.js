@@ -200,7 +200,7 @@ export class PerformTasks extends Component {
                                 <span onClick={() => this.props.goBack()} className="TitleContent backProfileIcon theme-primary-light" />
                                 <div className='requestContent'>
                                     <div className='requestNameContent'>
-                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>, {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitNumber}</span>
+                                        <span><i className='requestName'><Moment format="ddd, DD MMM">{this.state.taskList.visitDate}</Moment>{this.state.taskList.slot && `,`} {this.state.taskList.slot}</i>{this.state.taskList.serviceRequestVisitNumber}</span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.state.taskList.patient && this.state.taskList.patient.patientId)}>
                                         <span>
