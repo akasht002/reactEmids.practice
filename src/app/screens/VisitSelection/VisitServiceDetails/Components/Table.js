@@ -96,9 +96,9 @@ export const Table = props => {
                             <Fragment>
                             <th></th>
                             <th></th>
-                            <th></th>
                             </Fragment>
                             }
+                        {(isEntity || isEntityServiceProvider) && <th></th>}  
                         {!isEntity && <th></th>}
                     </tr>
                 </thead>
@@ -138,14 +138,16 @@ export const Table = props => {
                                     />
                                 </td>
                             }
-                            <td>
-                            {item.additionalInformation === null ? 
-                            <span></span> :
-                            <div className="theme-primary">
-                              <img src={editNoteImage} className="note-block" alt="noteEdit" title={item.additionalInformation}/>
-                            </div>
-                            }        
-                            </td>        
+                            {(isEntity || isEntityServiceProvider) &&
+                                <td>
+                                    {((item.additionalInformation === '') || (item.additionalInformation === null)) ? 
+                                    <span></span> :
+                                    <div className="theme-primary">
+                                    <img src={editNoteImage} className="note-block" alt="noteEdit" title={item.additionalInformation}/>
+                                    </div>
+                                    }        
+                                </td> 
+                            }       
                             {!isEntity ?
                                 <td>
                                     <div className="ScheduleRowButton"><button className="btn btn-outline-primary"
@@ -186,7 +188,7 @@ export const Table = props => {
                         pageSizeChange={props.rowPageChange}
                         pageSizeOption={PAGE_SIZE_OPTIONS}
                     />
-                    <span className="page-result">Total {props.totalResult} results</span>
+                    <span className="page-result">Total {props.totalResult} Results</span>
                 </div>
             }
         </Fragment>

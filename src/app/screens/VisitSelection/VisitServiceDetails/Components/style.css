@@ -98,15 +98,25 @@ span.title-view {
 }
 
 .plan-tableview th:nth-child(4),
-.plan-tableview th:nth-child(5),
-.plan-tableview td:nth-child(4),
-.plan-tableview td:nth-child(5){
+.plan-tableview td:nth-child(4)
+{
     width: 20%;
 }
 
+ .plan-tableview th:nth-child(5),
+.plan-tableview td:nth-child(5)
+{
+    width: 15%;
+} 
+
+.plan-tableview th:nth-child(8),
+.plan-tableview td:nth-child(8) {
+    width: 10%;
+} 
+
 .plan-tableview th:nth-child(6),
 .plan-tableview td:nth-child(6) {
-    width: 5%;
+    width: 10%;
 }
 
 .plan-tableview th:nth-child(7),
@@ -521,4 +531,6 @@ span.title-view {
     display: block;
     width: 16px;
     max-width: 100%;
+    margin: 0 auto;
+    
 }
