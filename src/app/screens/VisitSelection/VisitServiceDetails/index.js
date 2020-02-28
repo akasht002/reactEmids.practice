@@ -284,11 +284,14 @@ export class VisitServiceDetails extends Component {
     await this.props.getServiceRequestList(this.props.patientId);
   }
 
-  engage = () => {
+  engage = async() => {
     let model = {
       serviceRequestId: this.state.serviceRequestId,
     }
-    this.props.updateHireStatusForServiceRequest(model)
+    await this.props.updateHireStatusForServiceRequest(model)
+    await this.props.getVisitServiceDetails(this.props.ServiceRequestId);
+    await this.props.getServiceRequestList(this.props.patientId);
+    await this.setState({isEngageAlertPopupOpen: false})
   }
 
   addSchedule = () => {
