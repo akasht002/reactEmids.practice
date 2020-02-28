@@ -182,6 +182,7 @@ export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_NUMBER = 1;
 export const DEFAULT_TIME = 200
 export const PAGE_RANGE = 5;
+export const THOUSAND_PAGE_SIZE = 1000;
 
 export const SERVICE_REQ_STATUS = {
     OPEN: 35,
@@ -610,3 +611,9 @@ export const OKTA = {
 }
 
 export const REFRESH_TOKEN = "refreshToken";
+
+export const NEW_SERVICE_REQUEST_STATUS = {
+    All : [35,38,39,47,42],
+    Open : [35],
+    Engaged : [38]
+}

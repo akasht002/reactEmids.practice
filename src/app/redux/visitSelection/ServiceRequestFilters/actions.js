@@ -1,7 +1,7 @@
 import { API } from '../../../services/api';
 import { Get, elasticSearchPost, elasticSearchGet, getUserInfo,ServiceRequestPost } from '../../../services/http';
 import { getVisitServiceListSuccess, startLoading, endLoading } from '../VisitServiceList/actions';
-import { SERVICE_REQ_STATUS } from '../../../constants/constants';
+import { SERVICE_REQ_STATUS, NEW_SERVICE_REQUEST_STATUS } from '../../../constants/constants';
 import { getTimeZoneOffset } from '../../../utils/dateUtility';
 import { SERVICE_REQUEST_STATUS } from '../../constants/constants';
 
@@ -161,10 +161,11 @@ export function getServiceArea(data) {
 };
 
 export const formatRequestPayload = data => {
+    let status =  typeof data.serviceStatus  !== 'string' ? data.serviceStatus : NEW_SERVICE_REQUEST_STATUS[data.serviceStatus]
     let reqObj = {
         Category: data.ServiceCategoryId,
         ServiceTypes: data.serviceTypes,
-        Status: data.serviceStatus,
+        Status: status,
         FromPage: data.FromPage,
         ToPage: data.ToPage,
         ServiceAreas: data.ServiceAreas,

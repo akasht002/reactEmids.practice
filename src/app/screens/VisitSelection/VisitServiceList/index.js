@@ -18,7 +18,8 @@ import {
     DEFAULT_FROM_DATE,
     DEFAULT_TO_DATE,
     DEFAULT_PAGE_NUMBER,
-    SERVICE_REQ_STATUS
+    SERVICE_REQ_STATUS,
+    NEW_SERVICE_REQUEST_STATUS
 } from '../../../constants/constants'
 import { uniqElementOfArray } from '../../../utils/arrayUtility'
 import { getFieldsNoSeperater } from '../../../utils/validations.js'
@@ -68,7 +69,7 @@ export class VisitServiceList extends Component {
             lon: '',
             ServiceAreas: {},
             isChecked: false,
-            activePage: this.props.pageNumber,
+            activePage: PAGE_NO,
             pageNumber: PAGE_NO,
             pageSize: SERVICE_REQUEST_PAGE_SIZE,
             sort: 'false',
@@ -195,12 +196,16 @@ export class VisitServiceList extends Component {
     }
 
     getStatus = () => {
-        let status = []
+        let status = [];
+        typeof this.props.status !== 'string' ?
         this.props.ServiceStatus.forEach(obj => {
-          if (obj.isChecked) {
-            status.push(obj.id)
-          }
-        });
+            if (obj.isChecked) {
+                status.push(obj.id)
+            }
+          })
+        :
+        status = NEW_SERVICE_REQUEST_STATUS[this.props.status]
+       
         return status
       }
 

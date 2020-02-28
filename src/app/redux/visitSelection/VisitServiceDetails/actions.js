@@ -687,11 +687,9 @@ export function updateHireStatusForServiceRequest(data) {
     ServiceRequestPut(API.hireServiceProvider, model)
       .then(resp => {
         dispatch(endLoading())
-        dispatch(push(Path.visitServiceList))
       })
       .catch(err => {
         dispatch(endLoading())
-        dispatch(push(Path.visitServiceList))
       })
   }
 }

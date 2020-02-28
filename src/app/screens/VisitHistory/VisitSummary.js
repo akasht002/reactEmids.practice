@@ -95,7 +95,7 @@ export class VisitSummary extends React.Component {
         <div className='ProfileHeaderWidget'>
           <div className='ProfileHeaderTitle'>
             <h5 className='theme-primary m-0'>
-              View Request
+              Visit Summary
             </h5>
           </div>
         </div>
