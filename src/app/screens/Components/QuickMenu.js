@@ -119,7 +119,7 @@ export class QuickMenu extends Component {
       </Item>
     let patientDetails = {firstName: conversations.patientFirstName, lastName: conversations.patientLastName, phoneNumber: conversations.phoneNumber}
 
-    let updatedGuardians = [patientDetails, ...conversations.guardians]
+    let updatedGuardians = conversations.guardians ? [patientDetails, ...conversations.guardians] : [patientDetails]
 
     let guardianPhoneNumbers = updatedGuardians.map((guardian, index) => 
           <Item className='ListItem CTDashboard' key={`item-${guardian.firstName}`} onClick={(e) => { this.handlePhoneNumber(guardian) }}>
