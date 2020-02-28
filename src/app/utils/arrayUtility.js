@@ -93,6 +93,6 @@ export const unique = (array,key) => {
 
 export const mergeArrayBasedOnId = (array1, guardianInfoList) =>
     array1.map(item1 => ({
-        ...guardianInfoList.find((item2) => (item2.id === item1.id) && item2),
+        ...guardianInfoList.find((item2) => (item2.patientId === item1.patientId) && item2),
         ...item1
     }));
