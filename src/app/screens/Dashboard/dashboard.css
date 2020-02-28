@@ -1489,7 +1489,7 @@ div.ProfileSearchContainer,
 }
 
 .topProfile .ProfileCardBody .topPalette {
-    margin-top: 0;
+    margin-top: -7px;
 }
 
 
