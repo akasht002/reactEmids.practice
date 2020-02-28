@@ -376,10 +376,6 @@ span.ProfileCardHeaderLink:hover {
     position: relative;
 }
 
-/* .ProfileMonthList .Select-control .Select-input {
-    display: none !important;
-} */
-
 .ProfileMonthList .Select-control .Select-value .Select-value-label {
     color: #7a329f !important;
     padding: 0 10px 0 0;
