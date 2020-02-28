@@ -229,8 +229,10 @@ export function mapDispatchToProps(dispatch) {
 };
 
 export function mapStateToProps(state) {
+    const { canProcessVisit } = state.authState.userState.userData.userInfo
     return {
-        isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit, 
+        isStandByModeOn: state.profileState.PersonalDetailState.spBusyInVisit,
+        canProcessVisit  
     }
 };
 
