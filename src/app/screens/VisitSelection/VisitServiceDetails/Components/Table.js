@@ -140,7 +140,7 @@ export const Table = props => {
                             }
                             {(isEntity || isEntityServiceProvider) &&
                                 <td>
-                                    {(item.additionalInformation === null) ? 
+                                    {((item.additionalInformation === '') || (item.additionalInformation === null)) ? 
                                     <span></span> :
                                     <div className="theme-primary">
                                     <img src={editNoteImage} className="note-block" alt="noteEdit" title={item.additionalInformation}/>
