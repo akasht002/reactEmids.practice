@@ -20,13 +20,17 @@ export class AssignServiceProvider extends Component {
     this.data = ""
   }
 
+  componentDidMount() {
+    this.props.getEntityServiceProviderListSearch('')
+  }
+
   onchangeSearchServiceProvider = e => {
     this.props.getEntityServiceProviderListSearch(e.target.value)
   }
 
   getModalContent = (serviceProviderList) => {
     return (
-      <form className="assign-serviceproblock">
+      <form className="assign-serviceproblock" onSubmit={(e)=>e.preventDefault()} >
         <Input
           id='participantsSearch'
           autoComplete='false'
@@ -110,7 +114,7 @@ export class AssignServiceProvider extends Component {
   render() {
     let modalTitle = "Assign Service Provider";
     let modalType = "";
-    let modalContent = this.getModalContent(this.props.entityServiceProvidersList)
+    let modalContent = this.getModalContent(this.props.serviceProviderList)
     return (
       <div className='EntityUServiceProf'>
         {
