@@ -7,6 +7,7 @@ import {
 } from '../../../utils/validations'
 import { ProfileImage } from '../../../components'
 import { formatPhoneNumber } from '../../../utils/formatName'
+import { getUserInfo } from '../../../services/http';
 import './index.css'
 import { communicationData } from './communicationData';
 
@@ -109,9 +110,11 @@ export class PersonalDetail extends React.PureComponent {
               (!this.props.personalDetail.deceasedInd) &&
               <div className="d-flex profile-action-block">
               {
+                (!getUserInfo().isEntityServiceProvider && getUserInfo().entityId === 0 ) ?
                 communicationData.map(item =>
-                  <i className={item.className} title={item.title} onClick={() => this.performActionBasedOnTitle(item.title)}/>
-                )
+                  <i key={item.id} className={item.className} title={item.title} onClick={() => this.performActionBasedOnTitle(item.title)}/>
+                ):<i key={communicationData[0].id} className={communicationData[0].className} title={communicationData[0].title} onClick={() => this.performActionBasedOnTitle(communicationData[0].title)}/>
+
               }
           </div>
             }
