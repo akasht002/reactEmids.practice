@@ -126,7 +126,7 @@ export class QuickMenu extends Component {
           <i className='iconPhone' />{`${guardian.firstName} ${guardian.lastName}`}</Item>)
 
     if(isEntityServiceProvider()) {
-        options = conversations.deceasedInd ? [visitProcessingOption] : [
+        options = !this.props.canProcessVisit ? [...guardianPhoneNumbers] : conversations.deceasedInd ? [visitProcessingOption] : [
           visitProcessingOption,
           ...guardianPhoneNumbers  
         ];
