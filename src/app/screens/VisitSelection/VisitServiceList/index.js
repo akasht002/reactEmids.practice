@@ -494,8 +494,8 @@ export class VisitServiceList extends Component {
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? (
             this.props.visitServiceList.map(serviceList => {
-                let serviceTypeIds = serviceList.serviceTypes && getFieldsNoSeperater(serviceList.serviceTypes,"type");
-                let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
+                let serviceTypeIds = serviceList.serviceTypes && getFieldsNoSeperater(serviceList.serviceTypes,"id");
+                let serviceImage = getServiceTypeImage(serviceTypeIds && Number.parseInt(serviceTypeIds[0], 10));
                 let patientImage = '';
                 let patientLastName = '';
                 if (_.indexOf(SHOW_IMAGES_SERVICE_REQUEST, serviceList.statusId) !== -1) {
