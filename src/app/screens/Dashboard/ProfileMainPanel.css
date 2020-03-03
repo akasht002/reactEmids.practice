@@ -352,7 +352,12 @@ span.ProfileCardHeaderLink:hover {
 
 .ProfileMonthList .Select-control {
     border: 0;
-    height: auto;
+    align-items:baseline;
+}
+
+.topProfile .ProfileMonthList
+{
+    top: -2px;
 }
 
 .ProfileMonthList .Select-control,
@@ -369,10 +374,6 @@ span.ProfileCardHeaderLink:hover {
 
 .ProfileMonthList .Select-control .Select-value {
     position: relative;
-}
-
-.ProfileMonthList .Select-control .Select-input {
-    display: none !important;
 }
 
 .ProfileMonthList .Select-control .Select-value .Select-value-label {
@@ -1224,17 +1225,56 @@ div.ProfileConversation {
 .topProfile .topPalette .monthPalette {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: left;
 }
 
-.topProfile .topPalette .monthPalette span {
+.topProfile .topPalette .monthPalette span{
     font-size: 14px;
     font-weight: 600;
     color: #444;
     padding-right: 0px;
     position: relative !important;
     right: 0 !important;
+    vertical-align: baseline;
+    top:0px;
+}
+
+.topProfile .ProfileMonthList,
+.bottomProfile .ProfileMonthList {
+    top: 0px;
+}
+
+.bottomProfile .topPalette .monthPalette span {
+    vertical-align: baseline;
+}
+
+.topProfile .ProfileCardBody .topPalette .monthPalette,
+.bottomProfile .ProfileCardBody .topPalette .monthPalette {
+    margin-top: 0;
+    display: flex;
+    align-items: baseline;
+    height: 30px;
+}
+
+.topProfile .topPalette .Select.is-focused:not(.is-open)>.Select-control,
+.bottomProfile .topPalette .Select.is-focused:not(.is-open)>.Select-control {
+    box-shadow: none;
+    background: none;
+}
+
+.topProfile .ProfileCardBody .monthPalette .ProfileMonthList .Select-menu-outer,
+.bottomProfile .ProfileCardBody .monthPalette .ProfileMonthList .Select-menu-outer {
+    border-top: 1px solid #c0c0c0;
+}
+
+.topProfile .ProfileCardBody .monthPalette .ProfileMonthList .Select-menu-outer {
+    left: 12px;
+    margin-top: -5px;
+}
+
+.bottomProfile .ProfileCardBody .monthPalette .ProfileMonthList .Select-menu-outer
+{
+    margin-top: 7px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider {
@@ -1356,4 +1396,90 @@ div.ProfileConversation {
 .No-Coverastion-Block:hover {
     background-color: #eaeaea;
     cursor: pointer;
+}
+
+/*IE-Edge*/
+
+@supports (-ms-ime-align: auto) {
+
+    .topProfile .ProfileCardBody .topPalette .monthPalette .Select-control .Select-multi-value-wrapper .Select-value,
+    .bottomProfile .ProfileCardBody .topPalette .monthPalette .Select-control .Select-multi-value-wrapper .Select-value {
+        top: -22px;
+    }
+}
+
+/* IE11 & IE10 */
+@media all and (-ms-high-contrast:none) {
+
+    .topProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-multi-value-wrapper,
+    .bottomProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-multi-value-wrapper {
+        display: table-cell;
+    }
+
+
+    *::-ms-backdrop,
+    .topProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-multi-value-wrapper,
+    .bottomProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-multi-value-wrapper {
+        display: table-cell;
+    }
+
+    .topProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-multi-value-wrapper,
+    .bottomProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-arrow-zone {
+        display: table-cell;
+    }
+
+
+    *::-ms-backdrop,
+    .topProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-multi-value-wrapper,
+    .bottomProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-arrow-zone {
+        display: table-cell;
+    }
+
+
+    .topProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-arrow-zone .Select-arrow {
+        vertical-align: bottom;
+    }
+
+
+    *::-ms-backdrop,
+    .topProfile .topPalette .monthPalette .ProfileMonthList .Select-control .Select-arrow-zone .Select-arrow {
+        vertical-align: bottom;
+    }
+
+    .topProfile .ProfileCardBody .topPalette .monthPalette span:first-child,
+    .topProfile .ProfileCardBody .topPalette .monthPalette .ProfileMonthList {
+        display: table-cell;
+    }
+
+
+    *::-ms-backdrop,
+    .topProfile .ProfileCardBody .topPalette .monthPalette span:first-child,
+    .topProfile .ProfileCardBody .topPalette .monthPalette .ProfileMonthList {
+        display: table-cell;
+    }
+
+
+    .topProfile .ProfileCardBody .topPalette .monthPalette span:first-child,
+    .topProfile .ProfileCardBody .topPalette .monthPalette .ProfileMonthList {
+        display: table-cell;
+    }
+
+
+    *::-ms-backdrop,
+    .topProfile .ProfileCardBody .topPalette .monthPalette span:first-child,
+    .topProfile .ProfileCardBody .topPalette .monthPalette .ProfileMonthList {
+        display: table-cell;
+    }
+
+    .todayPalette{
+       top: 20px;
+    }
+
+    *::-ms-backdrop,
+    .todayPalette{
+        top: 20px;
+    }
+
+
+
 }
