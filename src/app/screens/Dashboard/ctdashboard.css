@@ -1,105 +1,119 @@
 .ProfileHeaderTitle.CTDashboard {
-display: flex;
-position: relative;
-width: 100%;
-justify-content: space-between;
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .ProfileHeaderTitle.CTDashboard .ProfileHeaderRight {
-display: block;
-height: 24px;
+    display: block;
+    height: 24px;
 }
 
-.ProfileHeaderTitle.CTDashboard .ProfileHeaderRight form, .entity-date-filter .form-group {
-display: flex;
+.ProfileHeaderTitle.CTDashboard .ProfileHeaderRight form,
+.entity-date-filter .form-group {
+    display: flex;
 }
 
 .entity-date-filter {
-margin-right: 15px;
+    margin-right: 15px;
 }
 
 .entity-date-filter:last-child {
-margin-right: 0;
+    margin-right: 0;
 }
 
 .entity-date-filter .form-group label {
-font-size: 14px;
-font-weight: 600;
-color: #7a329f;
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
-align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #7a329f;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .entity-date-filter .form-group label span {
-margin: 0;
+    margin: 0;
 }
 
 .entity-date-filter .form-group input.datePicker {
-height: 24px;
-font-size: 14px;
-padding: 0 0 5px 0;
-width: 125px;
-top: 3px;
-position: relative;
-background-color: rgba(0, 0, 0, 0);
+    height: 24px;
+    font-size: 14px;
+    padding: 0 0 5px 0;
+    width: 125px;
+    top: 3px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .entity-date-filter .form-group .react-datepicker__input-container:after {
-height: 15px;
-width: 15px;
-bottom: 5px;
+    height: 15px;
+    width: 15px;
+    bottom: 5px;
 }
 
 .entity-date-filter .form-group .react-datepicker__input-container {
-margin: 0 15px;
+    margin: 0 15px;
 }
 
 .entity-date-filter .btn.CTHeaderFilterToday {
-font-size: 12px;
-padding: 5px 10px !important;
-height: 24px;
-line-height: 12px !important;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
-border-radius: 10px;
+    font-size: 12px;
+    padding: 5px 10px !important;
+    height: 24px;
+    line-height: 12px !important;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
 
 section .ProfileRightWidget {
-position: inherit;
+    position: inherit;
 }
 
 .iconLogInto {
-width: 18px;
-height: 18px;
-opacity: 0.5;
-margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.5;
+    margin-right: 10px;
 }
 
-.iconPhone, .iconConversation, .iconVideoCon {
-width: 18px;
-height: 18px;
-margin-right: 10px;
+.iconPhone,
+.iconConversation,
+.iconVideoCon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
 }
 
-.iconPhone:before, .iconConversation:before, .iconVideoCon:before {
-top: 4px;
+.iconPhone:before,
+.iconConversation:before,
+.iconVideoCon:before {
+    top: 4px;
 }
 
-.iconLocation:before, .iconLogInto:before {
-top: -2px;
+.iconLocation:before,
+.iconLogInto:before {
+    top: -2px;
 }
 
-.iconLogInto:before, .iconPhone:before, .iconConversation:before, .iconVideoCon:before, .iconPaymentPending:before, .iconStartVisit:before, .iconCancelVisit:before, .iconVisitSummary:before, .iconVisitInProgressDashboard:before   {
-content: "";
-position: absolute;
-display: block;
-width: 100%;
-height: 100%;
-background-position: 50%;
-background-size: 100%;
-background-repeat: no-repeat;
+.iconLogInto:before,
+.iconPhone:before,
+.iconConversation:before,
+.iconVideoCon:before,
+.iconPaymentPending:before,
+.iconStartVisit:before,
+.iconCancelVisit:before,
+.iconVisitSummary:before,
+.iconVisitInProgressDashboard:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-position: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .iconLogInto:before {
@@ -107,218 +121,248 @@ background-repeat: no-repeat;
 }
 
 .iconPhone:before {
-background-image: url('../../assets/images/Call_Purple.svg');
+    background-image: url('../../assets/images/Call_Purple.svg');
 }
 
 .iconConversation:before {
-background-image: url('../../assets/images/Message_Purple.svg');
+    background-image: url('../../assets/images/Message_Purple.svg');
 }
 
 .iconVideoCon:before {
-background-image: url('../../assets/images/TeleHealth_Purple.svg');
+    background-image: url('../../assets/images/TeleHealth_Purple.svg');
 }
 
 /*update-new-icons*/
-.iconVisitInProgressDashboard:before{
-background-image: url('../../assets/images/visit-in-progress.svg');
+.iconVisitInProgressDashboard:before {
+    background-image: url('../../assets/images/visit-in-progress.svg');
 }
 
-.iconStartVisit:before{
-background-image: url('../../assets/images/start-visit.svg');
+.iconStartVisit:before {
+    background-image: url('../../assets/images/start-visit.svg');
 }
 
-.iconPaymentPending:before{
-background-image: url('../../assets/images/payment-pending.svg');
+.iconPaymentPending:before {
+    background-image: url('../../assets/images/payment-pending.svg');
 }
 
-.iconCancelVisit:before{
-background-image: url('../../assets/images/cancel-visit.svg');
+.iconCancelVisit:before {
+    background-image: url('../../assets/images/cancel-visit.svg');
 }
 
-.iconVisitSummary:before{
-background-image: url('../../assets/images/ViewEye.svg');
+.iconVisitSummary:before {
+    background-image: url('../../assets/images/ViewEye.svg');
 }
 
-.iconCancelVisit:before, .iconPaymentPending:before, .iconStartVisit:before, .iconVisitInProgressDashboard:before, .iconVisitSummary:before {
-top: 4px;
+.iconCancelVisit:before,
+.iconPaymentPending:before,
+.iconStartVisit:before,
+.iconVisitInProgressDashboard:before,
+.iconVisitSummary:before {
+    top: 4px;
 }
 
-.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit, .iconPhone, .iconConversation, .iconVideoCon {
-display: inline-block;
-position: relative;
-margin-right: 1px;
+.iconStartVisit,
+.iconPaymentPending,
+.iconVisitInProgressDashboard,
+.iconVisitSummary,
+.iconCancelVisit,
+.iconPhone,
+.iconConversation,
+.iconVideoCon {
+    display: inline-block;
+    position: relative;
+    margin-right: 1px;
 }
 
-.iconStartVisit, .iconPaymentPending, .iconVisitInProgressDashboard, .iconVisitSummary, .iconCancelVisit, .iconPhone, .iconConversation, .iconVideoCon{
-width: 18px;
-height: 18px;
-margin-right: 10px;
+.iconStartVisit,
+.iconPaymentPending,
+.iconVisitInProgressDashboard,
+.iconVisitSummary,
+.iconCancelVisit,
+.iconPhone,
+.iconConversation,
+.iconVideoCon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
 }
 
-.iconStartVisit:before, .iconPaymentPending:before, .iconVisitInProgressDashboard:before, .iconVisitSummary:before, .iconCancelVisit:before,  {
-content: "";
-position: absolute;
-display: block;
-width: 100%;
-height: 100%;
-background-position: 50%;
-background-size: 100%;
-background-repeat: no-repeat;
+.iconStartVisit:before,
+.iconPaymentPending:before,
+.iconVisitInProgressDashboard:before,
+.iconVisitSummary:before,
+.iconCancelVisit:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-position: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .Actions .text__c-txt___14ptu {
-display: inline-block;
+    display: inline-block;
 }
 
 .SelectDropDown.CTDashboard {
-position: relative;
-width: 18px;
-height: 18px;
+    position: relative;
+    width: 18px;
+    height: 18px;
 }
 
 .SelectDropDown.CTDashboard:before {
-content: '...';
-background: none !important;
-position: absolute;
-height: 100%;
-width: 100%;
-top: 0;
-right: 0;
-color: #444444;
-line-height: 6px;
-font-size: 22px;
--webkit-transform: rotate(-90deg) !important;
--moz-transform: rotate(-90deg) !important;
--ms-transform: rotate(-90deg) !important;
--o-transform: rotate(-90deg) !important;
-transform: rotate(-90deg) !important;
+    content: '...';
+    background: none !important;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    color: #444444;
+    line-height: 6px;
+    font-size: 22px;
+    -webkit-transform: rotate(-90deg) !important;
+    -moz-transform: rotate(-90deg) !important;
+    -ms-transform: rotate(-90deg) !important;
+    -o-transform: rotate(-90deg) !important;
+    transform: rotate(-90deg) !important;
 }
 
-.ListItem.CTDashboard:before, .SelectDropDown.CTDashboard:after {
-display: none;
+.ListItem.CTDashboard:before,
+.SelectDropDown.CTDashboard:after {
+    display: none;
 }
 
 .ListItem.CTDashboard {
-padding: 10px 15px;
+    padding: 10px 15px;
 }
 
 .SPTableTask {
-display: flex;
-display: -ms-flex;
-flex-direction: row;
+    display: flex;
+    display: -ms-flex;
+    flex-direction: row;
 }
 
 .SPTableTaskWidget {
-margin-right: 8px;
+    margin-right: 8px;
 }
 
 .SPTableTaskBarDown {
-display: inline-block;
-position: relative;
-width: 62px;
-height: 5px;
-background-color: #d7d7d7;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
-overflow: hidden;
+    display: inline-block;
+    position: relative;
+    width: 62px;
+    height: 5px;
+    background-color: #d7d7d7;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 .SPTableTaskBarUp {
-display: block;
-position: absolute;
-height: 100%;
-top: 0;
-left: 0;
-background-color: #f68e56;
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #f68e56;
 }
 
 .CheckboxSet.ProfileImageCheckbox label:before {
-top: calc(50% - 8px);
+    top: calc(50% - 8px);
 }
 
 .CheckboxSet.ProfileImageCheckbox label {
-padding-left: 34px;
+    padding-left: 34px;
 }
 
 .FilterContainer .scrollarea-content {
-width: 100%;
-overflow-x: hidden;
-overflow-y: auto;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .CTFilter.FilterMiddle .scrollarea-content {
-flex-direction: column;
+    flex-direction: column;
 }
 
 .top-tabicons-block {
-display: block;
-width: 80px;
-top: 5px;
-position: absolute;
-right: -40px;
+    display: block;
+    width: 80px;
+    top: 5px;
+    position: absolute;
+    right: -40px;
 }
 
 .top-tabicons-block img {
-display: block;
-max-width: 100%;
-height: auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
 .ServiceProvider .top-tabicons-block {
-width: 75px;
+    width: 75px;
 }
 
 div.SelectDropDown.LabelInputSelect {
-font-size: 16px;
-color: #444444;
-width: 100%;
-padding: 5px 0;
-border-bottom: 1px solid #e1e1e1;
--webkit-border-radius: 0;
--moz-border-radius: 0;
-border-radius: 0;
+    font-size: 16px;
+    color: #444444;
+    width: 100%;
+    padding: 5px 0;
+    border-bottom: 1px solid #e1e1e1;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 div.SelectDropDown.LabelInputSelect:before {
-bottom: 10px;
-top: auto;
+    bottom: 10px;
+    top: auto;
 }
 
-.tab-pane .LocationLabelWidget > label {
-display: block;
-font-size: 16px;
+.tab-pane .LocationLabelWidget>label {
+    display: block;
+    font-size: 16px;
 }
 
 input.LabelInput {
-position: relative;
-opacity: 1;
+    position: relative;
+    opacity: 1;
 }
 
 .form-radio-label .form-group {
-margin: 0;
+    margin: 0;
 }
 
 
 .CTDashboardApprove .modal-content .modal-body {
-max-height: calc(100vh - 120px);
-padding: 0;
+    max-height: calc(100vh - 120px);
+    padding: 0;
 }
 
 .CTDashboardApprove .modal-content .modal-body .bottomButton {
-display: flex;
+    display: flex;
 }
 
 /*UI_Fix_header*/
 
 .ProfileRightWidget .navbarProfile {
-width: inherit;
-position: absolute;
-padding: 15px 30px;
+    width: inherit;
+    position: absolute;
+    padding: 15px 30px;
 }
 
 .ProfileRightWidget .ProfileRightContainer {
-clear: both;
-width: auto;
-margin-top: 60px;
+    clear: both;
+    width: auto;
+    margin-top: 60px;
+}
+
+.ListItem.CTDashboard {
+    padding-right: 0px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
 }

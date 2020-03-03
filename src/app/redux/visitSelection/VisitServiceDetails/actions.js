@@ -629,7 +629,7 @@ export function getVisitList(data) {
         dispatch(getPlanScheduleId(resp.data, servicePlanVisitId))
         dispatch(getVisitListSuccess(resp.data))
         dispatch(getVisitListCount(data))
-        dispatch(setActivePage(pageNumber))
+        !isEntityServiceProvider && dispatch(setActivePage(pageNumber))
       })
       .catch(err => {
         logError(err)

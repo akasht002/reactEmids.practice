@@ -9,6 +9,7 @@ import { VISIT_STATUS } from '../../../../constants/constants';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 
 export const PlanTab = props => { 
+    console.log('aaaaaaaa',props.activePage)
     let isEntity = isEntityUser()
     let renderPLanDetailsClass = !isEntity ? 'full-block-requestplan' : '';
     let defaultImage = (caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.requested.keyValue) || caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.open.keyValue))
@@ -78,6 +79,7 @@ export const PlanTab = props => {
                                     canProcessVisit={props.canProcessVisit}
                                 />
                                 {props.visitList.length !== 0 &&
+                                     <div className="pagination-table-block">
                                     <CoreoPagination
                                         activePage={props.activePage}
                                         itemsCountPerPage={props.rowPageSize}
@@ -85,6 +87,7 @@ export const PlanTab = props => {
                                         pageRangeDisplayed={5}
                                         onChange={props.pageNumberChange}
                                     />
+                                    </div>
                                 }
                                 <Filter
                                     isOpen={props.isOpen}
