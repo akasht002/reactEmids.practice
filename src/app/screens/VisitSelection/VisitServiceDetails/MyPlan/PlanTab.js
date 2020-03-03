@@ -9,7 +9,6 @@ import { VISIT_STATUS } from '../../../../constants/constants';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 
 export const PlanTab = props => { 
-    console.log('aaaaaaaa',props.activePage)
     let isEntity = isEntityUser()
     let renderPLanDetailsClass = !isEntity ? 'full-block-requestplan' : '';
     let defaultImage = (caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.requested.keyValue) || caseInsensitiveComparer(props.visitServiceDetails.statusName, VISIT_STATUS.open.keyValue))
