@@ -185,6 +185,7 @@ export const Table = props => {
                 </tbody>
             </table>
             {props.visitList.length !== 0 &&
+               
                 <div className="table-result-block">
                     <RowPerPage
                         pageSize={props.rowPageSize}
@@ -193,6 +194,7 @@ export const Table = props => {
                     />
                     <span className="page-result">Total {props.totalResult} Results</span>
                 </div>
+                
             }
         </Fragment>
     )
