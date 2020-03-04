@@ -29,7 +29,7 @@ export const ScheduleList = props => {
                                     <span class="checkmark theme-primary"></span>
                 
                                 <div className="edit-block">
-                                {item.isAnyAvailableScheduleVisit && <button className= {'TestBtn'} disabled={true} onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
+                                {item.isAnyAvailableScheduleVisit && <button className= {'TestBtn'} onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
                                                 props.handelEditShedule(item.planScheduleId): 
                                                 props.handelEditAssessment(item.planScheduleId)}>
                                     Edit
