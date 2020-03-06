@@ -12,6 +12,7 @@ import { Path } from '../../../routes';
 import { setParticipantProfile, setESP} from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import { setServiceProviderId } from '../../../redux/profile/PersonalDetail/actions';
+import { getUserInfo } from '../../../utils/userUtility';
 
 export class ParticipantContent extends Component {
 
@@ -193,7 +194,7 @@ export class ParticipantContent extends Component {
         let userId = this.props.loggedInUser.coreoHomeUserId;
         if (this.props.existingParticipants && this.props.existingParticipants.length > 0) {
              this.props.existingParticipants.map((participant, index) => {
-                if ((userId !== participant.userId) && !(participant.participantType === USERTYPES.ENTITY)) {
+                if ((userId !== participant.userId) && !((participant.participantType === USERTYPES.ENTITY) && (participant.participantId === getUserInfo().serviceProviderId))) {
                     participant.userId.toString() === this.state.selectedProfile ? profileOptionClass = "Open" : profileOptionClass = "";
                     existingParticipants.push(
                         <li key={index} className="list-group-item participants">
@@ -254,7 +255,7 @@ export class ParticipantContent extends Component {
                 return '';
             });
             this.props.existingParticipants.map((participant, index) => {
-                if ((userId === participant.userId) || (participant.participantType === USERTYPES.ENTITY)) {
+                if ((userId === participant.userId) || ((participant.participantType === USERTYPES.ENTITY) && (participant.participantId === getUserInfo().serviceProviderId))) {
                     loggedInUser.push(
                         <li className="list-group-item d-flex participants myChat">
                             <table className="table">
