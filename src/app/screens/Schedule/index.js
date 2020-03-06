@@ -36,7 +36,8 @@ import {
     setServiceTypeIds,
     checkServiceType,
     setselectedServices,
-    setServiceCategoryId
+    setServiceCategoryId,
+    setViewPlan
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, getMinutes, getHours } from "../../utils/dateUtility";
 import './Components/styles.css'
@@ -130,6 +131,7 @@ export class Schedule extends Component {
     componentWillUnmount() {
         this.props.clearServiceDetails();
         this.props.getValidPatientAddressSuccess(false)
+        this.props.setViewPlan(false)
     }
 
     getPrimaryAddress = () => {
@@ -232,15 +234,15 @@ export class Schedule extends Component {
 
     selectNew = () => {
         let data = this.props.individualSchedulesDetails;
-        this.categoryId = data.categoryId;
+        this.categoryId = data.serviceCategoryIds[0];
         this.serviceTypes = data.serviceTypes;
-        this.props.getServiceType(data.categoryId, data.serviceTypes)
+        this.props.getServiceType(data.serviceCategoryIds[0], data.serviceTypes)
         data.monthly !== null && this.handleChangeSelectedDays(data.monthly.weekDayMonth && data.monthly.weekDayMonth.day);
         data.monthly !== null && this.handleChangeSelectedWeeks(data.monthly.weekDayMonth && data.monthly.weekDayMonth.week);
         this.setState({
             selectedPOS: data.patientAddressId,
             planType: SCHEDULE_TYPE_OPTIONS.standard,
-            checkedServiceCategoryId: data.categoryId,
+            checkedServiceCategoryId: data.serviceCategoryIds[0],
             startDate: data.startDate,
             endDate: data.endDate,
             street: data.address && data.address.streetAddress,
@@ -883,6 +885,7 @@ export class Schedule extends Component {
     };
 
     render() {
+        let renderBlockClass = this.props.isViewPlan ? 'view-schedule-block' : ''
         return (
             <AsideScreenCover>
                 <div className='ProfileHeaderWidget'>
@@ -894,7 +897,7 @@ export class Schedule extends Component {
                     smoothScrolling
                     horizontal={false}
                     className='ProfileContentWidget add-new-scheduleblock'>
-                    <div className="full-block-view">
+                    <div className={`full-block-view ${renderBlockClass}`}>
                         <div className="Plan-typebar">
                             <PlanType
                                 options={PlanTypeData}
@@ -907,7 +910,7 @@ export class Schedule extends Component {
                         <Fragment>
                             {
                                 parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
-                                <div className={this.state.isIndividualScheduleEdit ? 'Service-Cat-Typesblock Service-Cat-Typesblock-Edit' : "Service-Cat-Typesblock"}>
+                                <div className={"Service-Cat-Typesblock"}>
                                     <div>
                                         <h2 className='ServicesTitle theme-primary'>Service Category</h2>
                                         <ServiceCategory
@@ -936,6 +939,9 @@ export class Schedule extends Component {
                                             onClickSave={this.state.onClickSave}
                                         />
                                     </div>
+                                    {this.state.isIndividualScheduleEdit &&
+                                        <span>Note: If any changes in the Service Category or Service Type will led to create a new plan for the individual.</span>
+                                    }
                                 </div>
                             }
                             <div className={"ServiceTypesWidget PostSR schdule-postblock " + (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
@@ -1115,7 +1121,8 @@ export function mapDispatchToProps(dispatch) {
         setServiceTypeIds: data => dispatch(setServiceTypeIds(data)),
         checkServiceType: (data, id, checked) => dispatch(checkServiceType(data, id, checked)),
         setselectedServices: (data,isChecked) => dispatch(setselectedServices(data,isChecked)),
-        setServiceCategoryId: data => dispatch(setServiceCategoryId(data))
+        setServiceCategoryId: data => dispatch(setServiceCategoryId(data)),
+        setViewPlan: data => dispatch(setViewPlan(data))
     }
 }
 
@@ -1141,7 +1148,8 @@ export function mapStateToProps(state) {
         isAddNewScheduleClicked: state.visitSelectionState.VisitServiceDetailsState.isAddNewScheduleClicked,
         serviceCategoryIds: state.scheduleState.serviceCategoryIds,
         serviceTypeIds: state.scheduleState.serviceTypeIds,
-        services: state.scheduleState.services
+        services: state.scheduleState.services,
+        isViewPlan: scheduleState.isViewPlan
     }
 }
 

@@ -175,6 +175,7 @@ export const serviceTypesImage = {
     14: 'G&N Grocery Delivery.svg',
     15: 'G&N Meal Delivery.svg',
     16: 'Transportation - General Transportation.svg',
+    'AssessMent': 'assessment-icon.png'
     // 17: 'HAH - Shopping.svg',
 }
 

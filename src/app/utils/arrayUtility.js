@@ -96,3 +96,12 @@ export const mergeArrayBasedOnId = (array1, guardianInfoList) =>
         ...guardianInfoList.find((item2) => (item2.patientId === item1.patientId) && item2),
         ...item1
     }));
+
+export const compareArrays = (arr1,arr2) => {
+let sortedArr1 = arr1.sort().join()
+let sortedArr2 = arr2.sort().join()
+if((sortedArr1 === sortedArr2) && (arr1.length === arr2.length))
+    return true;
+else
+    return false;
+}

@@ -1482,7 +1482,7 @@ span.ProfileIconSearch .search-block_SP {
   transform: rotate(45deg);
 }
 
-.edit-block {
+.edit-block, .schedule-listblock .view-icon  {
   width: 15%;
   display: inline-block;
   position: absolute;
@@ -1570,6 +1570,10 @@ span.ProfileIconSearch .search-block_SP {
 
 .full-block-view .form-check textarea {
   color: #444;
+}
+
+.view-schedule-block {
+  pointer-events: none;
 }
 
 .CustomPOS input.form-control::placeholder {

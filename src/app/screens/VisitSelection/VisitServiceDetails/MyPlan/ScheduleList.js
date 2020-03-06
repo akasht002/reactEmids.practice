@@ -3,10 +3,25 @@ import { getFields } from "../../../../utils/validations";
 import {VISIT_TYPE} from "../../../../constants/constants"
 
 export const ScheduleList = props => {
+
+    
+const onClickPlanAction = (item) => {
+    if(!item.isAnyAvailableScheduleVisit) {
+        props.setViewPlan(true)
+    }
+    else {
+        props.setViewPlan(false)
+    }
+    parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
+    props.handelEditShedule(item.planScheduleId): 
+    props.handelEditAssessment(item.planScheduleId)
+}
+
     return (
         <Fragment>
             {
                 props.list.map(item => {
+                    let renderPlanActionIcon = item.isAnyAvailableScheduleVisit ? 'edit-block' : 'view-icon'
                     let activeListBlockClass = (props.planScheduleId === item.planScheduleId) ? 'active-listblock' : ''
                     return (
                         <div className={`schedule-listblock ${activeListBlockClass}`}>
@@ -28,10 +43,8 @@ export const ScheduleList = props => {
                                     <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
                                     <span class="checkmark theme-primary"></span>
                 
-                                <div className="edit-block">
-                                {item.isAnyAvailableScheduleVisit && <button className= {'TestBtn'} onClick={() => parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
-                                                props.handelEditShedule(item.planScheduleId): 
-                                                props.handelEditAssessment(item.planScheduleId)}>
+                                <div className={renderPlanActionIcon}>
+                                {<button className= {'TestBtn'} onClick={() => onClickPlanAction(item)}>
                                     Edit
                                 </button>}
                                 </div>
