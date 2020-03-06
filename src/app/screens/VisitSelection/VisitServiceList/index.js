@@ -31,7 +31,6 @@ import {
 import { formattedDateMoment, formattedDateChange, getServiceTypeImage, getStatusTextBasedOnStatus } from "../../../utils/validations";
 import Filter from "./ServiceRequestFilters";
 import { getSort } from "../../../redux/visitSelection/ServiceRequestSorting/actions";
-// import Sorting from "../ServiceRequestSorting";
 import { setPatient } from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
 import Pagination from 'react-js-pagination';
@@ -495,8 +494,8 @@ export class VisitServiceList extends Component {
     render() {
         let visitList = this.props.visitServiceList && this.props.visitServiceList.length > 0 ? (
             this.props.visitServiceList.map(serviceList => {
-                let serviceTypeIds = serviceList.serviceTypes && getFieldsNoSeperater(serviceList.serviceTypes,"type");
-                let serviceImage = getServiceTypeImage(serviceTypeIds && serviceTypeIds[0]);
+                let serviceTypeIds = serviceList.serviceTypes && getFieldsNoSeperater(serviceList.serviceTypes,"id");
+                let serviceImage = getServiceTypeImage(serviceTypeIds && Number.parseInt(serviceTypeIds[0], 10));
                 let patientImage = '';
                 let patientLastName = '';
                 if (_.indexOf(SHOW_IMAGES_SERVICE_REQUEST, serviceList.statusId) !== -1) {
@@ -648,12 +647,12 @@ export class VisitServiceList extends Component {
                     toggle={this.toggleFilter}
                     applyFilter={this.applyFilter}
                     applyReset={this.applyReset}
-                    startDate={this.state.startDate}
+                    startDate={formattedDateMoment(this.state.startDate)}
                     dateChanged={this.dateChanged}
                     dateChangedRaw={this.dateChangedRaw}
                     todateChanged={this.todateChanged}
                     todateChangedRaw={this.todateChangedRaw}
-                    endDate={this.state.endDate}
+                    endDate={formattedDateMoment(this.state.endDate)}
                     isValid={this.state.isValid}
                     ServiceCategory={this.props.ServiceCategory}
                     handleChangeServiceCategory={this.handleChangeServiceCategory}

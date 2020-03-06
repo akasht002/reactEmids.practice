@@ -290,13 +290,7 @@ span.life-map-btn .btn:hover {
 }
 
 .filter-label-content {
-    width: calc(100% - 20px);
-    padding: 0 8px 0 0;
-    z-index: 999;
-}
-
-.filter-label-content {
-    width: calc(100% - 20px);
+    width: calc(100% - 30px);
     padding: 0 8px 0 0;
     z-index: 999;
 }
@@ -395,7 +389,7 @@ span.life-map-btn .btn:hover {
 }
 
 .entity-dashboard-topview .react-datepicker-popper[data-placement^="bottom"] {
-    z-index: 1000;
+    z-index: 10000;
 }
 
 span.no-recoord-table {

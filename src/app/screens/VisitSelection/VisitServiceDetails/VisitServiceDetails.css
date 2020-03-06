@@ -470,8 +470,15 @@
     margin-top: 0 !important;
 }
 
-.full-block-requestplan .right-tablelist .table-result-block {
-    padding-left: 18px;
+.full-block-requestplan .right-tablelist .table-result-block{
+    bottom: 0;
+    padding-top: 20px;
+}
+
+.full-block-requestplan .right-tablelist .pagination-table-block  
+{
+    bottom: 0;
+    padding-top: 13px;
 }
 
 .right-customewidth .right-tablelist .FilterWidget {
@@ -482,9 +489,15 @@
 }
 
 .right-customewidth .right-tablelist .table-result-block .select-wrap-dahboard {
-    margin-left: 18px;
+    left: 34px;
     float: left;
     position: relative;
+}
+
+.full-block-requestplan .right-tablelist .table-result-block .select-wrap-dahboard
+{
+    left: 66px;
+    padding-right: 100px;
 }
 
 
@@ -509,7 +522,12 @@
 
     .right-customewidth .right-tablelist .table-result-block .select-wrap-dahboard
     {
-        margin-left: 36px;
+        left: 54px;
+    }
+
+    .full-block-requestplan .right-tablelist .table-result-block .select-wrap-dahboard {
+        left: 102px;
+        padding-right: 169px;
     }
 
 }

@@ -78,6 +78,7 @@ export const PlanTab = props => {
                                     canProcessVisit={props.canProcessVisit}
                                 />
                                 {props.visitList.length !== 0 &&
+                                     <div className="pagination-table-block">
                                     <CoreoPagination
                                         activePage={props.activePage}
                                         itemsCountPerPage={props.rowPageSize}
@@ -85,6 +86,7 @@ export const PlanTab = props => {
                                         pageRangeDisplayed={5}
                                         onChange={props.pageNumberChange}
                                     />
+                                    </div>
                                 }
                                 <Filter
                                     isOpen={props.isOpen}
