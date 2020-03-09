@@ -22,7 +22,7 @@ import { uniqBy } from 'lodash'
 import { SERVICE_CATEGORY } from '../../constants/constants';
 import { logError } from '../../utils/logError';
 import { forEach, uniq } from 'lodash';
-import { removeArrayElements, removeArrayObjects, removeDuplicates } from '../../utils/arrayUtility';
+import { removeArrayElements, removeArrayObjects, removeDuplicates, unique } from '../../utils/arrayUtility';
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -376,8 +376,10 @@ export function getDays(selectedDaysId = []) {
 };
 
 export function createSchedule(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading());
+        let {editServiceTypeIds, editServiceCategoryIds} = getState().scheduleState; 
+        let serviceTypeIds = unique(data.serviceTypes) 
         let modelData = createScheduleModal(data)
         return ServiceRequestPost(API.createOrEditSchedule, modelData)
             .then(resp => {
