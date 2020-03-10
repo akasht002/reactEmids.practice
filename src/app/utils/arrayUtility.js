@@ -98,9 +98,9 @@ export const mergeArrayBasedOnId = (array1, guardianInfoList) =>
     }));
 
 export const compareArrays = (arr1,arr2) => {
-let sortedArr1 = arr1.sort().join()
-let sortedArr2 = arr2.sort().join()
-if((sortedArr1 === sortedArr2) && (arr1.length === arr2.length))
+let sortedArr1 = arr1.sort()
+let sortedArr2 = arr2.sort()
+if(sortedArr1.every((v,i)=> v === sortedArr2[i]))
     return true;
 else
     return false;

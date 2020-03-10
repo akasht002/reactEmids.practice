@@ -128,7 +128,9 @@ const scheduleState = (state = defaultState, action) => {
                 individualSchedulesDetails: {},
                 services: [],
                 serviceTypeIds: [],
-                serviceCategoryIds: []
+                serviceCategoryIds: [],
+                editServiceCategoryIds: [],
+                editServiceTypeIds: []
             };
         case Schedule.setServiceTypeIds:
         return {

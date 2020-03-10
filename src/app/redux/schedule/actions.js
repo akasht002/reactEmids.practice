@@ -378,8 +378,6 @@ export function getDays(selectedDaysId = []) {
 export function createSchedule(data) {
     return (dispatch, getState) => {
         dispatch(startLoading());
-        let {editServiceTypeIds, editServiceCategoryIds} = getState().scheduleState; 
-        let serviceTypeIds = unique(data.serviceTypes) 
         let modelData = createScheduleModal(data)
         return ServiceRequestPost(API.createOrEditSchedule, modelData)
             .then(resp => {
@@ -450,7 +448,7 @@ export function getIndividualSchedulesDetails(scheduleId) {
         dispatch(startLoading());
         let {services, serviceTypeIds} = getState().scheduleState
         return ServiceRequestGet(API.getIndividualSchedulesDetails + scheduleId).then((resp) => {
-            let serviceTypes = resp.data && resp.data.serviceTypes
+            let serviceTypes = resp.data && resp.data.serviceTypes.map(obj=> ({ ...obj, isChecked: true, selected: true }))
             let serviceCategoryId = resp.data && resp.data.serviceCategoryIds
             dispatch(getIndividualSchedulesDetailsSuccess(resp.data));
             let updatedServiceTypeids = [...serviceTypeIds, ...serviceTypes.map(obj => obj.serviceTypeId)] 
@@ -471,14 +469,16 @@ export function getIndividualSchedulesDetails(scheduleId) {
 export const setselectedServices = (data,isChecked) => {
     return (dispatch,getState) => {
         let services = getState().scheduleState.services
-        let updatedServices  = null ;
+        let updatedServices  = null;
+
         if(isChecked){
-            updatedServices = [...services,data]
+           updatedServices = [...services,data]
+
         }          
         else{
             updatedServices = services.filter(item => item.serviceTypeId !== data.serviceTypeId);
         }
-        dispatch(setselectedServicesSuccess(updatedServices))
+        dispatch(setselectedServicesSuccess(removeDuplicates(updatedServices)))
     } 
 }
 

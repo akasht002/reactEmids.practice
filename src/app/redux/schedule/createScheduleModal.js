@@ -18,6 +18,7 @@ export const createScheduleModal = (data) => {
         daily: data.daily,
         weekly: data.weekly,
         monthly: data.monthly,
-        patientAddressId: data.patientAddressId
+        patientAddressId: data.patientAddressId,
+        isPlanEdit: data.isPlanEdit
     }
 }

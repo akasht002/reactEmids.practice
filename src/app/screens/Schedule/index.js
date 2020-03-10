@@ -11,7 +11,7 @@ import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty, formatContactNumber } from "../../utils/validations";
-import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip, unique } from '../../utils/arrayUtility';
+import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip, unique, compareArrays } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
     getServiceCategory,
@@ -94,7 +94,8 @@ export class Schedule extends Component {
             isAssessmentEdit: false,
             isDefaultAddress: false,
             planTypeAlertPopup: false,
-            monthlyOptions: 1
+            monthlyOptions: 1,
+            confirmationPopup: false
         }
         this.serviceTypes = this.props.services;
         this.categoryId = SERVICE_CATEGORY.adl.id;
@@ -163,7 +164,6 @@ export class Schedule extends Component {
                 longitude: validAddress.longitude,
                 isDefaultAddress: true
             })
-
             this.address = {
                 addressType: validAddress.addressType,
                 streetAddress: validAddress.street,
@@ -278,7 +278,7 @@ export class Schedule extends Component {
             stateId: data.address && data.address.stateId,
             stateName: data.address && data.address.stateName,
             zip: data.address && data.address.zip,
-            latitude: data.address && data.address.latitue,
+            latitude: data.address && data.address.latitude,
             longitude: data.address && data.address.longitude,
             addressType: this.state.addressType
         }
@@ -788,6 +788,25 @@ export class Schedule extends Component {
     }
 
     savePlan = () => {
+        let { isIndividualScheduleEdit } = this.state
+
+        this.props.getValidPatientAddress(this.getSelectedData(), (isValid) => {
+            isValid && (isIndividualScheduleEdit ? this.openConfirmationPopup() : this.props.createSchedule(this.getSelectedData()))
+        });
+    }
+
+    openConfirmationPopup = async () => {
+        console.log('openConfirmationPopup ',this.getSelectedData())
+      if(this.getSelectedData().isPlanEdit) {
+          await this.setState({ confirmationPopup: true})
+      }
+      else {
+        await this.props.editSchedule(this.getSelectedData()) 
+      }
+    }
+
+    getSelectedData = () => {
+
         let {
             startDate,
             endDate,
@@ -807,6 +826,10 @@ export class Schedule extends Component {
             selectedPOS
         } = this.state
 
+        let serviceTypeIds = unique(this.props.services,"serviceTypeId")
+        let serviceCategoryIds = unique(this.props.services,"serviceCategoryId")
+
+        let isPlanEdit = !compareArrays(serviceTypeIds, this.props.editServiceTypeIds) || !compareArrays(serviceCategoryIds, this.props.editServiceCategoryIds)
         let serviceTypes = this.props.services.map((types) => {
             let updatedTypes = omit(types, ['serviceCategoryId']);
             return updatedTypes
@@ -814,7 +837,7 @@ export class Schedule extends Component {
         let data = {
             planScheduleId: this.state.planScheduleId,
             name: "",
-            serviceCategoryIds: unique(this.props.services,"serviceCategoryId"),
+            serviceCategoryIds: serviceCategoryIds,
             startDate: startDate,
             endDate: isRecurring ? endDate : startDate,
             startTime: isIndividualScheduleEdit ? getHourMin(startTime) : this.formatedStartTime,
@@ -845,12 +868,15 @@ export class Schedule extends Component {
                     week: selectedWeeksId ? selectedWeeksId : null,
                     month: monthlyMonthsSecond ? monthlyMonthsSecond : null
                 }
-            }
+            },
+            isPlanEdit: isIndividualScheduleEdit && isPlanEdit
         }
+      return data
+    }
 
-        this.props.getValidPatientAddress(data, (isValid) => {
-            isValid && (isIndividualScheduleEdit ? this.props.editSchedule(data) : this.props.createSchedule(data))
-        });
+    onAcceptConfirmationPopup = async () => {
+        await this.setState({confirmationPopup: false})
+        await this.props.editSchedule(this.getSelectedData())
     }
 
     clickShowMore = () => {
@@ -1089,6 +1115,15 @@ export class Schedule extends Component {
                         closePopup={() => this.setState({ planTypeAlertPopup: false })}
                         onAcceptClick={() => this.handelTypeChange()}
                     />
+                    <AlertPopup
+                        message='All the upcoming visit will be removed and a new revised plan will be created. Do you wish to continue?'
+                        OkButtonTitle={'Yes'}
+                        CancelButtonTitle={'No'}
+                        isCancel={true}
+                        isOpen={this.state.confirmationPopup}
+                        closePopup={() => this.setState({ confirmationPopup: false })}
+                        onAcceptClick={this.onAcceptConfirmationPopup}
+                    />
                 </Scrollbars>
             </AsideScreenCover>
         )
@@ -1149,7 +1184,9 @@ export function mapStateToProps(state) {
         serviceCategoryIds: state.scheduleState.serviceCategoryIds,
         serviceTypeIds: state.scheduleState.serviceTypeIds,
         services: state.scheduleState.services,
-        isViewPlan: scheduleState.isViewPlan
+        isViewPlan: scheduleState.isViewPlan,
+        editServiceCategoryIds: scheduleState.editServiceCategoryIds,
+        editServiceTypeIds: scheduleState.editServiceTypeIds
     }
 }
 
