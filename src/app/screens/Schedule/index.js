@@ -909,7 +909,7 @@ export class Schedule extends Component {
                                 parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                                 <div className={this.state.isIndividualScheduleEdit ? 'Service-Cat-Typesblock Service-Cat-Typesblock-Edit' : "Service-Cat-Typesblock"}>
                                     <div>
-                                        <h2 className='ServicesTitle theme-primary'>Service Category</h2>
+                                        <h2 className='ServicesTitle theme-primary'>Service Category (Select one or multiple)</h2>
                                         <ServiceCategory
                                             categoryList={this.props.serviceCategoryList}
                                             handleServiceCategory={this.handleServiceCategory}
@@ -919,7 +919,7 @@ export class Schedule extends Component {
                                     </div>
                                     <div className="Service-typesTitle">
                                         <span>
-                                            <h2 className='ServicesTitle theme-primary'>Service Types</h2>
+                                            <h2 className='ServicesTitle theme-primary'>Service Types (Select one or multiple)</h2>
                                         </span>
                                         <span className="theme-primary">
                                             <h5 onClick={() => this.selectAllTypes(true)}>Select All</h5>
