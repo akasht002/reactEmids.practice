@@ -88,15 +88,15 @@ export class AssignServiceProvider extends Component {
     });
   };
 
-  onSubmit = () => {
-    this.setState({
+  onSubmit = async () => {
+    await this.setState({
       EditPersonalDetailModal: !this.state.EditPersonalDetailModal
     });
     let data = {
       servicePlanVisitId: this.props.getServicePlanVisitId,
       assignedServiceProviderId: this.selectedServiceProviderId
     }
-    this.props.onSubmit(data);
+    await this.props.onSubmit(data);
     this.selectedServiceProviderId = ''
   }
 
