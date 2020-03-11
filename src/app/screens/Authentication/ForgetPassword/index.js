@@ -10,6 +10,8 @@ import {
 } from '../../../redux/auth/ForgetPassword/actions';
 import { onLogin } from '../../../redux/auth/login/actions';
 import './forgetPassword.css';
+import { Path } from '../../../routes';
+import { push } from '../../../redux/navigation/actions';
 
 export class ForgetPassword extends Component {
 
@@ -93,7 +95,7 @@ export function mapDispatchToProps(dispatch) {
     return {
         sendResetPasswordLink: (data) => dispatch(sendResetPasswordLink(data)),
         formDirty: () => dispatch(formDirty()),
-        onLogin: () => dispatch(onLogin())
+        onLogin: () => dispatch(push(Path.login))
     }
 }
 

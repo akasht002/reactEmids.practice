@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch, Router } from 'react-router';
 import Loadable from 'react-loadable';
 import { SCREENS, USER_LOCALSTORAGE, ENTITY_USER } from '../constants/constants';
-import { Security, ImplicitCallback } from '@okta/okta-react';
 import {
   VerifyContact,
   SetPassword,
@@ -37,7 +36,8 @@ import {
   AssessmentSummary,
   Schedule,
   EntityDashboard,
-  OktaCallBack
+  OktaCallBack,
+  Login
 } from '../screens';
 import PrivateRoute from './privateRouter';
 import { oktaIssuer, oktaClientId } from '../services/http';
@@ -57,6 +57,7 @@ export const LoginCallBack = Loadable({
 
 export const Path = {
   root: '/',
+  login: '/login',
   setPassword: '/setpassword',
   verifyEmail: '/verifyemail',
   verifyContact: '/verifycontact',
@@ -111,14 +112,9 @@ export class AppStackRoot extends Component {
   render() {
     return (
       <Router history={this.props.history}>
-        <Security
-          issuer= {oktaIssuer}
-          client_id= {oktaClientId}
-          redirect_uri={window.location.origin + '/implicit/callback'}
-          pkce={false}>
           <Switch>
             <Route exact path={Path.root} component={this.startPage} />
-            <Route path="/implicit/callback" component={ImplicitCallback} /> 
+            <Route exact path={Path.login} component={Login} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.oktaCallBack} component={OktaCallBack} />
             <Route path={Path.verifyContact} component={VerifyContact} />
@@ -160,7 +156,6 @@ export class AppStackRoot extends Component {
             <PrivateRoute path={Path.assessmentSummary} component={AssessmentSummary} />
             <PrivateRoute path={Path.entityDashboard} component={EntityDashboard} />
           </Switch>
-        </Security>
       </Router>
     );
   }

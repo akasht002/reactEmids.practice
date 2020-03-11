@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { ScreenCover, Button } from '../../components';
-import { onLogin } from '../../redux/auth/login/actions';
 import {SLIDER_TIME} from '../../constants/config';
 import './styles.css';
 import { Path } from "../../routes";
-import {withAuth} from '@okta/okta-react'
-import { isSecureLogin } from "../../redux/auth/user/actions";
+import { push } from "react-router-redux";
 
 export class Welcome extends Component {
 
@@ -38,13 +35,6 @@ export class Welcome extends Component {
             this.nextSlide();
         }, SLIDER_TIME);
     };
-
-     checkAuthentication = async() => {
-        const authenticated = await this.props.auth.isAuthenticated();
-        if (authenticated !== this.state.authenticated) {
-          this.setState({ authenticated });
-        }
-      }
 
     prevSlide() {
         this.setState({
@@ -83,13 +73,7 @@ export class Welcome extends Component {
     async componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions.bind(this));
-        this.checkAuthentication()
-    }
-
-    async componentDidUpdate(){
-        this.checkAuthentication()
-    }	    
-
+    }   
 
     componentWillUnmount() {
         if (this.interval) {
@@ -103,7 +87,7 @@ export class Welcome extends Component {
     }
 
     onLoginPress = () => {
-        this.props.auth.login(Path.oktaCallBack)
+        this.props.onLogin();
     }
 
     render() {
@@ -174,8 +158,8 @@ export class Welcome extends Component {
 
 export function mapDispatchToProps(dispatch) {
     return {
-        onLogin: () => dispatch(onLogin())
+        onLogin: () => dispatch(push(Path.login))
     }
 }
 
-export default withAuth(connect(null, mapDispatchToProps)(Welcome));
+export default withRouter(connect(null, mapDispatchToProps)(Welcome));
