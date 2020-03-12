@@ -351,6 +351,7 @@ export function getRecurringPattern() {
         dispatch(startLoading());
         return ServiceRequestGet(API.servicerequest + `LookUp/RecurringPattern`).then((resp) => {
             dispatch(getRecurringPatternSuccess(resp.data))
+            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })
@@ -369,6 +370,7 @@ export function getDays(selectedDaysId = []) {
                 })
             })
             dispatch(getDaysSuccess(data))
+            dispatch(endLoading());
         }).catch((err) => {
             dispatch(endLoading());
         })

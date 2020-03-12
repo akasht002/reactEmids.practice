@@ -119,10 +119,9 @@ export class Schedule extends Component {
         if (this.props.patientId) {
             await this.props.getServiceCategory(this.categoryId, [], this.props.isIndividualScheduleEdit);
             await this.props.getStates();
-            await this.props.getEntityServiceProviderList(data);
+            await this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
             await this.props.getRecurringPattern();
             await this.props.getDays(this.props.individualSchedulesDetails.weekly && this.props.individualSchedulesDetails.weekly.days);
-            await this.props.getEntityServiceProviderList(data);
             await this.getPrimaryAddress();            
         } else {
             this.props.history.push(Path.visitServiceList)
@@ -912,11 +911,12 @@ export class Schedule extends Component {
 
     render() {
         let renderBlockClass = this.props.isViewPlan ? 'view-schedule-block' : ''
+        let scheduleTitle = this.state.isIndividualScheduleEdit ? (this.props.isViewPlan ? 'View Schedule' : 'Edit Schedule') : 'Add New Schedule'
         return (
             <AsideScreenCover>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='theme-primary m-0'>Add New Schedule</h5>
+                        <h5 className='theme-primary m-0'>{scheduleTitle}</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2}
@@ -1084,9 +1084,9 @@ export class Schedule extends Component {
                             </div>
 
                             <div className="ServiceTypesWidget PostSR bottom-blockbtn">
-                                <button onClick={this.onClickCancel} type="button" class="btn btn-outline-primary pull-left btn btn-secondary">Cancel</button>
+                               {!this.props.isViewPlan  && <button onClick={this.onClickCancel} type="button" class="btn btn-outline-primary pull-left btn btn-secondary">Cancel</button>}
                                 <div class="ml-auto">
-                                    <button onClick={this.checkValidAddress} type="button" class="btn btn-primary">Save</button>
+                                    <button onClick={this.props.isViewPlan ? this.onClickCancel : this.checkValidAddress} type="button" class="btn btn-primary return-button">{this.props.isViewPlan ? 'Return' : 'Save'}</button>
                                 </div>
                             </div>
                         </Fragment>
@@ -1157,7 +1157,8 @@ export function mapDispatchToProps(dispatch) {
         checkServiceType: (data, id, checked) => dispatch(checkServiceType(data, id, checked)),
         setselectedServices: (data,isChecked) => dispatch(setselectedServices(data,isChecked)),
         setServiceCategoryId: data => dispatch(setServiceCategoryId(data)),
-        setViewPlan: data => dispatch(setViewPlan(data))
+        setViewPlan: data => dispatch(setViewPlan(data)),
+
     }
 }
 

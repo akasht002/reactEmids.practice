@@ -1600,6 +1600,10 @@ span.ProfileIconSearch .search-block_SP {
   color: #8c8c8c;
 }
 
+.return-button {
+  pointer-events: visible;
+}
+
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
   .bottom-blockbtn {
