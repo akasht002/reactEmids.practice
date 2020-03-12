@@ -75,8 +75,8 @@ export function getConversationSummaryItemSignalR(conversationId){
     return (dispatch, getState) => {
         let state = getState();
         if(state.asyncMessageState.openedAsyncPage === 'conversationSummary'){
-            let userId = getUserInfo().coreoHomeUserId;
-            let userType = USERTYPES.SERVICE_PROVIDER;
+            let userId = isEntityUser() ? getUserInfo().serviceProviderId : getUserInfo().coreoHomeUserId;
+            let userType = isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER;
             return AsyncGet(API.getConversationSummary 
                 + conversationId + '/'
                 + userId + '/' 
@@ -421,7 +421,7 @@ export function onRemoveParticipant(data) {
 export function getUnreadMessageCounts() {
     return (dispatch) => {
         let USER_ID = getUserInfo().coreoHomeUserId;
-        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+        let USER_TYPE = isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER;
         return AsyncGet(API.getUnreadCount + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(onUnreadCountSuccess(resp.data))
@@ -540,9 +540,10 @@ export function checkConversationCreated(conversation) {
         dispatch(getDashboardMessageCount());
         if (state.asyncMessageState.openedAsyncPage === 'conversationSummary' && state.asyncMessageState.activePageNumber === 1) {
             let userId = getUserInfo().coreoHomeUserId;
-            let userType = USERTYPES.SERVICE_PROVIDER;
+            let serviceProviderId = getUserInfo().serviceProviderId
+            let userType = isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER;
             conversation.participantList.map((data) => {
-                if (data.userId === userId && data.participantType === userType) {
+                if (((data.userId === userId) && (data.participantType === userType)) || (serviceProviderId === data.participantId)) {
                     dispatch(getConversationSummaryItemSignalR(conversation.conversationId))
                 }
                 return data;
@@ -671,7 +672,8 @@ export const getLinkedParticipantsByPatientsSuccess = data => {
 export function getDashboardMessageCount() {
     return (dispatch) => {
         let USER_ID = getUserInfo().coreoHomeUserId;
-        return AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USERTYPES.SERVICE_PROVIDER)
+        let USER_TYPE = isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER;
+        return AsyncGet(API.getDashboardMessageCount + USER_ID + '/' + USER_TYPE)
             .then(resp => {
                 dispatch(getDashboardCountSuccess(resp.data));
             })

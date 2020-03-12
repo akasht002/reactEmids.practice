@@ -154,7 +154,7 @@ export class VisitServiceDetails extends Component {
       if (this.props.ServiceRequestId === 0) {
         this.props.getSchedulesList(this.props.patientId)
       } else {
-        this.props.history.push(Path.visitServiceList)
+        getUserInfo().isEntityServiceProvider ? this.props.goToDashboard() : this.props.goToVisitList()
       }
     }
     this.props.getServiceCategory();
@@ -663,9 +663,13 @@ export class VisitServiceDetails extends Component {
   }
 
   goBackToParticularPage = () => {
-    if (this.props.isAddNewScheduleClicked) {
+    if (this.props.isAddNewScheduleClicked && !getUserInfo().isEntityServiceProvider) {
       this.props.goToVisitList()
-    } else {
+    }
+    else if(getUserInfo().isEntityServiceProvider) {
+      this.props.goToDashboard()
+    } 
+    else {
       this.props.goBack();
     }
   }
@@ -1206,7 +1210,8 @@ export function mapDispatchToProps(dispatch) {
     clearVisitList: () => dispatch(clearVisitList()),
     getServiceRequestAssessmentQuestionByID:data => dispatch(getServiceRequestAssessmentQuestionByID(data)),
     getIsAnyEngagedServiceRequest: (data) => dispatch(getIsAnyEngagedServiceRequest(data)),
-    setViewPlan: data => dispatch(setViewPlan(data))
+    setViewPlan: data => dispatch(setViewPlan(data)),
+    goToDashboard: () => dispatch(push(Path.dashboard))
   }
 }
 
