@@ -795,7 +795,6 @@ export class Schedule extends Component {
     }
 
     openConfirmationPopup = async () => {
-        console.log('openConfirmationPopup ',this.getSelectedData())
       if(this.getSelectedData().isPlanEdit) {
           await this.setState({ confirmationPopup: true})
       }

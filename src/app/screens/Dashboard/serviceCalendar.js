@@ -515,7 +515,7 @@ export class ServiceCalendar extends Component {
             <span className="dateElement">{daysMapping.day.format("D")}</span>
           </label>
           <div className="eventIndicator">
-            <ShowIndicator count={data <= 2 ? data : 3} />
+            <ShowIndicator count={data < 2 ? data : 3} />
           </div>
         </div>
       );
