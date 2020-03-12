@@ -116,7 +116,7 @@ export class VisitSummary extends React.Component {
                 <div className='requestContent'>
                   <div className='requestNameContent'>
                     <span>
-                      <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>, {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitNumber}</span>
+                      <i className='requestName'><Moment format="ddd, DD MMM">{visitSummary.visitDate}</Moment>{visitSummary.slotDescription && ','} {visitSummary.slotDescription}</i>{visitSummary.serviceRequestVisitNumber}</span>
                   </div>
                   <div className='requestImageContent' onClick={() => this.handelPatientProfile(profileData.id)}>
                     <span className='IndividualName'>
