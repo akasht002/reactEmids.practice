@@ -326,7 +326,7 @@ export function rejectConference() {
           let userInfo = getUserInfo();
           let data = {
             participantId: userInfo.serviceProviderId,
-            participantType: USERTYPES.SERVICE_PROVIDER,
+            participantType: isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER,
             roomNumber: state.telehealthState.roomId,
             coreoHomeuserId: userInfo.coreoHomeUserId
           };
@@ -367,10 +367,10 @@ const onClearLinkedParticipants = () => {
     }
 };
 
-const onGetParticipantByConfernceIdSuccess = (data) => {
+const onGetParticipantByConfernceIdSuccess = (participantList) => {
     return {
         type: TeleHealth.getParticipantByConfernceIdSuccess,
-        data
+        data: getUpdatedParticipantList(participantList)
     }
 };
 
@@ -451,17 +451,7 @@ export function checkTeleHealth(data) {
                 }
             } else if (data.messageType === 'Joined' || data.messageType === 'Left' || data.messageType === 'Rejected') {
                 if (teleHealthState.roomId === data.roomID && data.userId !== userId) {
-                    let participants = teleHealthState.participantsByConferenceId.map((participant) => {
-                        if (participant.userId === data.participantList[0].userId) {
-                                return {
-                                    ...participant,
-                                    status: data.messageType
-                                }
-                        } else {
-                            return participant;
-                        }
-                    });
-                    dispatch(onGetParticipantByConfernceIdSuccess(participants));
+                    dispatch(GetParticipantByConferenceId())
                 }
             }  else if (data.messageType === 'Ended') {
                 if (teleHealthState.roomId === data.roomID) {
@@ -474,4 +464,30 @@ export function checkTeleHealth(data) {
             }
         }
     }
+}
+
+export const getUpdatedParticipantList = (participantList) => {
+    let entityUsersList = participantList.filter(item => item.participantType === USERTYPES.ENTITY_USER)
+    let otherParticipantsList = participantList.filter(item => item.participantType !== USERTYPES.ENTITY_USER)
+    let normalizedEntityUsersList ={}
+    let data =[]
+    entityUsersList.map(item => {
+      let id = item.participantId
+      data = normalizedEntityUsersList[id] || []
+      data.push(item)
+      normalizedEntityUsersList = {
+        ...normalizedEntityUsersList,
+        [id]: data
+      }
+    })
+
+    let updatedList = []
+    Object.keys(normalizedEntityUsersList).map(id => {
+      if(normalizedEntityUsersList[id].length > 1){
+       let updatedData = normalizedEntityUsersList[id].map((item, index) => {return {...item, lastName:item.lastName + (index + 1)}} )
+       updatedList = updatedList.concat(updatedData)
+      }else {updatedList = updatedList.concat(normalizedEntityUsersList[id])}
+    })
+    updatedList = updatedList.concat(otherParticipantsList)
+    return updatedList
 }

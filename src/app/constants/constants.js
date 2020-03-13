@@ -510,7 +510,7 @@ export const VISIT_PROCESSING_STATUS = {
         "keyValue": "Payment Pending"
     },
     entityProcess: {
-        "id": 119,
+        "id": 120,
         "keyValue": "Entity Process"
     }
 }

@@ -105,7 +105,7 @@ export class AssessmentFeedback extends Component {
             serviceProviderId: this.props.SummaryDetails.serviceProviderId,
             answers: this.selectedAnswers
         }
-        this.props.saveAnswers(data);
+        this.selectedAnswers.length > 0 && this.props.saveAnswers(data);
         this.props.goToSummary();
         this.setState({ isModalOpen: false })
     }

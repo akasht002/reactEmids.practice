@@ -189,7 +189,7 @@ export class PerformTasks extends Component {
                 {this.state.isLoading && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='theme-primary m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Visit Processing</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
