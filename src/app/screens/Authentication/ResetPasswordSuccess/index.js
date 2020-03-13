@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { LoginCover } from '../../../components';
-import { onLogin } from '../../../redux/auth/login/actions';
+import { Path } from '../../../routes';
+import { push } from '../../../redux/navigation/actions';
 import './resetPasswordSuccess.css'
 
 export class ResetPasswordSuccess extends Component {
@@ -24,7 +25,7 @@ export class ResetPasswordSuccess extends Component {
 
 export function mapDispatchToProps(dispatch) {
     return {
-        onLogin: () => dispatch(onLogin()),
+        onLogin: () => dispatch(push(Path.login))
     }
 }
 

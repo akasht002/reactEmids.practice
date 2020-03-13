@@ -8,7 +8,6 @@ import {
     sendResetPasswordLink,
     formDirty
 } from '../../../redux/auth/ForgetPassword/actions';
-import { onLogin } from '../../../redux/auth/login/actions';
 import './forgetPassword.css';
 import { Path } from '../../../routes';
 import { push } from '../../../redux/navigation/actions';
