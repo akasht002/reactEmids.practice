@@ -349,7 +349,7 @@ export function getEntityServiceProviderListSearch(data, selectedESPId = null) {
 export function getRecurringPattern() {
     return (dispatch) => {
         dispatch(startLoading());
-        return ServiceRequestGet(API.servicerequest + `LookUp/RecurringPattern`).then((resp) => {
+        return ServiceRequestGet(`${API.servicerequest}LookUp/RecurringPattern`).then((resp) => {
             dispatch(getRecurringPatternSuccess(resp.data))
             dispatch(endLoading());
         }).catch((err) => {

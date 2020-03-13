@@ -233,15 +233,15 @@ export class Schedule extends Component {
 
     selectNew = () => {
         let data = this.props.individualSchedulesDetails;
-        this.categoryId = data.serviceCategoryIds[0];
+        this.categoryId = data && data.serviceCategoryIds.length > 0 && data.serviceCategoryIds[0];
         this.serviceTypes = data.serviceTypes;
-        this.props.getServiceType(data.serviceCategoryIds[0], data.serviceTypes)
+        this.props.getServiceType(this.categoryId, data.serviceTypes)
         data.monthly !== null && this.handleChangeSelectedDays(data.monthly.weekDayMonth && data.monthly.weekDayMonth.day);
         data.monthly !== null && this.handleChangeSelectedWeeks(data.monthly.weekDayMonth && data.monthly.weekDayMonth.week);
         this.setState({
             selectedPOS: data.patientAddressId,
             planType: SCHEDULE_TYPE_OPTIONS.standard,
-            checkedServiceCategoryId: data.serviceCategoryIds[0],
+            checkedServiceCategoryId: this.categoryId,
             startDate: data.startDate,
             endDate: data.endDate,
             street: data.address && data.address.streetAddress,
@@ -908,6 +908,10 @@ export class Schedule extends Component {
         })
     };
 
+    closeConfirmationPopup = () => {
+        this.setState({ confirmationPopup: false })
+    }
+
     render() {
         let renderBlockClass = this.props.isViewPlan ? 'view-schedule-block' : ''
         let scheduleTitle = this.state.isIndividualScheduleEdit ? (this.props.isViewPlan ? 'View Schedule' : 'Edit Schedule') : 'Add New Schedule'
@@ -1120,7 +1124,7 @@ export class Schedule extends Component {
                         CancelButtonTitle={'No'}
                         isCancel={true}
                         isOpen={this.state.confirmationPopup}
-                        closePopup={() => this.setState({ confirmationPopup: false })}
+                        closePopup={this.closeConfirmationPopup}
                         onAcceptClick={this.onAcceptConfirmationPopup}
                     />
                 </Scrollbars>

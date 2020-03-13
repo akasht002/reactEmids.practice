@@ -6,15 +6,8 @@ export const ScheduleList = props => {
 
     
 const onClickPlanAction = (item) => {
-    if(!item.isAnyAvailableScheduleVisit) {
-        props.setViewPlan(true)
-    }
-    else {
-        props.setViewPlan(false)
-    }
-    parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? 
-    props.handelEditShedule(item.planScheduleId): 
-    props.handelEditAssessment(item.planScheduleId)
+    !item.isAnyAvailableScheduleVisit ? props.setViewPlan(true) : props.setViewPlan(false)
+    parseInt(item.scheduleTypeId,10) === VISIT_TYPE.scheduled ? props.handelEditShedule(item.planScheduleId) : props.handelEditAssessment(item.planScheduleId)
 }
 
     return (
