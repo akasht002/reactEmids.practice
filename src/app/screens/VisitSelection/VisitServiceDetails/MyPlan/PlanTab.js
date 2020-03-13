@@ -55,6 +55,7 @@ export const PlanTab = props => {
                                         handelEditShedule={props.handelEditShedule}
                                         handelEditAssessment={props.handelEditAssessment}
                                         planScheduleId={props.planScheduleId}
+                                        setViewPlan={props.setViewPlan}
                                     />
                                 </div>
                             </div>}

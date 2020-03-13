@@ -17,7 +17,10 @@ const defaultState = {
     isIndividualScheduleEdit: false,
     serviceTypeIds: [],
     serviceCategoryIds: [],
-    services: []
+    services: [],
+    isViewPlan: false,
+    editServiceTypeIds: [],
+    editServiceCategoryIds: []
 };
 
 const scheduleState = (state = defaultState, action) => {
@@ -125,7 +128,9 @@ const scheduleState = (state = defaultState, action) => {
                 individualSchedulesDetails: {},
                 services: [],
                 serviceTypeIds: [],
-                serviceCategoryIds: []
+                serviceCategoryIds: [],
+                editServiceCategoryIds: [],
+                editServiceTypeIds: []
             };
         case Schedule.setServiceTypeIds:
         return {
@@ -142,6 +147,21 @@ const scheduleState = (state = defaultState, action) => {
             ...state,
             services: action.data
         };
+        case Schedule.setViewPlanSuccess:
+            return {
+                ...state,
+                isViewPlan: action.data
+            };
+        case Schedule.setEditServiceTypeIds:
+            return {
+                ...state,
+                editServiceTypeIds: action.data
+            };
+        case Schedule.setEditServiceCategoryIds:
+            return {
+                ...state,
+                editServiceCategoryIds: action.data
+            };
         default:
             return state;
     }

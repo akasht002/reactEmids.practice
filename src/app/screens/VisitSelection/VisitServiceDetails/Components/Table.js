@@ -15,11 +15,14 @@ import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 export const renderServiceTypeImages = serviceTypes => {
     let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
     return (
-        updatedServiceTypes.slice(0, 3).map(type =>
-            <div>
-                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn theme-primary"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
-            </div>
-        ))
+        updatedServiceTypes.slice(0, 3).map(type => {
+           let isAssessment = caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)
+           let renderImageBasedOnScheduleType =  isAssessment ? getServiceTypeImageBasedOnId(type.serviceTypeDescription) : getServiceTypeImageBasedOnId(type.serviceTypeId)
+           let renderTitleBasedOnScheduleType = isAssessment ? SCHEDULE_TYPES.assessment.name : type.serviceTypeDescription
+            return (<div>
+                <img src={require(`../../../../assets/ServiceTypes/${renderImageBasedOnScheduleType}`)} alt="Grooming" title={renderTitleBasedOnScheduleType} /> 
+            </div>)
+        }))
 }
 
 export const getServiceTypeImageBasedOnId = serviceTypeId => {

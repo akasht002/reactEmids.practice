@@ -33,7 +33,7 @@ import {
   clearVisitList,
   getServiceRequestAssessmentQuestionByID
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule, getPatientAddress } from '../../../redux/schedule/actions';
+import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule, getPatientAddress, setViewPlan } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
@@ -1039,6 +1039,7 @@ handleTextarea = (e) => {
                   highlightVisit={this.highlightVisit}
                   visitServiceDetails={this.props.VisitServiceDetails}
                   canProcessVisit={this.props.canProcessVisit}
+                  setViewPlan={this.props.setViewPlan}
                 />
                 <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
@@ -1209,7 +1210,8 @@ export function mapDispatchToProps(dispatch) {
     clearVisitList: () => dispatch(clearVisitList()),
     getServiceRequestAssessmentQuestionByID:data => dispatch(getServiceRequestAssessmentQuestionByID(data)),
     getIsAnyEngagedServiceRequest: (data) => dispatch(getIsAnyEngagedServiceRequest(data)),
-    goToDashboard: () => dispatch(push(Path.dashboard)),
+    setViewPlan: data => dispatch(setViewPlan(data)),
+    goToDashboard: () => dispatch(push(Path.dashboard))
   }
 }
 
