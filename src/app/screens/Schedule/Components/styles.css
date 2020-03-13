@@ -1603,6 +1603,11 @@ span.ProfileIconSearch .search-block_SP {
 .return-button {
   pointer-events: visible;
 }
+  
+.ServiceCategory .slick-list .ServiceCatLink>span
+{
+    min-height:50px ;
+}
 
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {

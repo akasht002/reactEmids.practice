@@ -26,7 +26,7 @@ const defaultState = {
         contracts: 'Contracts',
         attributedProviders: 'Attributed Provider',
         cohorts: 'Cohort',
-        button: 'Life Map',
+        button: 'Face Sheet',
         icon: 'Action',
         className: 'all-individuals-tableblock'
     }]

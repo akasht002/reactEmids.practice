@@ -7,7 +7,7 @@ export let allIndividuals =
     contracts: 'Contracts',
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
-    button: 'Life Map',
+    button: 'Face Sheet',
     status: 'Status',
     icon: 'Action',
     className: 'all-individuals-tableblock'
@@ -23,7 +23,7 @@ export let visitIndividuals = {
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
     visitCount: 'Visit(s)',
-    button: 'Life Map',
+    button: 'Face Sheet',
     status: 'Status',
     icon: 'Action',
     className: 'visit-individuals-tableblock'
@@ -38,7 +38,7 @@ export let feedbackIndividuals = {
     attributedProviders: 'Attributed Provider',
     cohorts: 'Cohort',
     alerts: 'Alert(s)',
-    button: 'Life Map',
+    button: 'Face Sheet',
     status: 'Status',
     icon: 'Action',
     className: 'feedback-individuals-tableblock'

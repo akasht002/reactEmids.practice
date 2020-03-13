@@ -7,7 +7,7 @@ export const AdditionalInformation = props => {
         <Fragment>
             <div className="feedbackForm form-check">
                 <CustomTextArea rows={4}
-                    placeholder='Write your description'
+                    placeholder='Enter Other Service Provider Name'
                     required={false}
                     className={props.className || 'form-control'}
                     maxlength={500}
@@ -15,7 +15,6 @@ export const AdditionalInformation = props => {
                     textChange={props.handleAdditionInfo}
                 />
             </div>
-            <div className='feedbackDesc default-222'>Disclaimer: Please note that this information will be available to Service Providers prior to hiring.</div>
         </Fragment>
     )
 }
