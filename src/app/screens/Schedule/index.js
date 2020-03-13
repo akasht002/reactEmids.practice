@@ -1014,7 +1014,7 @@ export class Schedule extends Component {
                             </div>
                             <div className="ServiceTypesWidget PostSR">
                                 <div className="top-search-blocksp">
-                                    <h2 className='ServicesTitle theme-primary'>Assign Service Provider</h2>
+                                    <h2 className='ServicesTitle theme-primary'>Assign Onboarded Service Provider</h2>
                                     <div className="search-block_SP">
                                         <Search
                                             toggleSearch={this.toggleSearch}
@@ -1044,7 +1044,7 @@ export class Schedule extends Component {
                                     </ul>}
                             </div>
                             <div className="ServiceTypesWidget PostSR">
-                                <h2 className='ServicesTitle theme-primary'>Assign one or more Caregivers</h2>
+                                <h2 className='ServicesTitle theme-primary'>Assign Other Service Provider</h2>
                                 <AdditionalInformation
                                     handleAdditionInfo={this.handleAdditionInfo}
                                     additionalDescription={this.state.additionalDescription}
