@@ -909,7 +909,7 @@ export class Schedule extends Component {
                                 parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
                                 <div className={this.state.isIndividualScheduleEdit ? 'Service-Cat-Typesblock Service-Cat-Typesblock-Edit' : "Service-Cat-Typesblock"}>
                                     <div>
-                                        <h2 className='ServicesTitle theme-primary'>Service Category</h2>
+                                        <h2 className='ServicesTitle theme-primary'>Service Category (Select one or multiple)</h2>
                                         <ServiceCategory
                                             categoryList={this.props.serviceCategoryList}
                                             handleServiceCategory={this.handleServiceCategory}
@@ -919,7 +919,7 @@ export class Schedule extends Component {
                                     </div>
                                     <div className="Service-typesTitle">
                                         <span>
-                                            <h2 className='ServicesTitle theme-primary'>Service Types</h2>
+                                            <h2 className='ServicesTitle theme-primary'>Service Types (Select one or multiple)</h2>
                                         </span>
                                         <span className="theme-primary">
                                             <h5 onClick={() => this.selectAllTypes(true)}>Select All</h5>
@@ -1014,7 +1014,7 @@ export class Schedule extends Component {
                             </div>
                             <div className="ServiceTypesWidget PostSR">
                                 <div className="top-search-blocksp">
-                                    <h2 className='ServicesTitle theme-primary'>Assign Service Provider</h2>
+                                    <h2 className='ServicesTitle theme-primary'>Assign Onboarded Service Provider</h2>
                                     <div className="search-block_SP">
                                         <Search
                                             toggleSearch={this.toggleSearch}
@@ -1044,7 +1044,7 @@ export class Schedule extends Component {
                                     </ul>}
                             </div>
                             <div className="ServiceTypesWidget PostSR">
-                                <h2 className='ServicesTitle theme-primary'>Assign one or more Caregivers</h2>
+                                <h2 className='ServicesTitle theme-primary'>Assign Other Service Provider</h2>
                                 <AdditionalInformation
                                     handleAdditionInfo={this.handleAdditionInfo}
                                     additionalDescription={this.state.additionalDescription}

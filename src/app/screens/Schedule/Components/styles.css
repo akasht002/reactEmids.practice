@@ -1596,6 +1596,11 @@ span.ProfileIconSearch .search-block_SP {
   color: #8c8c8c;
 }
 
+.ServiceCategory .slick-list .ServiceCatLink>span
+{
+    min-height:50px ;
+}
+
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {
   .bottom-blockbtn {
