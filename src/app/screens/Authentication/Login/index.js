@@ -40,7 +40,7 @@ const Login = ({ login, forgotPassword, errorMessage }) => {
   return (
     <LoginCover test-forget-body='test-forget-body'>
       <h3>Welcome to CoreoHome</h3>
-      <div className="form-group  text-center login-body pb-0 pt-3">
+      <div className="form-group  text-center login-body p-0 m-0">
         <Input
           name="UserName"
           value={formData.UserName}
@@ -52,11 +52,11 @@ const Login = ({ login, forgotPassword, errorMessage }) => {
           className={'emailField ' + (validation.onClickSubmit && !validation.UserName && 'inputFailure')}
           textChange={(e) => onChange(e)}
         />
-        <small className='text-danger d-block OnboardingAlert'>
+        <p className='text-danger d-block OnboardingAlert'>
           {validation.onClickSubmit && !validation.UserName && 'Please enter a valid Email Address(e.g. abc@xyz.com)'}
-        </small>
+        </p>
       </div>
-      <div className="form-group text-center login-body pb-0 pt-3">
+      <div className="form-group text-center login-body p-0 m-0">
         <Input
           name="Password"
           value={formData.Password}
@@ -68,13 +68,13 @@ const Login = ({ login, forgotPassword, errorMessage }) => {
           className={'emailField ' + (validation.onClickSubmit && !validation.Password && 'inputFailure')}
           textChange={(e) => onChange(e)}
         />
-        <small className='text-danger d-block OnboardingAlert'>
+        <p className='text-danger d-block OnboardingAlert'>
           {validation.onClickSubmit && !validation.Password && 'Please enter password'}
-        </small>
+        </p>
       </div>
-      <small className='text-danger d-block OnboardingAlert'>
+      <p className='text-danger d-block OnboardingAlert'>
         {errorMessage !== 'Success' && errorMessage}
-      </small>
+      </p>
       <Button
         type="button"
         classname="btn btn-primary send-btn"

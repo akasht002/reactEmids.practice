@@ -55,16 +55,14 @@ div.headingLoginCover{
 }
 .login-body > h3{
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .login-body .form-group input:focus {
   background-color: transparent;
   box-shadow:none;
   border-color: #1e3d5c;
 }
-.login-body .form-group{
-  margin:20px 0 20px 0!important;
-}
+
 .login-body .form-control::-webkit-input-placeholder {
   color: #8c8c8c;
   opacity: 1;
