@@ -87,6 +87,11 @@ div.headingLoginCover{
 	font-size:14px;
 }
 
+.loginCover-body+.Loader
+{
+	width: 100% !important;
+}
+
 /* Extra small devices (phones, 500px and down) */
 @media only screen and (min-width: 500px) {
 	.login-box{
