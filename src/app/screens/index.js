@@ -1,5 +1,6 @@
 import Welcome from './Welcome'
 import Login from './Authentication/Login'
+import SecurityQuestion from './Authentication/SecurityQuestion'
 import MobileLanding from './Welcome/Mobile'
 import VerifyContact from './Onboarding/VerifyContact'
 import SetPassword from './Onboarding/SetPassword'
@@ -45,6 +46,7 @@ import EntityDashboard from './Dashboard/EntityDashboard'
 import OktaCallBack from '../screens/Authentication/OktaCallBack/index'
 export {
   Welcome,
+  SecurityQuestion,
   Login,
   VerifyContact,
   SetPassword,

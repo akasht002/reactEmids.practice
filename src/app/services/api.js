@@ -36,9 +36,9 @@ export const API = {
     savePerformedTask: 'VisitProcessing/ServiceRequestVisitUpdate/',
     saveAnswers: 'VisitProcessing/ServiceRequestVisitFeedbackResponse',
     startOrStopService: 'VisitProcessing/ServiceRequestVisit',
-    SendResetPasswordLink: 'api/User/',
+    SendResetPasswordLink: 'OktaAccessibility/ForgotPassword',
     getEmailIdByUserId: 'api/user/verifypasswordlink/',
-    resetPassword: 'api/user',
+    resetPassword: 'OktaAccessibility/ResetPassword',
     getPersonalDetail: 'ServiceProvider/',
     updatePersonalDetail: 'ServiceProvider/',
     getCity: 'ServiceProviderLookUp/GetState',
@@ -221,5 +221,7 @@ export const API = {
     getServiceRequestListCount:'viewrequest/servicerequestlistcount',
     oktaSession : 'v1/sessions/',
     getGuardianDetails: 'visitprocessing/guardianDetails',
-    getToken: 'OktaAccessibility/LogIn'
+    getToken: 'OktaAccessibility/LogIn',
+    validateSecurityAnswer: 'OktaAccessibility/AnswerRecoveryQuestion',
+    getSecurityQuestion: 'OktaAccessibility/GetSecurityQuestion/'
 }

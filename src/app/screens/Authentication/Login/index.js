@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Button, LoginCover } from '../../../components'
 import { withRouter } from 'react-router';
 import { connect } from "react-redux";
-import { login } from '../../../redux/auth/login/actions';
+import { login, loginFail } from '../../../redux/auth/login/actions';
 import { checkEmail, checkEmpty } from '../../../utils/validations';
 import { Path } from '../../../routes';
 import { push } from '../../../redux/navigation/actions';
+import { API_STATUS_CODE } from '../../../constants/status_code';
 
 const Login = ({ login, forgotPassword, errorMessage }) => {
+
+  useEffect(() => {
+    loginFail(API_STATUS_CODE.success)
+  },
+    []
+  );
 
   const [formData, setFormData] = useState({
     UserName: 'Robert@mailinator.com',
@@ -94,7 +101,8 @@ Login.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     login: (data) => dispatch(login(data)),
-    forgotPassword: () => dispatch(push(Path.forgetPassword))
+    forgotPassword: () => dispatch(push(Path.forgetPassword)),
+    loginFail: (data) => dispatch(loginFail(data))
   }
 };
 

@@ -37,7 +37,8 @@ import {
   Schedule,
   EntityDashboard,
   OktaCallBack,
-  Login
+  Login,
+  SecurityQuestion
 } from '../screens';
 import PrivateRoute from './privateRouter';
 import { oktaIssuer, oktaClientId } from '../services/http';
@@ -58,6 +59,7 @@ export const LoginCallBack = Loadable({
 export const Path = {
   root: '/',
   login: '/login',
+  securityQuestion: '/securityquestion/:uid',
   setPassword: '/setpassword',
   verifyEmail: '/verifyemail',
   verifyContact: '/verifycontact',
@@ -71,7 +73,7 @@ export const Path = {
   loginCallBack: '/loginCallBack',
   summary: '/summary',
   forgetPassword: '/forgetPassword',
-  resetPassword: '/resetPassword/:uid/:token',
+  resetPassword: '/resetPassword',
   resetPasswordSuccess: '/resetPasswordSuccess',
   resetPasswordConfirmation: '/resetPasswordConfirmation',
   dashboard: '/dashboard',
@@ -115,6 +117,7 @@ export class AppStackRoot extends Component {
           <Switch>
             <Route exact path={Path.root} component={this.startPage} />
             <Route exact path={Path.login} component={Login} />
+            <Route exact path={Path.securityQuestion} component={SecurityQuestion} />
             <Route path={Path.setPassword} component={SetPassword} />
             <Route path={Path.oktaCallBack} component={OktaCallBack} />
             <Route path={Path.verifyContact} component={VerifyContact} />

@@ -135,6 +135,9 @@ export class ResetPassword extends Component {
                     {this.props.resetPasswordStatus &&
                         <p className="text-danger d-block mt-4 mb-2">Invalid Password. The new password cannot be among the last 6 passwords used.</p>
                     }
+                    {this.props.errorMessage &&
+                        <p className="text-danger">{this.props.errorMessage}</p>
+                    }
                 </LoginCover> :
                 <LoginCover isLoading={this.props.isLoading} test-reset-noBody='test-reset-noBody'>
                     <h3>Link is no longer valid. Please reset your password from the login screen.</h3>
@@ -167,7 +170,8 @@ export function mapStateToProps(state) {
         userName: state.authState.resetPasswordState.emailId,
         resetPasswordSuccess: state.authState.resetPasswordState.resetPasswordSuccess,
         resetPasswordLinkStatus: state.authState.resetPasswordState.resetPasswordLinkStatus,
-        resetPasswordStatus: state.authState.resetPasswordState.resetPasswordStatus
+        resetPasswordStatus: state.authState.resetPasswordState.resetPasswordStatus,
+        errorMessage: state.authState.resetPasswordState.errorMessage
     }
 }
 

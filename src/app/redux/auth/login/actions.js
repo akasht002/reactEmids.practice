@@ -9,6 +9,8 @@ import { ThirdPartyPost } from '../../../services/http';
 import { API } from '../../../services/api';
 import { loadData, save } from '../../../utils/storage';
 import { userFound } from 'redux-oidc'
+import { startLoading, endLoading } from '../../loading/actions';
+import { logError } from '../../../utils/logError';
 
 export const loginStart = () => {
     return {
@@ -60,6 +62,7 @@ export const login = (data) => async (dispatch, getState) => {
         Password: encryptPassword(data.Password),
         ApplicationType: 'SP'
     }
+    dispatch(startLoading());
     try {
         const resp = await ThirdPartyPost(`${API.getToken}`, modelData)
         save(OKTA.tokenStorage, resp.data)
@@ -85,6 +88,7 @@ export const login = (data) => async (dispatch, getState) => {
             dispatch(onLoginFail(localStorageData.data.status))
         }
     } catch (error) {
-
+        logError(error)
     }
+    dispatch(endLoading());
 }; 
