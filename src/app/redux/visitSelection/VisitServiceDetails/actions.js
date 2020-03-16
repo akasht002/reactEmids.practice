@@ -620,7 +620,7 @@ export function getVisitList(data) {
   return (dispatch, getState) => {
     let {servicePlanVisitId, visitDate, isEntityDashboard} = getState().visitSelectionState.VisitServiceDetailsState
     data.startDate = isEntityDashboard ? visitDate.startVisitDateForWeb : data.startDate
-    data.endDate = isEntityDashboard ? visitDate.endVisitDateForWeb : data.startDate
+    data.endDate = isEntityDashboard ? visitDate.endVisitDateForWeb : data.endDate
     !isEntityUser() &&
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     ServiceRequestPost(getVisitList, data)
