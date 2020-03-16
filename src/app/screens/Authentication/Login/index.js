@@ -8,7 +8,7 @@ import { Path } from '../../../routes';
 import { push } from '../../../redux/navigation/actions';
 import { API_STATUS_CODE } from '../../../constants/status_code';
 
-const Login = ({ login, forgotPassword, errorMessage }) => {
+const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) => {
 
   useEffect(() => {
     loginFail(API_STATUS_CODE.success)
@@ -17,7 +17,7 @@ const Login = ({ login, forgotPassword, errorMessage }) => {
   );
 
   const [formData, setFormData] = useState({
-    UserName: 'Robert@mailinator.com',
+    UserName: 'Matt@mailinator.com',
     Password: 'Emids@123'
   });
 
@@ -28,6 +28,7 @@ const Login = ({ login, forgotPassword, errorMessage }) => {
   });
 
   const onChange = (e) => {
+    loginFail(API_STATUS_CODE.success)
     setFormData({
       ...formData,
       [e.target.id]: e.target.value
@@ -45,7 +46,7 @@ const Login = ({ login, forgotPassword, errorMessage }) => {
   }
 
   return (
-    <LoginCover test-forget-body='test-forget-body'>
+    <LoginCover isLoading={isLoading} test-forget-body='test-forget-body'>
       <h3>Welcome to CoreoHome</h3>
       <div className="form-group  text-center login-body p-0 m-0">
         <Input
@@ -80,7 +81,7 @@ const Login = ({ login, forgotPassword, errorMessage }) => {
         </p>
       </div>
       <p className='text-danger d-block OnboardingAlert'>
-        {errorMessage !== 'Success' && errorMessage}
+        {errorMessage !== API_STATUS_CODE.success && errorMessage}
       </p>
       <Button
         type="button"
@@ -108,6 +109,7 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
   return {
+    isLoading: state.loadingState.isLoading,
     errorMessage: state.authState.loginState.error.message
   };
 };
