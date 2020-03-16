@@ -6,7 +6,8 @@ import { Input, Button, LoginCover } from '../../../components';
 import { checkEmail } from '../../../utils/validations'
 import {
     sendResetPasswordLink,
-    formDirty
+    formDirty,
+    sendResetPasswordLinkSuccess
 } from '../../../redux/auth/ForgetPassword/actions';
 import './forgetPassword.css';
 import { Path } from '../../../routes';
@@ -45,6 +46,10 @@ export class ForgetPassword extends Component {
         this.props.onLogin();
     }
 
+    componentWillUnmount = () => {
+        this.props.sendResetPasswordLinkSuccess()
+    }
+
     render() {
         return (
             <LoginCover isLoading={this.props.isLoading} test-forget-body='test-forget-body'>
@@ -58,7 +63,7 @@ export class ForgetPassword extends Component {
                         type="email"
                         placeholder="Enter Email Address"
                         maxlength={100}
-                        className={"emailField " + (this.props.isSendResetPasswordLinkSuccess ? 'inputSuccess' : (!this.state.emailValid || this.props.isSendResetPasswordLinkError) && 'inputFailure')}
+                        className={"emailField " + (this.props.isSendResetPasswordLinkSuccess ? 'emailField' : (!this.state.emailValid || this.props.isSendResetPasswordLinkError) && 'inputFailure')}
                         value={this.state.email}
                         textChange={this.onChangeEmail}
                     />
@@ -94,7 +99,8 @@ export function mapDispatchToProps(dispatch) {
     return {
         sendResetPasswordLink: (data) => dispatch(sendResetPasswordLink(data)),
         formDirty: () => dispatch(formDirty()),
-        onLogin: () => dispatch(push(Path.login))
+        onLogin: () => dispatch(push(Path.login)),
+        sendResetPasswordLinkSuccess: () => dispatch(sendResetPasswordLinkSuccess())
     }
 }
 

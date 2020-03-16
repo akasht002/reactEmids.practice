@@ -1,9 +1,8 @@
 import { API } from '../../../services/api';
-import { AuthGet, ThirdPartyPost } from '../../../services/http';
+import { ThirdPartyPost } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
-import {RESPONSE_STATUS} from '../../../redux/constants/constants';
 import {ForgetPassword} from './bridge';
 import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 import { logError } from '../../../utils/logError';

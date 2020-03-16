@@ -40,7 +40,7 @@ const SecurityQuestion = (props) => {
     }
 
     return (
-        <LoginCover test-forget-body='test-forget-body'>
+        <LoginCover isLoading={props.isLoading} test-forget-body='test-forget-body'>
             <h6>Answer Forgotten Password Challenge</h6>
             <div className="form-group  text-center login-body pb-0 pt-2">
                 <p className="text-left color-yello">{props._embedded && props._embedded.user.recovery_question.question}</p>
@@ -88,7 +88,8 @@ export function mapStateToProps(state) {
     return {
         _embedded,
         stateToken: state.authState.securityQuestionState.securityQuestion.stateToken,
-        errorMessage: state.authState.securityQuestionState.errorMessage
+        errorMessage: state.authState.securityQuestionState.errorMessage,
+        isLoading: state.loadingState.isLoading
     }
 }
 

@@ -55,7 +55,8 @@ const resetPasswordState = (state = defaultState, action) => {
         case ResetPassword.formDirty:
             return {
                 ...state,
-                resetPasswordStatus: false
+                resetPasswordStatus: false,
+                errorMessage: ''
             };
         case ResetPassword.resetPasswordErrorMessage:
             return {
