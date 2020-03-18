@@ -16,7 +16,7 @@ import {
 import { setPatient } from '../../../../redux/patientProfile/actions';
 import { getPerformTasksList, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import './style.css'
-import { isNull,checkEmpty,divideIfNotZero } from '../../../../utils/validations'
+import { isNull,checkEmpty,divideIfNotZero, getStatusTextBasedOnStatus } from '../../../../utils/validations'
 import { getUserInfo } from '../../../../services/http'
 import { QUESTION_TYPE,SERVICE_STATES,DATE_FORMATS } from '../../../../constants/constants'
 import { convertTime24to12,getFullName } from '../../../../utils/stringHelper';
@@ -250,7 +250,7 @@ export class Assessment extends Component {
                                         </span>
                                     </div>
                                     <div className='requestImageContent' onClick={() => this.handelPatientProfile(this.props.patientDetails && this.props.patientDetails.patientId)}>
-                                        {requestDetails.patient ?
+                                        {requestDetails.patient &&
                                             <span>
                                                 <img
                                                      src={
@@ -260,9 +260,9 @@ export class Assessment extends Component {
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
                                                 <i className='requestName'>{requestDetails.patient.firstName && getFullName(requestDetails.patient.firstName, requestDetails.patient.lastName)} </i></span>
-                                            :
-                                            ''
                                         }
+                                     {requestDetails.patient && (requestDetails.patient.deceasedInd || !requestDetails.patient.isActive) &&
+                                    <span className='visit-processing-pg-status'>{getStatusTextBasedOnStatus(requestDetails.patient)}</span>}
                                     </div>
                                 </div>
                             </div>

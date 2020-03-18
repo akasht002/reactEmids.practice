@@ -195,7 +195,7 @@ export class VisitServiceDetails extends Component {
     this.setState({
       isQuestionareModalOpen:false
     })
-  }
+  } 
 
   getVisitFirstAndLastDate = async() => {
     let getVisitDate = {
