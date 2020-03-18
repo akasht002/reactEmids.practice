@@ -57,6 +57,8 @@ export const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabl
             return getEntityProcessingStatus(data)
         case VISIT_STATUS.cancelled.id:
             return VISIT_STATUS.cancelled.keyValue
+        case VISIT_PROCESSING_STATUS.entityProcess.id:
+            return VISIT_PROCESSING_STATUS.entityProcess.keyValue   
         default:
             return null
     }
