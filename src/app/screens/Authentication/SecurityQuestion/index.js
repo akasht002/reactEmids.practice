@@ -43,7 +43,7 @@ const SecurityQuestion = (props) => {
         <LoginCover isLoading={props.isLoading} test-forget-body='test-forget-body'>
             <h6>Answer Forgotten Password Challenge</h6>
             <div className="form-group  text-center login-body pb-0 pt-2">
-                <p className="text-left color-yello">{props._embedded && props._embedded.user.recovery_question.question}</p>
+                <p className="text-left color-yellow">{props._embedded && props._embedded.user.recovery_question.question}</p>
                 <Input
                     name="answer"
                     value={formData.answer}
