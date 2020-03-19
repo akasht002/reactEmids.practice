@@ -203,7 +203,6 @@ export class VistSummary extends React.Component {
     });
     filteredData.push(answers);
     this.selectedAnswers = filteredData;
-    console.log('object2', this.selectedAnswers)
 }
 
 
