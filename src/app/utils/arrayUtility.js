@@ -105,3 +105,16 @@ if(sortedArr1.every((v,i)=> v === sortedArr2[i]))
 else
     return false;
 }
+
+
+export const removeValueFromString = (list, value) => {
+    return list.replace(new RegExp(",?" + value + ",?"), function(match) {
+        var first_comma = match.charAt(0) === ',', second_comma;
+  
+        if (first_comma &&
+            (second_comma = match.charAt(match.length - 1) === ',')) {
+          return ',';
+        }
+        return '';
+      });
+  };

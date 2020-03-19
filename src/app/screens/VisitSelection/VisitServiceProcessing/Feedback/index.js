@@ -16,7 +16,8 @@ import { getSummaryDetails, getSavedSignature } from '../../../../redux/visitSel
 import './style.css'
 import { isNull, getStatusTextBasedOnStatus } from '../../../../utils/validations'
 import { getUserInfo, isEntityUser } from "../../../../utils/userUtility";
-import { visitProcessingNavigationData } from "../../../../utils/arrayUtility";
+import { visitProcessingNavigationData, removeValueFromString } from "../../../../utils/arrayUtility";
+import {QUESTION_TYPE} from '../../../../constants/constants'
 
 export class Feedback extends Component {
 
@@ -73,6 +74,36 @@ export class Feedback extends Component {
             [id]: id
         }
         this.setState({ answerList: filteredData });
+    }
+
+    
+    handleMultiSelected = (e, answer, id) => {
+        let selectedMultiAnswers = ''
+        if (e.target.checked) {
+            this.selectedAnswers.length > 0 ? this.selectedAnswers.map((item) => {
+                if (id === item.feedbackQuestionnaireId) {
+                    return selectedMultiAnswers = item.answerName + ", " + answer
+                } else {
+                    return selectedMultiAnswers = answer
+                }
+            }) : selectedMultiAnswers = answer
+        } else {
+            this.selectedAnswers.map((item) => {
+                if (id === item.feedbackQuestionnaireId) {
+                    return selectedMultiAnswers = removeValueFromString(item.answerName, answer)
+                }
+            })
+        }
+
+        let answers = {
+            feedbackQuestionnaireId: id,
+            answerName: selectedMultiAnswers
+        }
+        let filteredData = this.selectedAnswers.filter((answer) => {
+            return answer.feedbackQuestionnaireId !== id
+        });
+        filteredData.push(answers);
+        this.selectedAnswers = filteredData;
     }
 
     handleTextarea = (e, id) => {
@@ -232,6 +263,47 @@ export class Feedback extends Component {
                                                                             />
                                                                             <label className="form-radio-label" htmlFor={answer.id}>
                                                                                 <span className="RadioBoxIcon" /> {answer.answerName}</label>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+
+                                                if (questionList.answerTypeDescription === QUESTION_TYPE.MultiSelect) {
+                                                    return (
+                                                        <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
+                                                            <p className={'FeedbackQuestion'}>
+                                                                {i + 1}. {questionList.question}
+                                                            </p>
+                                                            <div className='FeedbackAnswerWidget'>
+                                                                {questionList.answers.map((answer) => {
+                                                                    this.props.VisitFeedback.map((feedback) => {
+                                                                        let multipleCheckboxOption = feedback.selectedAnswer && feedback.selectedAnswer.split(',');
+                                                                        multipleCheckboxOption && multipleCheckboxOption.map((item) => {
+                                                                            if ((item).trim() === answer.answerName) {
+                                                                                answer.checked = true;
+                                                                            }
+                                                                        })
+                                                                    });
+                                                                    return (
+                                                                        <div className="form-check" key={answer.id}>
+                                                                            <label className='form-check-label'>
+                                                                                <input className="form-check-input"
+                                                                                    id={answer.id}
+                                                                                    type="checkbox"
+                                                                                    value={answer.answerName}
+                                                                                    name={questionList.feedbackQuestionnaireId}
+                                                                                    checked={answer.checked}
+                                                                                    disabled={this.props.VisitFeedback.length}
+                                                                                    onChange={(e) => {
+                                                                                        answer.checked = e.target.checked;
+                                                                                        this.handleMultiSelected(e, answer.answerName, questionList.feedbackQuestionnaireId)
+                                                                                    }}
+                                                                                />
+                                                                                {answer.answerName}
+                                                                                <span className='CheckboxIcon' /></label>
                                                                         </div>
                                                                     )
                                                                 })}
