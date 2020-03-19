@@ -20,7 +20,7 @@ import {
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { Path } from '../../routes'
 import { push } from '../../redux/navigation/actions';
-import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS, ERROR_MESSAGE } from '../../constants/constants'
+import { ORG_SERVICE_PROVIDER_TYPE_ID, VISIT_TYPE, entityDashboardTab, ENTITY_DASHBOARD_STATUS, ERROR_MESSAGE, QUESTION_TYPE } from '../../constants/constants'
 import Moment from 'react-moment'
 import { Assessment } from "./assessment";
 import { caseInsensitiveComparer } from "../../utils/comparerUtility";
@@ -28,6 +28,7 @@ import { setServiceProviderFeedbackTab } from "../../redux/dashboard/EntityDashb
 import { getFullName } from "../../utils/stringHelper";
 import { isEntityUser } from "../../utils/userUtility";
 import { CustomTextArea } from "../../components/Base";
+import { removeValueFromString } from "../../utils/arrayUtility";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -175,6 +176,37 @@ export class VistSummary extends React.Component {
     this.setState({ answerList: filteredData });
   };
 
+  handleMultiSelected = (e, answer, id) => {
+    let selectedMultiAnswers = ''
+    if (e.target.checked) {
+        this.selectedAnswers.length > 0 ? this.selectedAnswers.map((item) => {
+            if (id === item.feedbackQuestionnaireId) {
+                return selectedMultiAnswers = item.answerName + ", " + answer
+            } else {
+                return selectedMultiAnswers = answer
+            }
+        }) : selectedMultiAnswers = answer
+    } else {
+        this.selectedAnswers.map((item) => {
+            if (id === item.feedbackQuestionnaireId) {
+                return selectedMultiAnswers = removeValueFromString(item.answerName, answer)
+            }
+        })
+    }
+
+    let answers = {
+        feedbackQuestionnaireId: id,
+        answerName: selectedMultiAnswers
+    }
+    let filteredData = this.selectedAnswers.filter((answer) => {
+        return answer.feedbackQuestionnaireId !== id
+    });
+    filteredData.push(answers);
+    this.selectedAnswers = filteredData;
+    console.log('object2', this.selectedAnswers)
+}
+
+
   handleTextarea = (value, id) => {
     this.setState({
       textareaValue: value,
@@ -289,6 +321,47 @@ export class VistSummary extends React.Component {
                   );
                 }
 
+                if (questionList.answerTypeDescription === QUESTION_TYPE.MultiSelect) {
+                  return (
+                      <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
+                          <p className={'FeedbackQuestion'}>
+                              {i + 1}. {questionList.question}
+                          </p>
+                          <div className='FeedbackAnswerWidget'>
+                              {questionList.answers.map((answer) => {
+                                  this.props.VisitFeedback.map((feedback) => {
+                                      let multipleCheckboxOption = feedback.selectedAnswer && feedback.selectedAnswer.split(',');
+                                      multipleCheckboxOption && multipleCheckboxOption.map((item) => {
+                                          if ((item).trim() === answer.answerName) {
+                                              answer.checked = true;
+                                          }
+                                      })
+                                  });
+                                  return (
+                                      <div className="form-check" key={answer.id}>
+                                          <label className='form-check-label'>
+                                              <input className="form-check-input"
+                                                  id={answer.id}
+                                                  type="checkbox"
+                                                  value={answer.answerName}
+                                                  name={questionList.feedbackQuestionnaireId}
+                                                  checked={answer.checked}
+                                                  disabled={this.props.VisitFeedback.length}
+                                                  onChange={(e) => {
+                                                      answer.checked = e.target.checked;
+                                                      this.handleMultiSelected(e, answer.answerName, questionList.feedbackQuestionnaireId)
+                                                  }}
+                                              />
+                                              {answer.answerName}
+                                              <span className='CheckboxIcon' /></label>
+                                      </div>
+                                  )
+                              })}
+                          </div>
+                      </div>
+                  )
+              }
+
                 if (questionList.answerTypeDescription === "OpenText") {
                   return (
                     <div
@@ -357,6 +430,12 @@ export class VistSummary extends React.Component {
                     </p>
                     <div className='FeedbackAnswerWidget'>
                       {questionList.answers.map((answer, i) => {
+                        let selectedAnswer = questionList.selectedAnswer && questionList.selectedAnswer.split(',')
+                        selectedAnswer && selectedAnswer.map((item) => {
+                          if ((item).trim() === answer.answerName) {
+                              answer.checked = true;
+                          }
+                      })
                         return (
                           <div
                             className='form-radio col-md-4'
@@ -373,7 +452,7 @@ export class VistSummary extends React.Component {
                                   answer.answerName,
                                   questionList.feedbackQuestionnaireId
                                 )}
-                              checked={questionList.selectedAnswer === answer.answerName ? true : false}
+                              checked={answer.checked}
                               disabled={true}
                             />
                             <label
