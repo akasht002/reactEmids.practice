@@ -443,7 +443,7 @@ export class VistSummary extends React.Component {
                             <input
                               className='form-radio-input'
                               id={answer.id}
-                              type='radio'
+                              type={questionList.answerTypeDescription === QUESTION_TYPE.ChoiceBased ? 'radio' : 'checkbox'}
                               value={answer.answerName}
                               name={questionList.feedbackQuestionnaireId}
                               onChange={e =>
