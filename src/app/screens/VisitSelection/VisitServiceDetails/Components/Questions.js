@@ -41,6 +41,41 @@ export const Questions = (props) => {
                         )
                     }
 
+                    if (questionList.answerType === QUESTION_TYPE.MultiSelect) {
+                        return (
+                            <div key={"questionList" + i} className="FeedbackQuestionWidget">
+                                <p className={'FeedbackQuestion'}>
+                                    {i + 1}. {questionList.question}
+                                </p>
+                                <div className='FeedbackAnswerWidget inline-check-block mb-3'>
+                                    {questionList.answerss.map((answer) => {
+                                        let multipleCheckboxOption = questionList.selectedAnswer && questionList.selectedAnswer.split(',');
+                                        multipleCheckboxOption && multipleCheckboxOption.map((item) => {
+                                            if ((item).trim() === answer.answerName) {
+                                                answer.checked = true;
+                                            }
+                                        })
+                                        return (
+                                            <div className="form-check" key={answer.id}>
+                                                <label className='form-check-label'>
+                                                    <input className="form-check-input"
+                                                        id={questionList.serviceRequestAssessmentQuestionnaireId}
+                                                        type="checkbox"
+                                                        value={answer.answerName}
+                                                        name={questionList.serviceRequestAssessmentQuestionnaireId}
+                                                        checked={answer.checked}
+                                                        disabled={true}
+                                                    />
+                                                    {answer.answerName}
+                                                    <span className='CheckboxIcon' /></label>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    }
+
                     if (questionList.answerType === QUESTION_TYPE.OpenText) {
                         return (
                             <div className="FeedbackQuestionWidget" key={"questionList"+i}>

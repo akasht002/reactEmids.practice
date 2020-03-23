@@ -168,7 +168,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                                 )
                             }
 
-                            if (questionList.answerTypeDescription === FEEDBACK_QUESTION_TYPE.MultiSelect) {
+                            if (questionList.answerTypeDescription === FEEDBACK_QUESTION_TYPE.MULTISELECT) {
                                 return (
 
                                     <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget">

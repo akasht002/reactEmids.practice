@@ -238,7 +238,8 @@ export const MMMDD_FORMAT = "MMM DD";
 
 export const QUESTION_TYPE = {
     ChoiceBased: 'ChoiceBased',
-    OpenText: 'OpenText'
+    OpenText: 'OpenText',
+    MultiSelect: 'MultiSelect'
 }
 
 export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
@@ -552,7 +553,7 @@ export const SCHEDULE_TYPE = {
 export const FEEDBACK_QUESTION_TYPE = {
     CHOICEBASED: 'ChoiceBased',
     OPENTEXT: 'OpenText',
-    MultiSelect:'MultiSelect'
+    MULTISELECT: 'MultiSelect'
 }
 
 export const SCHEDULE_RECURRENCE_FIELD = {
