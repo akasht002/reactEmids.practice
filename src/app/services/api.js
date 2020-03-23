@@ -220,5 +220,6 @@ export const API = {
     getServiceRequestLists:'viewrequest/servicerequestlist',
     getServiceRequestListCount:'viewrequest/servicerequestlistcount',
     oktaSession : 'v1/sessions/me',
-    getGuardianDetails: 'visitprocessing/guardianDetails'
+    getGuardianDetails: 'visitprocessing/guardianDetails',
+    getUserFeedbackInfo:'feedback/FeedbackDetails/'
 }

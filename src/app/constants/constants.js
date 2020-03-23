@@ -267,7 +267,8 @@ export const DATE_FORMATS = {
     hh_mm_a: 'hh:mm a',
     visitFormat:'ddd, DD MMM',
     mm_dd_yyy: 'MM/DD/YYYY',
-    mmmyyy: 'MMM YYYY'
+    mmmyyy: 'MMM YYYY',
+    ddmmmyyy:"DD MMM, YYYY"
 }
 
 
@@ -550,7 +551,8 @@ export const SCHEDULE_TYPE = {
 
 export const FEEDBACK_QUESTION_TYPE = {
     CHOICEBASED: 'ChoiceBased',
-    OPENTEXT: 'OpenText'
+    OPENTEXT: 'OpenText',
+    MultiSelect:'MultiSelect'
 }
 
 export const SCHEDULE_RECURRENCE_FIELD = {

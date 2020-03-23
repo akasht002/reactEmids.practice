@@ -1,4 +1,6 @@
 import React, { Fragment } from "react";
+import ReactToPrint from "react-to-print";
+
 import {
   Accordion,
   AccordionItem,
@@ -28,6 +30,7 @@ import { setServiceProviderFeedbackTab } from "../../redux/dashboard/EntityDashb
 import { getFullName } from "../../utils/stringHelper";
 import { isEntityUser } from "../../utils/userUtility";
 import { CustomTextArea } from "../../components/Base";
+import PrintView from "./PrintView";
 
 export class VistSummary extends React.Component {
   constructor(props) {
@@ -424,7 +427,28 @@ export class VistSummary extends React.Component {
           <div className="VisitSummaryWidget">
             <div className="LeftWidget">
               <div className="LeftContent">
+              <div className="d-flex">
+              <div className="col-md-6 p-0">
                 <p className="SummaryContentTitle theme-primary">Service Details</p>
+                </div>
+                {isEntity && isAssessment &&
+                <div className="col-md-6 pl-0 pr-0 pb-3">
+                <span className='d-block'>
+                  <ReactToPrint
+                    trigger={() => <a href="#" className='btn btn-primary pull-right'>Print</a>}
+                    content={() => this.componentRef}
+                  />
+                  <div style={{ display: "none" }}>
+                  <PrintView 
+                    ref={el => (this.componentRef = el)} 
+                    questionsList={this.props.assessmentQuestionsList}
+                    userFeedbackInfo={this.props.userFeedbackInfo}
+                  />
+                  </div>
+               </span>
+               </div>
+                }
+               </div>
                 <div className="row mb-3">
                   <div className="col-md-12 SummaryContentTable">
                     <p className="m-0">
@@ -687,6 +711,8 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
   const {thresholdRadius} = state.authState.userState
+  const {ServiceRequestId, VisitFeedback, assessmentQuestionsList, userFeedbackInfo} = state.visitHistoryState.vistServiceHistoryState
+
   return {
     QuestionsList:
       state.visitSelectionState.VisitServiceProcessingState.FeedbackState
@@ -694,19 +720,18 @@ export function mapStateToProps(state) {
     patientDetails:
       state.visitSelectionState.VisitServiceProcessingState.PerformTasksState
         .PerformTasksList,
-    ServiceRequestId:
-      state.visitHistoryState.vistServiceHistoryState.ServiceRequestId,
-    VisitFeedback: state.visitHistoryState.vistServiceHistoryState
-      .VisitFeedback,
     isLoading: state.visitHistoryState.vistServiceHistoryState.isLoading,
     savedScheduleType: state.visitSelectionState.VisitServiceDetailsState.savedScheduleType,
-    assessmentQuestionsList: state.visitHistoryState.vistServiceHistoryState.assessmentQuestionsList,
     isPaymentAvailable: state.visitSelectionState.VisitServiceDetailsState.isPaymentAvailable,
     entityDashboardActiveTab: state.dashboardState.individualsListState.activeTab,
     activeSubTab: state.dashboardState.VisitServiceProviderState.activeSubTab,
     summaryDetails: state.visitHistoryState.vistServiceHistoryState.VisitServiceDetails,
     isServiceProviderFeedbackTab: state.dashboardState.VisitServiceProviderState.isServiceProviderFeedbackTab,
-    thresholdRadius 
+    thresholdRadius,
+    ServiceRequestId,
+    VisitFeedback,
+    assessmentQuestionsList,
+    userFeedbackInfo
   };
 }
 

@@ -12,7 +12,7 @@ import { updateCountList, checkDataCount } from '../utilActions';
 import { ENTITY_SR_STATUS, RECURRING_OPTIONS, entityDashboardTab, ENTITY_SV_STATUS } from '../../../../constants/constants';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
-import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/actions';
+import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/bridge';
 
 export const setActiveSubTab = data => {
   return {

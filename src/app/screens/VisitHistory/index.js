@@ -17,7 +17,8 @@ import {
   getHistoryListCount,
   getAllPatientForServiceProviders,
   clearPatientForServiceProviders,
-  getAssessmentQuestionsList
+  getAssessmentQuestionsList,
+  getUserFeedbackInfo
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { VisitList } from './VisitList'
 import Filter from './VisitHistoryFilter'
@@ -112,6 +113,7 @@ export class VisitHistory extends Component {
     }
     if(data.visitTypeId === VISIT_TYPE.assessment){
       this.props.getAssessmentQuestionsList(model)
+      this.props.getUserFeedbackInfo(model)
     }
   }
 
@@ -330,7 +332,8 @@ export function mapDispatchToProps(dispatch) {
     saveScheduleType: (data) => dispatch(saveScheduleType(data)),
     getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
-    getPaymentAvailability: () => dispatch(getPaymentAvailability())
+    getPaymentAvailability: () => dispatch(getPaymentAvailability()),
+    getUserFeedbackInfo: (data) => dispatch(getUserFeedbackInfo(data))
   }
 }
 

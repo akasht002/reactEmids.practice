@@ -36,6 +36,38 @@ export const Assessment = props => {
                     )
                 }
 
+                if (questionList.answerTypeDescription === FEEDBACK_QUESTION_TYPE.MultiSelect) {
+                                            return (
+                                                <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget">
+                                                    <p className={'FeedbackQuestion'}>
+                                                        {i + 1}. {questionList.question}
+                                                    </p>
+                                                    <div className='FeedbackAnswerWidget'>
+                                                        {questionList.answers.map((answer) => {
+                                                            if (questionList.selectedAnswer === answer.answerName) {
+                                                                answer.checked = true;
+                                                            }
+                                                            return (
+                                                                <div className="form-check" key={answer.id}>
+                                                                    <label className='form-check-label'>
+                                                                        <input className="form-check-input"
+                                                                            id={answer.id}
+                                                                            type="checkbox"
+                                                                            value={answer.answerName}
+                                                                            name={questionList.feedbackQuestionnaireId}
+                                                                            checked={answer.checked}
+                                                                            disabled={true}
+                                                                        />
+                                                                        {answer.answerName}
+                                                                        <span className='CheckboxIcon' /></label>
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            )
+                }
+
                 if (questionList.answerTypeDescription === FEEDBACK_QUESTION_TYPE.OPENTEXT) {
                     return (
                         <div className="FeedbackQuestionWidget" key={questionList.assessmentQuestionnaireId}>
