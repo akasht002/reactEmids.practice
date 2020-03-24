@@ -19,7 +19,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
     render() {
         const { serviceRequestVisitNumber, serviceTypeDescription, visitDate, duration, totalTask, totalTaskCompleted } = this.props.userFeedbackInfo
         const { spFirstName, spLastName } = this.props.userFeedbackInfo && this.props.userFeedbackInfo.serviceProviderFeedbackDetails
-        const { patientFirstName, patientGender, patientDOB, patientHeight, patientWeight, patientStateName, patientCity, patientZipCode, patientStreetAddess, patientPhoneNumber } = this.props.userFeedbackInfo && this.props.userFeedbackInfo.patientFeedbackDetails
+        const { patientFirstName, patientLastName, patientGender, patientDOB, patientHeight, patientWeight, patientStateName, patientCity, patientZipCode, patientStreetAddess, patientPhoneNumber } = this.props.userFeedbackInfo && this.props.userFeedbackInfo.patientFeedbackDetails
 
         return (
             <div className="full-block page-print-view full-height-block">
@@ -30,7 +30,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 border-right pdf-block min-74">
                                 <div className="col  p-0">
                                     <p>Patient Name</p>
-                                    <span>{patientFirstName}</span>
+                                    <span>{patientFirstName} {patientLastName}</span>
                                 </div>
                                 <div className="profile-body-block">
                                     <div className="row">
@@ -46,11 +46,11 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                                     <div className="row">
                                         <div className="col min-101  border-right border-top min-74">
                                             <p>Height</p>
-                                            <span>{patientHeight}</span>
+                                            <span>{`${patientHeight} Inches`}</span>
                                         </div>
                                         <div className="col min-101 border-top min-74">
                                             <p>Weight</p>
-                                            <span>{patientWeight}</span>
+                                            <span>{`${patientWeight} Lbs`}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -177,9 +177,12 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                                         </p>
                                         <div className='FeedbackAnswerWidget pl-3'>
                                             {questionList.answers.map((answer) => {
-                                                if (questionList.selectedAnswer === answer.answerName) {
-                                                    answer.checked = true;
-                                                }
+                                                let multipleCheckboxOption = questionList.selectedAnswer && questionList.selectedAnswer.split(',');
+                                                multipleCheckboxOption && multipleCheckboxOption.map((item) => {
+                                                    if ((item).trim() === answer.answerName) {
+                                                        answer.checked = true;
+                                                    }
+                                                })
                                                 return (
                                                     <div className="form-check col-lg-3 col-md-3 col-sm-4 col-xs-6 question-part" key={answer.id}>
                                                         <label className='form-check-label'>
