@@ -11,8 +11,8 @@ import { logError } from '../../../../utils/logError';
 import { updateCountList, checkDataCount } from '../utilActions';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS, VISIT_PROCESSING_STATUS, VISIT_STATUS } from '../../../../constants/constants';
-import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/actions';
 import { VisitServiceRequestList } from '../ServiceRequest/bridge';
+import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/bridge';
 
 export const setActiveSubTab = data => {
     return {

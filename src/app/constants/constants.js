@@ -268,7 +268,8 @@ export const DATE_FORMATS = {
     hh_mm_a: 'hh:mm a',
     visitFormat:'ddd, DD MMM',
     mm_dd_yyy: 'MM/DD/YYYY',
-    mmmyyy: 'MMM YYYY'
+    mmmyyy: 'MMM YYYY',
+    ddmmmyyy:"DD MMM, YYYY"
 }
 
 

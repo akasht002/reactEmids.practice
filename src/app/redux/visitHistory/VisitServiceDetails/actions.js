@@ -8,27 +8,7 @@ import {getUpdatedPerformTasksList} from '../../visitSelection/VisitServiceProce
 import _ from 'lodash';
 import { isEntityUser } from '../../../utils/userUtility';
 import { logError } from '../../../utils/logError';
-
-export const vistServiceHistoryDetails = {
-    getVisitServiceHistoryListSuccess: 'getVisitServiceHistoryListSuccess/visitHistory',
-    getVisitServiceHistoryDetailsSuccess: 'getVisitServiceHistoryDetailsSuccess/visitHistory',
-    getVisitServiceHistoryByIdDetailSuccess: 'getVisitServiceHistoryByIdDetailSuccess/visitHistory',
-    updateVisitHistoryFilter: 'updateVisitHistoryFilter/visitHistory',
-    getServiceCategorySuccess: "getServiceCategorySuccess/VisitHistory",
-    getSubmittedResponse: "getSubmittedResponse/visitHistory",
-    getAllServiceProviders: "getServiceProviders/visitHistory",
-    getServiceRequestId: 'getServiceRequestId/visitHistory',
-    getServiceTypeSuccess: 'get_type_success/visitHistory',
-    clearServiceTypes: 'clearServiceTypes/visitHistory',
-    clearServiceProviders: 'clearServiceProviders/visitHistory',
-    getHistoryListCountSuccess: 'getHistoryListCountSuccess/visitHistory',
-    getVisitFeedBack: 'getVisitFeedBack/visit',
-    getAllPatientForServiceProviders: "getAllPatientForServiceProviders/visitHistory",
-    clearPatientForServiceProviders: "clearPatientForServiceProviders/visitHistory",
-    formDirty: 'formDirty/visitHistory',
-    visitHistoryLoading: 'visitHistoryLoading/visitHistory',
-    getAssessmentQuestionsListSuccess: 'getAssessmentQuestionsListSuccess/visitHistory'
-};
+import { vistServiceHistoryDetails } from './bridge';
 
 export const visitHistoryLoading = (data) => {
     return {
@@ -344,3 +324,21 @@ export function getAssessmentQuestionsList(data) {
         })
     }
   }
+
+export const getUserFeedbackInfo = data => async (dispatch, getState) => {
+    try {
+        const resp = await ServiceRequestGet(`${API.getUserFeedbackInfo}${data.visitId}/${true}`)
+        dispatch(getUserFeedbackInfoSuccess(resp.data))
+        dispatch(endLoading());
+    } catch (error) {
+        dispatch(endLoading());
+        logError(error)
+    }
+};  
+
+export const getUserFeedbackInfoSuccess = data => {
+    return {
+        type: vistServiceHistoryDetails.getUserFeedbackInfoSuccess,
+        data
+    }
+}
