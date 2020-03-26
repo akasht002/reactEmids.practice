@@ -257,7 +257,7 @@ export class ServiceCalendar extends Component {
 
   componentDidMount() {
     this.initialCall();
-    this.props.getEntityServiceProviderList();
+    getUserInfo().isEntityServiceProvider && this.props.getEntityServiceProviderList();
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
   }
