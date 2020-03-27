@@ -35,7 +35,7 @@ import {
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import { DashboardDetail } from './bridge'
-import { formDirty, getVisitServiceHistoryByIdDetail, getAssessmentQuestionsList } from '../../visitHistory/VisitServiceDetails/actions';
+import { formDirty, getVisitServiceHistoryByIdDetail, getAssessmentQuestionsList, getUserFeedbackInfo  } from '../../visitHistory/VisitServiceDetails/actions';
 import { formDirtyFeedback } from '../../visitSelection/VisitServiceProcessing/Feedback/actions';
 import { getSummaryDetails, getSavedSignature, formDirtySummaryDetails } from '../../visitSelection/VisitServiceProcessing/Summary/actions';
 import { START_VISIT, IN_PROGRESS,VISIT_SUMMARY, PAYMENT_PENDING } from '../../constants/constants'
@@ -406,6 +406,7 @@ export function goToAssessmentVisitProcessing(data){
         }
         if(data.visitTypeId === VISIT_TYPE.assessment || data.scheduleTypeId === VISIT_TYPE.assessment){
           dispatch(getAssessmentQuestionsList(assessmentQuestionList))
+          dispatch(getUserFeedbackInfo({visitId: visitID}))
         }
       break; 
       default:

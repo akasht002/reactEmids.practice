@@ -18,8 +18,8 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
 
     render() {
         const { serviceRequestVisitNumber, serviceTypeDescription, visitDate, duration, totalTask, totalTaskCompleted } = this.props.userFeedbackInfo
-        const { spFirstName, spLastName } = this.props.userFeedbackInfo && this.props.userFeedbackInfo.serviceProviderFeedbackDetails
-        const { patientFirstName, patientLastName, patientGender, patientDOB, patientHeight, patientWeight, patientStateName, patientCity, patientZipCode, patientStreetAddess, patientPhoneNumber } = this.props.userFeedbackInfo && this.props.userFeedbackInfo.patientFeedbackDetails
+        const { spFirstName, spLastName } = this.props.userFeedbackInfo && this.props.userFeedbackInfo.serviceProviderFeedbackDetails && this.props.userFeedbackInfo.serviceProviderFeedbackDetails 
+        const { patientFirstName, patientLastName, patientGender, patientDOB, patientHeight, patientWeight, patientStateName, patientCity, patientZipCode, patientStreetAddess, patientPhoneNumber } = this.props.userFeedbackInfo && this.props.userFeedbackInfo.patientFeedbackDetails && this.props.userFeedbackInfo.patientFeedbackDetails 
 
         return (
             <div className="full-block page-print-view full-height-block">
