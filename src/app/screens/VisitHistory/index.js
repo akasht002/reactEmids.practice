@@ -267,7 +267,7 @@ export class VisitHistory extends Component {
           speed={2}
           smoothScrolling
           horizontal={false}
-          className='ProfileContentWidget'
+          className='ProfileContentWidget visit-history-block'
         >
           <VisitList
             visitHistoryList={this.props.VisitServiceHistory}
