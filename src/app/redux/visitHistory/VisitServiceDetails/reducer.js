@@ -23,7 +23,8 @@ const defaultState = {
     VisitFeedback: [],
     PatientForServiceproviders: [],
     isLoading: false,
-    assessmentQuestionsList: []
+    assessmentQuestionsList: [],
+    userFeedbackInfo: {}
 };
 
 const vistServiceHistoryState = (state = defaultState, action) => {
@@ -113,6 +114,11 @@ const vistServiceHistoryState = (state = defaultState, action) => {
                 ...state,
                 assessmentQuestionsList: action.data
             };
+        case vistServiceHistoryDetails.getUserFeedbackInfoSuccess:
+            return {
+                ...state,
+                userFeedbackInfo: action.data
+            };   
         default:
             return state;
     }
