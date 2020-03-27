@@ -34,6 +34,7 @@ import { getServiceRequestId, saveScheduleType, getPaymentAvailability }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
 import {DEFAULT_FROM_DATE, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, VISIT_TYPE} from '../../constants/constants'
 import { setServiceProviderFeedbackTab } from '../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
+import { setPageNumber } from '../../redux/visitSelection/VisitServiceList/actions';
 export class VisitHistory extends Component {
   constructor(props) {
     super(props)
@@ -66,6 +67,7 @@ export class VisitHistory extends Component {
     this.props.getHistoryListCount()
     this.props.setServiceProviderFeedbackTab(true)
     this.props.getPaymentAvailability()
+    this.props.setPageNumber(1)
   }
 
   getModel = (data) => {
@@ -333,7 +335,8 @@ export function mapDispatchToProps(dispatch) {
     getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
     getPaymentAvailability: () => dispatch(getPaymentAvailability()),
-    getUserFeedbackInfo: (data) => dispatch(getUserFeedbackInfo(data))
+    getUserFeedbackInfo: (data) => dispatch(getUserFeedbackInfo(data)),
+    setPageNumber: data => dispatch(setPageNumber(data))
   }
 }
 

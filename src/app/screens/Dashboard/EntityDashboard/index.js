@@ -19,6 +19,7 @@ import { createDataStore } from '../../../redux/telehealth/actions'
 import { getThresholdRadius } from '../../../redux/auth/user/actions';
 import './entity-user-dashboard.css'
 import { Tabs } from './Components/Tabs/Tabs';
+import { setPageNumber } from '../../../redux/visitSelection/VisitServiceList/actions';
 
 export class EntityDashboard extends Component {
   constructor(props) {
@@ -68,6 +69,7 @@ export class EntityDashboard extends Component {
     this.props.getMessageFallBackInterval();
     this.props.getThresholdRadius();
     this.setState({ activeTab: this.props.activeTab })
+    this.props.setPageNumber(1)
   }
 
   fromDateChanged = date => {
@@ -212,7 +214,8 @@ export function mapDispatchToProps(dispatch) {
     createDataStore: data => dispatch(createDataStore(data)),
     setFromDate: data => dispatch(setFromDate(data)),
     setToDate: data => dispatch(setToDate(data)),
-    getThresholdRadius: () => dispatch(getThresholdRadius())
+    getThresholdRadius: () => dispatch(getThresholdRadius()),
+    setPageNumber: data => dispatch(setPageNumber(data))
   }
 }
 

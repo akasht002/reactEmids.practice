@@ -14,6 +14,7 @@ import { getUserInformation } from '../../redux/auth/UserAgreement/actions';
 import {
   PROFILE_SERVICE_PROVIDER_TYPE_ID
 } from '../../constants/constants';
+import { setPageNumber } from '../../redux/visitSelection/VisitServiceList/actions';
 import { getMessageFallBackInterval } from '../../redux/asyncMessages/actions';
 import './dashboard.css'
 import './ctdashboard.css'
@@ -48,6 +49,7 @@ export class Dashboard extends React.Component {
     this.props.getBuildVersion();
     this.props.getUserInformation();
     this.props.getMessageFallBackInterval()
+    this.props.setPageNumber(1)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -264,6 +266,7 @@ export function mapDispatchToProps(dispatch) {
     getUserInformation: () => dispatch(getUserInformation()),
     getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval()),
     createDataStore: data => dispatch(createDataStore(data)),
+    setPageNumber: data => dispatch(setPageNumber(data))
   }
 }
 
