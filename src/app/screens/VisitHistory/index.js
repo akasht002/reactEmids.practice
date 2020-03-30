@@ -29,6 +29,7 @@ import './visitList.css'
 import '../../styles/SelectDropdown.css'
 import { push } from '../../redux/navigation/actions';
 import { Path } from "../../routes";
+import { PAGE_NO } from "../../constants/constants";
 import { getTimeZoneOffset } from '../../utils/dateUtility';
 import { getServiceRequestId, saveScheduleType, getPaymentAvailability }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
@@ -67,7 +68,7 @@ export class VisitHistory extends Component {
     this.props.getHistoryListCount()
     this.props.setServiceProviderFeedbackTab(true)
     this.props.getPaymentAvailability()
-    this.props.setPageNumber(1)
+    this.props.setPageNumber(PAGE_NO)
   }
 
   getModel = (data) => {

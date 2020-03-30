@@ -12,7 +12,7 @@ import { getProfilePercentage } from '../../redux/profile/ProgressIndicator/acti
 import { getAboutUsContent, getBuildVersion } from '../../redux/aboutUs/actions';
 import { getUserInformation } from '../../redux/auth/UserAgreement/actions';
 import {
-  PROFILE_SERVICE_PROVIDER_TYPE_ID
+  PROFILE_SERVICE_PROVIDER_TYPE_ID,PAGE_NO
 } from '../../constants/constants';
 import { setPageNumber } from '../../redux/visitSelection/VisitServiceList/actions';
 import { getMessageFallBackInterval } from '../../redux/asyncMessages/actions';
@@ -49,7 +49,7 @@ export class Dashboard extends React.Component {
     this.props.getBuildVersion();
     this.props.getUserInformation();
     this.props.getMessageFallBackInterval()
-    this.props.setPageNumber(1)
+    this.props.setPageNumber(PAGE_NO)
   }
 
   componentWillReceiveProps(nextProps) {

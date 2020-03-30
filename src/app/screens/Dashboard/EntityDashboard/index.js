@@ -11,7 +11,7 @@ import { Calendar } from '../../../components/LevelOne'
 import { formateStateDate } from '../../../utils/validations'
 import { AsideScreenCover } from '../../ScreenCover/AsideScreenCover'
 import { formatDate } from '../../../utils/dateUtility'
-import { DATE_FORMAT, entityDashboardTab, ENTITY_DASHBOARD_STATUS } from '../../../constants/constants'
+import { DATE_FORMAT, entityDashboardTab, ENTITY_DASHBOARD_STATUS,PAGE_NO } from '../../../constants/constants'
 import { setActiveTab, setFromDate, setToDate } from '../../../redux/dashboard/EntityDashboard/Individuals/actions';
 import { getAboutUsContent, getBuildVersion } from '../../../redux/aboutUs/actions';
 import { getMessageFallBackInterval } from '../../../redux/asyncMessages/actions';
@@ -69,7 +69,7 @@ export class EntityDashboard extends Component {
     this.props.getMessageFallBackInterval();
     this.props.getThresholdRadius();
     this.setState({ activeTab: this.props.activeTab })
-    this.props.setPageNumber(1)
+    this.props.setPageNumber(PAGE_NO)
   }
 
   fromDateChanged = date => {
