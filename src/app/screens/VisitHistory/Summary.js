@@ -789,7 +789,7 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
   const {thresholdRadius} = state.authState.userState
-  const {ServiceRequestId, VisitFeedback, assessmentQuestionsList, userFeedbackInfo} = state.visitHistoryState.vistServiceHistoryState
+  const {ServiceRequestId, VisitFeedback, assessmentQuestionsList} = state.visitHistoryState.vistServiceHistoryState
 
   return {
     QuestionsList:
@@ -809,7 +809,7 @@ export function mapStateToProps(state) {
     ServiceRequestId,
     VisitFeedback,
     assessmentQuestionsList,
-    userFeedbackInfo
+    userFeedbackInfo: state.visitHistoryState.vistServiceHistoryState.userFeedbackInfo
   };
 }
 

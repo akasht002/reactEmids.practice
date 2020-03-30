@@ -8,7 +8,7 @@ import { isFutureDay} from '../../utils/dateUtility'
 import { isEntityServiceProvider, getUserInfo } from '../../utils/userUtility';
 import { ModalPopup, AlertPopup } from '../../components'
 import { formatPhoneNumber } from "../../utils/formatName"
-import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT,VISIT_TYPE } from "../../constants/constants";
+import { CONTACT_NOT_FOUND, PHONE_NUMBER_TEXT,VISIT_TYPE, VISIT_PROCESSING_STATUS } from "../../constants/constants";
 import { SERVICE_VISIT_STATUS,START_VISIT } from '../../redux/constants/constants';
 import { IN_PROGRESS } from '../Dashboard/constant'
 import { USERTYPES } from "../../constants/constants";
@@ -126,7 +126,7 @@ export class QuickMenu extends Component {
           <i className='iconPhone' />{`${guardian.firstName} ${guardian.lastName}`}</Item>)
 
     if(isEntityServiceProvider()) {
-        options = !this.props.canProcessVisit ? [...guardianPhoneNumbers] : conversations.deceasedInd ? [visitProcessingOption] : [
+        options = (!this.props.canProcessVisit || conversations.visitStatusId === VISIT_PROCESSING_STATUS.entityProcess.id) ? [...guardianPhoneNumbers] : conversations.deceasedInd ? [visitProcessingOption] : [
           visitProcessingOption,
           ...guardianPhoneNumbers  
         ];
