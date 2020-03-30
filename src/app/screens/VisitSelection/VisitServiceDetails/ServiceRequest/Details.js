@@ -30,7 +30,7 @@ export const Details = props => {
             (serviceTypes, index) => {
                 let catNum = index + 1
                 return (
-                    <div className='ServiceTypeList'>
+                    <div className='ServiceTypeList' key={`ServiceTypeListId_${index}`}>
                         <input
                             id={serviceTypes.serviceRequestTypeDetailsId}
                             type='radio'
@@ -83,7 +83,7 @@ export const Details = props => {
         modifiedDays &&
         modifiedDays.map((days, index) => {
             return (
-                <div className={'SPAvailContainer Available'}>
+                <div className={'SPAvailContainer Available'} key={`SPAvailContainer AvailableId_${index}`}>
                     <div className={'SPAvailTitle'}>
                         <label className='SPAvailTitleText'>{days.day}</label>
                     </div>
@@ -178,9 +178,9 @@ export const Details = props => {
                     <div className='SummaryContent POS mb-4'>
                         {props.details.patient &&
                             props.details.patient
-                            ? address.map(pointofservice => {
+                            ? address.map((pointofservice,index) => {
                                 return (
-                                    <Fragment>
+                                    <Fragment  key={`addresstypeId_${index}`}>
                                         {pointofservice.addressTypeId &&
                                             <p>
                                                 <span className="addresstype">Address Type</span>

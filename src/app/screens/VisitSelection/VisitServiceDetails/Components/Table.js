@@ -136,7 +136,7 @@ export const Table = props => {
                             </td>
                             {
                                 isEntity &&
-                                <td className={item.visitStatusId === VISIT_STATUS.cancelled.id && 'disable-assign-provider'}>
+                                <td className={item.visitStatusId === VISIT_STATUS.cancelled.id ? 'disable-assign-provider' : ''}>
                                     <AssignServiceProvider
                                         visitList={item}
                                         getServicePlanVisitId={item.servicePlanVisitId}
