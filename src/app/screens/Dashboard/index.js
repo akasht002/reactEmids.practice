@@ -12,8 +12,9 @@ import { getProfilePercentage } from '../../redux/profile/ProgressIndicator/acti
 import { getAboutUsContent, getBuildVersion } from '../../redux/aboutUs/actions';
 import { getUserInformation } from '../../redux/auth/UserAgreement/actions';
 import {
-  PROFILE_SERVICE_PROVIDER_TYPE_ID
+  PROFILE_SERVICE_PROVIDER_TYPE_ID,PAGE_NO
 } from '../../constants/constants';
+import { setPageNumber } from '../../redux/visitSelection/VisitServiceList/actions';
 import { getMessageFallBackInterval } from '../../redux/asyncMessages/actions';
 import './dashboard.css'
 import './ctdashboard.css'
@@ -48,6 +49,7 @@ export class Dashboard extends React.Component {
     this.props.getBuildVersion();
     this.props.getUserInformation();
     this.props.getMessageFallBackInterval()
+    this.props.setPageNumber(PAGE_NO)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -264,6 +266,7 @@ export function mapDispatchToProps(dispatch) {
     getUserInformation: () => dispatch(getUserInformation()),
     getMessageFallBackInterval: () => dispatch(getMessageFallBackInterval()),
     createDataStore: data => dispatch(createDataStore(data)),
+    setPageNumber: data => dispatch(setPageNumber(data))
   }
 }
 

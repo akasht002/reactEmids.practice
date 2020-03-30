@@ -114,7 +114,9 @@ export class VisitServiceList extends Component {
             })
             this.setState({
                 serviceStatus: serviceRequestStatus,
-                serviceRequestList: nextProps.ServiceStatus
+                serviceRequestList: nextProps.ServiceStatus,
+                activePage: this.props.pageNumber,
+                pageNumber: this.props.pageNumber,
             })
         }
         this.setState({
@@ -134,6 +136,7 @@ export class VisitServiceList extends Component {
         this.props.goToServiceRequestDetailsPage();
         this.props.setPatient(patientId)
         this.props.setActiveTab('1')
+        this.props.setPageNumber(this.props.pageNumber)
     }
 
     renderStatusClassName = (status) => {
@@ -430,7 +433,7 @@ export class VisitServiceList extends Component {
             serviceProviderId: getUserInfo().serviceProviderId,
             ToPage: SERVICE_REQUEST_PAGE_SIZE,
             searchKeyword:this.state.searchKeyword,
-            FromPage:  this.state.activePage
+            FromPage:  isdefault ? this.props.pageNumber:this.state.activePage
         }
         let statusData ;
         isdefault ? 
