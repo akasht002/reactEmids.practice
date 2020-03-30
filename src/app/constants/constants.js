@@ -532,7 +532,7 @@ export const FilterActiveTab = {
 
 export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Cancelled'];
 
-export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'OverDue'];
+export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'Over Due'];
 
 export const RECURRING_OPTIONS = [31, 32]
 
