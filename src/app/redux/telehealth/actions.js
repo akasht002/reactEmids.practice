@@ -9,6 +9,7 @@ import { onLogout } from '../auth/logout/actions';
 import { goBack } from '../navigation/actions';
 import { logError } from '../../utils/logError';
 import { isEntityUser } from '../../utils/userUtility';
+import { caseInsensitiveComparer } from '../../utils/comparerUtility';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
@@ -146,14 +147,14 @@ export function createVideoConference(data) {
         const personalState = getState().profileState.PersonalDetailState.personalDetail
         let twilioData = {
             createdBy: userInfo.coreoHomeUserId,
-            createdByType: USERTYPES.SERVICE_PROVIDER,
+            createdByType: isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER,
             createdByFirstName : personalState.firstName,
             createdByLastName  : personalState.lastName,
             context: getState().telehealthState.contextId,
             participantList: [
                 {
                     userId: userInfo.coreoHomeUserId,
-                    participantType: USERTYPES.SERVICE_PROVIDER,
+                    participantType: isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER,
                     firstName: personalState.firstName,
                     lastName: personalState.lastName,
                     thumbNail: getState().profileState.PersonalDetailState.imageData.thumbnailImage,

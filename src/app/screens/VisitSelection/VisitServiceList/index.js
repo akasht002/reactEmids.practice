@@ -462,12 +462,12 @@ export class VisitServiceList extends Component {
         this.props.setPageNumber(1)
     }
 
-    closeSearch = () => {
+    closeSearch = async () => {
         let data = {
             pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: this.state.pageSize
         }
-        this.setState({
+        await this.setState({
             searchOpen: !this.state.searchOpen,
             searchKeyword: '',   
             activePage: DEFAULT_PAGE_NUMBER       
@@ -489,8 +489,10 @@ export class VisitServiceList extends Component {
         }
         else {
             let filterData = this.getFilterData(true);
-            this.props.getFilter(filterData);
-            this.props.getFilterDataCount(filterData);  
+            filterData.startDate = DEFAULT_FROM_DATE
+            filterData.endDate = DEFAULT_TO_DATE
+            await this.props.getFilter(filterData);
+            await this.props.getFilterDataCount(filterData);  
         }
     }
 
