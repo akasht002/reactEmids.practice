@@ -515,6 +515,7 @@ export class VistSummary extends React.Component {
                   <ReactToPrint
                     trigger={() => <a href="#" className='btn btn-primary pull-right'>Print</a>}
                     content={() => this.componentRef}
+                    pageStyle="@page { size: A4 portrait;}"
                   />
                   <div style={{ display: "none" }}>
                   <PrintView 

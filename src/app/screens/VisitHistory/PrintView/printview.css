@@ -27,10 +27,16 @@
     color: #444;
 }
 
+.emergency-address-block ul li p
+{
+    color: #8c8c8c !important;
+}
+
 .top-block-details span {
     margin-top: 5px;
     margin-bottom: 10px;
     display: block;
+    color: #8c8c8c;
 }
 
 .bg-white {
@@ -226,15 +232,17 @@ div.full-block-table {
 
 .questions-view-block .FeedbackQuestionWidget .FeedbackQuestion {
     margin-bottom: 3px;
+    color: #444444;
 }
 
 .questions-view-block .FeedbackAnswerWidget label.form-radio-label {
     font-weight: normal;
     padding: 5px 0px 5px 25px;
+    color: #444444 !important;
 }
 
 .questions-view-block .FeedbackAnswerWidget span.RadioBoxIcon {
-    left: 0px;
+    left: 0px !important;
     top: 10px;
 }
 
@@ -282,7 +290,7 @@ div.full-block-table {
     .print-textbox .form-control {
         padding: 0;
         overflow: visible;
-        min-width: 980px;
+        min-width: 945px;
     }
 
     .questions-view-block .FeedbackAnswerWidget {
@@ -305,6 +313,14 @@ div.full-block-table {
         overflow: visible;
         width: 100% !important;
         height: 100% !important;
+    }
+
+    .questions-view-block .VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget {
+        padding-bottom: 0px !important;
+    }
+
+    .questions-view-block .VisitSummaryWidget .LeftWidget .FeedbackQuestionWidget {
+        line-height: 20px !important;
     }
 
 }
