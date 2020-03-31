@@ -27,7 +27,6 @@ import { VISIT_TYPE,LATITUDE,LONGITUDE } from '../../../constants/constants'
       lon : data.data.longitude?data.data.longitude:LONGITUDE,
     },
      serviceProviderId : data.data.serviceProviderId,
-     patientId : data.data.patientId,
-    //  patientAddressId: data.address.patientAddressId
+     patientId : data.data.patientId
   }
 }
