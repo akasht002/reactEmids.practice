@@ -128,7 +128,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                 </div>
 
                 <div className="full-block-table page-break">
-                    <h5 className="mt-3 mb-3 text-left">Assement Questions</h5>
+                    <h5 className="mt-3 mb-3 text-left">Assessment Questions</h5>
                     <hr></hr>
                     <div className="print-table-top questions-view-block">
 
