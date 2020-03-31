@@ -152,6 +152,7 @@ export class Schedule extends Component {
             }
 
             this.setState({
+                patientAddressId: validAddress.addressId,
                 addressType: validAddress.addressType,
                 selectedPOS: validAddress.addressId,
                 street: validAddress.street,
