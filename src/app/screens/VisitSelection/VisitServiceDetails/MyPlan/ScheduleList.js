@@ -13,11 +13,11 @@ const onClickPlanAction = (item) => {
     return (
         <Fragment>
             {
-                props.list.map(item => {
+                props.list.map( (item,index) => {
                     let renderPlanActionIcon = item.isAnyAvailableScheduleVisit ? 'edit-block' : 'view-icon'
                     let activeListBlockClass = (props.planScheduleId === item.planScheduleId) ? 'active-listblock' : ''
                     return (
-                        <div className={`schedule-listblock ${activeListBlockClass}`}>
+                        <div className={`schedule-listblock ${activeListBlockClass}`} key={`schedule-listblock_id${index}`}>
                             <fieldset>
                                 <label className="customechk">
                                     <input

@@ -45,7 +45,7 @@ export class AssignServiceProvider extends Component {
         <div className="participantsSearchList">
           {serviceProviderList.map((item, index) => {
             return (
-              <fieldset>
+              <fieldset key={`item_id_${index}`}>
                 <div className="CheckboxSet" key={item.id}>
                   <input
                     className="ServiceCheckbox"

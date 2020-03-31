@@ -348,12 +348,10 @@ export function getEntityServiceProviderListSearch(data, selectedESPId = null) {
 
 export function getRecurringPattern() {
     return (dispatch) => {
-        dispatch(startLoading());
         return ServiceRequestGet(`${API.servicerequest}LookUp/RecurringPattern`).then((resp) => {
             dispatch(getRecurringPatternSuccess(resp.data))
-            dispatch(endLoading());
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
     }
 };
@@ -361,7 +359,6 @@ export function getRecurringPattern() {
 export function getDays(selectedDaysId = []) {
     return (dispatch) => {
         let selectedDaysIds = selectedDaysId ? selectedDaysId : [];
-        dispatch(startLoading());
         return ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
             let data = resp.data.map((value) => {
                 return ({
@@ -369,10 +366,9 @@ export function getDays(selectedDaysId = []) {
                     selected: selectedDaysIds.indexOf(value.id) !== -1
                 })
             })
-            dispatch(getDaysSuccess(data))
-            dispatch(endLoading());
+            dispatch(getDaysSuccess(data))           
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
     }
 };
