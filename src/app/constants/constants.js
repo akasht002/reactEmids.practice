@@ -14,6 +14,7 @@ export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
 export const VIEW_ALL_COUNT = 5
 
 export const USER_LOCALSTORAGE = "CoreoSP";
+export const USER_CREDENTIALS = 'UserCredentials'
 export const PROFILE_SERVICE_PROVIDER_TYPE_ID = 1;
 export const NOT_INTERESTED = 58
 export const OPEN = 35

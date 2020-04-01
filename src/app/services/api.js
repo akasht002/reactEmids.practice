@@ -219,9 +219,10 @@ export const API = {
     getIsAnyEngagedServiceRequest: 'servicevisit/isanyhiredcard/',
     getServiceRequestLists:'viewrequest/servicerequestlist',
     getServiceRequestListCount:'viewrequest/servicerequestlistcount',
-    oktaSession : 'v1/sessions/',
+    oktaSession : 'OktaAccessibility/ExtendSession/',
     getGuardianDetails: 'visitprocessing/guardianDetails',
     getToken: 'OktaAccessibility/LogIn',
     validateSecurityAnswer: 'OktaAccessibility/AnswerRecoveryQuestion',
-    getSecurityQuestion: 'OktaAccessibility/GetSecurityQuestion/'
+    getSecurityQuestion: 'OktaAccessibility/GetSecurityQuestion/',
+    getRefreshToken: 'OktaAccessibility/RefreshAccessToken'
 }

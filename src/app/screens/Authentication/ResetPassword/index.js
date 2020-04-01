@@ -94,7 +94,7 @@ export class ResetPassword extends Component {
                             autoComplete="off"
                             type="password"
                             placeholder="New Password"
-                            className={"passwordField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
+                            className={"emailField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
                             value={this.state.pass}
                             textChange={this.onChangeNewPassword}
                             onBlur={this.validatePassword}
@@ -108,7 +108,7 @@ export class ResetPassword extends Component {
                             autoComplete="off"
                             type="password"
                             placeholder="Retype New Password"
-                            className={"passwordField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
+                            className={"emailField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
                             value={this.state.confirmPass}
                             textChange={this.onChangeConfirmPassword}
                             onBlur={this.validatePassword}
@@ -118,7 +118,7 @@ export class ResetPassword extends Component {
                     </div>
                     <Button
                         type="button"
-                        classname="btn login-btn"
+                        classname="btn btn-primary"
                         label="Reset My Password"
                         onClick={this.onClickButtonReset}
                         disable={false}

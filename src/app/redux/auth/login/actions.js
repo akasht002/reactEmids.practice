@@ -2,7 +2,7 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import userManager from '../../../utils/userManager';
 import { onSetUserSuccess, checkUserData } from '../user/actions';
-import { USER_LOCALSTORAGE, OKTA } from '../../../constants/constants';
+import { USER_LOCALSTORAGE, OKTA, USER_CREDENTIALS } from '../../../constants/constants';
 import { LOGIN } from './bridge'
 import { encryptPassword } from '../../../utils/encryptPassword';
 import { ThirdPartyPost } from '../../../services/http';
@@ -62,6 +62,7 @@ export const login = (data) => async (dispatch, getState) => {
         Password: encryptPassword(data.Password),
         ApplicationType: 'SP'
     }
+    save(USER_CREDENTIALS, modelData)
     dispatch(startLoading());
     try {
         const resp = await ThirdPartyPost(`${API.getToken}`, modelData)
