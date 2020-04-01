@@ -17,8 +17,8 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
   );
 
   const [formData, setFormData] = useState({
-    UserName: 'Robert@mailinator.com',
-    Password: 'Emids@111'
+    UserName: '',
+    Password: ''
   });
 
   const [validation, setValidationResult] = useState({
