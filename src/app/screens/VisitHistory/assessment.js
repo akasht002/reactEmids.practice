@@ -8,7 +8,7 @@ export const Assessment = props => {
             {props.questionsList && props.questionsList.map((questionList, i) => {
                 if (questionList.answerTypeDescription === FEEDBACK_QUESTION_TYPE.CHOICEBASED) {
                     return (
-                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget">
+                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget pb-0">
                             <p className={'FeedbackQuestion'}>
                                 {i + 1}. {questionList.question}
                             </p>
@@ -38,7 +38,7 @@ export const Assessment = props => {
 
                 if (questionList.answerTypeDescription === FEEDBACK_QUESTION_TYPE.MULTISELECT) {
                     return (
-                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget">
+                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget pb-0">
                             <p className={'FeedbackQuestion'}>
                                 {i + 1}. {questionList.question}
                             </p>

@@ -233,7 +233,7 @@ export class Feedback extends Component {
                                                 let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.feedbackQuestionnaireId])
                                                 if (questionList.answerTypeDescription === 'ChoiceBased') {
                                                     return (
-                                                        <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
+                                                        <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget pb-0">
                                                             <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
                                                                 {i + 1}. {questionList.question}
                                                             </p>
@@ -273,7 +273,7 @@ export class Feedback extends Component {
 
                                                 if (questionList.answerTypeDescription === QUESTION_TYPE.MultiSelect) {
                                                     return (
-                                                        <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
+                                                        <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget pb-0">
                                                             <p className={'FeedbackQuestion'}>
                                                                 {i + 1}. {questionList.question}
                                                             </p>
@@ -288,7 +288,7 @@ export class Feedback extends Component {
                                                                         })
                                                                     });
                                                                     return (
-                                                                        <div className="form-check" key={answer.id}>
+                                                                        <div className="form-check pr-3" key={answer.id}>
                                                                             <label className='form-check-label'>
                                                                                 <input className="form-check-input"
                                                                                     id={answer.id}

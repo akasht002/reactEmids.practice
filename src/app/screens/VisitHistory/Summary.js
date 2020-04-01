@@ -283,7 +283,7 @@ export class VistSummary extends React.Component {
                   return (
                     <div
                       key={questionList.feedbackQuestionnaireId}
-                      className="FeedbackQuestionWidget"
+                      className="FeedbackQuestionWidget pb-0"
                     >
                       <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
                         {i + 1}. {questionList.question}
@@ -426,7 +426,7 @@ export class VistSummary extends React.Component {
             {this.props.VisitFeedback &&
               this.props.VisitFeedback.map((questionList, i) => {
                 return (
-                  <div className='FeedbackQuestionWidget' key={i}>
+                  <div className='FeedbackQuestionWidget pb-0' key={i}>
                     <p className={this.getQuestionHiglight(questionList.feedbackAlertStatus)}>
                       {i + 1}. {questionList.question}
                     </p>
