@@ -2,6 +2,7 @@ import React from 'react';
 import './printview.css'
 import moment from 'moment';
 import { FEEDBACK_QUESTION_TYPE, DATE_FORMATS } from '../../../constants/constants';
+import { formatContactNumberValue } from '../../../utils/validations';
 import Moment from 'react-moment';
 
 export class PrintView extends React.Component {
@@ -40,7 +41,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                                         </div>
                                         <div className="col min-101  border-top min-74">
                                             <p>DOB</p>
-                                            <span>{moment(patientDOB, DATE_FORMATS.yyyy_mm_dd).format(DATE_FORMATS.ddmmmyyy)}</span>
+                                            <span>{moment(patientDOB).format(DATE_FORMATS.ddmmmyyy)}</span>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -77,7 +78,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
 
                                     <div className="col-lg-12 min-101  col-md-12 border-top min-74">
                                         <p>Primary Phone Number</p>
-                                        <span>{patientPhoneNumber}</span>
+                                        <span>{formatContactNumberValue(patientPhoneNumber)}</span>
                                     </div>
 
                                 </div>
@@ -119,7 +120,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                             </div>
                             <div className="col">
                                 <span className="title-label">Percentage Of tasks</span>
-                                <span className="details-view-user">{this.getTaskPercentage(totalTaskCompleted, totalTask)}</span>
+                                <span className="details-view-user">{`${this.getTaskPercentage(totalTaskCompleted, totalTask)}%`}</span>
                             </div>
 
                         </div>
