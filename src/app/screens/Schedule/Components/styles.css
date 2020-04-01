@@ -1482,7 +1482,7 @@ span.ProfileIconSearch .search-block_SP {
   transform: rotate(45deg);
 }
 
-.edit-block {
+.edit-block, .schedule-listblock .view-icon  {
   width: 15%;
   display: inline-block;
   position: absolute;
@@ -1572,6 +1572,10 @@ span.ProfileIconSearch .search-block_SP {
   color: #444;
 }
 
+.view-schedule-block {
+  pointer-events: none;
+}
+
 .CustomPOS input.form-control::placeholder {
   color: #8c8c8c;
   font-size: 16px;
@@ -1594,6 +1598,15 @@ span.ProfileIconSearch .search-block_SP {
 
 .full-block-scheduleDate .react-datepicker__input-container input::-ms-input-placeholder {
   color: #8c8c8c;
+}
+
+.return-button {
+  pointer-events: visible;
+}
+  
+.ServiceCategory .slick-list .ServiceCatLink>span
+{
+    min-height:50px ;
 }
 
 /*IE_11_&_IE_10*/

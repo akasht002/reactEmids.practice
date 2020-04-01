@@ -460,6 +460,20 @@ li.ListItem.disabled{
     white-space: nowrap;
 }
 
+.visit-history-block .no-resultblock {
+    display: -ms-flexbox;
+    display: flex;
+    height: calc(100vh - 120px);
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.visit-history-block .no-resultblock+.cardBottom {
+    display: none;
+}
 
 /*IE_11_&_IE_10*/
 

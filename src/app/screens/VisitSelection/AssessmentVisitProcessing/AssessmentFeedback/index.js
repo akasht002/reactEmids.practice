@@ -18,6 +18,7 @@ import './style.css'
 import { isNull } from '../../../../utils/validations'
 import { QUESTION_TYPE } from '../../../../constants/constants'
 import { CustomTextArea } from "../../../../components/Base";
+import { removeValueFromString } from "../../../../utils/arrayUtility";
 export class AssessmentFeedback extends Component {
 
     constructor(props) {
@@ -48,7 +49,7 @@ export class AssessmentFeedback extends Component {
         } else {
             this.props.history.push(Path.visitServiceList)
         }
-    }    
+    }
 
     handelPatientProfile = (data) => {
         this.props.setPatient(data)
@@ -105,7 +106,7 @@ export class AssessmentFeedback extends Component {
             serviceProviderId: this.props.SummaryDetails.serviceProviderId,
             answers: this.selectedAnswers
         }
-        this.props.saveAnswers(data);
+        this.selectedAnswers.length > 0 && this.props.saveAnswers(data);
         this.props.goToSummary();
         this.setState({ isModalOpen: false })
     }
@@ -126,13 +127,47 @@ export class AssessmentFeedback extends Component {
         this.props.getVisitFeedBack(this.props.ServiceRequestVisitId)
     }
 
+    handleMultiSelected = (e, answer, id) => {
+        let selectedMultiAnswers = ''
+        if (e.target.checked) {
+            this.selectedAnswers.length > 0 ? this.selectedAnswers.map((item) => {
+                if (id === item.feedbackQuestionnaireId) {
+                    return selectedMultiAnswers = item.answerName + ", " + answer
+                } else {
+                    return selectedMultiAnswers = answer
+                }
+            }) : selectedMultiAnswers = answer
+        } else {
+            this.selectedAnswers.map((item) => {
+                if (id === item.feedbackQuestionnaireId) {
+                    return selectedMultiAnswers = removeValueFromString(item.answerName, answer)
+                }
+            })
+        }
+
+        let answers = {
+            feedbackQuestionnaireId: id,
+            answerName: selectedMultiAnswers,
+            id
+        }
+        let filteredData = this.selectedAnswers.filter((answer) => {
+            return answer.feedbackQuestionnaireId !== id
+        });
+        filteredData.push(answers);
+        this.selectedAnswers = filteredData;
+        this.setState({
+            checked: true
+        })
+        console.log('object2', this.selectedAnswers)
+    }
+
     render() {
         return (
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 {(this.state.isLoading || this.props.eligibilityIsLoading) && <Preloader />}
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='theme-primary m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Visit Processing</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}
@@ -149,13 +184,13 @@ export class AssessmentFeedback extends Component {
                                         {this.props.patientDetails.patient ?
                                             <span>
                                                 <img
-                                                     src={
+                                                    src={
                                                         this.props.patientDetails.patient && this.props.patientDetails.patient.imageString
                                                             ? this.props.patientDetails.patient.imageString
                                                             : require('../../../../assets/images/Blank_Profile_icon.png')
                                                     }
                                                     className="avatarImage avatarImageBorder" alt="patientImage" />
-                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} { this.props.patientDetails.patient.lastName}</i></span>
+                                                <i className='requestName'>{this.props.patientDetails.patient.firstName} {this.props.patientDetails.patient.lastName}</i></span>
                                             :
                                             ''
                                         }
@@ -227,6 +262,47 @@ export class AssessmentFeedback extends Component {
                                                     )
                                                 }
 
+                                                if (questionList.answerTypeDescription === QUESTION_TYPE.MultiSelect) {
+                                                    return (
+                                                        <div key={questionList.feedbackQuestionnaireId} className="FeedbackQuestionWidget">
+                                                            <p className={'FeedbackQuestion'}>
+                                                                {i + 1}. {questionList.question}
+                                                            </p>
+                                                            <div className='FeedbackAnswerWidget'>
+                                                                {questionList.answers.map((answer) => {
+                                                                    this.props.VisitFeedback.map((feedback) => {
+                                                                        let multipleCheckboxOption = feedback.selectedAnswer && feedback.selectedAnswer.split(',');
+                                                                        multipleCheckboxOption && multipleCheckboxOption.map((item) => {
+                                                                            if ((item).trim() === answer.answerName) {
+                                                                                answer.checked = true;
+                                                                            }
+                                                                        })
+                                                                    });
+                                                                    return (
+                                                                        <div className="form-check" key={answer.id}>
+                                                                            <label className='form-check-label'>
+                                                                                <input className="form-check-input"
+                                                                                    id={answer.id}
+                                                                                    type="checkbox"
+                                                                                    value={answer.answerName}
+                                                                                    name={questionList.feedbackQuestionnaireId}
+                                                                                    checked={answer.checked}
+                                                                                    disabled={this.props.VisitFeedback.length}
+                                                                                    onChange={(e) => {
+                                                                                        answer.checked = e.target.checked;
+                                                                                        this.handleMultiSelected(e, answer.answerName, questionList.feedbackQuestionnaireId)
+                                                                                    }}
+                                                                                />
+                                                                                {answer.answerName}
+                                                                                <span className='CheckboxIcon' /></label>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+
                                                 if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                                                     return (
                                                         <div className="FeedbackQuestionWidget" key={questionList.feedbackQuestionnaireId}>
@@ -260,13 +336,13 @@ export class AssessmentFeedback extends Component {
 
                                 </div>
                                 <div className='bottomButton'>
-                                {this.props.VisitFeedback.length > 0 ?
-                                    ''
-                                :
-                                    <div className='mr-auto'>
-                                         <a className='btn btn-outline-primary' onClick={this.onClickSkip}>Skip</a>
-                                    </div>
-                                }
+                                    {this.props.VisitFeedback.length > 0 ?
+                                        ''
+                                        :
+                                        <div className='mr-auto'>
+                                            <a className='btn btn-outline-primary' onClick={this.onClickSkip}>Skip</a>
+                                        </div>
+                                    }
                                     <div className='ml-auto'>
                                         <a className='btn btn-outline-primary mr-3' onClick={this.onPreviousClick}>Previous</a>
                                         <a className='btn btn-primary' onClick={this.onClickNext}>Next</a>

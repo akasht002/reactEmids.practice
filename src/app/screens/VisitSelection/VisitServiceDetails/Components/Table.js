@@ -15,11 +15,14 @@ import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 export const renderServiceTypeImages = serviceTypes => {
     let updatedServiceTypes = serviceTypes.length > 3 ? serviceTypes.slice(0, 2) : serviceTypes
     return (
-        updatedServiceTypes.slice(0, 3).map(type =>
-            <div>
-                {caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)  ? <span className={"status-view-btn theme-primary"}>{SCHEDULE_TYPES.assessment.name}</span> : <img src={require(`../../../../assets/ServiceTypes/${getServiceTypeImageBasedOnId(type.serviceTypeId)}`)} alt="Grooming" title={type.serviceTypeDescription} />}
-            </div>
-        ))
+        updatedServiceTypes.slice(0, 3).map(type => {
+           let isAssessment = caseInsensitiveComparer(type.serviceTypeDescription, SCHEDULE_TYPES.assessment.name)
+           let renderImageBasedOnScheduleType =  isAssessment ? getServiceTypeImageBasedOnId(type.serviceTypeDescription) : getServiceTypeImageBasedOnId(type.serviceTypeId)
+           let renderTitleBasedOnScheduleType = isAssessment ? SCHEDULE_TYPES.assessment.name : type.serviceTypeDescription
+            return (<div>
+                <img src={require(`../../../../assets/ServiceTypes/${renderImageBasedOnScheduleType}`)} alt="Grooming" title={renderTitleBasedOnScheduleType} /> 
+            </div>)
+        }))
 }
 
 export const getServiceTypeImageBasedOnId = serviceTypeId => {
@@ -54,6 +57,8 @@ export const renderStatusBasedOnVisitStatus = (visitStatusId, isPaymentModeEnabl
             return getEntityProcessingStatus(data)
         case VISIT_STATUS.cancelled.id:
             return VISIT_STATUS.cancelled.keyValue
+        case VISIT_PROCESSING_STATUS.entityProcess.id:
+            return VISIT_PROCESSING_STATUS.entityProcess.keyValue   
         default:
             return null
     }
@@ -131,7 +136,7 @@ export const Table = props => {
                             </td>
                             {
                                 isEntity &&
-                                <td className={item.visitStatusId === VISIT_STATUS.cancelled.id && 'disable-assign-provider'}>
+                                <td className={item.visitStatusId === VISIT_STATUS.cancelled.id ? 'disable-assign-provider' : ''}>
                                     <AssignServiceProvider
                                         visitList={item}
                                         getServicePlanVisitId={item.servicePlanVisitId}
@@ -153,9 +158,16 @@ export const Table = props => {
                             {!isEntity ?
                                 !props.canProcessVisit ? <td></td> :
                                 <td>
-                                    <div className="ScheduleRowButton"><button className="btn btn-outline-primary"
+                                    <div className="ScheduleRowButton">
+                                    {[VISIT_PROCESSING_STATUS.entityProcess.id].indexOf(item.visitStatusId) === -1 ?
+                                        <button className="btn btn-outline-primary"
                                         onClick={() => props.navigateToparticularPageBasedonId(item)}
-                                    >{renderStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}</button></div>
+                                    >{renderStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}</button>
+                                    :
+                                    <span className="status-view-btn theme-primary">
+                                                {renderEntityStatusBasedOnVisitStatus(item.visitStatusId, item.isPaymentModeEnabled)}
+                                    </span>}
+                                    </div>
                                 </td>
                                 :
                                 <td>

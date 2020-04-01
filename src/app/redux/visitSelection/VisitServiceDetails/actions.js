@@ -586,6 +586,7 @@ export function getSchedulesList(patientId) {
 
     let serviceProviderId = getUserInfo().serviceProviderId;
     let { servicePlanVisitId, visitDate, isEntityDashboard } = getState().visitSelectionState.VisitServiceDetailsState
+    dispatch(scheduleLoading(true));
     ServiceRequestGet(API.getSchedulesList + `${patientId}/${serviceProviderId}`)
       .then(resp => {
         let id = resp.data.map(item => item.planScheduleId);
@@ -603,11 +604,10 @@ export function getSchedulesList(patientId) {
         }
         dispatch(getPlanId(id))
         dispatch(getSchedulesListSuccess(resp.data))
-        dispatch(getVisitList(model));
-        dispatch(scheduleLoading(false));
+        dispatch(getVisitList(model));       
       })
       .catch(err => {
-        dispatch(scheduleLoading(false));
+       
         logError(err);
       })
   }
@@ -620,7 +620,7 @@ export function getVisitList(data) {
   return (dispatch, getState) => {
     let {servicePlanVisitId, visitDate, isEntityDashboard} = getState().visitSelectionState.VisitServiceDetailsState
     data.startDate = isEntityDashboard ? visitDate.startVisitDateForWeb : data.startDate
-    data.endDate = isEntityDashboard ? visitDate.endVisitDateForWeb : data.startDate
+    data.endDate = isEntityDashboard ? visitDate.endVisitDateForWeb : data.endDate
     !isEntityUser() &&
       (data.serviceRequestId = getState().visitSelectionState.VisitServiceDetailsState.ServiceRequestId)
     ServiceRequestPost(getVisitList, data)
@@ -630,10 +630,13 @@ export function getVisitList(data) {
         dispatch(getVisitListSuccess(resp.data))
         dispatch(getVisitListCount(data))
         !isEntityServiceProvider && dispatch(setActivePage(pageNumber))
+        dispatch(scheduleLoading(false));
       })
       .catch(err => {
+        dispatch(scheduleLoading(false));
         logError(err)
       })
+     
   }
 };
 

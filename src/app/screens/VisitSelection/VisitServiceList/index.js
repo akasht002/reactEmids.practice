@@ -114,7 +114,9 @@ export class VisitServiceList extends Component {
             })
             this.setState({
                 serviceStatus: serviceRequestStatus,
-                serviceRequestList: nextProps.ServiceStatus
+                serviceRequestList: nextProps.ServiceStatus,
+                activePage: this.props.pageNumber,
+                pageNumber: this.props.pageNumber,
             })
         }
         this.setState({
@@ -134,6 +136,7 @@ export class VisitServiceList extends Component {
         this.props.goToServiceRequestDetailsPage();
         this.props.setPatient(patientId)
         this.props.setActiveTab('1')
+        this.props.setPageNumber(this.props.pageNumber)
     }
 
     renderStatusClassName = (status) => {
@@ -430,7 +433,7 @@ export class VisitServiceList extends Component {
             serviceProviderId: getUserInfo().serviceProviderId,
             ToPage: SERVICE_REQUEST_PAGE_SIZE,
             searchKeyword:this.state.searchKeyword,
-            FromPage:  this.state.activePage
+            FromPage:  isdefault ? this.props.pageNumber:this.state.activePage
         }
         let statusData ;
         isdefault ? 
@@ -459,12 +462,12 @@ export class VisitServiceList extends Component {
         this.props.setPageNumber(1)
     }
 
-    closeSearch = () => {
+    closeSearch = async () => {
         let data = {
             pageNumber: DEFAULT_PAGE_NUMBER,
             pageSize: this.state.pageSize
         }
-        this.setState({
+        await this.setState({
             searchOpen: !this.state.searchOpen,
             searchKeyword: '',   
             activePage: DEFAULT_PAGE_NUMBER       
@@ -486,8 +489,10 @@ export class VisitServiceList extends Component {
         }
         else {
             let filterData = this.getFilterData(true);
-            this.props.getFilter(filterData);
-            this.props.getFilterDataCount(filterData);  
+            filterData.startDate = DEFAULT_FROM_DATE
+            filterData.endDate = DEFAULT_TO_DATE
+            await this.props.getFilter(filterData);
+            await this.props.getFilterDataCount(filterData);  
         }
     }
 

@@ -7,7 +7,7 @@ export const Item = props => {
     let serviceTypeId = props.item.serviceTypes && props.item.serviceTypes.length > 0 && props.item.serviceTypes[0].serviceTypeId;
     let serviceImage = getServiceTypeImage(serviceTypeId);
     return (
-        <div test-handelDetails="test-handelDetails" onClick={() => props.handelDetails(props.item.serviceRequestId)}>
+        <div test-handelDetails="test-handelDetails" onClick={() => props.handelDetails(props.item.serviceRequestId)} key={`serviceRequestId_${props.item.serviceRequestId}`}>
             <div class="card_view_block">
                 <div class={props.serviceRequestId === props.item.serviceRequestId ? "card_view_visit active-card-view theme-primary-light" : "card_view_visit"}>
                     <div class="visit_iconview">

@@ -11,7 +11,7 @@ import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty, formatContactNumber } from "../../utils/validations";
-import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip, unique } from '../../utils/arrayUtility';
+import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip, unique, compareArrays } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
     getServiceCategory,
@@ -36,7 +36,8 @@ import {
     setServiceTypeIds,
     checkServiceType,
     setselectedServices,
-    setServiceCategoryId
+    setServiceCategoryId,
+    setViewPlan
 } from '../../redux/schedule/actions';
 import { getDiffTime, getHourMin, getMinutes, getHours } from "../../utils/dateUtility";
 import './Components/styles.css'
@@ -93,7 +94,8 @@ export class Schedule extends Component {
             isAssessmentEdit: false,
             isDefaultAddress: false,
             planTypeAlertPopup: false,
-            monthlyOptions: 1
+            monthlyOptions: 1,
+            confirmationPopup: false
         }
         this.serviceTypes = this.props.services;
         this.categoryId = SERVICE_CATEGORY.adl.id;
@@ -117,10 +119,9 @@ export class Schedule extends Component {
         if (this.props.patientId) {
             await this.props.getServiceCategory(this.categoryId, [], this.props.isIndividualScheduleEdit);
             await this.props.getStates();
-            await this.props.getEntityServiceProviderList(data);
+            await this.props.getEntityServiceProviderList(data, this.props.individualSchedulesDetails.serviceProviderId);
             await this.props.getRecurringPattern();
             await this.props.getDays(this.props.individualSchedulesDetails.weekly && this.props.individualSchedulesDetails.weekly.days);
-            await this.props.getEntityServiceProviderList(data);
             await this.getPrimaryAddress();            
         } else {
             this.props.history.push(Path.visitServiceList)
@@ -130,6 +131,7 @@ export class Schedule extends Component {
     componentWillUnmount() {
         this.props.clearServiceDetails();
         this.props.getValidPatientAddressSuccess(false)
+        this.props.setViewPlan(false)
     }
 
     getPrimaryAddress = () => {
@@ -150,6 +152,7 @@ export class Schedule extends Component {
             }
 
             this.setState({
+                patientAddressId: validAddress.addressId,
                 addressType: validAddress.addressType,
                 selectedPOS: validAddress.addressId,
                 street: validAddress.street,
@@ -161,7 +164,6 @@ export class Schedule extends Component {
                 longitude: validAddress.longitude,
                 isDefaultAddress: true
             })
-
             this.address = {
                 addressType: validAddress.addressType,
                 streetAddress: validAddress.street,
@@ -232,15 +234,15 @@ export class Schedule extends Component {
 
     selectNew = () => {
         let data = this.props.individualSchedulesDetails;
-        this.categoryId = data.categoryId;
+        this.categoryId = data && data.serviceCategoryIds.length > 0 && data.serviceCategoryIds[0];
         this.serviceTypes = data.serviceTypes;
-        this.props.getServiceType(data.categoryId, data.serviceTypes)
+        this.props.getServiceType(this.categoryId, data.serviceTypes)
         data.monthly !== null && this.handleChangeSelectedDays(data.monthly.weekDayMonth && data.monthly.weekDayMonth.day);
         data.monthly !== null && this.handleChangeSelectedWeeks(data.monthly.weekDayMonth && data.monthly.weekDayMonth.week);
         this.setState({
             selectedPOS: data.patientAddressId,
             planType: SCHEDULE_TYPE_OPTIONS.standard,
-            checkedServiceCategoryId: data.categoryId,
+            checkedServiceCategoryId: this.categoryId,
             startDate: data.startDate,
             endDate: data.endDate,
             street: data.address && data.address.streetAddress,
@@ -276,7 +278,7 @@ export class Schedule extends Component {
             stateId: data.address && data.address.stateId,
             stateName: data.address && data.address.stateName,
             zip: data.address && data.address.zip,
-            latitude: data.address && data.address.latitue,
+            latitude: data.address && data.address.latitude,
             longitude: data.address && data.address.longitude,
             addressType: this.state.addressType
         }
@@ -786,6 +788,24 @@ export class Schedule extends Component {
     }
 
     savePlan = () => {
+        let { isIndividualScheduleEdit } = this.state
+
+        this.props.getValidPatientAddress(this.getSelectedData(), (isValid) => {
+            isValid && (isIndividualScheduleEdit ? this.openConfirmationPopup() : this.props.createSchedule(this.getSelectedData()))
+        });
+    }
+
+    openConfirmationPopup = async () => {
+      if(this.getSelectedData().isPlanEdit) {
+          await this.setState({ confirmationPopup: true})
+      }
+      else {
+        await this.props.editSchedule(this.getSelectedData()) 
+      }
+    }
+
+    getSelectedData = () => {
+
         let {
             startDate,
             endDate,
@@ -805,6 +825,10 @@ export class Schedule extends Component {
             selectedPOS
         } = this.state
 
+        let serviceTypeIds = unique(this.props.services,"serviceTypeId")
+        let serviceCategoryIds = unique(this.props.services,"serviceCategoryId")
+
+        let isPlanEdit = !compareArrays(serviceTypeIds, this.props.editServiceTypeIds) || !compareArrays(serviceCategoryIds, this.props.editServiceCategoryIds)
         let serviceTypes = this.props.services.map((types) => {
             let updatedTypes = omit(types, ['serviceCategoryId']);
             return updatedTypes
@@ -812,7 +836,7 @@ export class Schedule extends Component {
         let data = {
             planScheduleId: this.state.planScheduleId,
             name: "",
-            serviceCategoryIds: unique(this.props.services,"serviceCategoryId"),
+            serviceCategoryIds: serviceCategoryIds,
             startDate: startDate,
             endDate: isRecurring ? endDate : startDate,
             startTime: isIndividualScheduleEdit ? getHourMin(startTime) : this.formatedStartTime,
@@ -843,12 +867,15 @@ export class Schedule extends Component {
                     week: selectedWeeksId ? selectedWeeksId : null,
                     month: monthlyMonthsSecond ? monthlyMonthsSecond : null
                 }
-            }
+            },
+            isPlanEdit: isIndividualScheduleEdit && isPlanEdit
         }
+      return data
+    }
 
-        this.props.getValidPatientAddress(data, (isValid) => {
-            isValid && (isIndividualScheduleEdit ? this.props.editSchedule(data) : this.props.createSchedule(data))
-        });
+    onAcceptConfirmationPopup = async () => {
+        await this.setState({confirmationPopup: false})
+        await this.props.editSchedule(this.getSelectedData())
     }
 
     clickShowMore = () => {
@@ -882,19 +909,25 @@ export class Schedule extends Component {
         })
     };
 
+    closeConfirmationPopup = () => {
+        this.setState({ confirmationPopup: false })
+    }
+
     render() {
+        let renderBlockClass = this.props.isViewPlan ? 'view-schedule-block' : ''
+        let scheduleTitle = this.state.isIndividualScheduleEdit ? (this.props.isViewPlan ? 'View Schedule' : 'Edit Schedule') : 'Add New Schedule'
         return (
             <AsideScreenCover>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='theme-primary m-0'>Add New Schedule</h5>
+                        <h5 className='theme-primary m-0'>{scheduleTitle}</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2}
                     smoothScrolling
                     horizontal={false}
                     className='ProfileContentWidget add-new-scheduleblock'>
-                    <div className="full-block-view">
+                    <div className={`full-block-view ${renderBlockClass}`}>
                         <div className="Plan-typebar">
                             <PlanType
                                 options={PlanTypeData}
@@ -907,9 +940,9 @@ export class Schedule extends Component {
                         <Fragment>
                             {
                                 parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.standard &&
-                                <div className={this.state.isIndividualScheduleEdit ? 'Service-Cat-Typesblock Service-Cat-Typesblock-Edit' : "Service-Cat-Typesblock"}>
+                                <div className={"Service-Cat-Typesblock"}>
                                     <div>
-                                        <h2 className='ServicesTitle theme-primary'>Service Category</h2>
+                                        <h2 className='ServicesTitle theme-primary'>Service Category (Select one or multiple)</h2>
                                         <ServiceCategory
                                             categoryList={this.props.serviceCategoryList}
                                             handleServiceCategory={this.handleServiceCategory}
@@ -919,7 +952,7 @@ export class Schedule extends Component {
                                     </div>
                                     <div className="Service-typesTitle">
                                         <span>
-                                            <h2 className='ServicesTitle theme-primary'>Service Types</h2>
+                                            <h2 className='ServicesTitle theme-primary'>Service Types (Select one or multiple)</h2>
                                         </span>
                                         <span className="theme-primary">
                                             <h5 onClick={() => this.selectAllTypes(true)}>Select All</h5>
@@ -936,6 +969,9 @@ export class Schedule extends Component {
                                             onClickSave={this.state.onClickSave}
                                         />
                                     </div>
+                                    {this.state.isIndividualScheduleEdit &&
+                                        <span>Note: If any changes in the Service Category or Service Type will led to create a new plan for the individual.</span>
+                                    }
                                 </div>
                             }
                             <div className={"ServiceTypesWidget PostSR schdule-postblock " + (parseInt(this.state.planType, 10) === SCHEDULE_TYPE_OPTIONS.assessment && 'left-block1-shedule')}>
@@ -1014,7 +1050,7 @@ export class Schedule extends Component {
                             </div>
                             <div className="ServiceTypesWidget PostSR">
                                 <div className="top-search-blocksp">
-                                    <h2 className='ServicesTitle theme-primary'>Assign Service Provider</h2>
+                                    <h2 className='ServicesTitle theme-primary'>Assign Onboarded Service Provider</h2>
                                     <div className="search-block_SP">
                                         <Search
                                             toggleSearch={this.toggleSearch}
@@ -1044,7 +1080,7 @@ export class Schedule extends Component {
                                     </ul>}
                             </div>
                             <div className="ServiceTypesWidget PostSR">
-                                <h2 className='ServicesTitle theme-primary'>Assign one or more Caregivers</h2>
+                                <h2 className='ServicesTitle theme-primary'>Assign Other Service Provider</h2>
                                 <AdditionalInformation
                                     handleAdditionInfo={this.handleAdditionInfo}
                                     additionalDescription={this.state.additionalDescription}
@@ -1052,9 +1088,9 @@ export class Schedule extends Component {
                             </div>
 
                             <div className="ServiceTypesWidget PostSR bottom-blockbtn">
-                                <button onClick={this.onClickCancel} type="button" class="btn btn-outline-primary pull-left btn btn-secondary">Cancel</button>
+                               {!this.props.isViewPlan  && <button onClick={this.onClickCancel} type="button" class="btn btn-outline-primary pull-left btn btn-secondary">Cancel</button>}
                                 <div class="ml-auto">
-                                    <button onClick={this.checkValidAddress} type="button" class="btn btn-primary">Save</button>
+                                    <button onClick={this.props.isViewPlan ? this.onClickCancel : this.checkValidAddress} type="button" class="btn btn-primary return-button">{this.props.isViewPlan ? 'Return' : 'Save'}</button>
                                 </div>
                             </div>
                         </Fragment>
@@ -1082,6 +1118,15 @@ export class Schedule extends Component {
                         isOpen={this.state.planTypeAlertPopup}
                         closePopup={() => this.setState({ planTypeAlertPopup: false })}
                         onAcceptClick={() => this.handelTypeChange()}
+                    />
+                    <AlertPopup
+                        message='All the upcoming visit will be removed and a new revised plan will be created. Do you wish to continue?'
+                        OkButtonTitle={'Yes'}
+                        CancelButtonTitle={'No'}
+                        isCancel={true}
+                        isOpen={this.state.confirmationPopup}
+                        closePopup={this.closeConfirmationPopup}
+                        onAcceptClick={this.onAcceptConfirmationPopup}
                     />
                 </Scrollbars>
             </AsideScreenCover>
@@ -1115,7 +1160,9 @@ export function mapDispatchToProps(dispatch) {
         setServiceTypeIds: data => dispatch(setServiceTypeIds(data)),
         checkServiceType: (data, id, checked) => dispatch(checkServiceType(data, id, checked)),
         setselectedServices: (data,isChecked) => dispatch(setselectedServices(data,isChecked)),
-        setServiceCategoryId: data => dispatch(setServiceCategoryId(data))
+        setServiceCategoryId: data => dispatch(setServiceCategoryId(data)),
+        setViewPlan: data => dispatch(setViewPlan(data)),
+
     }
 }
 
@@ -1141,7 +1188,10 @@ export function mapStateToProps(state) {
         isAddNewScheduleClicked: state.visitSelectionState.VisitServiceDetailsState.isAddNewScheduleClicked,
         serviceCategoryIds: state.scheduleState.serviceCategoryIds,
         serviceTypeIds: state.scheduleState.serviceTypeIds,
-        services: state.scheduleState.services
+        services: state.scheduleState.services,
+        isViewPlan: scheduleState.isViewPlan,
+        editServiceCategoryIds: scheduleState.editServiceCategoryIds,
+        editServiceTypeIds: scheduleState.editServiceTypeIds
     }
 }
 

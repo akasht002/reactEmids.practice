@@ -22,7 +22,7 @@ import { uniqBy } from 'lodash'
 import { SERVICE_CATEGORY } from '../../constants/constants';
 import { logError } from '../../utils/logError';
 import { forEach, uniq } from 'lodash';
-import { removeArrayElements, removeArrayObjects, removeDuplicates } from '../../utils/arrayUtility';
+import { removeArrayElements, removeArrayObjects, removeDuplicates, unique } from '../../utils/arrayUtility';
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -348,11 +348,10 @@ export function getEntityServiceProviderListSearch(data, selectedESPId = null) {
 
 export function getRecurringPattern() {
     return (dispatch) => {
-        dispatch(startLoading());
-        return ServiceRequestGet(API.servicerequest + `LookUp/RecurringPattern`).then((resp) => {
+        return ServiceRequestGet(`${API.servicerequest}LookUp/RecurringPattern`).then((resp) => {
             dispatch(getRecurringPatternSuccess(resp.data))
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
     }
 };
@@ -360,7 +359,6 @@ export function getRecurringPattern() {
 export function getDays(selectedDaysId = []) {
     return (dispatch) => {
         let selectedDaysIds = selectedDaysId ? selectedDaysId : [];
-        dispatch(startLoading());
         return ServiceRequestGet(API.servicerequest + `LookUp/Days`).then((resp) => {
             let data = resp.data.map((value) => {
                 return ({
@@ -368,15 +366,15 @@ export function getDays(selectedDaysId = []) {
                     selected: selectedDaysIds.indexOf(value.id) !== -1
                 })
             })
-            dispatch(getDaysSuccess(data))
+            dispatch(getDaysSuccess(data))           
         }).catch((err) => {
-            dispatch(endLoading());
+            logError(err)
         })
     }
 };
 
 export function createSchedule(data) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(startLoading());
         let modelData = createScheduleModal(data)
         return ServiceRequestPost(API.createOrEditSchedule, modelData)
@@ -448,10 +446,13 @@ export function getIndividualSchedulesDetails(scheduleId) {
         dispatch(startLoading());
         let {services, serviceTypeIds} = getState().scheduleState
         return ServiceRequestGet(API.getIndividualSchedulesDetails + scheduleId).then((resp) => {
-            let serviceTypes = resp.data && resp.data.serviceTypes
+            let serviceTypes = resp.data && resp.data.serviceTypes.map(obj=> ({ ...obj, isChecked: true, selected: true }))
+            let serviceCategoryId = resp.data && resp.data.serviceCategoryIds
             dispatch(getIndividualSchedulesDetailsSuccess(resp.data));
             let updatedServiceTypeids = [...serviceTypeIds, ...serviceTypes.map(obj => obj.serviceTypeId)] 
             let updatedServices =  [...services, ...serviceTypes]
+            dispatch(setEditServiceCategoryIds(serviceCategoryId))
+            dispatch(setEditServiceTypeIds(updatedServiceTypeids))
             dispatch(setselectedServicesSuccess(updatedServices))
             dispatch(setServiceTypeIds(updatedServiceTypeids))
             dispatch(isScheduleEdit(true));
@@ -466,14 +467,16 @@ export function getIndividualSchedulesDetails(scheduleId) {
 export const setselectedServices = (data,isChecked) => {
     return (dispatch,getState) => {
         let services = getState().scheduleState.services
-        let updatedServices  = null ;
+        let updatedServices  = null;
+
         if(isChecked){
-            updatedServices = [...services,data]
+           updatedServices = [...services,data]
+
         }          
         else{
             updatedServices = services.filter(item => item.serviceTypeId !== data.serviceTypeId);
         }
-        dispatch(setselectedServicesSuccess(updatedServices))
+        dispatch(setselectedServicesSuccess(removeDuplicates(updatedServices)))
     } 
 }
 
@@ -510,6 +513,27 @@ export const setServiceCategoryId = data => {
 export const selectOrClearAllServiceTypeSuccess = data => {
     return {
         type: Schedule.getServiceTypeSuccess,
+        data
+    } 
+}
+
+export const setViewPlan = data => {
+    return {
+        type: Schedule.setViewPlanSuccess,
+        data
+    }  
+}
+
+export const setEditServiceTypeIds = data => {
+    return {
+        type: Schedule.setEditServiceTypeIds,
+        data
+    } 
+}
+
+export const setEditServiceCategoryIds = data => {
+    return {
+        type: Schedule.setEditServiceCategoryIds,
         data
     } 
 }

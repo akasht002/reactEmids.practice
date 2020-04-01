@@ -9,11 +9,11 @@ export const AssignServiceProvider = props => {
             <Fragment>
                 <div className="assign-sp-block">
                     {
-                        props.entityServiceProvidersList.map(item => {
+                        props.entityServiceProvidersList.map((item,index) => {
                             let espImage = item.thumbnail ? item.thumbnail : require('../../../../assets/images/Blank_Profile_icon.png');
                             return (
                                 <Fragment>
-                                    <div className="assign-SP-card">
+                                    <div className="assign-SP-card" key={`assign-SP-card_id${index}`}>
                                         <div className="card">
                                             <fieldset className={item.selected === true && 'selected-box-border'}>
                                                 <div className="checkblock">

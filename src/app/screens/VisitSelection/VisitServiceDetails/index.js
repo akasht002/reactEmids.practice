@@ -33,7 +33,7 @@ import {
   clearVisitList,
   getServiceRequestAssessmentQuestionByID
 } from '../../../redux/visitSelection/VisitServiceDetails/actions';
-import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule, getPatientAddress } from '../../../redux/schedule/actions';
+import { getIndividualSchedulesDetails, getAssessmentDetailsById, clearESPListSchedule, getPatientAddress, setViewPlan } from '../../../redux/schedule/actions';
 import {
   getServiceCategory,
   getServiceType,
@@ -154,7 +154,7 @@ export class VisitServiceDetails extends Component {
       if (this.props.ServiceRequestId === 0) {
         this.props.getSchedulesList(this.props.patientId)
       } else {
-        this.props.history.push(Path.visitServiceList)
+        getUserInfo().isEntityServiceProvider ? this.props.goToDashboard() : this.props.goToVisitList()
       }
     }
     this.props.getServiceCategory();
@@ -195,7 +195,7 @@ export class VisitServiceDetails extends Component {
     this.setState({
       isQuestionareModalOpen:false
     })
-  }
+  } 
 
   getVisitFirstAndLastDate = async() => {
     let getVisitDate = {
@@ -663,9 +663,13 @@ export class VisitServiceDetails extends Component {
   }
 
   goBackToParticularPage = () => {
-    if (this.props.isAddNewScheduleClicked) {
+    if (this.props.isAddNewScheduleClicked && !getUserInfo().isEntityServiceProvider) {
       this.props.goToVisitList()
-    } else {
+    }
+    else if(getUserInfo().isEntityServiceProvider) {
+      this.props.goToDashboard()
+    } 
+    else {
       this.props.goBack();
     }
   }
@@ -1035,6 +1039,7 @@ handleTextarea = (e) => {
                   highlightVisit={this.highlightVisit}
                   visitServiceDetails={this.props.VisitServiceDetails}
                   canProcessVisit={this.props.canProcessVisit}
+                  setViewPlan={this.props.setViewPlan}
                 />
                 <PatientProfileTab
                   showPhoneNumber={this.showPhoneNumber}
@@ -1204,7 +1209,9 @@ export function mapDispatchToProps(dispatch) {
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
     clearVisitList: () => dispatch(clearVisitList()),
     getServiceRequestAssessmentQuestionByID:data => dispatch(getServiceRequestAssessmentQuestionByID(data)),
-    getIsAnyEngagedServiceRequest: (data) => dispatch(getIsAnyEngagedServiceRequest(data))
+    getIsAnyEngagedServiceRequest: (data) => dispatch(getIsAnyEngagedServiceRequest(data)),
+    setViewPlan: data => dispatch(setViewPlan(data)),
+    goToDashboard: () => dispatch(push(Path.dashboard))
   }
 }
 

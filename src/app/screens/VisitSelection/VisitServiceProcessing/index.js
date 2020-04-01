@@ -27,7 +27,7 @@ export class VisitServiceProcessing extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle} test-VisitServiceProcessing='test-VisitServiceProcessing'>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='theme-primary m-0'>Service Requests <span>/ VID97531</span></h5>
+                        <h5 className='theme-primary m-0'>Visit Processing<span>/ VID97531</span></h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}

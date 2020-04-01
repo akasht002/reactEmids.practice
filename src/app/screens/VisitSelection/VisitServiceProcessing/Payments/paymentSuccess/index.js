@@ -54,7 +54,7 @@ export class PaymentSuccess extends Component {
             <AsideScreenCover isOpen={this.state.isOpen} toggle={this.toggle}>
                 <div className='ProfileHeaderWidget'>
                     <div className='ProfileHeaderTitle'>
-                        <h5 className='theme-primary m-0'>Service Requests</h5>
+                        <h5 className='theme-primary m-0'>Visit Processing</h5>
                     </div>
                 </div>
                 <Scrollbars speed={2} smoothScrolling={true} horizontal={false}

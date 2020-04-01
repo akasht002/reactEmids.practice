@@ -224,5 +224,6 @@ export const API = {
     getToken: 'OktaAccessibility/LogIn',
     validateSecurityAnswer: 'OktaAccessibility/AnswerRecoveryQuestion',
     getSecurityQuestion: 'OktaAccessibility/GetSecurityQuestion/',
-    getRefreshToken: 'OktaAccessibility/RefreshAccessToken'
+    getRefreshToken: 'OktaAccessibility/RefreshAccessToken',
+    getUserFeedbackInfo:'feedback/FeedbackDetails/'
 }

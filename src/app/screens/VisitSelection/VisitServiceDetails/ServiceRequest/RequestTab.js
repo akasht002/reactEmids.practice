@@ -15,11 +15,11 @@ export const RequestTab = props => {
         return <Preloader />
     }else{
         return (
-            <TabPane tabId='1' className='TabBody'>
-                <div class="tab_content_block">
-                    <div class="row">
+            <TabPane tabId='1' className='TabBody' key={`status_id${props.VisitServiceDetails.serviceRequestId}`}>
+                <div class="tab_content_block" key={`tab_content_block_id${props.VisitServiceDetails.serviceRequestId}`}>
+                    <div class="row" key={`row_id${props.VisitServiceDetails.serviceRequestId}`}>
                         {isEntity && props.VisitServiceDetails.statusId !== SERVICE_REQ_STATUS.CANCELLED &&
-                            <div class="left-block-view">
+                            <div class="left-block-view" key={`left-block-view_id${props.VisitServiceDetails.serviceRequestId}`}>
                                 <List
                                     list={props.visitServiceList}
                                     handelDetails={props.handelDetails}

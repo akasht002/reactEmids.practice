@@ -18,5 +18,8 @@ export const Schedule = {
     clearServiceDetails: 'clearServiceDetails/Schedule',
     selectedServices: 'selectedServices/Schedule',
     setServiceTypeIds: 'setServiceTypeIds/Schedule',
-    setServiceCategoryId: 'setServiceCategoryId/Schedule'
+    setServiceCategoryId: 'setServiceCategoryId/Schedule',
+    setViewPlanSuccess: 'setViewPlanSuccess/Schedule',
+    setEditServiceTypeIds: 'setEditServiceTypeIds/Schedule',
+    setEditServiceCategoryIds: 'setEditServiceCategoryIds/Schedule'
 };

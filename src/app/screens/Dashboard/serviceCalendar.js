@@ -257,7 +257,7 @@ export class ServiceCalendar extends Component {
 
   componentDidMount() {
     this.initialCall();
-    this.props.getEntityServiceProviderList();
+    getUserInfo().isEntityServiceProvider && this.props.getEntityServiceProviderList();
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
   }
@@ -515,7 +515,7 @@ export class ServiceCalendar extends Component {
             <span className="dateElement">{daysMapping.day.format("D")}</span>
           </label>
           <div className="eventIndicator">
-            <ShowIndicator count={data < 2 ? data : 3} />
+            <ShowIndicator count={data <= 2 ? data : 3} />
           </div>
         </div>
       );

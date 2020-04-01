@@ -17,7 +17,8 @@ import {
   getHistoryListCount,
   getAllPatientForServiceProviders,
   clearPatientForServiceProviders,
-  getAssessmentQuestionsList
+  getAssessmentQuestionsList,
+  getUserFeedbackInfo
 } from '../../redux/visitHistory/VisitServiceDetails/actions'
 import { VisitList } from './VisitList'
 import Filter from './VisitHistoryFilter'
@@ -28,11 +29,13 @@ import './visitList.css'
 import '../../styles/SelectDropdown.css'
 import { push } from '../../redux/navigation/actions';
 import { Path } from "../../routes";
+import { PAGE_NO } from "../../constants/constants";
 import { getTimeZoneOffset } from '../../utils/dateUtility';
 import { getServiceRequestId, saveScheduleType, getPaymentAvailability }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
 import {DEFAULT_FROM_DATE, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, VISIT_TYPE} from '../../constants/constants'
 import { setServiceProviderFeedbackTab } from '../../redux/dashboard/EntityDashboard/ServiceProvider/actions';
+import { setPageNumber } from '../../redux/visitSelection/VisitServiceList/actions';
 export class VisitHistory extends Component {
   constructor(props) {
     super(props)
@@ -65,6 +68,7 @@ export class VisitHistory extends Component {
     this.props.getHistoryListCount()
     this.props.setServiceProviderFeedbackTab(true)
     this.props.getPaymentAvailability()
+    this.props.setPageNumber(PAGE_NO)
   }
 
   getModel = (data) => {
@@ -112,6 +116,7 @@ export class VisitHistory extends Component {
     }
     if(data.visitTypeId === VISIT_TYPE.assessment){
       this.props.getAssessmentQuestionsList(model)
+      this.props.getUserFeedbackInfo(model)
     }
   }
 
@@ -265,7 +270,7 @@ export class VisitHistory extends Component {
           speed={2}
           smoothScrolling
           horizontal={false}
-          className='ProfileContentWidget'
+          className='ProfileContentWidget visit-history-block'
         >
           <VisitList
             visitHistoryList={this.props.VisitServiceHistory}
@@ -330,7 +335,9 @@ export function mapDispatchToProps(dispatch) {
     saveScheduleType: (data) => dispatch(saveScheduleType(data)),
     getAssessmentQuestionsList: data => dispatch(getAssessmentQuestionsList(data)),
     setServiceProviderFeedbackTab: data => dispatch(setServiceProviderFeedbackTab(data)),
-    getPaymentAvailability: () => dispatch(getPaymentAvailability())
+    getPaymentAvailability: () => dispatch(getPaymentAvailability()),
+    getUserFeedbackInfo: (data) => dispatch(getUserFeedbackInfo(data)),
+    setPageNumber: data => dispatch(setPageNumber(data))
   }
 }
 

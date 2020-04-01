@@ -12,7 +12,8 @@ import { updateCountList, checkDataCount } from '../utilActions';
 import { ENTITY_SR_STATUS, RECURRING_OPTIONS, entityDashboardTab, ENTITY_SV_STATUS } from '../../../../constants/constants';
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
-import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/actions';
+import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/bridge';
+import { SERVICE_STATUS } from '../../../constants/constants'
 
 export const setActiveSubTab = data => {
   return {
@@ -140,7 +141,10 @@ export function getServiceRequestStatus() {
     let get = serviceRequestTab ? ServiceRequestGet(API.getServiceStatus) : Get(API.getServiceProviderVisitStatus)
     return get
       .then(resp => {
-        dispatch(getServiceRequestStatusSuccess(getUpdatedStatusForSrSv(resp.data, activeTab, filterApplied)))
+        let modifiedData = resp.data && resp.data.map( (value) => 
+                                caseInsensitiveComparer(value.name , SERVICE_STATUS.OverDue.oldValue) ? {...value,name: SERVICE_STATUS.OverDue.newValue} : value 
+                              )
+        dispatch(getServiceRequestStatusSuccess(getUpdatedStatusForSrSv(modifiedData, activeTab, filterApplied)))
       })
       .catch(err => {
         logError(err)

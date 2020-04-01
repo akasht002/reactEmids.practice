@@ -189,7 +189,7 @@
 .service_status_name {
     justify-content: left;
     vertical-align: middle;
-    width: 58%;
+    width: 68%;
     overflow: hidden;
     white-space: nowrap;
     -o-text-overflow: ellipsis;
@@ -214,7 +214,7 @@
 .status_view_arrow {
     justify-content:flex-end;
     vertical-align: middle;
-    width: 30%;
+    width: 20%;
     align-items: center;
     display: flex;
 }
@@ -613,7 +613,7 @@
     margin-top: 0px;
 }
 
-.edit-block {
+.edit-block, .schedule-listblock .view-icon {
     width: 10% !important;
     margin-top: -3px !important;
     z-index: 9999;
@@ -624,8 +624,8 @@
     padding:10px;
 }
 
-.edit-block button {
-    background: url("../../../assets/images/edit-new.png") no-repeat center;
+.edit-block button,
+.view-icon button {
     width: 16px;
     height: 16px !important;
     display: block;
@@ -637,6 +637,17 @@
     z-index: 10;
     cursor: pointer;
     padding: 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color:transparent;
+}
+
+.view-icon button {
+    background-image: url('../../../assets/images/view.svg');
+}
+
+.edit-block button {
+    background-image: url("../../../assets/images/edit-new.png");
 }
 
 .visit-srq-slider .ServiceTypesSlider .slick-list .slick-slide .ServiceTypeList {

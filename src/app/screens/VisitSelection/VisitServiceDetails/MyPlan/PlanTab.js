@@ -31,7 +31,7 @@ export const PlanTab = props => {
                         }
                         <div className={`col-lg-8 col-md-8 right-customewidth ${renderPLanDetailsClass}`}>
                             <div className="pull-left">
-                                <span className="title-view theme-primary">Visit(s)</span>
+                                <span className="title-view theme-primary">Upcoming Visit(s)</span>
                             </div>
                             <div className="pull-right">
                                 <div className="full-block filter-block">                            
@@ -55,6 +55,7 @@ export const PlanTab = props => {
                                         handelEditShedule={props.handelEditShedule}
                                         handelEditAssessment={props.handelEditAssessment}
                                         planScheduleId={props.planScheduleId}
+                                        setViewPlan={props.setViewPlan}
                                     />
                                 </div>
                             </div>}

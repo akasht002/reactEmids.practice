@@ -176,7 +176,7 @@ export const serviceTypesImage = {
     14: 'G&N Grocery Delivery.svg',
     15: 'G&N Meal Delivery.svg',
     16: 'Transportation - General Transportation.svg',
-    // 17: 'HAH - Shopping.svg',
+    'AssessMent': 'assessment-icon.png'
 }
 
 export const DEFAULT_PAGE_SIZE = 10;
@@ -239,7 +239,8 @@ export const MMMDD_FORMAT = "MMM DD";
 
 export const QUESTION_TYPE = {
     ChoiceBased: 'ChoiceBased',
-    OpenText: 'OpenText'
+    OpenText: 'OpenText',
+    MultiSelect: 'MultiSelect'
 }
 
 export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
@@ -268,7 +269,8 @@ export const DATE_FORMATS = {
     hh_mm_a: 'hh:mm a',
     visitFormat:'ddd, DD MMM',
     mm_dd_yyy: 'MM/DD/YYYY',
-    mmmyyy: 'MMM YYYY'
+    mmmyyy: 'MMM YYYY',
+    ddmmmyyy:"DD MMM, YYYY"
 }
 
 
@@ -511,7 +513,7 @@ export const VISIT_PROCESSING_STATUS = {
         "keyValue": "Payment Pending"
     },
     entityProcess: {
-        "id": 119,
+        "id": 120,
         "keyValue": "Entity Process"
     }
 }
@@ -531,7 +533,7 @@ export const FilterActiveTab = {
 
 export const ENTITY_SR_STATUS = ['Open', 'Engaged', 'Cancelled'];
 
-export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'OverDue'];
+export const ENTITY_SV_STATUS = ['Scheduled', 'Completed', 'Cancelled', 'InProgress', 'Over Due', 'Entity Process'];
 
 export const RECURRING_OPTIONS = [31, 32]
 
@@ -551,7 +553,8 @@ export const SCHEDULE_TYPE = {
 
 export const FEEDBACK_QUESTION_TYPE = {
     CHOICEBASED: 'ChoiceBased',
-    OPENTEXT: 'OpenText'
+    OPENTEXT: 'OpenText',
+    MULTISELECT: 'MultiSelect'
 }
 
 export const SCHEDULE_RECURRENCE_FIELD = {
