@@ -326,7 +326,7 @@ export class Assessment extends Component {
                                                 let showError = this.state.isSubmitButtonClicked && isNull(this.normalizedSelectedAnswers[questionList.assessmentQuestionnaireId])
                                                 if (questionList.answerTypeDescription === QUESTION_TYPE.ChoiceBased) {
                                                     return (
-                                                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget">
+                                                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget pb-0">
                                                             <p className={showError ? 'alertedQuestionnaire' : 'FeedbackQuestion'}>
                                                                 {i + 1}. {questionList.question}
                                                             </p>
@@ -363,7 +363,7 @@ export class Assessment extends Component {
 
                                                 if (questionList.answerTypeDescription === QUESTION_TYPE.MultiSelect) {
                                                     return (
-                                                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget">
+                                                        <div key={questionList.assessmentQuestionnaireId} className="FeedbackQuestionWidget pb-0">
                                                             <p className={'FeedbackQuestion'}>
                                                                 {i + 1}. {questionList.question}
                                                             </p>
@@ -403,7 +403,7 @@ export class Assessment extends Component {
 
                                                 if (questionList.answerTypeDescription === QUESTION_TYPE.OpenText) {
                                                     return (
-                                                        <div className="FeedbackQuestionWidget" key={questionList.assessmentQuestionnaireId}>
+                                                        <div className="FeedbackQuestionWidget pb-0" key={questionList.assessmentQuestionnaireId}>
                                                             <p className="FeedbackQuestion">{i + 1}. {questionList.question}</p>
                                                             <div className='FeedbackAnswerWidget'>
                                                                 {questionList.answers.map((answer, i) => {

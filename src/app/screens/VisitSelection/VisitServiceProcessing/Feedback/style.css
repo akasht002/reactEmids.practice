@@ -79,46 +79,10 @@
     margin: 0 0 15px 0;
 }
 
-/* .FeedbackAnswerWidget .form-radio .RadioBoxIcon{
-    left: 35px;
-} */
-
 .FeedbackAnswerWidget .feedbackForm{
     width: 100%;
     margin-bottom: 20px;
     padding: 0 0 0 15px;
-}
-
-@media (max-width: 1024px){
-    .rightTimerContainer div.FeedbackTimer{
-        top: 20px;
-    }
-
-    .FeedbackTimer .TimerContent{
-        top: 0;
-    }
-}
-
-@media (max-width: 768px){
-    .FeedbackTimer span.TimerStarted{
-        padding: 0;
-    }
-
-    .rightTimerWidget.running{
-        padding: 0;
-    }
-
-    .FeedbackAnswerWidget .form-radio{
-        padding: 0;
-    }
-
-    /* .FeedbackAnswerWidget .form-radio .RadioBoxIcon {
-        left: 20px;
-    } */
-
-    .FeedbackAnswerWidget .feedbackForm {
-        padding: 0;
-    }
 }
 
 .alertedQuestionnaire{

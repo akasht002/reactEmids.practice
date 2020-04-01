@@ -12,7 +12,7 @@ export const Questions = (props) => {
                     
                     if (questionList.answerType === QUESTION_TYPE.ChoiceBased) {
                         return (
-                            <div key={"questionList" + i} className="FeedbackQuestionWidget">
+                            <div key={"questionList" + i} className="FeedbackQuestionWidget pb-0">
                                 <p className={ 'FeedbackQuestion'}>
                                     {i + 1}. {questionList.question}
                                 </p>
@@ -43,7 +43,7 @@ export const Questions = (props) => {
 
                     if (questionList.answerType === QUESTION_TYPE.MultiSelect) {
                         return (
-                            <div key={"questionList" + i} className="FeedbackQuestionWidget">
+                            <div key={"questionList" + i} className="FeedbackQuestionWidget pb-0">
                                 <p className={'FeedbackQuestion'}>
                                     {i + 1}. {questionList.question}
                                 </p>
@@ -56,7 +56,7 @@ export const Questions = (props) => {
                                             }
                                         })
                                         return (
-                                            <div className="form-check" key={answer.id}>
+                                            <div className="form-check pr-3" key={answer.id}>
                                                 <label className='form-check-label'>
                                                     <input className="form-check-input"
                                                         id={questionList.serviceRequestAssessmentQuestionnaireId}
