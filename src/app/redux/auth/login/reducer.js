@@ -26,7 +26,7 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 error: {
-                    message: '',
+                    message: action.data,
                     code: ''
                 }
             };

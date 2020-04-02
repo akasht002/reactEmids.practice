@@ -2,8 +2,17 @@ import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';
 import userManager from '../../../utils/userManager';
 import { onSetUserSuccess, checkUserData } from '../user/actions';
-import { USER_LOCALSTORAGE } from '../../../constants/constants';
+import { USER_LOCALSTORAGE, OKTA, USER_CREDENTIALS } from '../../../constants/constants';
 import { LOGIN } from './bridge'
+import { encryptPassword } from '../../../utils/encryptPassword';
+import { ThirdPartyPost } from '../../../services/http';
+import { API } from '../../../services/api';
+import { loadData, save } from '../../../utils/storage';
+import { userFound } from 'redux-oidc'
+import { startLoading, endLoading } from '../../loading/actions';
+import { logError } from '../../../utils/logError';
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
+import { API_STATUS_CODE } from '../../../constants/status_code';
 
 export const loginStart = () => {
     return {
@@ -17,22 +26,22 @@ export const loginEnd = () => {
     }
 }
 
-export const loginFail = () => {
+export const loginFail = (data) => {
     return {
-        type: LOGIN.failed
+        type: LOGIN.failed,
+        data
     }
 }
 
-export function onLoginSuccess(data){
+export function onLoginSuccess(data) {
     return (dispatch) => {
         dispatch(onSetUserSuccess(data));
     }
 }
 
-export function onLoginFail(){
+export function onLoginFail(data) {
     return (dispatch) => {
-        dispatch(loginFail());
-        dispatch(push(Path.root));
+        dispatch(loginFail(data));
     }
 }
 
@@ -48,3 +57,42 @@ export function onLogin() {
         }
     }
 }
+
+export const login = (data) => async (dispatch, getState) => {
+    let modelData = {
+        UserName: data.UserName,
+        Password: encryptPassword(data.Password),
+        ApplicationType: 'SP'
+    }
+    save(USER_CREDENTIALS, modelData)
+    dispatch(startLoading());
+    try {
+        const resp = await ThirdPartyPost(`${API.getToken}`, modelData)
+        save(OKTA.tokenStorage, resp.data)
+        let localStorageData = loadData(OKTA.tokenStorage);
+        if (localStorageData && caseInsensitiveComparer(localStorageData.data.status, API_STATUS_CODE.success)) {
+            const { idToken, accessToken, expiresIn } = localStorageData.data
+            let loginResponse = {
+                access_token: accessToken,
+                expires_at: expiresIn,
+                id_token: idToken,
+                profile: {
+                    amr: idToken.amr,
+                    auth_time: idToken.auth_time,
+                    idp: idToken.idp,
+                    sub: idToken.preferred_username,
+                    scope: accessToken.scopes,
+                    token_type: accessToken.tokenType
+                }
+            }
+            dispatch(userFound(loginResponse))
+            dispatch(onLoginSuccess(loginResponse))
+        } else {
+            dispatch(onLoginFail(localStorageData.data.status))
+        }
+    } catch (error) {
+        logError(error)
+    } finally {
+        dispatch(endLoading());
+    }
+}; 

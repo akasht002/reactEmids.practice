@@ -1,10 +1,10 @@
 import { API } from '../../../services/api';
 import { Get, CareTeamGet, ThirdPartyGet, OktaGet } from '../../../services/http';
 import { push } from '../../navigation/actions';
-import { save } from '../../../utils/storage';
+import { save, loadData } from '../../../utils/storage';
 import { remove } from '../../offline/actions';
 import { Path } from '../../../routes';
-import { USER_LOCALSTORAGE, ENTITY_USER, LOCALSTORAGE_KEYS } from '../../../constants/constants';
+import { USER_LOCALSTORAGE, ENTITY_USER, LOCALSTORAGE_KEYS, OKTA } from '../../../constants/constants';
 import userManager from '../../../utils/userManager';
 import { objectCreationRoles } from '../../../utils/roleUtility';
 import { startLoading, endLoading } from '../../loading/actions';
@@ -170,8 +170,9 @@ export const getThresholdRadius = () => async (dispatch) => {
 };
 
 export const getCurrentSession = () => async (dispatch) => {
+    let localStorageData = loadData(OKTA.tokenStorage);
     try {
-        const resp = await OktaGet(API.oktaSession);
+        const resp = await ThirdPartyGet(API.oktaSession + localStorageData.data.sessionId);
         if (resp && resp.data.expiresAt) {
             const momentUtcNow = moment.utc();
             const momentUtcExp = moment.utc(resp.data.expiresAt);

@@ -94,7 +94,7 @@ export class ResetPassword extends Component {
                             autoComplete="off"
                             type="password"
                             placeholder="New Password"
-                            className={"passwordField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
+                            className={"emailField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
                             value={this.state.pass}
                             textChange={this.onChangeNewPassword}
                             onBlur={this.validatePassword}
@@ -108,7 +108,7 @@ export class ResetPassword extends Component {
                             autoComplete="off"
                             type="password"
                             placeholder="Retype New Password"
-                            className={"passwordField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
+                            className={"emailField " + (this.props.resetPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
                             value={this.state.confirmPass}
                             textChange={this.onChangeConfirmPassword}
                             onBlur={this.validatePassword}
@@ -118,7 +118,7 @@ export class ResetPassword extends Component {
                     </div>
                     <Button
                         type="button"
-                        classname="btn login-btn"
+                        classname="btn btn-primary"
                         label="Reset My Password"
                         onClick={this.onClickButtonReset}
                         disable={false}
@@ -134,6 +134,9 @@ export class ResetPassword extends Component {
                     }
                     {this.props.resetPasswordStatus &&
                         <p className="text-danger d-block mt-4 mb-2">Invalid Password. The new password cannot be among the last 6 passwords used.</p>
+                    }
+                    {this.props.errorMessage &&
+                        <p className="text-danger">{this.props.errorMessage}</p>
                     }
                 </LoginCover> :
                 <LoginCover isLoading={this.props.isLoading} test-reset-noBody='test-reset-noBody'>
@@ -167,7 +170,8 @@ export function mapStateToProps(state) {
         userName: state.authState.resetPasswordState.emailId,
         resetPasswordSuccess: state.authState.resetPasswordState.resetPasswordSuccess,
         resetPasswordLinkStatus: state.authState.resetPasswordState.resetPasswordLinkStatus,
-        resetPasswordStatus: state.authState.resetPasswordState.resetPasswordStatus
+        resetPasswordStatus: state.authState.resetPasswordState.resetPasswordStatus,
+        errorMessage: state.authState.resetPasswordState.errorMessage
     }
 }
 

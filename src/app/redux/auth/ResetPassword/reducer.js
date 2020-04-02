@@ -1,5 +1,5 @@
 import { ResetPassword } from './bridge'
-import {RESPONSE_STATUS} from '../../../redux/constants/constants';
+import { RESPONSE_STATUS } from '../../../redux/constants/constants';
 
 const defaultState = {
     userId: null,
@@ -11,7 +11,8 @@ const defaultState = {
     getEmailIdSuccess: false,
     getEmailIdError: false,
     resetPasswordStatus: false,
-    resetPasswordLinkStatus: ''
+    resetPasswordLinkStatus: '',
+    errorMessage: ''
 };
 
 const resetPasswordState = (state = defaultState, action) => {
@@ -53,8 +54,14 @@ const resetPasswordState = (state = defaultState, action) => {
             };
         case ResetPassword.formDirty:
             return {
-               ...state,
-               resetPasswordStatus: false 
+                ...state,
+                resetPasswordStatus: false,
+                errorMessage: ''
+            };
+        case ResetPassword.resetPasswordErrorMessage:
+            return {
+                ...state,
+                errorMessage: action.data
             };
         default:
             return state;

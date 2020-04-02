@@ -1,55 +1,117 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Input, Button, LoginCover } from '../../../components'
+import { withRouter } from 'react-router';
+import { connect } from "react-redux";
+import { login, loginFail } from '../../../redux/auth/login/actions';
+import { checkEmail, checkEmpty } from '../../../utils/validations';
+import { Path } from '../../../routes';
+import { push } from '../../../redux/navigation/actions';
+import { API_STATUS_CODE } from '../../../constants/status_code';
 
-import { onLogin } from '../../../redux/auth/login/actions' 
-import { ScreenCover, CoreoWizScreen, Button,Scrollbars } from '../../../components';
-import userManager from '../../../utils/userManager';
+const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) => {
 
+  useEffect(() => {
+    loginFail(API_STATUS_CODE.success)
+  },
+    []
+  );
 
+  const [formData, setFormData] = useState({
+    UserName: '',
+    Password: ''
+  });
 
-export class Login extends PureComponent {
-  
-  onBtnPress = () => {
-    userManager.signinRedirect();
-  } 
+  const [validation, setValidationResult] = useState({
+    onClickSubmit: false,
+    Password: false,
+    UserName: false
+  });
 
-  render() {
-    return (
-      <ScreenCover onPress={this.onBtnPress}>
-        <CoreoWizScreen>
-          <Scrollbars className="container-fluid mainContent px-5 d-flex align-items-start flex-column">
-            <div className="row d-block">
-              <div className="col-md-12 py-5 px-0">
-                <h4 className="font-weight-normal mb-4">
-                sdfsdfsdf
-                <Button
-                      type="submit"
-                      classname="btn btn-primary"
-                      label="Send Invitation"
-                      onClick={this.onBtnPress}/>
-                  {this.props.setPasswordLinkStatus === 'Onboarded' && 'User is already registered please Login to proceed'}
-                  {this.props.setPasswordLinkStatus === 'Invalid' && 'Link is not active'}
-                </h4>
-              </div>
-            </div>
-          </Scrollbars>
-        </CoreoWizScreen>
-      </ScreenCover>
-    );
+  const onChange = (e) => {
+    loginFail(API_STATUS_CODE.success)
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+    setValidationResult({
+      onClickSubmit: false
+    })
   }
+
+  const onSubmit = () => {
+    let isValidEmail = checkEmail(formData.UserName)
+    let isVaildPassword = !checkEmpty(formData.Password)
+    setValidationResult({ UserName: isValidEmail, Password: isVaildPassword, onClickSubmit: true });
+    isValidEmail && isVaildPassword && login(formData)
+  }
+
+  return (
+    <LoginCover isLoading={isLoading} test-forget-body='test-forget-body'>
+      <h3>Welcome to CoreoHome</h3>
+      <div className="form-group  text-center login-body p-0 m-0">
+        <Input
+          name="UserName"
+          value={formData.UserName}
+          autoComplete="off"
+          required="required"
+          type="email"
+          placeholder="Enter email address"
+          maxlength={100}
+          className={'emailField ' + (validation.onClickSubmit && !validation.UserName && 'inputFailure')}
+          textChange={(e) => onChange(e)}
+        />
+        <p className='text-danger d-block OnboardingAlert'>
+          {validation.onClickSubmit && !validation.UserName && 'Please enter a valid Email Address(e.g. abc@xyz.com)'}
+        </p>
+      </div>
+      <div className="form-group text-center login-body p-0 m-0">
+        <Input
+          name="Password"
+          value={formData.Password}
+          autoComplete="off"
+          required="required"
+          type="password"
+          placeholder="Enter password"
+          maxlength={100}
+          className={'emailField ' + (validation.onClickSubmit && !validation.Password && 'inputFailure')}
+          textChange={(e) => onChange(e)}
+        />
+        <p className='text-danger d-block OnboardingAlert'>
+          {validation.onClickSubmit && !validation.Password && 'Please enter password'}
+        </p>
+      </div>
+      <p className='text-danger d-block OnboardingAlert'>
+        {errorMessage !== API_STATUS_CODE.success && errorMessage}
+      </p>
+      <Button
+        type="button"
+        classname="btn btn-primary send-btn"
+        label="Login"
+        onClick={onSubmit}
+        disable={false}
+      />
+      <p><span className="login" onClick={forgotPassword}>Forget Password</span></p>
+
+    </LoginCover>
+  );
+};
+
+Login.propTypes = {
 }
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLogin: () => dispatch(onLogin())
+    login: (data) => dispatch(login(data)),
+    forgotPassword: () => dispatch(push(Path.forgetPassword)),
+    loginFail: (data) => dispatch(loginFail(data))
   }
-}
+};
 
 export function mapStateToProps(state) {
   return {
-    setPasswordLinkStatus: state.onboardingState.setPasswordState.setPasswordStatus
-  }
-}
+    isLoading: state.loadingState.isLoading,
+    errorMessage: state.authState.loginState.error.message
+  };
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

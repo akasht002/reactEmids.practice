@@ -2,10 +2,11 @@ import axios from 'axios'
 import { store } from '../redux/store'
 import {getTimeZoneOffset} from '../utils/dateUtility';
 import { Auth } from '@okta/okta-react';
-import {loadData} from '../utils/storage'
+import {loadData, save} from '../utils/storage'
 import { isEmpty } from '../utils/validations'
 import { createBrowserHistory } from 'history'
-import { REFRESH_TOKEN } from '../constants/constants';
+import { REFRESH_TOKEN, OKTA, USER_CREDENTIALS } from '../constants/constants';
+import { API } from './api';
 
 const history = createBrowserHistory();
 
@@ -22,53 +23,51 @@ export const oktaURL = process.env.REACT_APP_OKTA_URL;
 export const oktaIssuer = process.env.REACT_APP_OKTA_ISSUER;
 export const oktaClientId = process.env.REACT_APP_OKTA_CLIENTID
 
-const auth = new Auth({
-    history,
-    issuer: oktaIssuer,
-    clientId: oktaClientId,
-    redirectUri: window.location.origin + '/implicit/callback',
-  });
+export const getAccessToken = () => {
+    let token = loadData(OKTA.tokenStorage)
+    return token && token.data.accessToken
+}
 
-axios.interceptors.request.use(    
-    config => {
-        let loc = auth.getAccessToken();
-        let newToken;
-        loc.then((res) => {
-            newToken = loadData(res)
-        })
-        const token = newToken
-        if (token) {
-            config.headers['Authorization'] = 'Bearer ' + token;
-            config.headers['offset'] = getTimeZoneOffset()
-        }
-        config.headers['Content-Type'] = 'application/json';
-        return config;
+let authTokenRequest;
 
-    },
-    error => {
-        Promise.reject(error)
-    });
+async function makeActualAuthenticationRequest() {
+    let credentials = loadData(USER_CREDENTIALS).data
+    const requestObject = {
+        accessToken: getAccessToken(),
+        userName: credentials.UserName,
+        password: credentials.Password,
+        ApplicationType: credentials.ApplicationType
+    }
+    const resp = await ThirdPartyPost(API.getRefreshToken, requestObject)
+    return resp
+}
 
+function getAuthToken() {
+    if (!authTokenRequest) {
+        authTokenRequest = makeActualAuthenticationRequest();
+        authTokenRequest.then(resetAuthTokenRequest, resetAuthTokenRequest);
+    }
+    return authTokenRequest;
+}
 
-axios.interceptors.response.use((response) => {
-    return response
-    }, function (error) {
-        const originalRequest = error.config;
-        if (error.response && error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            let loc = auth.getAccessToken();
-            loc.then((res) => {
-                if (res) {
-                    localStorage.setItem(REFRESH_TOKEN, res);
-                    getHeader(false)
-                    return axios(originalRequest);
-                }
+function resetAuthTokenRequest() {
+    authTokenRequest = null;
+}
 
-            })
-        }
-        return Promise.reject(error);
-     });
-
+axios.interceptors.response.use(undefined, err => {
+    const error = err.response;
+    if (error && error.status === 401 && error.config && !error.config.__isRetryRequest) {
+        return getAuthToken().then(response => {
+            const originalRequest = error.config;
+            save(OKTA.tokenStorage, response.data)
+            localStorage.setItem(REFRESH_TOKEN, response.data.accessToken);
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response && response.data.accessToken;
+            originalRequest.headers['Authorization'] = 'Bearer ' + response && response.data.accessToken;
+            error.config.__isRetryRequest = true;
+            return axios(error.config);
+        });
+    }
+});
 
 export const AuthLogin = (url, data) => {
     var bodyFormData = new FormData()
