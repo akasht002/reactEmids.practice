@@ -11,7 +11,7 @@ import { AssignServiceProvider } from './Components/AssignServiceProvider';
 import { AdditionalInformation } from './Components/AdditionalInformation';
 import { ScheduleType } from './Components/ScheduleType';
 import { validateCoordinates, formattedDateChange, formattedDateMoment, checkEmpty, formatContactNumber } from "../../utils/validations";
-import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip, unique, compareArrays } from '../../utils/arrayUtility';
+import { checkLength, allEqual, numbersOnly, disableZeroInFirstChar, checkLengthOfZip, unique, compareTwoParams } from '../../utils/arrayUtility';
 import { formatPhoneNumber } from '../../utils/formatName'
 import {
     getServiceCategory,
@@ -828,7 +828,7 @@ export class Schedule extends Component {
         let serviceTypeIds = unique(this.props.services,"serviceTypeId")
         let serviceCategoryIds = unique(this.props.services,"serviceCategoryId")
 
-        let isPlanEdit = !compareArrays(serviceTypeIds, this.props.editServiceTypeIds) || !compareArrays(serviceCategoryIds, this.props.editServiceCategoryIds)
+        let isPlanEdit = !compareTwoParams(serviceTypeIds, this.props.editServiceTypeIds) || !compareTwoParams(serviceCategoryIds, this.props.editServiceCategoryIds)
         let serviceTypes = this.props.services.map((types) => {
             let updatedTypes = omit(types, ['serviceCategoryId']);
             return updatedTypes
@@ -1177,7 +1177,7 @@ export function mapStateToProps(state) {
         isPosAddressValid: scheduleState.isPosAddressValid,
         entityServiceProvidersList: scheduleState.entityServiceProvidersList,
         recurringPatternList: scheduleState.recurringPatternList,
-        daysList: state.visitSelectionState.VisitServiceDetailsState.daysType,
+        daysList: scheduleState.daysList,
         patientId: state.patientProfileState.patientId,
         disableShowmore: scheduleState.disableShowmore,
         individualSchedulesDetails: scheduleState.individualSchedulesDetails,
