@@ -28,27 +28,6 @@ export const sendResetPasswordLinkError = () => {
     }
 }
 
-// export function sendResetPasswordLink(data) {
-//     return (dispatch) => {
-//         let emailId = data && data.emailId;
-//         dispatch(startLoading());
-//         return AuthGet(
-//             API.SendResetPasswordLink + emailId
-//         ).then((resp) => {
-//             if (resp && resp.statusText === RESPONSE_STATUS.OK) {
-//                 dispatch(sendResetPasswordLinkSuccess(resp.data, emailId));
-//                 dispatch(push(Path.resetPasswordConfirmation));
-//             } else {
-//                 dispatch(sendResetPasswordLinkError());
-//             }
-//             dispatch(endLoading());
-//         }).catch((err) => {
-//             dispatch(sendResetPasswordLinkError());
-//             dispatch(endLoading());
-//         })
-//     }
-// }
-
 export const sendResetPasswordLink = (data) => async (dispatch) => {
     dispatch(startLoading());
     let model = ({
@@ -63,6 +42,7 @@ export const sendResetPasswordLink = (data) => async (dispatch) => {
             dispatch(sendResetPasswordLinkError())
     } catch (error) {
         logError(error)
+    } finally {
+        dispatch(endLoading());
     }
-    dispatch(endLoading());
 }

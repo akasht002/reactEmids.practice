@@ -55,7 +55,7 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
           autoComplete="off"
           required="required"
           type="email"
-          placeholder="Enter User ID"
+          placeholder="Enter email address"
           maxlength={100}
           className={'emailField ' + (validation.onClickSubmit && !validation.UserName && 'inputFailure')}
           textChange={(e) => onChange(e)}
@@ -71,7 +71,7 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
           autoComplete="off"
           required="required"
           type="password"
-          placeholder="Enter Password"
+          placeholder="Enter password"
           maxlength={100}
           className={'emailField ' + (validation.onClickSubmit && !validation.Password && 'inputFailure')}
           textChange={(e) => onChange(e)}

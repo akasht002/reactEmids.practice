@@ -86,40 +86,7 @@ export const resetPassword = (data) => async (dispatch, getState) => {
             dispatch(resetPasswordErrorMessage(resp.data.statusMessage))
     } catch (error) {
         logError(error)
+    } finally {
+        dispatch(endLoading());
     }
-    dispatch(endLoading());
 }
-
-// export function resetPassword(data) {
-//     return (dispatch, getState) => {
-//         let currstate = getState();
-//         let userModel = {
-//             userId: '',
-//             userName: '',
-//             password: '',
-//             token: ''
-//         };
-//         const encryptedPass = encryptPassword(data.password);
-//          if (currstate.authState.resetPasswordState) {
-//             userModel = {
-//                 userId: data.userId,
-//                 userName: currstate.authState.resetPasswordState.emailId,
-//                 password: encryptedPass,
-//                 token: data.token
-//             };
-//         }
-//         dispatch(startLoading());
-//         return AuthPut(API.resetPassword, userModel).then((resp) => {
-//             if (resp && resp.statusText === RESPONSE_STATUS.OK) {
-//                 dispatch(resetPasswordSuccess(resp.data));
-//                 dispatch(push(Path.resetPasswordSuccess));
-//             } else {
-//                 dispatch(resetPasswordError());
-//             }
-//             dispatch(endLoading());
-//         }).catch((err) => {
-//             dispatch(resetPasswordError(err.response.data));
-//             dispatch(endLoading());
-//         })
-//     }
-// }

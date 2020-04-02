@@ -11,6 +11,8 @@ import { loadData, save } from '../../../utils/storage';
 import { userFound } from 'redux-oidc'
 import { startLoading, endLoading } from '../../loading/actions';
 import { logError } from '../../../utils/logError';
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
+import { API_STATUS_CODE } from '../../../constants/status_code';
 
 export const loginStart = () => {
     return {
@@ -68,7 +70,7 @@ export const login = (data) => async (dispatch, getState) => {
         const resp = await ThirdPartyPost(`${API.getToken}`, modelData)
         save(OKTA.tokenStorage, resp.data)
         let localStorageData = loadData(OKTA.tokenStorage);
-        if (localStorageData && localStorageData.data.status === "Success") {
+        if (localStorageData && caseInsensitiveComparer(localStorageData.data.status, API_STATUS_CODE.success)) {
             const { idToken, accessToken, expiresIn } = localStorageData.data
             let loginResponse = {
                 access_token: accessToken,
@@ -90,6 +92,7 @@ export const login = (data) => async (dispatch, getState) => {
         }
     } catch (error) {
         logError(error)
+    } finally {
+        dispatch(endLoading());
     }
-    dispatch(endLoading());
 }; 

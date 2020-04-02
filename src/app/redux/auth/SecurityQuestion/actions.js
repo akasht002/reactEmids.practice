@@ -42,8 +42,9 @@ export const getSecurityQuestion = (uid) => async (dispatch) => {
         dispatch(getSecurityQuestionSuccess(resp.data));
     } catch (error) {
         logError(error);
+    } finally {
+        dispatch(endLoading());
     }
-    dispatch(endLoading());
 }
 
 export const validateSecurityAnswer = (data) => async (dispatch) => {
@@ -59,6 +60,7 @@ export const validateSecurityAnswer = (data) => async (dispatch) => {
     }
     catch (error) {
         logError(error);
+    } finally {
+        dispatch(endLoading());
     }
-    dispatch(endLoading());
 }
