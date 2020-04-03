@@ -791,7 +791,7 @@ export class Schedule extends Component {
         let { isIndividualScheduleEdit } = this.state
 
         this.props.getValidPatientAddress(this.getSelectedData(), (isValid) => {
-            isValid && (isIndividualScheduleEdit ? this.openConfirmationPopup() : this.props.createSchedule(this.getSelectedData()))
+            isValid && (isIndividualScheduleEdit ? (this.props.services.length > 0 && this.openConfirmationPopup()) : this.props.createSchedule(this.getSelectedData()))
         });
     }
 
