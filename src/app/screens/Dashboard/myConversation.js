@@ -33,27 +33,28 @@ export class MyConversation extends React.Component {
   };
 
   render() {
-    let entityUser = getUserInfo().isEntityServiceProvider;
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider;
     let conversation_data = this.props.conversationDetail;
-    let conversionDefault = entityUser ? <EntityUserMyConversionDefault />  : <MyConversionDefault />;
-    let conversation_item = getLength(conversation_data) > 0
-      ? <MyConversionDetail 
-      gotoConversations={this.onClickConversation}
-      conversation={conversation_data}
-      getUnreadMsgCounts={this.props.unreadMsgCounts}/>
-      : conversionDefault
+    let conversionDefault = <MyConversionDefault />;
+    let conversation_item = isEntityServiceProvider ? <EntityUserMyConversionDefault /> :
+      (getLength(conversation_data) > 0
+        ? <MyConversionDetail 
+        gotoConversations={this.onClickConversation}
+        conversation={conversation_data}
+        getUnreadMsgCounts={this.props.unreadMsgCounts}/>
+        : conversionDefault)
     return (
       <div className='card ProfileCard'>
         <div className='ProfileCardBody'>
           <div className='ProfileCardHeader'>
             <span className='ProfileCardHeaderTitle theme-primary'>
-            {!entityUser && 'My Conversations'}
+            {!isEntityServiceProvider && 'My Conversations'}
             </span>
-           { getLength(conversation_data) > 0 && <Link className='ProfileCardHeaderLink theme-primary' to='/messagesummary'>View all</Link>}
+           {(!isEntityServiceProvider && getLength(conversation_data) > 0) && <Link className='ProfileCardHeaderLink theme-primary' to='/messagesummary'>View all</Link>}
           </div>
           <div className='topPalette ProfileConversation'>
             <ul className='list-group ProfileConversationWidget'>
-            {this.props.isConversationLoading && !entityUser && <Preloader/>}
+            {this.props.isConversationLoading && !isEntityServiceProvider && <Preloader/>}
               {conversation_item}
             </ul>
           </div>
