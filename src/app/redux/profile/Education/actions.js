@@ -69,8 +69,11 @@ export function addEducation(data) {
 };
 
 export function editEducation(data) {
-    return (dispatch) => {
+    return (dispatch,getState) => {
         let serviceProviderId = getUserInfo().serviceProviderId;
+        if(getState().profileState.PersonalDetailState.serviceProviderId){
+            serviceProviderId = getState().profileState.PersonalDetailState.serviceProviderId;
+          };
         let educationId =data;
         let modal = {
             ServiceProviderId: serviceProviderId,
@@ -78,7 +81,7 @@ export function editEducation(data) {
 
         };
         dispatch(startLoading());
-        Get(API.education +serviceProviderId+`/Education/${educationId}`,modal).then((resp) => {
+        Get(`${API.education}${serviceProviderId}/Education/${educationId}`,modal).then((resp) => {
             dispatch(getEducationFieldDetails(resp.data))
             dispatch(getProfilePercentage());
             dispatch(endLoading());
