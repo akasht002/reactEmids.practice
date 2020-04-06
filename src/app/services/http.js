@@ -119,8 +119,8 @@ export const Put = (url, data) => {
         })
 }
 
-export const Get = (url, _baseUrl = baseURL) => {
-    return axios.get(_baseUrl + url, getHeader()).then((resp) => {
+export const Get = url  => {
+    return axios.get( baseURL + url, getHeader()).then((resp) => {
         return resp;
     }).catch((error) => {
         handleError(error);
