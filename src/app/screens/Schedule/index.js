@@ -791,7 +791,7 @@ export class Schedule extends Component {
         let { isIndividualScheduleEdit } = this.state
 
         this.props.getValidPatientAddress(this.getSelectedData(), (isValid) => {
-            isValid && (isIndividualScheduleEdit ? this.openConfirmationPopup() : this.props.createSchedule(this.getSelectedData()))
+            isValid && (isIndividualScheduleEdit ? (this.props.services.length > 0 && this.openConfirmationPopup()) : this.props.createSchedule(this.getSelectedData()))
         });
     }
 
@@ -969,8 +969,8 @@ export class Schedule extends Component {
                                             onClickSave={this.state.onClickSave}
                                         />
                                     </div>
-                                    {this.state.isIndividualScheduleEdit && !this.props.isViewPlan &&
-                                        <span>Note: If any changes in the Service Category or Service Type will led to create a new plan for the individual.</span>
+                                    {this.state.isIndividualScheduleEdit &&
+                                        <span>Note: Any changes to the Service Category or Service Type will led to creation of a new plan for the individual.</span>
                                     }
                                 </div>
                             }
