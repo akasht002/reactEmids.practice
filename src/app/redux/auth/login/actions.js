@@ -64,12 +64,12 @@ export const login = (data) => async (dispatch, getState) => {
         Password: encryptPassword(data.Password),
         ApplicationType: 'SP'
     }
-    save(USER_CREDENTIALS, modelData)
     dispatch(startLoading());
     try {
         const resp = await ThirdPartyPost(`${API.getToken}`, modelData)
         save(OKTA.tokenStorage, resp.data)
         let localStorageData = loadData(OKTA.tokenStorage);
+        save(USER_CREDENTIALS, modelData);
         if (localStorageData && caseInsensitiveComparer(localStorageData.data.status, API_STATUS_CODE.success)) {
             const { idToken, accessToken, expiresIn } = localStorageData.data
             let loginResponse = {
@@ -89,10 +89,10 @@ export const login = (data) => async (dispatch, getState) => {
             dispatch(onLoginSuccess(loginResponse))
         } else {
             dispatch(onLoginFail(localStorageData.data.status))
+            dispatch(endLoading());
         }
     } catch (error) {
         logError(error)
-    } finally {
         dispatch(endLoading());
     }
 }; 
