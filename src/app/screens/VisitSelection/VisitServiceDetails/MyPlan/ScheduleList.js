@@ -34,6 +34,7 @@ const onClickPlanAction = (item) => {
                                             getFields(item.serviceTypes, 'serviceTypeDescription')}
                                     </label>
                                     <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{item.schedulePatternType}</label></span>
+                                    <span className="SR-cat"><label htmlFor={"ServiceStatus" + item.planScheduleId}>{!item.isAnyAvailableScheduleVisit && 'Completed'}</label></span>
                                     <span class="checkmark theme-primary"></span>
                 
                                 <div className={renderPlanActionIcon}>
