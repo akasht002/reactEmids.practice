@@ -77,7 +77,7 @@ export class Filter extends Component {
                                             onDateChange={this.props.dateChanged}
                                             onDateChangeRaw={this.props.dateChangedRaw}
                                             mandatory={false}
-                                            minDate={this.props.visitDate.startVisitDateForWeb && formateStateDateValue(this.props.visitDate.startVisitDateForWeb)}
+                                            minDate={this.props.visitDate && this.props.visitDate.startVisitDateForWeb && formateStateDateValue(this.props.visitDate.startVisitDateForWeb)}
                                             maxDate={this.props.endDate && formateStateDateValue(this.props.endDate)}
                                             value={this.props.startDate}
                                             className={"form-control datePicker"}
@@ -91,7 +91,7 @@ export class Filter extends Component {
                                             onDateChangeRaw={this.props.todateChangedRaw}
                                             mandatory={false}
                                             minDate={this.props.startDate && formateStateDateValue(this.props.startDate)}
-                                            maxDate={this.props.visitDate.endVisitDateForWeb && formateStateDateValue(this.props.visitDate.endVisitDateForWeb)}
+                                            maxDate={this.props.visitDate && this.props.visitDate.endVisitDateForWeb && formateStateDateValue(this.props.visitDate.endVisitDateForWeb)}
                                             value={this.props.endDate}
                                             className={"form-control datePicker"}
                                             label="To Date"
