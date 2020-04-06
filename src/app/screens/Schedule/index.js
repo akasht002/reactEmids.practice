@@ -954,10 +954,10 @@ export class Schedule extends Component {
                                         <span>
                                             <h2 className='ServicesTitle theme-primary'>Service Types (Select one or multiple)</h2>
                                         </span>
-                                        <span className="theme-primary">
+                                        {!this.props.isViewPlan && <span className="theme-primary">
                                             <h5 onClick={() => this.selectAllTypes(true)}>Select All</h5>
                                             <h5 onClick={() => this.selectAllTypes(false)}>Clear All</h5>
-                                        </span>
+                                        </span>}
                                     </div>
                                     <div className="ServiceTypesWidget PostSR">
                                         <ServiceTypes

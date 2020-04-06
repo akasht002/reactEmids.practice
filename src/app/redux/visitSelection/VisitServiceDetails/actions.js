@@ -689,6 +689,8 @@ export function updateHireStatusForServiceRequest(data) {
   return dispatch => {
     ServiceRequestPut(API.hireServiceProvider, model)
       .then(resp => {
+        dispatch(getVisitServiceDetails(data.serviceRequestId))
+        dispatch(getServiceRequestList(data.patientId))
         dispatch(endLoading())
       })
       .catch(err => {
@@ -749,7 +751,7 @@ export function getfirstlastvisitdate(data) {
   return (dispatch) => {
     ServiceRequestPost(API.getfirstlastvisitdate, data)
       .then(resp => {
-        dispatch(getfirstlastvisitdateSuccess(resp.data))
+        dispatch(getfirstlastvisitdateSuccess(resp && resp.data))
 
       })
   }
