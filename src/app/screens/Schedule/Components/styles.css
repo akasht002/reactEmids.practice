@@ -1401,6 +1401,10 @@ span.ProfileIconSearch .search-block_SP {
   margin-top: -126px;
 }
 
+.my-patientblock .SPCardTitle h4 {
+  font-size: 18px;
+}
+
 .colorblock {
   width: 100%;
   display: block;
