@@ -129,9 +129,7 @@ export class ResetPassword extends Component {
                     {!this.state.passwordMatch && this.state.confirmPass &&
                         <p className="text-danger d-block mt-4 mb-2">Passwords do not match. Please try again.</p>
                     }
-                    {!this.state.passwordCombination &&
-                        <p className="text-danger d-block mt-4 mb-2">Password should contain a combination of upper case, lower case, special characters, numbers and should be at least 8 characters</p>
-                    }
+                    <p className="d-block mt-4 mb-2">Password should contain a combination of upper case, lower case, special characters, numbers and should be at least 8 characters</p>
                     {this.props.resetPasswordStatus &&
                         <p className="text-danger d-block mt-4 mb-2">Invalid Password. The new password cannot be among the last 6 passwords used.</p>
                     }
