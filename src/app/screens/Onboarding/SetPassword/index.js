@@ -123,15 +123,15 @@ export class SetPassword extends React.Component {
                     <Scrollbars speed={2}
                     smoothScrolling
                     horizontal={false} className="container-fluid mainContent d-block">
-                    <div className="container-fluid mainContent px-5">
-                        <div className="row d-flex justify-content-center">
-                            <div className="col-md-12 py-5 px-0">
+                   
+                        <div className="row d-block">
+                            <div className="col-md-12 pt-5 p-r-l-30">
                                 <h4 className="font-weight-normal mb-4 defaualt-purple theme-primary">Set My Password</h4>
                                 <form className="form tempPassForm my-2 my-lg-0">
                                     <div className="form-group my-4">
                                     </div>
                                     <div className="row">
-                                        <div className="col-md-6 my-3">
+                                        <div className="col-md-6 mb-3">
                                             <Input
                                                 id="newPass"
                                                 autoComplete="off"
@@ -154,7 +154,7 @@ export class SetPassword extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-md-6 my-3">
+                                        <div className="col-md-6  mb-3">
                                             <Input
                                                 id="rePass"
                                                 autoComplete="off"
@@ -184,7 +184,7 @@ export class SetPassword extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-md-6 my-3">
+                                        <div className="col-md-6">
                                             <label className="mb-3 theme-primary">Security Question</label>
                                             <div className="full-block">
                                                 <ThemeProvider>
@@ -206,7 +206,7 @@ export class SetPassword extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-md-6 my-3">
+                                        <div className="col-md-6">
                                             <Input
                                                 name="securityAnswer"
                                                 label="Answer"
@@ -225,7 +225,7 @@ export class SetPassword extends React.Component {
                                             </small>
                                         </div>
                                     </div>
-                                    <div className="form-check">
+                                    <div className="form-check pb-4">
                                         <label className="form-check-label license-agreespan">
                                             <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.checked })} />
                                             <span className="CheckboxIcon"></span>
@@ -235,7 +235,7 @@ export class SetPassword extends React.Component {
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    
                     </Scrollbars>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={navigationData} activeFlowId={2} />
