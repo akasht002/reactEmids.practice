@@ -7,6 +7,7 @@ import { checkEmail, checkEmpty } from '../../../utils/validations';
 import { Path } from '../../../routes';
 import { push } from '../../../redux/navigation/actions';
 import { API_STATUS_CODE } from '../../../constants/status_code';
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 
 const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) => {
 
@@ -60,7 +61,7 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
             placeholder="Enter email address"
             maxlength={100}
             className={'emailField ' + (validation.onClickSubmit && !validation.UserName && 'inputFailure')}
-            textChange={(e) => onChange(e)}
+            textChange={onChange}
           />
           <p className='text-danger d-block OnboardingAlert'>
             {validation.onClickSubmit && !validation.UserName && 'Please enter a valid Email Address(e.g. abc@xyz.com)'}
@@ -76,14 +77,14 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
             placeholder="Enter password"
             maxlength={100}
             className={'emailField ' + (validation.onClickSubmit && !validation.Password && 'inputFailure')}
-            textChange={(e) => onChange(e)}
+            textChange={onChange}
           />
           <p className='text-danger d-block OnboardingAlert'>
             {validation.onClickSubmit && !validation.Password && 'Please enter password'}
           </p>
         </div>
         <p className='text-danger d-block OnboardingAlert'>
-          {errorMessage !== API_STATUS_CODE.success && errorMessage}
+          {!caseInsensitiveComparer(errorMessage, API_STATUS_CODE.success) && errorMessage}
         </p>
         <Button
           type="submit"
