@@ -54,22 +54,54 @@ export const onSetUserIdCompletion = (data) => {
     }
 };
 
-export function setPassword(data) {
-    return (dispatch, getState) => {
-        let userDetails = getState().onboardingState.verifyUserIDState.serviceProviderDetails
-        let payload = {
-            "firstName": userDetails.firstName,
-            "lastName": userDetails.lastName,
-            "userName": userDetails.emailId,
-            "password": data.password,
-        }
+// export function setPassword(data) {
+//     return (dispatch, getState) => {
+//         let userDetails = getState().onboardingState.verifyUserIDState.serviceProviderDetails
+//         let payload = {
+//             "firstName": userDetails.firstName,
+//             "lastName": userDetails.lastName,
+//             "userName": userDetails.emailId,
+//             "password": data.password,
+//         }
 
-        let userType = getState().onboardingState.setPasswordState.serviceProviderDetails.userType;
-        if (userType === USERTYPES.ENTITY_USER) {
-            dispatch(setPasswordEntity(data))
-        } else {
-            dispatch(setPasswordIndividual(payload))
-        }
+//         let userType = getState().onboardingState.setPasswordState.serviceProviderDetails.userType;
+//         if (userType === USERTYPES.ENTITY_USER) {
+//             dispatch(setPasswordEntity(data))
+//         } else {
+//             dispatch(setPasswordIndividual(payload))
+//         }
+//     }
+// };
+
+export const setPassword = (data) => async (dispatch, getState) => {
+    let payload =
+    {
+        "userName": data.username,
+        "password": encryptPassword(data.password),
+        "confirmPassword": encryptPassword(data.password),
+        "isActive": true,
+        "groupIds": ["string"],
+        "question": data.selectedQuestionName,
+        "answer": data.securityAnswer,
+        "serviceProviderId": 0,
+        "firstName": "sr",
+        "lastName": "sr",
+        "phoneNumber": "76564546546",
+        "gender": "Male",
+        "rating": 0,
+        "task": 0,
+        "visitCount": 0,
+        "feedbackCount": 0,
+        "age": 0
+    }
+
+    try {
+        await Post(API.setPassword, payload)
+        dispatch(onboardSucess());
+        dispatch(endLoading());
+    } catch (error) {
+        dispatch(endLoading());
+        logError(error)
     }
 };
 
@@ -136,15 +168,15 @@ export const getQuestionsSuccess = (data) => {
     }
 }
 
-export const  getQuestions = () => async (dispatch) => {
+export const getQuestions = () => async (dispatch) => {
     dispatch(startLoading());
     try {
         const resp = await ThirdPartyGet(`${API.getSecurityQuestionList}`)
         dispatch(getQuestionsSuccess(resp.data))
     } catch (error) {
         logError(error)
-    }finally {
+    } finally {
         dispatch(endLoading());
     }
 }
-    
+

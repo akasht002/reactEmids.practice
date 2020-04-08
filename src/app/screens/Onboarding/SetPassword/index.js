@@ -58,7 +58,9 @@ export class SetPassword extends React.Component {
             const data = {
                 username: this.props.userEmail,
                 password: this.state.password,
-                confirmPassword: this.state.confirmPassword
+                confirmPassword: this.state.confirmPassword,
+                securityAnswer: this.state.securityAnswer,
+                selectedQuestionName: this.state.selectedQuestionName
             };
             this.validate() && this.props.onSetPassword(data);
         }
