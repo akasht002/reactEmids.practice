@@ -11,6 +11,7 @@ import { USERTYPES } from "../../../constants/constants";
 import { getEulaContent } from '../../../redux/auth/UserAgreement/actions';
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
+import { PASSWORD_COMPLEXITY_MSG } from "../../../constants/message";
 
 export class SetPassword extends React.Component {
 
@@ -27,7 +28,7 @@ export class SetPassword extends React.Component {
             passMatch: false,
             selectedQuestionName: '',
             selectedQuestionNameInvalid: true,
-            securityAnswer:'',
+            securityAnswer: '',
             securityAnswerInvalid: true
         };
     };
@@ -82,8 +83,8 @@ export class SetPassword extends React.Component {
         });
     }
 
-    handleTextChange = e =>{
-        this.setState({[e.target.id]:e.target.value})
+    handleTextChange = e => {
+        this.setState({ [e.target.id]: e.target.value })
     }
 
     getQuestions = () => {
@@ -163,6 +164,12 @@ export class SetPassword extends React.Component {
                                             />
                                         </div>
                                     </div>
+                                    <div className="col-md-12 mb-2">
+                                        {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match.</span>}
+                                        <div>
+                                            <span className="d-block mt-4 mb-2">{PASSWORD_COMPLEXITY_MSG}</span>
+                                        </div>
+                                    </div>
                                     <div className="row">
                                         <div className="col-md-6 my-3">
                                             <label className="mb-3 theme-primary">Security Question</label>
@@ -212,10 +219,6 @@ export class SetPassword extends React.Component {
                                             By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="theme-primary" onClick={() => this.setState({ agreementModal: true })}>End User License Agreement</Link>.
                                         </label>
                                     </div>
-                                    {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match.</span>}
-                                    {!this.state.passwordCombination && <div className="MsgWithIcon MsgWrongIcon">
-                                        <span className="text-danger d-block mt-4 mb-2">Password should contain a combination of upper case, lower case, special characters and number, and should be at least 8 characters.</span>
-                                    </div>}
                                 </form>
                             </div>
                         </div>

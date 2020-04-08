@@ -7,6 +7,7 @@ import { checkEmail, checkEmpty } from '../../../utils/validations';
 import { Path } from '../../../routes';
 import { push } from '../../../redux/navigation/actions';
 import { API_STATUS_CODE } from '../../../constants/status_code';
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 
 const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) => {
 
@@ -38,7 +39,8 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
     })
   }
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     let isValidEmail = checkEmail(formData.UserName)
     let isVaildPassword = !checkEmpty(formData.Password)
     setValidationResult({ UserName: isValidEmail, Password: isVaildPassword, onClickSubmit: true });
@@ -48,50 +50,51 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
   return (
     <LoginCover isLoading={isLoading} test-forget-body='test-forget-body'>
       <h3>Welcome to CoreoHome</h3>
-      <div className="form-group  text-center login-body p-0 m-0">
-        <Input
-          name="UserName"
-          value={formData.UserName}
-          autoComplete="off"
-          required="required"
-          type="email"
-          placeholder="Enter email address"
-          maxlength={100}
-          className={'emailField ' + (validation.onClickSubmit && !validation.UserName && 'inputFailure')}
-          textChange={(e) => onChange(e)}
-        />
+      <form>
+        <div className="form-group  text-center login-body p-0 m-0">
+          <Input
+            name="UserName"
+            value={formData.UserName}
+            autoComplete="off"
+            required="required"
+            type="email"
+            placeholder="Enter email address"
+            maxlength={100}
+            className={'emailField ' + (validation.onClickSubmit && !validation.UserName && 'inputFailure')}
+            textChange={onChange}
+          />
+          <p className='text-danger d-block OnboardingAlert'>
+            {validation.onClickSubmit && !validation.UserName && 'Please enter a valid Email Address(e.g. abc@xyz.com)'}
+          </p>
+        </div>
+        <div className="form-group text-center login-body p-0 m-0">
+          <Input
+            name="Password"
+            value={formData.Password}
+            autoComplete="off"
+            required="required"
+            type="password"
+            placeholder="Enter password"
+            maxlength={100}
+            className={'emailField ' + (validation.onClickSubmit && !validation.Password && 'inputFailure')}
+            textChange={onChange}
+          />
+          <p className='text-danger d-block OnboardingAlert'>
+            {validation.onClickSubmit && !validation.Password && 'Please enter password'}
+          </p>
+        </div>
         <p className='text-danger d-block OnboardingAlert'>
-          {validation.onClickSubmit && !validation.UserName && 'Please enter a valid Email Address(e.g. abc@xyz.com)'}
+          {!caseInsensitiveComparer(errorMessage, API_STATUS_CODE.success) && errorMessage}
         </p>
-      </div>
-      <div className="form-group text-center login-body p-0 m-0">
-        <Input
-          name="Password"
-          value={formData.Password}
-          autoComplete="off"
-          required="required"
-          type="password"
-          placeholder="Enter password"
-          maxlength={100}
-          className={'emailField ' + (validation.onClickSubmit && !validation.Password && 'inputFailure')}
-          textChange={(e) => onChange(e)}
+        <Button
+          type="submit"
+          classname="btn btn-primary send-btn"
+          label="Login"
+          onClick={onSubmit}
+          disable={false}
         />
-        <p className='text-danger d-block OnboardingAlert'>
-          {validation.onClickSubmit && !validation.Password && 'Please enter password'}
-        </p>
-      </div>
-      <p className='text-danger d-block OnboardingAlert'>
-        {errorMessage !== API_STATUS_CODE.success && errorMessage}
-      </p>
-      <Button
-        type="button"
-        classname="btn btn-primary send-btn"
-        label="Login"
-        onClick={onSubmit}
-        disable={false}
-      />
-      <p><span className="login" onClick={forgotPassword}>Forget Password</span></p>
-
+        <p><span className="login" onClick={forgotPassword}>Forget Password</span></p>
+      </form>
     </LoginCover>
   );
 };
