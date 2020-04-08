@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { setPassword, onCancelClick, getUserData, getQuestions } from '../../../redux/onboarding/SetPassword/actions';
 import { CoreoWizNavigationData } from '../../../data/CoreoWizNavigationData';
 import { ContactMenu } from '../../../data/HeaderMenu';
-import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, ModalPopup } from '../../../components';
+import { Input, ScreenCover, CoreoWizScreen, CoreoWizFlow, ModalUserAgreement, ModalPopup, Scrollbars } from '../../../components';
 import { checkPassword } from '../../../utils/validations'
 import '../styles.css';
 import { USERTYPES } from "../../../constants/constants";
@@ -60,7 +60,7 @@ export class SetPassword extends React.Component {
                 password: this.state.password,
                 confirmPassword: this.state.confirmPassword
             };
-            this.props.onSetPassword(data);
+            this.validate() && this.props.onSetPassword(data);
         }
     }
 
@@ -93,6 +93,14 @@ export class SetPassword extends React.Component {
         });
     }
 
+    validate = () => {
+        this.setState({
+            securityAnswerInvalid:this.state.securityAnswer.length > 0,
+            selectedQuestionNameInvalid:this.state.selectedQuestionName.length > 0 
+        })
+        return this.state.securityAnswer.length > 0 || this.state.selectedQuestionName.length > 0 
+    }
+
     render() {
         let navigationData = CoreoWizNavigationData;
         if (this.props.userType === USERTYPES.ENTITY_USER) {
@@ -112,6 +120,9 @@ export class SetPassword extends React.Component {
                     onSubmitClick={this.onClickButtonSubmit}
                     onCancelClick={this.onClickCancel}
                 >
+                    <Scrollbars speed={2}
+                    smoothScrolling
+                    horizontal={false} className="container-fluid mainContent d-block">
                     <div className="container-fluid mainContent px-5">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-12 py-5 px-0">
@@ -164,10 +175,12 @@ export class SetPassword extends React.Component {
                                             />
                                         </div>
                                     </div>
-                                    <div className="col-md-12 mb-2">
-                                        {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match.</span>}
-                                        <div>
-                                            <span className="d-block mt-4 mb-2">{PASSWORD_COMPLEXITY_MSG}</span>
+                                    <div className="row">
+                                        <div className="col-md-12 mb-2">
+                                            {!this.state.passwordMatch && <span className="text-danger d-block mt-4 mb-2 MsgWithIcon MsgWrongIcon">Passwords do not match.</span>}
+                                            <div>
+                                                <span className="d-block mt-4 mb-2">{PASSWORD_COMPLEXITY_MSG}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -223,6 +236,7 @@ export class SetPassword extends React.Component {
                             </div>
                         </div>
                     </div>
+                    </Scrollbars>
                 </CoreoWizScreen>
                 <CoreoWizFlow coreoWizNavigationData={navigationData} activeFlowId={2} />
                 <ModalPopup
