@@ -360,7 +360,7 @@ export class Summary extends Component {
                                                                     "serviceTypeDescription"
                                                                 )}
                                                         </span>
-                                                        <span className="CategorySub">{this.props.SummaryDetails && this.props.SummaryDetails.serviceCategoryDescription}</span></p>
+                                                        </p>
                                                 </div>
                                                 <div className="col-md-4 SummaryRange">
                                                     <span className="bottomTaskName">Tasks</span>
