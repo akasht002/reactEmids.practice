@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { Post } from '../../../services/http';
+import { Post, ThirdPartyGet } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { clearState as verifyContactClear } from '../VerifyUserID/actions';
 import { push } from '../../navigation/actions';
@@ -7,6 +7,7 @@ import { Path } from '../../../routes';
 import { encryptPassword } from '../../../utils/encryptPassword';
 import { USERTYPES } from '../../../constants/constants';
 import { SetPassword } from './bridge';
+import { logError } from '../../../utils/logError';
 
 export const cancelClick = () => {
     return {
@@ -127,3 +128,23 @@ export function onCancelClick() {
         dispatch(push(Path.root));
     }
 }
+
+export const getQuestionsSuccess = (data) => {
+    return {
+        type: SetPassword.getQuestions,
+        data
+    }
+}
+
+export const  getQuestions = () => async (dispatch) => {
+    dispatch(startLoading());
+    try {
+        const resp = await ThirdPartyGet(`${API.getSecurityQuestionList}`)
+        dispatch(getQuestionsSuccess(resp.data))
+    } catch (error) {
+        logError(error)
+    }finally {
+        dispatch(endLoading());
+    }
+}
+    
