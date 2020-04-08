@@ -43,8 +43,8 @@ div.row.emptyGuardianRow {
 }
 
 .onBoarding .mainWidget .mainContent {
-    height: calc(100% - 70px);
     position: relative;
+    z-index: 100;
 }
 
 .onBoardingPageTitle {
@@ -151,6 +151,21 @@ label.license-agreespan {
 .succss-idblock {
     margin-top: 30px;
     display: block;
+}
+
+.p-r-l-30 {
+    padding-left: 30px!important;
+    padding-right: 30px!important;
+}
+
+.onBoarding div.scrollarea .scrollbar-container.vertical {
+    width: 4px !important;
+    opacity: 0.6 !important;
+    right: 23px;
+}
+
+.onBoarding div.scrollarea .scrollbar-container.vertical .scrollbar {
+    width: 4px !important;
 }
 
 /*cross-browser-bug-fixed-e11*/
