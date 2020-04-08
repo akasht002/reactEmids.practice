@@ -761,6 +761,9 @@
     Padding: 0 0px 15px;
 }
 
+.questionnaire-model-pop  .form-check-label:hover {
+    cursor: context-menu;
+}
 
 /*IE_11_&_IE_10*/
 @media all and (-ms-high-contrast:none) {

@@ -52,7 +52,7 @@ export const Assessment = props => {
                                         return ''
                                     })
                                     return (
-                                        <div className="form-check" key={answer.id}>
+                                        <div className="form-check pr-3" key={answer.id}>
                                             <label className='form-check-label'>
                                                 <input className="form-check-input"
                                                     id={answer.id}

@@ -1,14 +1,10 @@
 import axios from 'axios'
 import { store } from '../redux/store'
 import {getTimeZoneOffset} from '../utils/dateUtility';
-import { Auth } from '@okta/okta-react';
 import {loadData, save} from '../utils/storage'
 import { isEmpty } from '../utils/validations'
-import { createBrowserHistory } from 'history'
 import { REFRESH_TOKEN, OKTA, USER_CREDENTIALS } from '../constants/constants';
 import { API } from './api';
-
-const history = createBrowserHistory();
 
 export const baseURL = process.env.REACT_APP_API_URL
 export const authURL = process.env.REACT_APP_AUTH_URL
@@ -119,8 +115,8 @@ export const Put = (url, data) => {
         })
 }
 
-export const Get = (url, _baseUrl = baseURL) => {
-    return axios.get(_baseUrl + url, getHeader()).then((resp) => {
+export const Get = url  => {
+    return axios.get( baseURL + url, getHeader()).then((resp) => {
         return resp;
     }).catch((error) => {
         handleError(error);

@@ -154,9 +154,9 @@ export class Dashboard extends React.Component {
   }
 
   render() {
-    let entityUser = getUserInfo().isEntityServiceProvider;
+    let isEntityServiceProvider = getUserInfo().isEntityServiceProvider;
 
-    let serviceRequestTemplate = entityUser ? "" :
+    let serviceRequestTemplate = isEntityServiceProvider ? "" :
     <div className='innerWidget'><ServiceRequest /></div>;
     return (
       <AsideScreenCover
@@ -169,7 +169,7 @@ export class Dashboard extends React.Component {
             <h5 className='theme-primary m-0'>Dashboard</h5>
           </div>
           {
-            (!entityUser && getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) ?
+            (!isEntityServiceProvider && getUserInfo().serviceProviderTypeId === PROFILE_SERVICE_PROVIDER_TYPE_ID) ?
               <div className='ProfileHeaderButton'>
                 <span className='standBy'>Stand by</span>
                 <label className='switch'>
@@ -188,7 +188,7 @@ export class Dashboard extends React.Component {
             <div className='ProfileContainer topProfile'>
               <ServiceCalendar createDataStore={this.props.createDataStore}/>
             </div>
-            <div className={entityUser ? "ProfileContainer bottomProfile entity-sp-block" : 'ProfileContainer bottomProfile'}>
+            <div className={isEntityServiceProvider ? "ProfileContainer bottomProfile entity-sp-block" : 'ProfileContainer bottomProfile'}>
               {serviceRequestTemplate}
               <div className='innerWidget'>
                 <MyConversation />
