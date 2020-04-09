@@ -74,25 +74,19 @@ export const onSetUserIdCompletion = (data) => {
 // };
 
 export const setPassword = (data) => async (dispatch, getState) => {
+    let userDetails = getState().onboardingState.verifyUserIDState.serviceProviderDetails
     let payload =
     {
-        "userName": data.username,
-        "password": encryptPassword(data.password),
-        "confirmPassword": encryptPassword(data.password),
+        "userName": userDetails.emailId,
+        "password": data.password,
+        "confirmPassword": data.password,
         "isActive": true,
-        "groupIds": ["string"],
         "question": data.selectedQuestionName,
         "answer": data.securityAnswer,
-        "serviceProviderId": 0,
-        "firstName": "sr",
-        "lastName": "sr",
-        "phoneNumber": "76564546546",
-        "gender": "Male",
-        "rating": 0,
-        "task": 0,
-        "visitCount": 0,
-        "feedbackCount": 0,
-        "age": 0
+        "serviceProviderId": userDetails.serviceProviderId,
+        "firstName": userDetails.firstName,
+        "lastName": userDetails.lastName,
+        "phoneNumber": userDetails.mobileNumber
     }
 
     try {

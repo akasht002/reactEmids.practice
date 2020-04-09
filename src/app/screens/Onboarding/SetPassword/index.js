@@ -100,7 +100,7 @@ export class SetPassword extends React.Component {
             securityAnswerInvalid:this.state.securityAnswer.length > 0,
             selectedQuestionNameInvalid:this.state.selectedQuestionName.length > 0 
         })
-        return this.state.securityAnswer.length > 0 || this.state.selectedQuestionName.length > 0 
+        return this.state.securityAnswer.length > 0 && this.state.selectedQuestionName.length > 0 
     }
 
     render() {
