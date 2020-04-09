@@ -111,7 +111,7 @@ export const Table = props => {
                 </thead>
                 <tbody>
                     {props.visitList.map(item => {
-                        let startTime = (isEntity || isEntityServiceProvider) ? item.startTime : convert24To12Hrs(item.visitStartTime)
+                        let startTime = (isEntity || isEntityServiceProvider) ? convert24To12Hrs(item.startTime) : convert24To12Hrs(item.visitStartTime)
                         let duration = (isEntity || isEntityServiceProvider) ? item.duration : (item.originalTotalDuration === null ? item.billedTotalDuration : item.originalTotalDuration)
                         let isIndividualServiceProvider = !((item.visitStatusId === VISIT_STATUS.startVisit.id) && isEntity && isEntityServiceProvider)
                         let isStartVisit =  (item.visitStatusId === VISIT_STATUS.startVisit.id) && !(isEntity || isEntityServiceProvider)

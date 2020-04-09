@@ -969,7 +969,7 @@ export class Schedule extends Component {
                                             onClickSave={this.state.onClickSave}
                                         />
                                     </div>
-                                    {this.state.isIndividualScheduleEdit &&
+                                    {this.state.isIndividualScheduleEdit && !this.props.isViewPlan &&
                                         <span>Note: Any changes to the Service Category or Service Type will led to creation of a new plan for the individual.</span>
                                     }
                                 </div>
