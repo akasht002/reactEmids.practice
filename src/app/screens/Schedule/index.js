@@ -327,23 +327,15 @@ export class Schedule extends Component {
         this.setState({ checkedServiceCategoryId: id, serviceTypeSelected: false })
     }
 
-    handleServiceType = (data, e) => {
+    handleServiceType = async (data, isChecked) => {
         data.selected = !data.selected
-
-        if (data.selected) {
-            this.serviceTypes.push(data)
-        } else {
-            this.serviceTypes.splice(this.serviceTypes.findIndex(item => {
-                return item.serviceTypeId === parseInt(e.target.value, 0);
-            }), 1);
-        }
         let serviceTypeIds = pushSpliceHandler(this.props.serviceTypeIds, data.serviceTypeId)
-        this.props.setselectedServices(data, e.target.checked)
-        this.props.checkServiceType(this.props.serviceTypeList, data.serviceTypeId, e.target.checked)
-        this.props.setServiceTypeIds(serviceTypeIds)
+        await this.props.setselectedServices(data, isChecked)
+        await this.props.checkServiceType(this.props.serviceTypeList, data.serviceTypeId, isChecked)
+        await this.props.setServiceTypeIds(serviceTypeIds)
         this.serviceTypes = this.props.services
-        this.setState({
-            serviceTypeId: this.serviceTypes,
+        await this.setState({
+            serviceTypeId: this.props.services,
             serviceTypeSelected: false
         })
         this.isDataEntered = true;
@@ -736,7 +728,6 @@ export class Schedule extends Component {
             } else if (this.state.selectedRecurringType === RECURRING_PATTERN_OPTIONS.monthly && this.state.monthlyOptions === 2) {
                 savePlan = this.validate(validate.recurring.monthly.second)
             }
-
             if (!savePlan && this.state.latitude !== 0 && this.state.longitude !== 0) {
                 this.savePlan();
             }
@@ -791,7 +782,7 @@ export class Schedule extends Component {
         let { isIndividualScheduleEdit } = this.state
 
         this.props.getValidPatientAddress(this.getSelectedData(), (isValid) => {
-            isValid && (isIndividualScheduleEdit ? this.openConfirmationPopup() : this.props.createSchedule(this.getSelectedData()))
+            isValid && (isIndividualScheduleEdit ? (this.props.services.length > 0 && this.openConfirmationPopup()) : this.props.createSchedule(this.getSelectedData()))
         });
     }
 
@@ -827,8 +818,8 @@ export class Schedule extends Component {
 
         let serviceTypeIds = unique(this.props.services,"serviceTypeId")
         let serviceCategoryIds = unique(this.props.services,"serviceCategoryId")
-
-        let isPlanEdit = !compareTwoParams(serviceTypeIds, this.props.editServiceTypeIds) || !compareTwoParams(serviceCategoryIds, this.props.editServiceCategoryIds)
+        
+        let isPlanEdit = this.props.services.length > 0 && (!compareTwoParams(serviceTypeIds, this.props.editServiceTypeIds) || !compareTwoParams(serviceCategoryIds, this.props.editServiceCategoryIds))
         let serviceTypes = this.props.services.map((types) => {
             let updatedTypes = omit(types, ['serviceCategoryId']);
             return updatedTypes
@@ -969,8 +960,8 @@ export class Schedule extends Component {
                                             onClickSave={this.state.onClickSave}
                                         />
                                     </div>
-                                    {this.state.isIndividualScheduleEdit && !this.props.isViewPlan &&
-                                        <span>Note: If any changes in the Service Category or Service Type will led to create a new plan for the individual.</span>
+                                    {this.state.isIndividualScheduleEdit &&
+                                        <span>Note: Any changes to the Service Category or Service Type will led to creation of a new plan for the individual.</span>
                                     }
                                 </div>
                             }

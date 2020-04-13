@@ -17,7 +17,7 @@ function ServiceTypes(props) {
                     value={j}
                     checked={serviceTypes.isChecked}
                     onChange={(e)=>{
-                    props.handleServiceType(serviceTypes, e)
+                    props.handleServiceType(serviceTypes, e.target.checked)
                 }}
                 />
                 <label className='ServiceTypeLink' htmlFor={'ServiceType' + catNum}>
