@@ -1,6 +1,8 @@
 import React from 'react';
 import { HEADER_ACTIONS } from './constants';
 import { omit } from 'lodash'
+import { caseInsensitiveComparer } from '../../../../../utils/comparerUtility';
+import { SERVICE_STATUS } from '../../../../../redux/constants/constants'
 
 export const Body = props => {
     let updatedHeader = omit(props.header,[HEADER_ACTIONS.className])
@@ -30,8 +32,9 @@ export const Body = props => {
                                         {`${item[key]} %`}
                                     </div></td>
                             case HEADER_ACTIONS.rating:
-                                return <td><span className='Rating'><i className='iconFilledStar' /> {item[key]}</span></td>
-        
+                                return <td><span className='Rating'><i className='iconFilledStar' /> {item[key]}</span></td>                            
+                            case HEADER_ACTIONS.status:
+                                return <td title={item[key]}>{ caseInsensitiveComparer(item[key],SERVICE_STATUS.OverDue.oldValue) ? SERVICE_STATUS.OverDue.newValue : item[key] }</td>                    
                             default:
                                 return <td title={item[key]}>{item[key]}</td>
                         }
