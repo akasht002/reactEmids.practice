@@ -3,5 +3,6 @@ export const HEADER_ACTIONS = {
     icon: 'icon',
     task: 'task',
     className: 'className',
-    rating: 'rating'
+    rating: 'rating',
+    status:'visitStatus'
 }
