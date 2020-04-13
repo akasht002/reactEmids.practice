@@ -32,7 +32,7 @@ const EmergencyAttorneyContact = (
                     />
                     <EmergencyAttorneyDetails
                         details={attorneyContactDetails}
-                        header={'Attorney'}
+                        header={'Legal Guardian/Power of Attorney'}
                     />
                 </div>
             </div>

@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { PointOfService } from '../../../../components';
 import { formatPhoneNumber } from '../../../../utils/formatName'
+import { caseInsensitiveComparer } from "../../../../utils/comparerUtility";
 
 const EmergencyAttorneyDetails = ({
     header,
@@ -16,11 +17,15 @@ const EmergencyAttorneyDetails = ({
                 </div>
                 {details !== "" ? <div className='ConnectionsWidget CoreoWidget vital-block'>
                     <p className='CoreoAssociationHeader mb-1'>Name</p>
-                    <p>{`${firstName} ${lastName}`}</p>
+                    <p>{`${firstName || ''} ${lastName || ''}`}</p>
                     <p className='CoreoAssociationHeader mb-1 theme-primary'>Phone Number</p>
                     <p>{formatPhoneNumber(phoneNumber)}</p>
-                    <p className='CoreoAssociationHeader mb-1'>Relationship to Individual</p>
-                    <p>{relationship}</p>
+                    {!caseInsensitiveComparer(header, 'Emergency') &&
+                        <Fragment>
+                            <p className='CoreoAssociationHeader mb-1'>Relationship to Individual</p>
+                            <p>{relationship}</p>
+                        </Fragment>
+                    }
                     <div className='SummaryContent POS mb-4 emergency-address-block'>
                         <ul className="SPCertificateList theme-primary">
                             <li className="SPAddressItems">
