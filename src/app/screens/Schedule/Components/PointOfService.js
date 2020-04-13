@@ -188,6 +188,10 @@ export class PointOfService extends Component {
         return (
 
             <div className='ServiceType WhiteBG'>
+                <div className="add-block-pos">
+                 <i className='SPIconLarge SPIconAdd'
+                    onClick={() => this.props.handlePOSAddress('0')} />
+                </div>
                 <Slider {...Locationsettings} className="POSAddressSlider">
                     <div className="form-radio AddressCardWidget">
                         {/* <input
@@ -200,10 +204,7 @@ export class PointOfService extends Component {
                             defaultChecked={false}
                             checked={this.props.selectedPOS === '0'}
                         /> */}
-                        <i
-                            className='SPIconLarge SPIconAdd'
-                            onClick={() => this.props.handlePOSAddress('0')}
-                        />
+                       
                         {/* <label className="form-radio-label AddressPOS" htmlFor="AddressPOS0">
                             <span className='POSTitle'>New Address</span>
                             <span className='POSAddress'>Enter a new location</span>

@@ -1076,6 +1076,25 @@ fieldset.right-colblock2 {
   width: 100% !important;
 }
 
+.add-block-pos {
+  position: absolute;
+  right: 50px;
+  display: block;
+  width: 10%;
+  margin-top: -50px;
+}
+
+.add-block-pos i {
+  display: block;
+  float: right;
+}
+
+@media (min-width: 1367px) {
+  .add-block-pos {
+    right: 64px;
+  }
+}
+
 /*assign-SP-card*/
 
 .ServiceTypesWidget .assign-sp-block .assign-SP-card {
