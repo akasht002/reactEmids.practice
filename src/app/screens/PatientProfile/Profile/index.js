@@ -61,12 +61,12 @@ export class Profile extends Component {
                 { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USERTYPES.PATIENT_AND_GUARDIAN) ? 
                 <PersonalDetail /> : <div>
                   <PersonalDetail />
-                  <EmergencyAttorneyContact />
                   <ClinicalCondition />
                   <PointService />
                   <Languages />
                 </div>}
                 <MyConnections />
+                <EmergencyAttorneyContact />
               </div>
             </div>
           </div>
