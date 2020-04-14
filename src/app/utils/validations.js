@@ -1,6 +1,7 @@
 import moment from 'moment'
-import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE, VISIT_PROCESSING_STATUS, PATIENT_STATUS  } from '../constants/constants'
+import { DATE_FORMAT, DATE_FORMAT_MONTH,DATE_FORMATS, DATE_YEAR, serviceTypesImage, serviceCategoriesImage,DEFAULT_CATEGORY_IMAGE, VISIT_PROCESSING_STATUS, PATIENT_STATUS, USERTYPES  } from '../constants/constants'
 import _ from 'lodash'
+import { isEntityUser } from './userUtility'
 
 const genderID = [{ Female: 1 }, { Male: 2 }]
 
@@ -345,4 +346,8 @@ export const nullCheckArray = (array,index) => {
 
 export const isEmpty = (val) => {
   return (val === undefined || val == null || val.length <= 0) ? true : false;
+}
+
+export const getUserTypeInitials = () => {
+  return isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER
 }
