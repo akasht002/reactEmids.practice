@@ -54,6 +54,8 @@ export const onSetUserIdCompletion = (data) => {
     }
 };
 
+// Let it be till all EU/ESP onboarding completes
+
 // export function setPassword(data) {
 //     return (dispatch, getState) => {
 //         let userDetails = getState().onboardingState.verifyUserIDState.serviceProviderDetails
@@ -74,6 +76,7 @@ export const onSetUserIdCompletion = (data) => {
 // };
 
 export const setPassword = (data) => async (dispatch, getState) => {
+    dispatch(startLoading());
     let userDetails = getState().onboardingState.verifyUserIDState.serviceProviderDetails
     let payload =
     {
@@ -90,8 +93,8 @@ export const setPassword = (data) => async (dispatch, getState) => {
     }
 
     try {
-        await Post(API.setPassword, payload)
-        dispatch(onboardSucess());
+        let resp = await Post(API.setPassword, payload)
+        resp && dispatch(onboardSucess());
         dispatch(endLoading());
     } catch (error) {
         dispatch(endLoading());
