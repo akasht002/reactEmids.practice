@@ -288,7 +288,7 @@ export function mapDispatchToProps(dispatch) {
 export function mapStateToProps(state) {
     return {
         userEmail: state.onboardingState.setPasswordState.userEmail,
-        isLoading: state.onboardingState.setPasswordState.loading,
+        isLoading: state.loadingState.isLoading,
         userType: state.onboardingState.verifyContactState.serviceProviderDetails.userType,
         eulaContent: state.authState.userAgreementState.eulaContent,
         securityQuestion: state.onboardingState.setPasswordState.securityQuestion
