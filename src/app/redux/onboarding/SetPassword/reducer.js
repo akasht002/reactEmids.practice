@@ -9,7 +9,8 @@ const defaultState = {
         mobileNumber: '',
         passcode: '',
         token: '',
-        userType: ''
+        userType: '',
+        securityQuestion:null
     },
 };
 
@@ -40,6 +41,12 @@ const setPasswordState = (state = defaultState, action) => {
 
         case SetPassword.clearOnboardingState:
             return defaultState;
+
+        case SetPassword.getQuestions:
+            return {
+                ...state,
+                securityQuestion: action.data
+            }
 
         default:
             return state;
