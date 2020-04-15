@@ -103,6 +103,24 @@ export class SetPassword extends React.Component {
         return this.state.securityAnswer.length > 0 && this.state.selectedQuestionName.length > 0 
     }
 
+    handelPasswordChange = (e) => {
+        this.setState({
+            password: e.target.value,
+            passwordMatch: true,
+            passwordCombination: true,
+            passMatch: false
+        })
+    }
+
+    handelConfirmPasswordChange = (e) => {
+        this.setState({
+            confirmPassword: e.target.value,
+            passwordMatch: true,
+            passwordCombination: true,
+            passMatch: false,
+        })
+    }
+
     render() {
         let navigationData = CoreoWizNavigationData;
         if (this.props.userType === USERTYPES.ENTITY_USER) {
@@ -110,7 +128,6 @@ export class SetPassword extends React.Component {
                 return data.id !== 0;
             });
         }
-        const dropDownOptions = this.getQuestions()
         return (
             <ScreenCover isLoading={this.props.isLoading} test-setPassword="test-setPassword">
                 <CoreoWizScreen
@@ -142,13 +159,7 @@ export class SetPassword extends React.Component {
                                                 maxlength={25}
                                                 className="form-control"
                                                 value={this.state.password}
-                                                textChange={(e) => this.setState({
-                                                    password: e.target.value,
-                                                    passwordMatch: true,
-                                                    passwordCombination: true,
-                                                    passMatch: false,
-
-                                                })}
+                                                textChange={(e) => this.handelPasswordChange(e)}
                                                 onBlur={this.validatePassword}
                                                 onCopy={(e) => { e.preventDefault() }}
                                                 onPaste={(e) => { e.preventDefault() }}
@@ -165,12 +176,7 @@ export class SetPassword extends React.Component {
                                                 maxlength={25}
                                                 className="form-control"
                                                 value={this.state.confirmPassword}
-                                                textChange={(e) => this.setState({
-                                                    confirmPassword: e.target.value,
-                                                    passwordMatch: true,
-                                                    passwordCombination: true,
-                                                    passMatch: false,
-                                                })}
+                                                textChange={(e) => this.handelConfirmPasswordChange(e)}
                                                 onBlur={this.validatePassword}
                                                 onCopy={(e) => { e.preventDefault() }}
                                                 onPaste={(e) => { e.preventDefault() }}
@@ -193,7 +199,7 @@ export class SetPassword extends React.Component {
                                                     <SelectField>
                                                         <Select
                                                             placement="auto"
-                                                            options={dropDownOptions}
+                                                            options={this.getQuestions()}
                                                             onChange={this.changeSelectedValue}
                                                             selectedValue={this.state.selectedQuestionName}
                                                             className={'onBoardingSelect'}>
