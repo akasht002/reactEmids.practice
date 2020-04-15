@@ -3,4 +3,5 @@ export const SetPassword = {
     onSetUserDetailsCompletion: 'set_user_details/setPassword',
     cancelClick: 'cancel_click/setPassword',
     clearOnboardingState: 'clear_state/setPassword',
+    getQuestions: "get_questions/setPassword"
 };
