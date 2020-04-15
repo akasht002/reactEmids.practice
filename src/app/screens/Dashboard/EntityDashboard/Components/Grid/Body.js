@@ -13,7 +13,7 @@ export const Body = props => {
                     {Object.keys(updatedHeader).map(key => {
                         switch (key) {
                             case HEADER_ACTIONS.button:
-                                return <td><span className="life-map-btn"><button className="btn btn-outline-primary">Life Map</button></span></td>
+                                return <td><span className="life-map-btn"><button className="btn btn-outline-primary">Face Sheet</button></span></td>
                             case HEADER_ACTIONS.icon:
                                 return <td><span className="actions-block"><i className="iconLogInto" onClick={() => props.impersinate(item)}></i></span></td>
                             case HEADER_ACTIONS.task:

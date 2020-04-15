@@ -338,7 +338,7 @@ export class Assessment extends Component {
                                                                             }
                                                                                                                                                
                                                                     return (
-                                                                        <div className="form-radio col-md-3" key={answer.id}>
+                                                                        <div className="form-radio col-md-3 custome-md-2" key={answer.id}>
                                                                             <input className="form-radio-input"
                                                                                 id={answer.id}
                                                                                 type="radio"

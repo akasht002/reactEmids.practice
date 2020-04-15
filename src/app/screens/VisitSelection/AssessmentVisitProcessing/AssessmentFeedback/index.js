@@ -239,7 +239,7 @@ export class AssessmentFeedback extends Component {
                                                                         return '';
                                                                     });
                                                                     return (
-                                                                        <div className="form-radio col-md-3" key={answer.id}>
+                                                                        <div className="form-radio col-md-2 custome-md-2" key={answer.id}>
                                                                             <input className="form-radio-input"
                                                                                 id={answer.id}
                                                                                 type="radio"

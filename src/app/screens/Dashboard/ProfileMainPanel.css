@@ -1309,8 +1309,9 @@ div.ProfileConversation {
     width: 100%;
 }
 
-.topProfile .bottomPalette .NoRequestServiceProvider .NoInfoText .NoServiceInfoLink {
+.topProfile .bottomPalette .NoRequestServiceProvider .NoInfoText .NoServiceInfoLink,  .EmptySR  .NoServiceInfoLink {
     margin-top: -11px;
+    color: #ffffff !important;
 }
 
 .topProfile .bottomPalette .NoRequestServiceProvider .myPlanBlank {
@@ -1342,6 +1343,13 @@ div.ProfileConversation {
     background-position: 50% 34%;
     background-size: auto;
     background-repeat: no-repeat;
+}
+
+.NoRequestServiceProvider  .no-blockinfo-top .NewSPReq, .EmptySR  .no-blockinfo-top .NewSPReq  {
+    background-image: url("../../assets/images/empty-sr-update.png");
+    background-color: #1e3d5c !important;
+    background-repeat: no-repeat;
+    background-size: 40px;
 }
 
 .NoInfoText .NoServiceInfoLink {
@@ -1396,6 +1404,19 @@ div.ProfileConversation {
 .No-Coverastion-Block:hover {
     background-color: #eaeaea;
     cursor: pointer;
+}
+
+.NoInformation .no-blockinfo-top .No-Coverastion-Block {
+    background-image: url('../../assets/images/convsn-icon-update.png');
+    background-color: #1e3d5c !important;
+}
+
+.no-blockinfo-top .No-Coverastion-Block .NoServiceInfoLink {
+    color: #ffffff !important;
+}
+
+.NoInformation .MsgThreadContent {
+    max-width: 100%;
 }
 
 /*IE-Edge*/
