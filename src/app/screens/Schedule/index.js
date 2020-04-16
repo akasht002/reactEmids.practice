@@ -347,8 +347,8 @@ export class Schedule extends Component {
         this.isDataEntered = true;
     }
 
-    handlePOSAddress = (e) => {
-        let currentValue = e.target.value
+    handlePOSAddress = (value) => {
+        let currentValue = value
         this.setState({
             addressType: '',
             selectedPOS: currentValue,
@@ -359,8 +359,8 @@ export class Schedule extends Component {
             selectedOptionState: null,
             isDefaultAddress: true
         });
-        this.props.setSelectedPos(e.target.value)
-        if (e.target.value === '0') {
+        this.props.setSelectedPos(value)
+        if (value === '0') {
             this.props.getValidPatientAddressSuccess(false)
         }
         this.isDataEntered = true;
