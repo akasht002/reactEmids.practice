@@ -151,6 +151,6 @@ export const NOTIFICATIONS = {
 export const SERVICE_STATUS = {
    OverDue: {
       oldValue:"OverDue",
-      newValue:"Over Due"
+      newValue:"Overdue"
    }
 }
