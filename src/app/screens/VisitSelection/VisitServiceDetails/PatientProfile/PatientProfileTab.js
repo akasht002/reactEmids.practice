@@ -11,19 +11,19 @@ export const PatientProfileTab = props => {
     return (
         <Fragment>
             <TabPane tabId='3' className='TabBody'>
-            <div className="colorblock theme-primary-gradient"></div>
-             <div className="my-patientblock">   
-            <PersonalDetail 
-             showPhoneNumber={props.showPhoneNumber}
-             onClickConversation={props.onClickConversation}
-             onClickVideoConference={props.onClickVideoConference}
-            />
-            <EmergencyAttorneyContact />
-            <ClinicalCondition />
-            <PointService />
-            <Languages />
-            <MyConnections />
-            </div>
+                <div className="colorblock theme-primary-gradient"></div>
+                <div className="my-patientblock">
+                    <PersonalDetail
+                        showPhoneNumber={props.showPhoneNumber}
+                        onClickConversation={props.onClickConversation}
+                        onClickVideoConference={props.onClickVideoConference}
+                    />
+                    <ClinicalCondition />
+                    <PointService />
+                    <Languages />
+                    <MyConnections />
+                    <EmergencyAttorneyContact />
+                </div>
             </TabPane>
         </Fragment>
     )
