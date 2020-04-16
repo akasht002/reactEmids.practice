@@ -25,7 +25,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
         return (
             <div className="full-block page-print-view full-height-block">
                 <div className="row full-block top-row page-break">
-                    <h4 className="mt-3 mb-3">Coreo Home Initial Assessment Visit - {serviceRequestVisitNumber}</h4>
+                    <h3 className="mt-3 mb-3">Coreo Home Initial Assessment Visit - {serviceRequestVisitNumber}</h3>
                     <div className="col-lg-12 col-md-12 border-block top-block-details mt-3 mb-3 bg-white">
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 border-right pdf-block min-74">
@@ -93,7 +93,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                 </div>
 
                 <div className="full-block-table page-break">
-                    <h5 className="mt-3 mb-3 text-left">Visit History details</h5>
+                    <h4 className="mt-3 mb-3 text-left">Visit History details</h4>
                     <hr></hr>
                     <div className="print-table-top details-view-block">
                         <div className="row">
@@ -129,7 +129,7 @@ getTaskPercentage = (totalTaskCompleted, totalTask) => {
                 </div>
 
                 <div className="full-block-table page-break">
-                    <h5 className="mt-3 mb-3 text-left">Assessment Questions</h5>
+                    <h4 className="mt-3 mb-3 text-left">Assessment Questions</h4>
                     <hr></hr>
                     <div className="print-table-top questions-view-block">
 

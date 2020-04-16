@@ -19,12 +19,17 @@
     margin-bottom: 5px;
     margin-top: 10px;
     display: block;
+    font-size: 17px;
 }
 
 .top-block-details p,
 .top-block-details span,
 .top-block-details .emergency-address-block ul li p span {
     color: #444;
+}
+
+.full-block .emergency-address-block ul li p span {
+    font-size: 17px;
 }
 
 .emergency-address-block ul li p
@@ -37,6 +42,7 @@
     margin-bottom: 10px;
     display: block;
     color: #8c8c8c;
+    font-size: 17px;
 }
 
 .bg-white {
@@ -48,7 +54,7 @@
 }
 
 .top-block-details .emergency-address-block ul li p {
-    font-size: 16px;
+    font-size: 17px;
     margin-top: 0px;
     font-weight: 400;
 }
@@ -77,8 +83,8 @@
     min-height: 74px !important;
 }
 
-.full-height-block h4,
-.full-height-block h5 {
+.full-height-block h3,
+.full-height-block h4 {
     text-align: center;
     display: block;
     color: #1e3d5c;
@@ -205,7 +211,7 @@ div.full-block-table {
 
 .title-label,
 .details-view-user {
-    font-size: 1rem;
+    font-size: 17px;
     display: block;
 }
 
@@ -219,13 +225,6 @@ div.full-block-table {
     color: #8c8c8c;
 }
 
-.full-height-block h4,
-.full-height-block h5 {
-    text-align: center;
-    display: block;
-    color: #1e3d5c;
-}
-
 .full-block hr {
     background-color: #1e3d5c;
 }
@@ -233,6 +232,7 @@ div.full-block-table {
 .questions-view-block .FeedbackQuestionWidget .FeedbackQuestion {
     margin-bottom: 3px;
     color: #444444;
+    font-size: 17px;
 }
 
 .questions-view-block .FeedbackAnswerWidget label.form-radio-label {
@@ -254,6 +254,7 @@ div.full-block-table {
     border: none !important;
     background: transparent !important;
     margin-bottom: 0;
+    font-size: 17px;
 }
 
 .questions-view-block .form-radio-input:checked~.form-radio-label.theme-primary {
@@ -279,6 +280,12 @@ div.full-block-table {
     .full-block-table.full-height-block {
         padding: 0 15px;
     }
+
+    .full-height-block h3 {
+      display: block;
+      text-align: center;
+      width: 100%;
+  }
 
     .print-textbox,
     .FeedbackQuestionWidget,

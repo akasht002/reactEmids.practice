@@ -85,6 +85,34 @@
     padding: 0 0 0 15px;
 }
 
+.FeedbackAnswerWidget .custome-md-2 {
+    flex: 0 0 17%;
+    max-width: 17%;
+}
+
+.FeedbackAnswerWidget .custome-md-2 label.form-radio-label {
+    font-weight: normal;
+    padding: 15px 0px 15px 45px;
+}
+
+.FeedbackAnswerWidget .custome-md-2.form-radio .RadioBoxIcon {
+    left: 16px;
+}
+
+@media only screen and (max-width: 1536px) {
+    .FeedbackAnswerWidget .custome-md-2 {
+        flex: 0 0 21%;
+        max-width: 21%;
+    }
+  }
+
+  @media only screen and (max-width: 1280px) {
+    .FeedbackAnswerWidget .custome-md-2 {
+        flex: 0 0 23%;
+        max-width: 23%;
+    }
+  }
+
 @media (max-width: 1024px){
     .rightTimerContainer div.FeedbackTimer{
         top: 20px;
