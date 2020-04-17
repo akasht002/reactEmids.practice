@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component,Fragment } from "react";
 import moment from "moment";
 import Select from "react-select";
 import _ from 'lodash'
@@ -19,7 +19,7 @@ import {
 } from "../../redux/dashboard/Dashboard/actions";
 import { getServiceRequestId, setEntityServiceProvider, setActiveTab }
   from "../../redux/visitSelection/VisitServiceDetails/actions";
-import { ServiceCalendarList, ShowIndicator } from './Components/CalendarList'
+import { ServiceCalendarList, ShowIndicator,ServiceVisitsDefault } from './Components/CalendarList'
 import { CalendarDefault } from './Components/CalendarDefault'
 import { getUserInfo } from "../../services/http";
 import { Path } from "../../routes";
@@ -396,62 +396,22 @@ export class ServiceCalendar extends Component {
   }
 
   getDates = selectedDate => {
-    // let dates = [];
+    let dateArray = [];
+    let len = this.state.width > '1280' ? 3 : 2;
+    for(let i = len;i >= 0;i--){
+       dateArray.push({
+        day: moment(selectedDate).subtract(i, 'days'),
+        date: moment(selectedDate).subtract(i, 'days')
+      })
+    }
 
-    if (this.state.width > '1280')
-      return [
-        {
-          day: moment(selectedDate).subtract(3, 'days'),
-          date: moment(selectedDate).subtract(3, 'days')
-        },
-        {
-          day: moment(selectedDate).subtract(2, 'days'),
-          date: moment(selectedDate).subtract(2, 'days')
-        },
-        {
-          day: moment(selectedDate).subtract(1, 'days'),
-          date: moment(selectedDate).subtract(1, 'days')
-        },
-        {
-          day: moment(selectedDate),
-          date: moment(selectedDate)
-        },
-        {
-          day: moment(selectedDate).add(1, 'days'),
-          date: moment(selectedDate).add(1, 'days')
-        },
-        {
-          day: moment(selectedDate).add(2, 'days'),
-          date: moment(selectedDate).add(2, 'days')
-        },
-        {
-          day: moment(selectedDate).add(3, 'days'),
-          date: moment(selectedDate).add(3, 'days')
-        }
-      ]
-    else
-      return [
-        {
-          day: moment(selectedDate).subtract(2, 'days'),
-          date: moment(selectedDate).subtract(2, 'days')
-        },
-        {
-          day: moment(selectedDate).subtract(1, 'days'),
-          date: moment(selectedDate).subtract(1, 'days')
-        },
-        {
-          day: moment(selectedDate),
-          date: moment(selectedDate)
-        },
-        {
-          day: moment(selectedDate).add(1, 'days'),
-          date: moment(selectedDate).add(1, 'days')
-        },
-        {
-          day: moment(selectedDate).add(2, 'days'),
-          date: moment(selectedDate).add(2, 'days')
-        }
-      ]
+    for(let i = 1;i <= len;i++){
+      dateArray.push({
+       day: moment(selectedDate).add(i, 'days'),
+       date: moment(selectedDate).add(i, 'days')
+     })
+   }
+   return dateArray;
   }
 
   goToServiceVisits = (data) => {
@@ -472,15 +432,8 @@ export class ServiceCalendar extends Component {
     return data
   }
 
-  render() {
-    const visitCount = this.props.serviceVistCount;
-    let dates = this.getDates(this.state.startDate)
-    let optionChecked = this.state.reportDay
-    let count = this.state.width > '1280' ? 7 : 5
-
-    let monthList = this.getYears();
-
-    let dateList = dates.map((daysMapping, i) => {
+  getDateList = (dates,visitCount,optionChecked) => {
+    return dates.map((daysMapping, i) => {
       let className = "";
       if (daysMapping.date.format() === moment(today).format()) {
         className = " toDay";
@@ -520,31 +473,53 @@ export class ServiceCalendar extends Component {
         </div>
       );
     });
+  }
+
+  getVisitData = (serviceVisit)=> {
+    let visitLength =  this.props.serviceVist && this.props.serviceVist.length
+    let serviceVisits = <ServiceCalendarList
+    onClickConversation={data => this.onClickConversation(data)}
+    onClickVideoConference={data => this.onClickVideoConference(data)}
+    Servicelist={serviceVisit}
+    togglePersonalDetails={this.togglePersonalDetails}
+    handleClick={this.handleClick}
+    onClick={link => this.navigateProfileHeader(link)}
+    goToPatientProfile={this.handleClick}
+    goToESPProfile={
+      data => {
+        this.props.setESP(data);
+        this.props.goToESPProfile();
+      }
+    }
+    handlePhoneNumber={this.handlePhoneNumber}
+    goToServiceVisits = {this.goToServiceVisits}
+  />
+    return this.props.isServiceVisitLoading ?<Preloader/>: visitLength > 0 ? (
+      visitLength > 10 ? serviceVisits : 
+      <Fragment> 
+          {serviceVisits} 
+          <ServiceVisitsDefault count={(10 - visitLength)}/> 
+      </Fragment> 
+      ):<CalendarDefault/>
+  }
+
+  render() {
+    const visitCount = this.props.serviceVistCount;
+    let dates = this.getDates(this.state.startDate)
+    let optionChecked = this.state.reportDay
+    let count = this.state.width > '1280' ? 7 : 5
+
+    let monthList = this.getYears();
+
+    let dateList = this.getDateList(dates,visitCount,optionChecked);
 
     let serviceVist = this.props.serviceVist;
 
     let start_day_month = parseInt(dates[0].date.format('MM'), 10)
     let end_day_month = parseInt(dates[(count - 1)].date.format('MM'), 10)
     let selectedMonth = parseInt(this.state.selectedMonths, 10)
-    let visitData = this.props.isServiceVisitLoading ?<Preloader/>:this.props.serviceVist.length > 0 ? (
-      <ServiceCalendarList
-        onClickConversation={data => this.onClickConversation(data)}
-        onClickVideoConference={data => this.onClickVideoConference(data)}
-        Servicelist={serviceVist}
-        togglePersonalDetails={this.togglePersonalDetails}
-        handleClick={this.handleClick}
-        onClick={link => this.navigateProfileHeader(link)}
-        goToPatientProfile={this.handleClick}
-        goToESPProfile={
-          data => {
-            this.props.setESP(data);
-            this.props.goToESPProfile();
-          }
-        }
-        handlePhoneNumber={this.handlePhoneNumber}
-        goToServiceVisits = {this.goToServiceVisits}
-      />
-    ):<CalendarDefault/>
+    let visitData = this.getVisitData(serviceVist) 
+    
 
     let modalTitle = "Assign Service Provider";
     let modalType = "";
