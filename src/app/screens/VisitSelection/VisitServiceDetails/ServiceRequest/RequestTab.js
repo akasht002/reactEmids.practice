@@ -50,6 +50,8 @@ export const RequestTab = props => {
                             <Details
                                 details={props.VisitServiceDetails}
                                 daysType={props.daysType}
+                                handleServiceCategory={props.handleServiceCategory}
+                                checkedServiceCategoryId = {props.checkedServiceCategoryId}
                             />
                             {!isEntity &&
                                 <div className="sr-feature-pic">
