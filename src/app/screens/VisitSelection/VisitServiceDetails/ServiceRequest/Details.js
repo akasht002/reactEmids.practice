@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Carousel } from '../../../../components';
 
 import { ServiceCategory } from '../Components/ServiceCategory';
-import { RECURRING_PATTERN, MORNING, AFTERNOON, EVENING} from '../../../../constants/constants';
+import { RECURRING_PATTERN, MORNING, AFTERNOON, EVENING, DATE_FORMATS} from '../../../../constants/constants';
 import Moment from 'react-moment';
 import { unique } from '../../../../utils/arrayUtility';
 
@@ -46,14 +46,14 @@ export const Details = props => {
 
     function recurringPattern() {
         if (props.details.occurence !== 0) {
-            return '- ' + props.details.occurence + ' occurrences'
+            return `- ${props.details.occurence} occurrences`;
         } else {
             return (
                 <React.Fragment>
                     &nbsp;
                     -
                     &nbsp;
-              <Moment format='MM/DD/YYYY'>
+              <Moment format= {DATE_FORMATS.mm_dd_yyy}>
                         {props.details.endDate}
                     </Moment>
                 </React.Fragment>

@@ -1195,7 +1195,7 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
-  const { serviceRequestTypeDetails }  = state.visitSelectionState.VisitServiceDetailsState.VisitServiceDetails
+  const { serviceRequestTypeDetails }  = VisitServiceDetailsState.VisitServiceDetails
   const { canProcessVisit } = state.authState.userState.userData.userInfo
   return {
     isScheduleLoading:VisitServiceDetailsState.isScheduleLoading,
