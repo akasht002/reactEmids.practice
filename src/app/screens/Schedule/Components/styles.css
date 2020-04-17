@@ -1877,3 +1877,89 @@ ul.show-more-assignSP li {
 .recurring-msg{
   margin-bottom: 30px
 }
+
+/*new-service-category-css-16-04-2020*/
+
+.ServiceCatList.new-SC-ui input+label:hover
+{
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.new-SC-ui {
+    position: relative;
+}
+
+.new-SC-ui:before {
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #e0e0e0;
+    top: 17px;
+    right: 28px;
+    border-radius: 100%;
+    z-index: 1000;
+    cursor: pointer;
+    border-color: transparent;
+}
+
+.ServiceTypesWidget.PostSR .new-SC-ui input {
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.ServiceCatList.new-SC-ui label:before {
+    border: none !important;
+}
+
+.new-SC-ui.selected label {
+    background-color: transparent;
+    border-color: #186abd;
+}
+
+.new-SC-ui.selected label {
+    border: 4px solid #186abd !important;
+}
+
+.new-SC-ui.selected:before {
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border: 2px solid #ffffff !important;
+    top: 17px;
+    right: 28px;
+    background-image: url('../../../assets/images/checked.svg');
+    background-size: 60%;
+    background-color: #1e3d5c !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+    z-index: 10000;
+}
+
+.new-SC-ui .ServiceCatList input .selected+label.ServiceCatLink.CardBoxes:after {
+    border: none !important;
+}
+
+.new-SC-ui.selected input .selected+label:after {
+    background-color: transparent !important;
+}
+
+.ServiceCatList.new-SC-ui input .selected+label.ServiceCatLink.CardBoxes:after {
+    content: '';
+    position: absolute;
+    border: none;
+    height: initial;
+    width: initial;
+    top: initial;
+    left: initial;
+    border-radius: 5px;
+    -ms-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: initial;
+    z-index: 2;
+}

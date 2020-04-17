@@ -9,10 +9,10 @@ function ServiceCategory(props){
         let catNum = index + 1;
         let image_url = getServiceCategoryImage(service.serviceCategoryId);
         return (
-            <div className='ServiceCatList' key={'ServiceCat' + catNum}>
+            <div className='ServiceCatList new-SC-ui' key={'ServiceCat' + catNum}>
                 <input 
                 id={'ServiceCat' + catNum} 
-                type='radio' 
+                type='checkbox'  
                 name='ServiceCat'
                 checked={service.serviceCategoryId === props.checkedServiceCategoryId}
                 value={catNum}
