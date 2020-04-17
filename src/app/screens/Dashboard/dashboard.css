@@ -661,6 +661,10 @@ a.ProfileCardHeaderLink:hover {
 }
 
 .ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content {
+    height:100%;
+}
+
+.ProfileCard .ProfileCardBody .bottomPalette.ServiceRequestPalette .scrollarea-content .list-group.ProfileServicesVisitList {
     height: 100%;
 }
 
@@ -977,7 +981,7 @@ div.ProfileSearchContainer,
 
     div.ProfileCardBody .ServiceRequestPalette {
         /* height: calc(100vh - 623px); */
-        height: 200px;
+        height: 250px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
@@ -1021,7 +1025,7 @@ div.ProfileSearchContainer,
     }
 
     div.ProfileCardBody .ServiceRequestPalette {
-        height: 170px;
+        height: 200px;
     }
 
     div.ProfileCardBody .ServiceRequestPalette.EmptySR {
