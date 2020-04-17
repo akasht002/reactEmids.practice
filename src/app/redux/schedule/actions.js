@@ -22,7 +22,7 @@ import { uniqBy } from 'lodash'
 import { SERVICE_CATEGORY } from '../../constants/constants';
 import { logError } from '../../utils/logError';
 import { forEach, uniq } from 'lodash';
-import { removeArrayElements, removeArrayObjects, removeDuplicates, unique } from '../../utils/arrayUtility';
+import { removeArrayElements, removeArrayObjects, removeDuplicates } from '../../utils/arrayUtility';
 
 export const getServiceCategorySuccess = (data) => {
     return {
@@ -366,6 +366,9 @@ export function getDays(selectedDaysId = []) {
                     selected: selectedDaysIds.indexOf(value.id) !== -1
                 })
             })
+            let lastElement = data[data.length - 1]
+            data.pop()
+            data.unshift(lastElement)
             dispatch(getDaysSuccess(data))           
         }).catch((err) => {
             logError(err)

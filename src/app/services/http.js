@@ -57,8 +57,8 @@ axios.interceptors.response.use(undefined, err => {
             const originalRequest = error.config;
             save(OKTA.tokenStorage, response.data)
             localStorage.setItem(REFRESH_TOKEN, response.data.accessToken);
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response && response.data.accessToken;
-            originalRequest.headers['Authorization'] = 'Bearer ' + response && response.data.accessToken;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response && response.data.accessToken}`;
+            originalRequest.headers['Authorization'] = `Bearer ${response && response.data.accessToken}`;
             error.config.__isRetryRequest = true;
             return axios(error.config);
         });

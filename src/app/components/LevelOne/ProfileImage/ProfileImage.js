@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import { getUserTypeInitials } from '../../../utils/validations';
 
 function ProfileImage(props) {
     return (
@@ -12,6 +13,7 @@ function ProfileImage(props) {
                     />
                 </svg>
                 <img className={props.profileImage} src={props.src ? props.src : require('../../../assets/images/Blank_Profile_icon.png')} alt="user"/>
+                <div className={`memberType memT-${getUserTypeInitials()}`}>{getUserTypeInitials()}</div>
             </div>
         </div>
 

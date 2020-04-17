@@ -579,7 +579,7 @@ export class ServiceCalendar extends Component {
           {this.props.isServiceVisitLoading && <Preloader/>}
             <ul className="list-group ProfileServicesVisitList">
               {visitData}
-              {(!this.props.disableShowMore) && <li
+              {(!this.props.disableShowMore && this.props.serviceVist.length > 0) && <li
               className="list-group-item ProfileShowMore theme-primary-light"
               onClick={this.clickShowMore}
               >
