@@ -1,35 +1,17 @@
 import React, { Fragment } from 'react';
 import { Carousel } from '../../../../components';
-import { RECURRING_PATTERN, MORNING, AFTERNOON, EVENING} from '../../../../constants/constants';
+
+import { ServiceCategory } from '../Components/ServiceCategory';
+import { RECURRING_PATTERN, MORNING, AFTERNOON, EVENING, DATE_FORMATS} from '../../../../constants/constants';
 import Moment from 'react-moment';
 import { unique } from '../../../../utils/arrayUtility';
 
-export const Details = props => {
-    let serviceCategories = props.details && unique(props.details.serviceCategories,"serviceCategoryDescription").join(', ')
-
-    function recurringPattern() {
-        if (props.details.occurence !== 0) {
-            return '- ' + props.details.occurence + ' occurrences'
-        } else {
-            return (
-                <React.Fragment>
-                    &nbsp;
-                    -
-                    &nbsp;
-              <Moment format='MM/DD/YYYY'>
-                        {props.details.endDate}
-                    </Moment>
-                </React.Fragment>
-            )
-        }
-    }
-
-    let sliderTypes =
-        props.details && props.details.serviceRequestTypeDetails &&
+export const getServiceTypeSlider = (props) =>{    
+        return props.details && props.details.serviceRequestTypeDetails &&
         props.details.serviceRequestTypeDetails.map(
             (serviceTypes, index) => {
                 let catNum = index + 1
-                return (
+                return ( serviceTypes.serviceCategoryId === props.checkedServiceCategoryId &&
                     <div className='ServiceTypeList' key={`ServiceTypeListId_${index}`}>
                         <input
                             id={serviceTypes.serviceRequestTypeDetailsId}
@@ -57,7 +39,29 @@ export const Details = props => {
                 )
             }
         )
+    }       
 
+export const Details = props => {
+    let serviceCategories = props.details && unique(props.details.serviceCategories,"serviceCategoryDescription").join(', ')
+
+    function recurringPattern() {
+        if (props.details.occurence !== 0) {
+            return `- ${props.details.occurence} occurrences`;
+        } else {
+            return (
+                <React.Fragment>
+                    &nbsp;
+                    -
+                    &nbsp;
+              <Moment format= {DATE_FORMATS.mm_dd_yyy}>
+                        {props.details.endDate}
+                    </Moment>
+                </React.Fragment>
+            )
+        }
+    }
+
+   
     let modifiedDays = []
 
     props.daysType &&
@@ -109,12 +113,17 @@ export const Details = props => {
                     <h2 className='ServicesTitle theme-primary'>Service Category</h2>
                     <p className='ScheduleTypeTitle'>
                         {serviceCategories}
+                        <ServiceCategory
+                            categoryList={props.details.serviceCategories}
+                            handleServiceCategory={props.handleServiceCategory}
+                            checkedServiceCategoryId={props.checkedServiceCategoryId}
+                        />
                     </p>
                     <h2 className='ServicesTitle theme-primary'>Service Types</h2>
                     <div className='ServiceType visit-srq-slider WhiteBG'>
                         <div className='ServiceTypesSlider Summary'>
                             <Carousel className="ServiceTypesSlider">
-                                {sliderTypes}
+                                {getServiceTypeSlider(props)}
                             </Carousel>
                         </div>
                     </div>

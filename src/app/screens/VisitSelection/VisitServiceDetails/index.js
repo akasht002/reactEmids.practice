@@ -41,6 +41,7 @@ import {
   clearServiceType,
   clearServiceCategory
 } from "../../../redux/visitSelection/ServiceRequestFilters/actions";
+import {tabdata,header} from './data'
 
 import { getUserInfo } from '../../../services/http'
 import {
@@ -129,7 +130,8 @@ export class VisitServiceDetails extends Component {
       conversationErrMsg: '',
       selectedDuration: null,
       isQuestionareModalOpen:false,
-      textareaValue: ''
+      textareaValue: '',
+      checkedServiceCategoryId:-1
     }
     this.selectedSchedules = [];
     this.espId = '';
@@ -170,6 +172,13 @@ export class VisitServiceDetails extends Component {
     this.props.resetServiceDetails()
     this.props.setEntityDashboard(false)
     this.applyReset();
+  }
+
+  componentWillReceiveProps(nextProps)  {
+    if (nextProps.serviceRequestTypeDetails && nextProps.serviceRequestTypeDetails.length > 0) {
+      this.setState({  checkedServiceCategoryId: nextProps.serviceRequestTypeDetails && nextProps.serviceRequestTypeDetails.length > 0 &&  nextProps.serviceRequestTypeDetails[0].serviceCategoryId });
+    }
+   
   }
 
   componentDidUpdate() {
@@ -808,6 +817,10 @@ handleTextarea = (e) => {
   })
 }
 
+handleServiceCategory = (data) =>{
+  this.setState({ checkedServiceCategoryId: data.serviceCategoryId})
+}
+
   render() {
     let srQuestionareDetaisModalContent= <Questions questionsLists={this.formatJSON(this.props.questionAnswerList)}/>;
     
@@ -914,43 +927,7 @@ handleTextarea = (e) => {
         </div>
       </div>
 
-    let tabdata = [
-      {
-        id: '1',
-        label: 'Request'
-      },
-      {
-        id: '2',
-        label: 'My Plan'
-      },
-      {
-        id: '3',
-        label: 'My Patient'
-      }
-    ]
-
-    let header = [
-      {
-        id: '1',
-        label: 'Date'
-      },
-      {
-        id: '2',
-        label: 'Start Time'
-      },
-      {
-        id: '3',
-        label: 'Duration(H)'
-      },
-      {
-        id: '4',
-        label: 'Service Types'
-      },
-      {
-        id: '5',
-        label: 'Service Provider'
-      },
-    ]
+    
     let updatedHeader = !isEntityUser() ? header.slice(0, 4) : header;
     let shouldPatientProfile = this.props.scheduleList && this.props.scheduleList.length > 0 ? this.props.scheduleList[0].isAnyAvailableHiredCard : (this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.HIRED || this.props.VisitServiceDetails.statusId === SERVICE_REQ_STATUS.CLOSED) ? true : false;
     let updatedTabdata = this.props.ServiceRequestId === 0 ?
@@ -979,6 +956,8 @@ handleTextarea = (e) => {
                   <RequestTab
                     visitServiceList={this.props.visitServiceList}
                     VisitServiceDetails={this.props.VisitServiceDetails}
+                    handleServiceCategory={this.handleServiceCategory}
+                    checkedServiceCategoryId = {this.state.checkedServiceCategoryId}
                     daysType={this.props.daysType}
                     handelDetails={this.handelDetails}
                     handelReject={this.handelReject}
@@ -1216,6 +1195,7 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
   const VisitServiceDetailsState = state.visitSelectionState.VisitServiceDetailsState;
+  const { serviceRequestTypeDetails }  = VisitServiceDetailsState.VisitServiceDetails
   const { canProcessVisit } = state.authState.userState.userData.userInfo
   return {
     isScheduleLoading:VisitServiceDetailsState.isScheduleLoading,
@@ -1249,7 +1229,8 @@ export function mapStateToProps(state) {
     planId: VisitServiceDetailsState.planId,
     questionAnswerList:VisitServiceDetailsState.questionAnswerList,
     isAnyEngagedServiceRequestSuccess: VisitServiceDetailsState.isAnyEngagedServiceRequestSuccess,
-    canProcessVisit
+    canProcessVisit,
+    serviceRequestTypeDetails
   }
 }
 

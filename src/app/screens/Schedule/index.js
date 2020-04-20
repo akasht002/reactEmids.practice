@@ -935,6 +935,7 @@ export class Schedule extends Component {
                                     <div>
                                         <h2 className='ServicesTitle theme-primary'>Service Category (Select one or multiple)</h2>
                                         <ServiceCategory
+                                            servicesTypeArray = {this.props.services}
                                             categoryList={this.props.serviceCategoryList}
                                             handleServiceCategory={this.handleServiceCategory}
                                             checkedServiceCategoryId={this.state.checkedServiceCategoryId}
