@@ -552,6 +552,11 @@
     width: 100%;
 }
 
+.individual-spblock-full .ServiceContent p.AdditionInfo, .right-block-view .ServiceContent .AdditionInfo {
+    display: block;
+    word-wrap: break-word;
+}
+
 .individual-spblock-full .btn-right-view .btn {
     margin-left: 10px;
 }

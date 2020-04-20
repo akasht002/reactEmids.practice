@@ -51,14 +51,14 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
     <LoginCover isLoading={isLoading} test-forget-body='test-forget-body'>
       <h3>Welcome to CoreoHome</h3>
       <form>
-        <div className="form-group  text-center login-body p-0 m-0">
+        <div className="form-group  text-center login-body pb-0 pt-3">
           <Input
             name="UserName"
             value={formData.UserName}
             autoComplete="off"
             required="required"
             type="email"
-            placeholder="Enter email address"
+            placeholder="Enter Email ID"
             maxlength={100}
             className={'emailField ' + (validation.onClickSubmit && !validation.UserName && 'inputFailure')}
             textChange={onChange}
@@ -67,14 +67,14 @@ const Login = ({ login, forgotPassword, errorMessage, loginFail, isLoading }) =>
             {validation.onClickSubmit && !validation.UserName && 'Please enter a valid Email Address(e.g. abc@xyz.com)'}
           </p>
         </div>
-        <div className="form-group text-center login-body p-0 m-0">
+        <div className="form-group text-center login-body pb-0 pt-3">
           <Input
             name="Password"
             value={formData.Password}
             autoComplete="off"
             required="required"
             type="password"
-            placeholder="Enter password"
+            placeholder="Enter Password"
             maxlength={100}
             className={'emailField ' + (validation.onClickSubmit && !validation.Password && 'inputFailure')}
             textChange={onChange}
