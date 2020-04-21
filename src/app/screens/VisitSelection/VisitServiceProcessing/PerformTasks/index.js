@@ -7,7 +7,7 @@ import moment from 'moment';
 import { getPerformTasksList, addPerformedTask, startOrStopService, getSummaryDetails } from '../../../../redux/visitSelection/VisitServiceProcessing/PerformTasks/actions';
 import { Scrollbars, DashboardWizFlow, ModalPopup, StopWatch, Button, Preloader } from '../../../../components';
 import { AsideScreenCover } from '../../../ScreenCover/AsideScreenCover';
-import { convertTime24to12 } from '../../../../utils/stringHelper';
+import { convertTime24to12, stringCaseInsensitive } from '../../../../utils/stringHelper';
 import { SERVICE_STATES } from '../../../../constants/constants';
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { Path } from '../../../../routes';
@@ -120,7 +120,7 @@ export class PerformTasks extends Component {
         this.percentageCompletion = percentageCalculation;
     }
 
-    startService = (data, visitId) => {
+    startService = async(data, visitId) => {
         let startServiceAction = 1;
         let current_time;
         if (data === startServiceAction) {
@@ -132,10 +132,19 @@ export class PerformTasks extends Component {
             this.saveData(data);
         }
         this.setState({ startService: !this.state.startService, disabled: false, backDisabled: true, stopTimer: !this.state.stopTimer })
-        this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
+        await this.props.startOrStopService(data, visitId, convertTime24to12(current_time));
+        await !stringCaseInsensitive(this.props.PerformTasksList.visitStatus, SERVICE_STATES.YET_TO_START) && this.checkAnswerLength();
     }
 
     onClickNext = () => {
+        if(stringCaseInsensitive(this.props.PerformTasksList.visitStatus,SERVICE_STATES.IN_PROGRESS)){
+            this.setState({ isStopModalOpen: true }) 
+        }else{
+            this.checkAnswerLength();
+        }
+    }
+
+    checkAnswerLength = () => {
         this.setState({ taskCount: (this.state.taskList.totalTask - (this.checkedTask).length) })
         this.taskCount = (this.state.taskList.totalTask - (this.checkedTask).length);
         if (this.taskCount > 0) {
@@ -328,7 +337,7 @@ export class PerformTasks extends Component {
                                     <Button
                                         classname='btn btn-primary ml-auto'
                                         onClick={this.onClickNext}
-                                        disable={visitStatus === SERVICE_STATES.IN_PROGRESS || visitStatus === SERVICE_STATES.YET_TO_START}
+                                        disable={visitStatus === SERVICE_STATES.YET_TO_START}
                                         label={'Next'} />
                                 </div>
                             </div>
