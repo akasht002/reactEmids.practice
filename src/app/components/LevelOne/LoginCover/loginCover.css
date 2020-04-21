@@ -55,7 +55,7 @@ div.headingLoginCover{
 }
 .login-body > h3{
   font-size: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .login-body .form-group input:focus {
   background-color: transparent;
@@ -90,6 +90,10 @@ div.headingLoginCover{
 .loginCover-body+.Loader
 {
 	width: 100% !important;
+}
+
+.loginCover-body .onBoardingHeader {
+    padding: 40px;
 }
 
 /* Extra small devices (phones, 500px and down) */

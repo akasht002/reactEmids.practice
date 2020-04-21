@@ -61,7 +61,7 @@ export class ForgetPassword extends Component {
                         autoComplete="off"
                         required="required"
                         type="email"
-                        placeholder="Enter Email Address"
+                        placeholder="Enter Email ID"
                         maxlength={100}
                         className={"emailField " + (this.props.isSendResetPasswordLinkSuccess ? 'emailField' : (!this.state.emailValid || this.props.isSendResetPasswordLinkError) && 'inputFailure')}
                         value={this.state.email}

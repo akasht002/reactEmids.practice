@@ -98,3 +98,22 @@ export const ServiceCalendarList = props => {
       </React.Fragment>
     )
   }
+
+
+  export const ServiceVisitsDefault = (props) => {
+    var noVisits = [];
+     for (var i = 0; i < props.count; i++) {
+       noVisits.push(
+         <li className='list-group-item ProfileServicesVisitContent'>
+         <div className='NoProfileServices'>
+           <i className='NoInformationIcon' /><span>No Visits</span>
+         </div>
+       </li>
+       );
+     }
+     return (
+       <Fragment>
+         {noVisits}
+       </Fragment>
+     )
+   }
