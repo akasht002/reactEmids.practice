@@ -83,7 +83,7 @@ export const setPassword = (data) => async (dispatch, getState) => {
 
     let isEntityUser = caseInsensitiveComparer(userType, USERTYPES.ENTITY_USER);
 
-    let userDetails = isEntityUser ? getState().onboardingState.setPasswordState.serviceProviderDetails : getState().onboardingState.verifyUserIDState.serviceProviderDetails;
+    let userDetails = isEntityUser ? getState().onboardingState.verifyContactState.serviceProviderDetails : getState().onboardingState.verifyUserIDState.serviceProviderDetails;
 
     let URL = isEntityUser ? API.setPasswordEntityUser : API.setPassword;
 
@@ -104,10 +104,10 @@ export const setPassword = (data) => async (dispatch, getState) => {
     try {
         let resp = await Post(URL, payload)
         resp && dispatch(onboardSucess());
-        dispatch(endLoading());
     } catch (error) {
-        dispatch(endLoading());
         logError(error)
+    } finally {
+        dispatch(endLoading());
     }
 };
 
