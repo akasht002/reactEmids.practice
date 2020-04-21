@@ -98,7 +98,8 @@ export const setPassword = (data) => async (dispatch, getState) => {
         "serviceProviderId": userDetails.serviceProviderId,
         "firstName": userDetails.firstName,
         "lastName": userDetails.lastName,
-        "phoneNumber": userDetails.mobileNumber
+        "phoneNumber": userDetails.mobileNumber,
+        "token": userDetails.token
     }
 
     try {

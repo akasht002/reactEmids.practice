@@ -129,7 +129,7 @@ export class SetPassword extends React.Component {
             });
         }
         return (
-            <ScreenCover isLoading={this.props.isLoading} test-setPassword="test-setPassword">
+            <ScreenCover test-setPassword="test-setPassword">
                 <CoreoWizScreen
                     menus={ContactMenu}
                     activeCoreoWiz={2}
