@@ -15,5 +15,7 @@ export const PatientProfile = {
     setParticipantProfile: 'setParticipantProfile/PatientProfile',
     getPatientVitalsSuccess: 'getPatientVitalsSuccess/PatientProfile',
     getEmergencyContactDetailsSuccess: 'getEmergencyContactDetailsSuccess/PatientProfile',
-    getAttorneyContactDetailsSuccess: 'getAttorneyContactDetailsSuccess/PatientProfile'
+    getAttorneyContactDetailsSuccess: 'getAttorneyContactDetailsSuccess/PatientProfile',
+    getPatientCoreoDetailsSuccess: 'get_Patient_CoreoDetails_Success/coreoInformation',
+    getPatientRiskScoreSuccess: 'get_Patient_RiskScore_Success/coreoInformation'
 };

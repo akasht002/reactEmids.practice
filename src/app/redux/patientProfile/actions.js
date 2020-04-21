@@ -332,3 +332,44 @@ export const getAttorneyContactDetails = () => async (dispatch, getState) => {
         dispatch(endLoading());
     }
 };
+
+
+export const getPatientCoreoDetailsSuccess = (data) => {
+    return {
+        type: PatientProfile.getPatientCoreoDetailsSuccess,
+        data
+    }
+}
+
+export const getPatientRiskScoreSuccess = (data) => {
+    return {
+        type: PatientProfile.getPatientRiskScoreSuccess,
+        data
+    }
+}
+
+export function getPatientRiskScore() {
+    return (dispatch, getState) => {
+        let patientId = getState().patientProfileState.patientId;
+        dispatch(startLoading());
+        PatientGet(`${API.getPatientRiskAssociation}${patientId}` ).then((resp) => {
+            dispatch(getPatientRiskScoreSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch(() => {
+            dispatch(endLoading());
+        })
+    }
+};
+
+export function getPatientCoreoDetails() {
+    return (dispatch, getState) => {
+        let patientId = getState().patientProfileState.patientId;
+        dispatch(startLoading());
+        return PatientGet(`${API.getPatientCoreoDetails}${patientId}`).then((resp) => {
+            dispatch(getPatientCoreoDetailsSuccess(resp.data))
+            dispatch(endLoading());
+        }).catch(() => {
+            dispatch(endLoading());
+        })
+    }
+};

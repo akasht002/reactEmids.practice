@@ -226,5 +226,7 @@ export const API = {
     getSecurityQuestion: 'OktaAccessibility/GetSecurityQuestion/',
     getRefreshToken: 'OktaAccessibility/RefreshAccessToken',
     getUserFeedbackInfo:'feedback/FeedbackDetails/',
-    getSecurityQuestionList: 'Common/OktaQuestionnaire'
+    getSecurityQuestionList: 'Common/OktaQuestionnaire',
+    getPatientCoreoDetails: 'Patient/GetPatientCoreoDetails/',
+    getPatientRiskAssociation:'patient/get-patient-risk-association/',
 }
