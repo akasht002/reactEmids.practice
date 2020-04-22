@@ -8,6 +8,7 @@ import { encryptPassword } from '../../../utils/encryptPassword';
 import { USERTYPES } from '../../../constants/constants';
 import { SetPassword } from './bridge';
 import { logError } from '../../../utils/logError';
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 
 export const cancelClick = () => {
     return {
@@ -77,7 +78,15 @@ export const onSetUserIdCompletion = (data) => {
 
 export const setPassword = (data) => async (dispatch, getState) => {
     dispatch(startLoading());
-    let userDetails = getState().onboardingState.verifyUserIDState.serviceProviderDetails
+
+    let userType = getState().onboardingState.setPasswordState.serviceProviderDetails.userType;
+
+    let isEntityUser = caseInsensitiveComparer(userType, USERTYPES.ENTITY_USER);
+
+    let userDetails = isEntityUser ? getState().onboardingState.verifyContactState.serviceProviderDetails : getState().onboardingState.verifyUserIDState.serviceProviderDetails;
+
+    let URL = isEntityUser ? API.setPasswordEntityUser : API.setPassword;
+
     let payload =
     {
         "userName": userDetails.emailId,
@@ -89,16 +98,17 @@ export const setPassword = (data) => async (dispatch, getState) => {
         "serviceProviderId": userDetails.serviceProviderId,
         "firstName": userDetails.firstName,
         "lastName": userDetails.lastName,
-        "phoneNumber": userDetails.mobileNumber
+        "phoneNumber": userDetails.mobileNumber,
+        "token": userDetails.token
     }
 
     try {
-        let resp = await Post(API.setPassword, payload)
+        let resp = await Post(URL, payload)
         resp && dispatch(onboardSucess());
-        dispatch(endLoading());
     } catch (error) {
-        dispatch(endLoading());
         logError(error)
+    } finally {
+        dispatch(endLoading());
     }
 };
 

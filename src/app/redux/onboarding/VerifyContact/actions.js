@@ -150,7 +150,9 @@ export function getEntityUserData(data) {
                 mobileNumber: resp.data.mobileNumber,
                 passcode: '',
                 token: data.token,
-                userType: data.userType
+                userType: data.userType,
+                lastName: resp.data.lastName,
+                firstName: resp.data.firstName
             };
             dispatch(onSetUserIdCompletion(getUserData));
             dispatch(endLoading());

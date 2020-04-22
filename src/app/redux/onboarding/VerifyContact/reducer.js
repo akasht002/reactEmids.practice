@@ -36,7 +36,9 @@ const verifyContactState = (state = defaultState, action) => {
                     mobileNumber: action.data.mobileNumber,
                     passcode: action.data.tempPassword,
                     token: action.data.token,
-                    userType: action.data.userType
+                    userType: action.data.userType,
+                    lastName: action.data.lastName,
+                    firstName: action.data.firstName
                 }
             };
         case VerifyContact.loadingStart:

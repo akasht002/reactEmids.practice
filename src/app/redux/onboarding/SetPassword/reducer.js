@@ -24,12 +24,14 @@ const setPasswordState = (state = defaultState, action) => {
                     ...state.serviceProviderDetails,
                     serviceProviderId: action.data.serviceProviderId,
                     memberId: action.data.memberId,
-                    emailId: action.data.serviceProviderEmailId,
+                    emailId: action.data.emailId,
                     fullName: action.data.firstName + ' ' + action.data.lastName,
                     mobileNumber: action.data.mobileNumber,
                     passcode: action.data.tempPassword,
                     token: action.data.token,
-                    userType: action.data.userType
+                    userType: action.data.userType,
+                    lastName: action.data.lastName,
+                    firstName: action.data.firstName
                 }
             };
 
