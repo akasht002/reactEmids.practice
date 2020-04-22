@@ -17,7 +17,7 @@ export const Footer = (props) => {
             <Button
             classname='btn btn-primary ml-auto'
             onClick={props.onClickNext}
-            disable={stringCaseInsensitive(props.visitStatus,SERVICE_STATES.IN_PROGRESS) || stringCaseInsensitive(props.visitStatus,SERVICE_STATES.YET_TO_START)}
+            disable={stringCaseInsensitive(props.visitStatus,SERVICE_STATES.YET_TO_START)}
             label={'Next'} />
                 </div>
         </div>

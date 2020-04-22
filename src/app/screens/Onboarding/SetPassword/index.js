@@ -13,6 +13,7 @@ import { ThemeProvider } from '@zendeskgarden/react-theming';
 import { SelectField, Select, Item } from '@zendeskgarden/react-select';
 import { PASSWORD_COMPLEXITY_MSG } from "../../../constants/message";
 
+
 export class SetPassword extends React.Component {
 
     constructor(props) {
@@ -23,6 +24,7 @@ export class SetPassword extends React.Component {
             userAgreement: false,
             passwordMatch: true,
             passwordCombination: true,
+            confirmPass: null,
             agreementModal: false,
             showModalOnCancel: false,
             passMatch: false,
@@ -129,7 +131,7 @@ export class SetPassword extends React.Component {
             });
         }
         return (
-            <ScreenCover isLoading={this.props.isLoading} test-setPassword="test-setPassword">
+            <ScreenCover test-setPassword="test-setPassword">
                 <CoreoWizScreen
                     menus={ContactMenu}
                     activeCoreoWiz={2}
@@ -157,7 +159,7 @@ export class SetPassword extends React.Component {
                                                 type="password"
                                                 label="Enter New Password"
                                                 maxlength={25}
-                                                className="form-control"
+                                                className={"form-control " + (this.props.setPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
                                                 value={this.state.password}
                                                 textChange={(e) => this.handelPasswordChange(e)}
                                                 onBlur={this.validatePassword}
@@ -174,7 +176,7 @@ export class SetPassword extends React.Component {
                                                 type="password"
                                                 label="Confirm New password"
                                                 maxlength={25}
-                                                className="form-control"
+                                                className={"form-control " + (this.props.setPasswordSuccess ? 'inputSuccess' : (!this.state.passwordCombination || (!this.state.passwordMatch && this.state.confirmPass)) && 'inputFailure')}
                                                 value={this.state.confirmPassword}
                                                 textChange={(e) => this.handelConfirmPasswordChange(e)}
                                                 onBlur={this.validatePassword}
@@ -237,7 +239,7 @@ export class SetPassword extends React.Component {
                                         <label className="form-check-label license-agreespan">
                                             <input className="form-check-input" type="checkbox" value={this.state.userAgreement} id="defaultCheck1" onChange={(e) => this.setState({ userAgreement: e.target.checked })} />
                                             <span className="CheckboxIcon"></span>
-                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="theme-primary" onClick={() => this.setState({ agreementModal: true })}>End User License Agreement</Link>.
+                                            By clicking on Submit, I agree that I have read and accepted the <Link to={this.props.match.url} className="theme-primary" onClick={() => this.setState({ agreementModal: true })}><u>End User License Agreement</u></Link>.
                                         </label>
                                     </div>
                                 </form>
@@ -273,6 +275,8 @@ export class SetPassword extends React.Component {
         )
     }
 };
+
+
 
 export function mapDispatchToProps(dispatch) {
     return {

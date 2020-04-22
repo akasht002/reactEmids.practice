@@ -9,6 +9,7 @@ import { ScreenCover, Header, ModalPopup, Preloader } from '../../../components'
 import {clearInvitaion, joinVideoConference} from '../../../redux/telehealth/actions';
 import {goBack, push} from '../../../redux/navigation/actions';
 import Help from '../../../assets/HelpDoc/Help.pdf';
+import CoreoInformation from '../CoreoInformation'
 import './styles.css'
 import { Path } from '../../../routes';
 import {clearState} from '../../../redux/patientProfile/actions';
@@ -61,6 +62,7 @@ export class Profile extends Component {
                 { (this.props.userType === USERTYPES.GUARDIAN || this.props.userType === USERTYPES.PATIENT_AND_GUARDIAN) ? 
                 <PersonalDetail /> : <div>
                   <PersonalDetail />
+                  <CoreoInformation />
                   <ClinicalCondition />
                   <PointService />
                   <Languages />

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { TabPane } from 'reactstrap';
 import PersonalDetail from '../../../PatientProfile/PersonalDetail';
+import CoreoInformation from '../../../PatientProfile/CoreoInformation'
 import PointService from '../../../PatientProfile/PointService';
 import Languages from '../../../PatientProfile/Languages';
 import ClinicalCondition from '../../../PatientProfile/ClinicalCondition';
@@ -18,6 +19,7 @@ export const PatientProfileTab = props => {
                         onClickConversation={props.onClickConversation}
                         onClickVideoConference={props.onClickVideoConference}
                     />
+                    <CoreoInformation />
                     <ClinicalCondition />
                     <PointService />
                     <Languages />

@@ -20,7 +20,7 @@ export class ResetPasswordConfirmation extends Component {
                 <p>A reset password link has been sent to Email Address <span className="email-length">{this.props.emailId}</span></p>
                 <p>Click on the link in the email to set your new password </p>
                 <p>Didn't receive the email yet? <br />
-                    Please check your Spam folder, or <span onClick={this.resendEmail}>Resend</span> Email.</p>
+                    Please check your Spam folder, or <span onClick={this.resendEmail}><u>Resend</u></span> Email.</p>
             </LoginCover>
         );
     }
