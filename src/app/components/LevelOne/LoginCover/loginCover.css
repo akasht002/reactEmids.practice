@@ -57,10 +57,11 @@ div.headingLoginCover{
   font-size: 20px;
   margin-top: 20px;
 }
+
 .login-body .form-group input:focus {
   background-color: transparent;
   box-shadow:none;
-  border-color: #1e3d5c;
+  border-color: #8c8c8c;
 }
 
 .login-body .form-control::-webkit-input-placeholder {
@@ -94,6 +95,14 @@ div.headingLoginCover{
 
 .loginCover-body .onBoardingHeader {
     padding: 40px;
+}
+
+.login-body .btn.btn-primary, .login-body  .send-btn {
+    background-color: #315477 !important;
+}
+
+.login-body .btn.btn-primary:hover, .login-body  .send-btn:hover {
+    background-color: #1e3d5c !important;
 }
 
 /* Extra small devices (phones, 500px and down) */
