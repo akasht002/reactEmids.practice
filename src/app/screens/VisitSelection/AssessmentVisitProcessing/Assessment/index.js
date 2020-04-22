@@ -24,6 +24,8 @@ import { Footer } from './Components/Footer'
 import { getUTCFormatedDate } from "../../../../utils/dateUtility";
 import { CustomTextArea } from "../../../../components/Base";
 import {removeValueFromString} from '../../../../utils/arrayUtility'
+import { stringCaseInsensitive } from '../../../../utils/stringHelper'
+
 export class Assessment extends Component {
 
     constructor(props) {
@@ -170,6 +172,14 @@ export class Assessment extends Component {
     }
 
     onClickNext = () => {
+        if(stringCaseInsensitive(this.props.requestDetails.visitStatus,SERVICE_STATES.IN_PROGRESS)){
+            this.setState({ isStopModalOpen: true }) 
+        }else{
+            this.checkAnswerLength();
+        }
+    }
+
+    checkAnswerLength = () => {
         let selectedLength = this.selectedAnswers.filter((answer) => {
             return !checkEmpty(answer.feedbackQuestionnaireId)
         }).length;
@@ -223,6 +233,7 @@ export class Assessment extends Component {
                         })
         }        
         await this.props.startOrStopService(this.props.requestDetails, data, convertTime24to12(current_time));
+        await !stringCaseInsensitive(this.props.requestDetails.visitStatus, SERVICE_STATES.YET_TO_START) && this.checkAnswerLength();   
     }
 
     render() {
