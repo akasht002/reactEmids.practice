@@ -246,3 +246,7 @@ div.modal-lg.EULA .main-title {
 .tempPassForm .form-group label {
     font-size: 16px;
 }
+
+.sideContent+.Loader {
+    width: 100% !important;
+}
