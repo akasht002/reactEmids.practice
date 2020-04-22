@@ -875,3 +875,9 @@ span.no-recoord-table {
         height: calc(100vh - 420px) !important;
     }
 }
+
+@media only screen and (max-width: 1280px) {
+    table.individuals-tableblock tbody {
+        height: calc(100vh - 450px);
+    }
+  }
