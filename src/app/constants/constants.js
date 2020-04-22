@@ -12,6 +12,7 @@ export const AFTERNOON = "Afternoon";
 export const EVENING = "Evening";
 export const VISIT_SERVICE_STATUS_NOT_HIRED = "Not Hired";
 export const VIEW_ALL_COUNT = 5
+export const COREO_INFO_NOT_FOUND = 'No Data Available'
 
 export const USER_LOCALSTORAGE = "CoreoSP";
 export const USER_CREDENTIALS = 'UserCredentials'

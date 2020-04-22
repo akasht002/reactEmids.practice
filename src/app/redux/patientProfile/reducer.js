@@ -17,7 +17,9 @@ const defaultState = {
   patientProfilePercentage: 0,
   vitalDetails: {},
   emergencyContactDetails: {},
-  attorneyContactDetails: {}
+  attorneyContactDetails: {},
+  coreoInformationDetails: '',
+  riskScore:''
 }
 
 const patientProfileState = (state = defaultState, action) => {
@@ -123,6 +125,16 @@ const patientProfileState = (state = defaultState, action) => {
         emergencyContactDetails: {},
         attorneyContactDetails: {}
       }
+    case PatientProfile.getPatientCoreoDetailsSuccess:
+        return {
+            ...state,
+            coreoInformationDetails: action.data
+        };
+    case PatientProfile.getPatientRiskScoreSuccess:
+        return {
+            ...state,
+            riskScore: action.data
+        };
     default:
       return state
   }
