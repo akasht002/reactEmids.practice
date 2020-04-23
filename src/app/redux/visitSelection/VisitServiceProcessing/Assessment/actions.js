@@ -109,11 +109,11 @@ export function saveAnswers(data) {
     dispatch(startLoadingProcessing())
     return ServiceRequestPost(API.visitProcessingAssessmentSave, data)
       .then(resp => {
-        dispatch(push(Path.assessmentFeedback));
+        dispatch(push(Path.assessmentSummary));
       })
       .catch(err => {
         dispatch(endLoadingProcessing())
-        dispatch(push(Path.assessmentFeedback))
+        dispatch(push(Path.assessmentSummary))
       })
   }
 }

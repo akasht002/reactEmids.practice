@@ -506,7 +506,7 @@ export class VistSummary extends React.Component {
             <div className="LeftWidget">
               <div className="LeftContent">
               <div className="d-flex">
-              <div className="col-md-6 p-0">
+              <div className={isAssessment ? "col-md-12 p-0" : "col-md-6 p-0"}>
                 <p className="SummaryContentTitle theme-primary">Service Details</p>
                 </div>
                 {isEntity && isAssessment &&
@@ -708,7 +708,7 @@ export class VistSummary extends React.Component {
                 }
 
 
-
+                {!isAssessment && <Fragment>
                 <p className="SummaryContentTitle mb-4 theme-primary">Feedback</p>
                 <div className="feedbackContainer">
                 {getLength(this.props.VisitFeedback) > 0 && (isEntityUser() && !this.props.isServiceProviderFeedbackTab) &&
@@ -741,6 +741,8 @@ export class VistSummary extends React.Component {
                     </p>
                     )}
                 </div>
+                </Fragment>
+                }
               </div>
             </div>
           </div>
