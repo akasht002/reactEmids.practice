@@ -503,14 +503,14 @@ export class VistSummary extends React.Component {
       <React.Fragment>
         <form className="ServiceContent">
           <div className="VisitSummaryWidget">
-            <div className="LeftWidget">
+            <div className={isAssessment ? "col-md-12 full-view-details" : "LeftWidget"}>
               <div className="LeftContent">
               <div className="d-flex">
-              <div className={isAssessment ? "col-md-12 p-0" : "col-md-6 p-0"}>
+              <div className="col-md-6 pl-0 pr-0 pb-2">
                 <p className="SummaryContentTitle theme-primary">Service Details</p>
                 </div>
                 {isEntity && isAssessment &&
-                <div className="col-md-6 pl-0 pr-0 pb-3">
+                <div className="col-md-6 pl-0 pr-0 pb-2">
                 <span className='d-block'>
                   <ReactToPrint
                     trigger={() => <a href="#" className='btn btn-primary pull-right'>Print</a>}

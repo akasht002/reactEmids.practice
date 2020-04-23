@@ -520,3 +520,7 @@ button.btn.CancelSignature {
     background-color: gray !important;
     border: 1px solid gray !important;
 }
+
+.full-view-details .LeftContent {
+    padding: 20px 30px 30px 30px;
+}
