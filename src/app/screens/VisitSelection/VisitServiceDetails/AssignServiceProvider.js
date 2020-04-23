@@ -152,9 +152,11 @@ export class AssignServiceProvider extends Component {
               </div>
             </Fragment>
             :
-            <span className="SP-viewplantable theme-primary"  onClick={this.togglePersonalDetails}>
+            <span className="SP-viewplantable theme-primary">
               <img alt="" src={require('../../../assets/images/Blank_Profile_icon.png')}></img>
-              <span><a>Assign Provider</a></span>
+              {(this.props.visitList.additionalInformation && this.props.visitList.additionalInformation.length > 0)  ?
+               <span>See Notes</span> :
+               <span onClick={this.togglePersonalDetails}><a>Assign Provider</a></span>}
             </span>
         }
         <ModalPopup
