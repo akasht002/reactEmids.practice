@@ -68,10 +68,21 @@ export const ServiceCategorySettings ={
             }
         },
         {
+          breakpoint: 1536,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            infinite: false,
+            variableWidth: true,
+            speed: 500,
+            dots: false
+          }
+      },
+        {
             breakpoint: 1280,
             settings: {
-              slidesToShow: 4,
-              slidesToScroll: 4,
+              slidesToShow: 2,
+              slidesToScroll: 2,
               infinite: false,
               variableWidth: true,
               speed: 500,
