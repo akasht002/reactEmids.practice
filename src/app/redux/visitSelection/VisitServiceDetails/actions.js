@@ -12,7 +12,7 @@ import { push } from '../../navigation/actions'
 import { Path } from '../../../routes'
 import { getUserInfo } from '../../../services/http'
 import { VisitServiceDetails } from './bridge'
-import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST, VISIT_TYPE } from '../../../constants/constants'
+import { USERTYPES, DEFAULT_PAGE_SIZE_ESP_LIST, VISIT_TYPE, VISIT_STATUS } from '../../../constants/constants'
 import { isEntityUser } from '../../../utils/userUtility'
 import { serviceRequestDetailsTab } from '../../constants/constants'
 import { orderBy, uniqBy } from 'lodash'
@@ -658,7 +658,8 @@ export function getVisitStatus() {
   return (dispatch) => {
     ServiceRequestGet(API.getVisitStatus).then((resp) => {
       resp.data.forEach(obj => {
-        let listToDelete = [61, 60];
+        let listToDelete = [VISIT_STATUS.notStarted.id, VISIT_STATUS.overdue.id]; 
+        isEntityUser() && listToDelete.push(VISIT_STATUS.paymentPending.id) ;
         let deleatedData = resp.data.filter(obj => !listToDelete.includes(obj.id));
         let data = deleatedData.map((item) => {
           let value;
