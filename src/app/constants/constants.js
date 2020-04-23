@@ -347,6 +347,14 @@ export const VISIT_STATUS = {
         "id": 106,
         "keyValue": "Pending Approval"
     },
+    notStarted: {
+        id: 60,
+        keyValue: "Not Started"
+    },
+    overdue: {
+        id: 61,
+        keyValue: "Over Due"
+    },
     declined: {
         "id": 107,
         "keyValue": "Declined"
