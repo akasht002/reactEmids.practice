@@ -109,7 +109,7 @@ export class VerifyUserID extends React.Component {
                                         autoComplete="off"
                                         type="text"
                                         placeholder="e.g. johndoe@xyz.com"
-                                        label="Enter Email Address"
+                                        label="Enter Email ID"
                                         className={"form-control " + (this.props.isEmailExist ? 'inputSuccess' : (!this.state.emailValid || this.state.isEmailNotExist) && 'inputFailure')}
                                         disabled={this.props.isEmailExist}
                                         value={checkSpace(this.state.email)}
