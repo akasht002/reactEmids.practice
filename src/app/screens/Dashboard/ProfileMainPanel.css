@@ -1425,7 +1425,7 @@ div.ProfileConversation {
 
     .topProfile .ProfileCardBody .topPalette .monthPalette .Select-control .Select-multi-value-wrapper .Select-value,
     .bottomProfile .ProfileCardBody .topPalette .monthPalette .Select-control .Select-multi-value-wrapper .Select-value {
-        top: -22px;
+        top: 0px;
     }
 }
 
