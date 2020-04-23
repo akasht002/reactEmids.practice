@@ -113,12 +113,15 @@ export const Details = props => {
                     <h2 className='ServicesTitle theme-primary'>Service Category</h2>
                     <p className='ScheduleTypeTitle'>
                         {serviceCategories}
+                    </p>
+                    <div className="d-block">
                         <ServiceCategory
                             categoryList={props.details.serviceCategories}
                             handleServiceCategory={props.handleServiceCategory}
                             checkedServiceCategoryId={props.checkedServiceCategoryId}
                         />
-                    </p>
+                    </div>
+                   
                     <h2 className='ServicesTitle theme-primary'>Service Types</h2>
                     <div className='ServiceType visit-srq-slider WhiteBG'>
                         <div className='ServiceTypesSlider Summary'>
@@ -127,6 +130,7 @@ export const Details = props => {
                             </Carousel>
                         </div>
                     </div>
+                    
                     <h2 className='ServicesTitle theme-primary'>
                         Additional Information
                           </h2>
