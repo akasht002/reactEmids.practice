@@ -481,7 +481,7 @@ export function mapDispatchToProps(dispatch) {
         saveSummaryDetails: (data) => dispatch(saveSummaryDetails(data)),
         saveSignature: (data) => dispatch(saveSignature(data)),
         getSavedSignature: (data) => dispatch(getSavedSignature(data)),
-        goBackToFeedback: () => dispatch(push(Path.assessmentFeedback)),
+        goBackToFeedback: () => dispatch(push(Path.assessment)),
         setPatient: (data) => dispatch(setPatient(data)),
         goToPatientProfile: () => dispatch(push(Path.patientProfile)),
         calculationActualData: () => dispatch(calculationActualData()),
