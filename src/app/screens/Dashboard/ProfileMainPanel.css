@@ -1280,19 +1280,21 @@ div.ProfileConversation {
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider {
     background: #f7f7f7;
     border-radius: 4px;
-    padding: 18px 0px 50px 0px;
+    padding: 18px 10px 50px 10px;
     display: block;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider span.clickView {
-    display: block;
     text-align: center;
     position: relative;
     z-index: 10;
     font-size: 15px;
     font-weight: 500;
-    padding-bottom: 30px;
-    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top {
@@ -1302,6 +1304,7 @@ div.ProfileConversation {
     justify-content: center;
     width: 46%;
     margin: 0 auto;
+    margin-top: 15px;
 }
 
 .topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider .no-blockinfo-top .NoServiceReq {
@@ -1345,7 +1348,7 @@ div.ProfileConversation {
     background-repeat: no-repeat;
 }
 
-.NoRequestServiceProvider  .no-blockinfo-top .NewSPReq, .EmptySR  .no-blockinfo-top .NewSPReq  {
+.ProfileServicesVisitList .NoRequestServiceProvider .NewSPReq, .EmptySR  .no-blockinfo-top .NewSPReq  {
     background-image: url("../../assets/images/empty-sr-update.png");
     background-color: #1e3d5c !important;
     background-repeat: no-repeat;
