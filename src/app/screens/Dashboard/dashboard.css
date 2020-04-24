@@ -1075,7 +1075,13 @@ div.ProfileSearchContainer,
 
 /*update-uit-fixes*/
 .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
-    height: calc(100% - 200px) !important;
+    height: calc(100% - 130px) !important;
+}
+
+@media (min-width: 1367px) {
+    .topProfile .ProfileCard .ProfileCardBody .bottomPalette {
+        height: calc(100% - 130px) !important;
+    }
 }
 
 @media (max-width: 1920px) {

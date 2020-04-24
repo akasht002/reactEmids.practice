@@ -1419,13 +1419,17 @@ div.ProfileConversation {
     max-width: 100%;
 }
 
+.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider+.ProfileShowMore {
+    display: none;
+}
+
 /*IE-Edge*/
 
 @supports (-ms-ime-align: auto) {
 
     .topProfile .ProfileCardBody .topPalette .monthPalette .Select-control .Select-multi-value-wrapper .Select-value,
     .bottomProfile .ProfileCardBody .topPalette .monthPalette .Select-control .Select-multi-value-wrapper .Select-value {
-        top: -22px;
+        top: 0px;
     }
 }
 
