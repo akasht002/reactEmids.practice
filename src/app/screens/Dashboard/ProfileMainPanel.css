@@ -1419,6 +1419,10 @@ div.ProfileConversation {
     max-width: 100%;
 }
 
+.topProfile .bottomPalette .ProfileServicesVisitList .NoRequestServiceProvider+.ProfileShowMore {
+    display: none;
+}
+
 /*IE-Edge*/
 
 @supports (-ms-ime-align: auto) {
