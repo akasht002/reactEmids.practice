@@ -7,7 +7,7 @@ import {
     getLinkedParticipantsByPatients
 } from '../../../redux/asyncMessages/actions';
 import { Button } from '../../../components';
-import { USERTYPES } from '../../../constants/constants';
+import { USERTYPES, USER_TYPE_INITIALS } from '../../../constants/constants';
 import { Path } from '../../../routes';
 import { setParticipantProfile, setESP} from '../../../redux/patientProfile/actions';
 import { push } from '../../../redux/navigation/actions';
@@ -205,7 +205,7 @@ export class ParticipantContent extends Component {
                                             <div className="avatarContainer">
                                                 <img key={index} alt="i" src={ participant.thumbNail ? participant.thumbNail : require("../../../assets/images/Blank_Profile_icon.png")}
                                                     className="avatarImage" />
-                                                <div className={"memberType memT-" + participant.participantType}>{participant.participantType}</div>
+                                                <div className={`memberType memT-${USER_TYPE_INITIALS[participant.participantType]}`}>{USER_TYPE_INITIALS[participant.participantType]}</div>
                                             </div>
                                         </td>
                                         <td className="participantName align-middle">
