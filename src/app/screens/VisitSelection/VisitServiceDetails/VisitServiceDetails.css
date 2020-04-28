@@ -879,6 +879,33 @@
     margin-bottom: 30px;
 }
 
+.right-block-view .ServiceCategory.WhiteBG {
+    margin-bottom: 30px;
+}
+
+.right-block-view .ServiceCategory.WhiteBG .slick-slider .slick-track, .right-block-view .ServiceType.WhiteBG .slick-slider .slick-track  {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+} 
+
+
+.right-block-view .ServiceCategory.WhiteBG .slick-slider .slick-list:before {
+    background-image: -webkit-gradient(linear, left top, right top, from(hsla(0, 0%, 100%, 0)), to(#fff));
+    background-image: -webkit-linear-gradient(left, hsla(0, 0%, 100%, 0), #fff);
+    background-image: -o-linear-gradient(left, hsla(0, 0%, 100%, 0), #fff);
+    background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #fff);
+    right:-2px;
+}
+
+@media only screen and (min-width: 1280px) {
+    .Service-Cat-Typesblock .ServiceCategory.WhiteBG .slick-slider .slick-prev,
+    .Service-Cat-Typesblock .ServiceCategory.WhiteBG .slick-slider .slick-next {
+        visibility: hidden;
+    }
+    }
+
+
 /*IE11*/
 @media all and (-ms-high-contrast:none) {
     .plan-tableview .EntityUServiceProf .SP-viewplantable {

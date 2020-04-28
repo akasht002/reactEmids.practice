@@ -503,14 +503,14 @@ export class VistSummary extends React.Component {
       <React.Fragment>
         <form className="ServiceContent">
           <div className="VisitSummaryWidget">
-            <div className="LeftWidget">
+            <div className={isAssessment ? "col-md-12 full-view-details" : "LeftWidget"}>
               <div className="LeftContent">
               <div className="d-flex">
-              <div className="col-md-6 p-0">
+              <div className="col-md-6 pl-0 pr-0 pb-2">
                 <p className="SummaryContentTitle theme-primary">Service Details</p>
                 </div>
                 {isEntity && isAssessment &&
-                <div className="col-md-6 pl-0 pr-0 pb-3">
+                <div className="col-md-6 pl-0 pr-0 pb-2">
                 <span className='d-block'>
                   <ReactToPrint
                     trigger={() => <a href="#" className='btn btn-primary pull-right'>Print</a>}
@@ -708,7 +708,7 @@ export class VistSummary extends React.Component {
                 }
 
 
-
+                {!isAssessment && <Fragment>
                 <p className="SummaryContentTitle mb-4 theme-primary">Feedback</p>
                 <div className="feedbackContainer">
                 {getLength(this.props.VisitFeedback) > 0 && (isEntityUser() && !this.props.isServiceProviderFeedbackTab) &&
@@ -741,6 +741,8 @@ export class VistSummary extends React.Component {
                     </p>
                     )}
                 </div>
+                </Fragment>
+                }
               </div>
             </div>
           </div>
