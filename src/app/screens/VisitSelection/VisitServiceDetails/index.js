@@ -175,8 +175,12 @@ export class VisitServiceDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps)  {
+    console.log("nextProps",nextProps.VisitServiceDetails.startDate)
     if (nextProps.serviceRequestTypeDetails && nextProps.serviceRequestTypeDetails.length > 0) {
-      this.setState({  checkedServiceCategoryId: nextProps.serviceRequestTypeDetails && nextProps.serviceRequestTypeDetails.length > 0 &&  nextProps.serviceRequestTypeDetails[0].serviceCategoryId });
+      this.setState({  
+        checkedServiceCategoryId: nextProps.serviceRequestTypeDetails && nextProps.serviceRequestTypeDetails.length > 0 &&  nextProps.serviceRequestTypeDetails[0].serviceCategoryId,
+        serviceRequestStartDate : nextProps.VisitServiceDetails && nextProps.VisitServiceDetails.startDate
+      });
     }
    
   }
