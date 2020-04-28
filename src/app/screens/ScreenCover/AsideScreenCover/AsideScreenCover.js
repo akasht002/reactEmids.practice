@@ -16,7 +16,7 @@ import { CanServiceProviderCreateMessage } from '../../../redux/asyncMessages/ac
 import { onLogout } from '../../../redux/auth/logout/actions';
 import { extractRole, authorizePermission } from '../../../utils/roleUtility';
 import { isEntityServiceProvider, isEntityUser } from '../../../utils/userUtility';
-import { SCREENS } from '../../../constants/constants';
+import { SCREENS, PROFILE_HEADER_NAVIGATION_ICON } from '../../../constants/constants';
 import { ProfileHeaderMenu } from "../../../data/ProfileHeaderMenu";
 import { EntityProfileHeaderMenu } from "../../../data/EntityProfileHeaderMenu";
 import { EntitySPProfileHeaderMenu } from "../../../data/EntitySPProfileHeaderMenu";
@@ -31,6 +31,7 @@ import './style.css'
 import { EntityUserMenuData } from '../../../data/EntityUserMenuData';
 import { withAuth } from "@okta/okta-react";
 import {getCurrentSession} from '../../../redux/auth/user/actions'
+import { caseInsensitiveComparer } from '../../../utils/comparerUtility';
 
 export class AsideScreenCover extends React.Component {
     constructor(props) {
@@ -191,7 +192,7 @@ export class AsideScreenCover extends React.Component {
         let entityUser = getUserInfo().isEntityServiceProvider;
         let headerMenu = entityUser ? EntityProfileHeaderMenu : ProfileHeaderMenu;
         if (isEntityServiceProvider()) {
-            headerMenu = EntitySPProfileHeaderMenu;
+            headerMenu = this.props.userInfo && this.props.userInfo.canAccessConversation ? EntityProfileHeaderMenu.filter(item => !caseInsensitiveComparer(item.name, PROFILE_HEADER_NAVIGATION_ICON.videoChat)): EntitySPProfileHeaderMenu;
         };
         let menuData = (!getUserInfo().isEntityServiceProvider) ? (isEntityUser() ? EntityUserMenuData : MenuData) : EntityMenuData;
         return (
@@ -403,7 +404,8 @@ export function mapStateToProps(state) {
         buildVersion: state.aboutUsState.buildVersion,
         isFormDirty: state.authState.userState.isFormDirty,
         createData: state.telehealthState.createData,
-        isSecureLogin: state.authState.userState.isSecureLogin
+        isSecureLogin: state.authState.userState.isSecureLogin,
+        userInfo: state.authState.userState.userData.userInfo
     };
 };
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles.css';
+import { USER_TYPE_INITIALS } from '../../../constants/constants';
 
 export class CheckBox extends Component {
     render() {
@@ -18,7 +19,7 @@ export class CheckBox extends Component {
                     <div className={"avatarContainer"}>
                         <img alt="i" src={this.props.participant.thumbNail ? this.props.participant.thumbNail : require("../../../assets/images/Blank_Profile_icon.png")}
                             className="avatarImage" />
-                        <div className={"memberType memT-"+ this.props.participant.participantType }>{this.props.participant.participantType}</div>
+                        <div className={`memberType memT-${USER_TYPE_INITIALS[this.props.participant.participantType]}`}>{USER_TYPE_INITIALS[this.props.participant.participantType]}</div>
                     </div>
                     <div className="participantName participantSearchName">
                         {this.props.participant.firstName + " " + this.props.participant.lastName}

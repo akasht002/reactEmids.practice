@@ -634,3 +634,15 @@ export const NEW_SERVICE_REQUEST_STATUS = {
     Open : [35],
     Engaged : [38]
 }
+
+export const PROFILE_HEADER_NAVIGATION_ICON = {
+    videoChat: 'videoChat',
+    contact: 'contact',
+    messages: 'messages'
+}
+
+export const USER_TYPE_INITIALS = {
+   'ESP': 'S',
+   'S': 'S',
+   'E': 'E'
+}

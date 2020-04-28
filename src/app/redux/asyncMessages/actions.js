@@ -618,7 +618,7 @@ export function getLinkedParticipantsByPatients(data) {
             return e.userId === data.patientId
         });
         let USER_ID = getUserInfo().coreoHomeUserId;
-        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+        let USER_TYPE = isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER;
         data.firstName = patient.firstName;
         data.lastName = patient.lastName;
         data.participantType = USERTYPES.PATIENT;
@@ -645,7 +645,7 @@ export function getLinkedParticipantsList(data) {
         dispatch(startLoading())
         let serchText = data.searchText === "" ? null : data.searchText;
         let USER_ID = getUserInfo().coreoHomeUserId;
-        let USER_TYPE = USERTYPES.SERVICE_PROVIDER;
+        let USER_TYPE = isEntityUser() ? USERTYPES.ENTITY : USERTYPES.SERVICE_PROVIDER;
         return AsyncGet(API.getParticipantsByContext 
                 + data.conversationId +
             '/' + USER_ID +
