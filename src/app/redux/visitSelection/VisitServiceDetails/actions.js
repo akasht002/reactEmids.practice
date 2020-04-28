@@ -585,7 +585,7 @@ export function getSchedulesList(patientId) {
   return (dispatch, getState) => {
 
     let serviceProviderId = getUserInfo().serviceProviderId;
-    let { servicePlanVisitId, visitDate, isEntityDashboard } = getState().visitSelectionState.VisitServiceDetailsState
+    let { servicePlanVisitId, visitDate, isEntityDashboard,VisitServiceDetails } = getState().visitSelectionState.VisitServiceDetailsState
     dispatch(scheduleLoading(true));
     ServiceRequestGet(API.getSchedulesList + `${patientId}/${serviceProviderId}`)
       .then(resp => {
@@ -596,8 +596,8 @@ export function getSchedulesList(patientId) {
           serviceTypes: [],
           pageNumber: 1,
           pageSize: 10,
-          startDate: isEntityDashboard ? visitDate.startVisitDateForWeb : null,
-          endDate: isEntityDashboard ? visitDate.endVisitDateForWeb : null,
+          startDate: isEntityDashboard ? visitDate.startVisitDateForWeb : VisitServiceDetails.startDate,
+          endDate: isEntityDashboard ? visitDate.endVisitDateForWeb : VisitServiceDetails.endDate,
           patientId: patientId,
           entityServiceProviders: [],
           servicePlanVisitId: servicePlanVisitId

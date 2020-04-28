@@ -106,7 +106,6 @@ export const ServiceCalendarList = props => {
        noVisits.push(
          <li className='list-group-item ProfileServicesVisitContent'>
          <div className='NoProfileServices'>
-           <i className='NoInformationIcon' /><span>No Visits</span>
          </div>
        </li>
        );
