@@ -1027,6 +1027,7 @@ handleServiceCategory = (data) =>{
                   showPhoneNumber={this.showPhoneNumber}
                   onClickConversation={this.onClickConversation}
                   onClickVideoConference={this.onClickVideoConference}
+                  personalDetail={this.props.personalDetail}
                 />
               </TabContent>
             </div>
@@ -1233,6 +1234,7 @@ export function mapStateToProps(state) {
     planId: VisitServiceDetailsState.planId,
     questionAnswerList:VisitServiceDetailsState.questionAnswerList,
     isAnyEngagedServiceRequestSuccess: VisitServiceDetailsState.isAnyEngagedServiceRequestSuccess,
+    personalDetail: state.patientProfileState.personalDetail,
     canProcessVisit,
     serviceRequestTypeDetails
   }
