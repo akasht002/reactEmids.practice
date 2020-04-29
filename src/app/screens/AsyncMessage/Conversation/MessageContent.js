@@ -287,7 +287,7 @@ export class MessageContent extends Component {
                                             <td className="sendButtonWidget">
                                                 <button
                                                     onClick={this.onClickSendMessage}
-                                                    className="btn btn-primary text-uppercase send-btn"
+                                                    className="btn btn-primary text-uppercase"
                                                     disabled={(this.props.messageText.trim().length === 0 && this.state.uploadedImageFile.length === 0) || !this.props.conversation.isActive}
                                                     value="send">Send</button>
                                             </td>
