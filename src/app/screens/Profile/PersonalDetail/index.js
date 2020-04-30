@@ -5,7 +5,6 @@ import _ from 'lodash'
 import './index.css'
 import {
   Input,
-  TextArea,
   SelectBox,
   ProfileModalPopup,
   ModalPopup, ScreenCover,
