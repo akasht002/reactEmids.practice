@@ -13,7 +13,6 @@ import { ENTITY_SR_STATUS, RECURRING_OPTIONS, entityDashboardTab, ENTITY_SV_STAT
 import { caseInsensitiveComparer } from '../../../../utils/comparerUtility';
 import { ENTITY_DASHBOARD_STATUS } from '../../../../constants/constants';
 import { vistServiceHistoryDetails } from '../../../visitHistory/VisitServiceDetails/bridge';
-import { SERVICE_STATUS } from '../../../constants/constants' 
 
 export const setActiveSubTab = data => {
   return {

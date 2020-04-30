@@ -266,9 +266,8 @@ export const getSelectedClinicalConditionDetails = (data) => {
 }
 
 export function getSelectedClinicalCondition() {
-    return (dispatch, getState) => {
-        const patientId = getState().patientProfileState.patientId;
-        return PatientGet(API.getPatientClinicalCondition + patientId).then((resp) => {
+    return (dispatch) => {
+        return PatientGet(API.getAllClinicalCondition).then((resp) => {
             dispatch(getSelectedClinicalConditionDetails(resp.data))
         }).catch(() => {
         })

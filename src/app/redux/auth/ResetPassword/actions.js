@@ -1,5 +1,5 @@
 import { API } from '../../../services/api';
-import { AuthGet, AuthPut, ThirdPartyPost } from '../../../services/http';
+import { AuthGet,ThirdPartyPost } from '../../../services/http';
 import { startLoading, endLoading } from '../../loading/actions';
 import { push } from '../../navigation/actions';
 import { Path } from '../../../routes';

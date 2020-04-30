@@ -41,7 +41,6 @@ import {
   SecurityQuestion
 } from '../screens';
 import PrivateRoute from './privateRouter';
-import { oktaIssuer, oktaClientId } from '../services/http';
 
 export function Loading({ error }) {
   if (error) {

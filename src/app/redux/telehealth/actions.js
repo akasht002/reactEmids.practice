@@ -9,7 +9,6 @@ import { onLogout } from '../auth/logout/actions';
 import { goBack } from '../navigation/actions';
 import { logError } from '../../utils/logError';
 import { isEntityUser } from '../../utils/userUtility';
-import { caseInsensitiveComparer } from '../../utils/comparerUtility';
 
 export const TeleHealth = {
     generateTokenSuccess: 'generate_token_success/telehealth',
