@@ -93,6 +93,17 @@ export const PatientGet = url => {
         })
 }
 
+export const PatientPut = (url, data) => {
+    return axios
+        .put(patientURL + url, data, getHeader())
+        .then(resp => {
+            return resp
+        })
+        .catch(error => {
+            handleError(error)
+        })
+}
+
 export const Post = (url, data) => {
     return axios
         .post(baseURL + url, data, getHeader())

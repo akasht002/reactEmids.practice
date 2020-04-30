@@ -129,6 +129,8 @@ export const API = {
     getPatientConnections: 'ManageConnections/GetPatientConnectionDetails/',
     getPatientLanguages: 'PatientLanguage/',
     getPatientClinicalCondition: 'Patient/get-patient-clinical-conditions/',
+    getAllClinicalCondition: 'Patient/get-all-clinical-conditions',    
+    addClinicalCondition: 'Patient/update-patient-clinical-conditions/',
     getSpBusyInVisit: 'ServiceProvider/IsServiceProviderBusyInVisit/',
     getHistoryListCount: 'ServiceRequest/GetServiceProviderVisitHistoryCount/',
     getRatingAndFeedback: 'VisitProcessing/get-service-request-visit-feedback-details/',
