@@ -67,7 +67,10 @@ export class Profile extends Component {
                   <PointService />
                   <Languages />
                 </div>}
-                <MyConnections />
+                {
+                  (this.props.personalDetail && (this.props.personalDetail.userType === USERTYPES.PATIENT)) &&
+                  <MyConnections />
+                }
                 <EmergencyAttorneyContact />
               </div>
             </div>
@@ -104,7 +107,8 @@ export function mapStateToProps(state) {
     showTelehealthInvite: state.telehealthState.isInvitationCame,
     patientId: state.patientProfileState.patientId,
     isLoading: state.loadingState.isLoading,
-    userType: state.patientProfileState.userType
+    userType: state.patientProfileState.userType,
+    personalDetail: state.patientProfileState.personalDetail
   };
 };
 

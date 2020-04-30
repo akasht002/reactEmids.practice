@@ -7,6 +7,7 @@ import Languages from '../../../PatientProfile/Languages';
 import ClinicalCondition from '../../../PatientProfile/ClinicalCondition';
 import EmergencyAttorneyContact from '../../../PatientProfile/EmergencyAttorneyContact';
 import MyConnections from '../../../PatientProfile/MyConnections';
+import { USERTYPES } from '../../../../constants/constants';
 
 export const PatientProfileTab = props => {
     return (
@@ -23,7 +24,10 @@ export const PatientProfileTab = props => {
                     <ClinicalCondition />
                     <PointService />
                     <Languages />
+                    {
+                    (props.personalDetail && (props.personalDetail.userType === USERTYPES.PATIENT)) &&
                     <MyConnections />
+                    }
                     <EmergencyAttorneyContact />
                 </div>
             </TabPane>
